@@ -10,6 +10,7 @@ export interface CategoryTypes {
 export interface BrandTypes {
     id:number;
     title:string;
+    image:string;
     updateAt: string;
     createdAt: string;
 } 

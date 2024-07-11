@@ -8,7 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useRef } from "react";
+import FileUpload from "@/Component/Forms/UploadImage";
 
 export default function DialogComponent({
   handleDialogClose,
@@ -20,10 +21,10 @@ export default function DialogComponent({
   handleDialogClose: () => void;
   handleBackdropClose: () => void;
   handleBackDropOpen: () => void;
-  handleClick: (text:string) => void;
+  handleClick: (text: string) => void;
   isBrand?: boolean;
-
-}) {  
+}) {
+  const fileUploadRef = useRef();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     handleBackDropOpen();
     const title = (event.target as any)?.title.value;
@@ -37,34 +38,45 @@ export default function DialogComponent({
         // value,
       }
     );
-    const data = {
-      title,
-    //   value
-    };
+    console.log('fileUploadRef.current  ',fileUploadRef.current);
+    const data = isBrand
+      ? {
+          title,
+          image: fileUploadRef.current,
+          //   value
+        }
+      : {
+          title,
+          //   value
+        };
     await axios
-        .post(isBrand ? `/api/brands/create` :`/api/category/create`, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response: any) => {
-          if (response?.data?.success) {
-            handleClick(isBrand ? "SUccessfully Brand Created" : "Successfully Category Created")
-            handleDialogClose()
-            window.location.reload();
-          }
-        })
-        .catch((err:any) => {
-          handleBackdropClose();
-          console.log("error", err);
-        });
+      .post(isBrand ? `/api/brands/create` : `/api/category/create`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response: any) => {
+        if (response?.data?.success) {
+          handleClick(
+            isBrand
+              ? "SUccessfully Brand Created"
+              : "Successfully Category Created"
+          );
+          handleDialogClose();
+          window.location.reload();
+        }
+      })
+      .catch((err: any) => {
+        handleBackdropClose();
+        console.log("error", err);
+      });
 
-    handleBackdropClose(); 
+    handleBackdropClose();
   };
   return (
-    <Container sx={{ p: 3,  }}>
+    <Container sx={{ p: 3 }}>
       <Typography sx={{ fontSize: 28, fontWeight: 550 }}>
-       {isBrand ? "Add Brands" :  "Add Category"}
+        {isBrand ? "Add Brands" : "Add Category"}
       </Typography>
       <form onSubmit={handleSubmit}>
         <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
@@ -79,12 +91,41 @@ export default function DialogComponent({
             startAdornment={<InputAdornment position="start"></InputAdornment>}
           />
         </FormControl>
-       
+        <FileUpload
+          runAfterChange={async (file) => {
+            console.log("Uploading file ", file);
+            const formData = new FormData();
+            formData.append("file", file);
+            try {
+              const response = await axios.post(
+                `/api/v1/image/upload/brands`,
+                formData,
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                }
+              );
+
+              if (response.data.success === 1) {
+                console.log("File uploaded successfully", response.data);
+                fileUploadRef.current = response.data?.file?.url;
+              } else {
+                throw new Error("Upload failed");
+              }
+            } catch (error) {
+              console.error("Error uploading file:", error);
+              throw error;
+            }
+          }}
+          required
+          name="titleImage"
+        />
         <Container sx={{ display: "flex", justifyContent: "end", gap: 3 }}>
           <Button color="error" onClick={handleDialogClose} variant="contained">
             Cancel
           </Button>
-          <Button  type="submit" color="primary" variant="contained">
+          <Button type="submit" color="primary" variant="contained">
             Submit
           </Button>
         </Container>

@@ -1,5 +1,5 @@
 import { db } from '@/drizzle/db';
-import { Brands } from '@/drizzle/schema';
+import { TechBrands } from '@/drizzle/schema';
 import { NextResponse } from "next/server"; 
 
 export async function POST(req: Request) {
@@ -7,17 +7,18 @@ export async function POST(req: Request) {
         // Parse the JSON body
         const body = await req.json()
         
-        const { title } = body;
+        const { title ,image} = body;
 
         console.log('body detail created', body, title, );
 
-        if (!title) {
+        if (!title || !image) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
         
         // Perform the database insertion using Drizzle ORM
-        const result = await db.insert(Brands).values({
+        const result = await db.insert(TechBrands).values({
             title,
+            image
         });
 
         return NextResponse.json({success:true,message:"successfully created Brands",data:result})

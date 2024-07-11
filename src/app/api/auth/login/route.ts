@@ -2,7 +2,6 @@
 
 import { signIn } from '@/auth';
 import { db } from '@/drizzle/db';
-import { Brands, Category } from '@/drizzle/schema';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from "next/server";
 

@@ -31,7 +31,7 @@ export default function NewsPageComponent({
     history.push(
       `/news?${new URLSearchParams({
         page: page,
-        limit: `${Number(limit) + 2}`,
+        limit: `${Number(limit) + 6}`,
       })}`,
       {
         scroll: false,

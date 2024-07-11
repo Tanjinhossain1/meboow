@@ -42,7 +42,7 @@ export default function RecentArticleComponent({
     history.push(
       `/?${new URLSearchParams({
         page: page,
-        limit: `${Number(limit) + 2}`,
+        limit: `${Number(limit) + 6}`,
       })}`,
       {
         scroll: false,
@@ -175,28 +175,7 @@ export default function RecentArticleComponent({
               {/* <CarouselItem className="basis-1/3"></CarouselItem>  */}
             </CarouselContent>
           </Carousel>
-        </Grid>
-
-        <Grid sx={{ mt: 2 }} container>
-          <Typography
-            sx={{
-              mb: 1,
-              mt: 5,
-              borderBottom: "2px solid lightgray",
-              fontSize: 25,
-              width: "100%",
-              fontWeight: 600,
-              color: "#e8005d",
-              cursor: "pointer",
-            }}
-            onClick={() => history.push("/brands")}
-            // onclick={()=>history.push('/brands')}
-          >
-            Brands <ArrowForwardIosIcon sx={{ fontSize: 20 }} />
-          </Typography>
-
-          <BrandDisplayComponent brands={brands} />
-        </Grid>
+        </Grid> 
       </Grid>
     </Grid>
   );

@@ -45,7 +45,7 @@ export default function CategoryPageComponent({
         history.push(
           `/search/?${new URLSearchParams({
             page: page,
-            limit: `${Number(limit) + 2}`,
+            limit: `${Number(limit) + 6}`,
             search: search,
           })}`,
           {
@@ -56,7 +56,7 @@ export default function CategoryPageComponent({
       history.push(
         `/article/brand-wise/${params?.brand}?${new URLSearchParams({
           page: page,
-          limit: `${Number(limit) + 2}`,
+          limit: `${Number(limit) + 6}`,
         })}`,
         {
           scroll: false,
@@ -66,7 +66,7 @@ export default function CategoryPageComponent({
         history.push(
             `/category/${params?.category}/?${new URLSearchParams({
               page: page,
-              limit: `${Number(limit) + 2}`,
+              limit: `${Number(limit) + 6}`,
             })}`,
             {
               scroll: false,

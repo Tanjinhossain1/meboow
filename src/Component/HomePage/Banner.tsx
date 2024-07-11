@@ -9,6 +9,12 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import RecentArticleComponent from "./RecentArticleComponent";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import WorkIcon from "@mui/icons-material/Work";
+import BrandDisplayComponent from "./BrandDisplay";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -133,13 +139,14 @@ export default function Banner({
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
-  return (
-    articles ? 
-    <Grid container>
+  return articles ? (
+    <Grid sx={{mt:1}} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
-        <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
-          <Typography sx={{fontSize:25,fontWeight:600,mb:1}}>Latest Article</Typography>
+        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+          <Typography sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}>
+            Latest Article
+          </Typography>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={8}>
               <ContentBox
@@ -184,8 +191,17 @@ export default function Banner({
             </Grid>
           </Grid>
         </Paper>
-        <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
-            <Typography sx={{fontSize:25,fontFamily:"Arial, sans-serif",fontWeight:600,mb:1}}>Categories</Typography>
+        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+          <Typography
+            sx={{
+              fontSize: 25,
+              fontFamily: "Arial, sans-serif",
+              fontWeight: 600,
+              mb: 1,
+            }}
+          >
+            Categories
+          </Typography>
           <Grid container gap={1} xs={12}>
             {category.map((value: CategoryTypes, index: number) => {
               return (
@@ -220,8 +236,46 @@ export default function Banner({
                   xs={1.5}
                   key={value.id}
                 >
-                  <Typography sx={{ m: 0, p: 0,mt:2 }}>
-                    <MobileFriendlyIcon sx={{ fontSize: 40 }} />
+                  <Typography
+                    sx={{ m: 0, p: 0, mt: 2, ml: 5, textAlign: "center" }}
+                  >
+                    {value.title === "Vehicles" ? (
+                      <Image
+                        alt={value.title}
+                        src="/category/car.png"
+                        height={40}
+                        width={40}
+                      />
+                    ) : value.title === "News" ? (
+                      <Image
+                        alt={value.title}
+                        src="/category/world-news.png"
+                        height={40}
+                        width={40}
+                      />
+                    ) : // <NewspaperIcon sx={{ fontSize: 40 }} />
+                    value.title === "Sports" ? (
+                      <Image
+                        alt={value.title}
+                        src="/category/basketball.png"
+                        height={40}
+                        width={40}
+                      />
+                    ) : value.title === "Jobs" ? (
+                      <Image
+                        alt={value.title}
+                        src="/category/case.png"
+                        height={40}
+                        width={40}
+                      />
+                    ) : (
+                      <Image
+                        alt={value.title}
+                        src="/category/phone.png"
+                        height={40}
+                        width={40}
+                      />
+                    )}
                   </Typography>
                   <br />
                   <Typography
@@ -237,7 +291,7 @@ export default function Banner({
             })}
           </Grid>
         </Paper>
-        <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
+        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
           <RecentArticleComponent
             brands={brands}
             latestArticles={latestArticles}
@@ -246,9 +300,27 @@ export default function Banner({
             articles={articles}
           />
         </Paper>
+        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+          <Grid gap={1} container>
+            <Typography
+              sx={{
+                mb: 1,
+                // borderBottom: "2px solid lightgray",
+                fontSize: 25,
+                width: "100%",
+                fontWeight: 600,
+              }}
+              onClick={() => history.push("/brands")}
+              // onclick={()=>history.push('/brands')}
+            >
+             Mobile Brands  
+            </Typography>
+
+            <BrandDisplayComponent brands={brands} />
+          </Grid>
+        </Paper>
       </Grid>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
     </Grid>
-    :null
-  );
+  ) : null;
 }

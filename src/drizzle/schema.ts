@@ -37,6 +37,16 @@ export const Category = pgTable(
   }
 )
 
+export const TechBrands = pgTable(
+  'techBrands',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull().unique(),
+    image: text('image').notNull(),
+    createdAt: timestamp('createdAt').defaultNow().notNull(),
+    updateAt: timestamp('updateAt').defaultNow().notNull(),
+  }
+)
 export const Brands = pgTable(
   'brands',
   {

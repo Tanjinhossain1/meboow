@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function fetchArticles({
   page = "1",
-  limit = "3",
+  limit = "6",
   category,
   search,
   latestDevice,
