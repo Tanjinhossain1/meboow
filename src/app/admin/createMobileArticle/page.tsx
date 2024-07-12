@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { Fragment } from "react";
+import { fetchBrands } from "@/services/articleServices";
+import MainSubmitForm from "./_components/Forms/MainSubmitForm";
 
-export default function createMobileArticle() {
+export default async function createMobileArticle() {
+    
+  const brands = await fetchBrands();
+
   return (
-    <div>createMobileArticle</div>
-  )
+    <Fragment>
+      <MainSubmitForm brands={brands.data} />
+    </Fragment>
+  );
 }
