@@ -20,7 +20,10 @@ export default function BrandDisplayComponent({
         <Grid
           onClick={() => history.push(`/article/brand-wise/${data.title}`)}
           key={data?.id}
-          xs={2}
+          xs={5}
+          sm={3} 
+          md={2}
+
         >
           <Box
             sx={{

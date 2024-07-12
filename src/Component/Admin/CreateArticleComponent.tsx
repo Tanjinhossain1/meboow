@@ -206,6 +206,14 @@ export default function CreateArticleComponent({
         <Container sx={{ width: "90%", mx: "auto" }}>
           <div id="top">
             <Button
+              onClick={() => history.push("/admin")}
+              variant="contained"
+              color="success"
+              sx={{ mt: 1,mr:1 }}
+            >
+              Back To Dashboard
+            </Button>
+            <Button
               onClick={() => history.push("/")}
               variant="contained"
               color="error"

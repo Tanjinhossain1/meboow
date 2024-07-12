@@ -65,23 +65,29 @@ export default function RecentArticleComponent({
           Recent Article
         </Typography>
 
-        <Grid sx={{ mt: 2 }} container>
+        <Grid sx={{ mt: 2,display:{sm: "flex",xs:"none"} }} container>
           {articles &&
             articles.map((data: RecentArticleDataType) => {
               console.log(data);
               return (
                 <Fragment key={data.id}>
-                  <DisplayArticleComponent data={data} />
+                  <DisplayArticleComponent  data={data} />
+                </Fragment>
+              );
+            })}
+        </Grid>
+        <Grid sx={{ mt: 2,display:{sm: "none",xs:"flex"} }} container>
+          {articles &&
+            articles.map((data: RecentArticleDataType) => {
+              console.log(data);
+              return (
+                <Fragment key={data.id}>
+                  <DisplayArticleComponent asSmall  data={data} />
                 </Fragment>
               );
             })}
         </Grid>
       </Grid>
-
-      {/* <Grid xs={12} md={0.3}></Grid>
-      <Grid xs={12} md={3.7}>
-        <CategoryListComponent category={category} />
-      </Grid> */}
 
       <Grid sx={{ mt: 3 }} container>
         <Grid xs={1} sm={4}></Grid>

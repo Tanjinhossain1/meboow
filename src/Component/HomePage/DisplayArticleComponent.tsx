@@ -25,16 +25,14 @@ export default function DisplayArticleComponent({
       sx={{
         borderBottom: asSmall ? "1px solid lightgray" : "none",
         border:"1px solid lightgray",
-        height:"150px",
+        // height:"150px",
         borderRadius:"5px",
-        // p:2,
-        // pb: 3,
         mr:1,
-        // pt: 2,
         p:1,
         mb:1
       }}
-      xs={5.6}
+      xs={12}
+      sm={5.6}
     >
       <Grid xs={asSmall ? 5 : 12} sm={5.5} sx={{height:"100%"}}>
         {/* <Image src={data.image} alt={data.title} layout="fill" objectFit="cover" /> */}
@@ -100,79 +98,13 @@ export default function DisplayArticleComponent({
             fontSize: 13,
             fontWeight: 500,
             mt: asSmall ? 0.5 : 2,
-            ml: asSmall ? 1 : 0,
-          }}
-        >
-          {asSmall ? formatDate(data.createdAt) : null}
-        </Typography>
-        {/* <Typography
-          sx={{
-            fontSize: 13,
-            fontWeight: 500,
-            mt: asSmall ? 0.5 : 2,
-            ml: asSmall ? 1 : 0,
-            display: {
-              xs: asSmall ? "none" : "block",
-              sm: asSmall ? "none" : "block",
-              md: "block",
-              lg: "block",
-              xl: "block",
-            },
-          }}
-        >
-          {truncateText(data.description, 300)}
-        </Typography> */}
-
-        {/* <Button
-        size="small"
-          variant="contained"
-          onClick={() => {
-            const joinTitle = data.title
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join("-");
-            history.push(
-              `/details/${data.id}/${
-                data.category
-              }/${joinTitle}?${new URLSearchParams({
-                page: `${Number(page) + 1}`,
-                limit: limit,
-              })}`,
-              {
-                scroll: false,
-              }
-            );
-          }}
-          sx={{
-            display: {
-              xs: asSmall ? "none" : "block",
-              sm: asSmall ? "none" : "block",
-              md: "block",
-              lg: "block",
-              xl: "block",
-            },
-            backgroundColor: "#bd047c", // Primary color
-            mt: 1,
-            color: "#ffffff",
-            padding: "10px 20px",
-            fontSize: "16px",
-            textTransform: "none",
-            marginBottom: "20px",
-            transition:
-              "background-color 0.3s ease-in-out, transform 0.3s ease-in-out",
-            "&:hover": {
-              backgroundColor: "#018c2d", // Darker shade for hover
-              transform: "scale(1.05)",
-            },
-            "&:active": {
-              backgroundColor: "#4791db", // Lighter shade for active
-              transform: "scale(0.95)",
-            },
+            ml: 1,
             
           }}
         >
-          Read More &gt;&gt;
-        </Button> */}
+          { formatDate(data.createdAt) }
+          {/* {asSmall ? formatDate(data.createdAt) : null} */}
+        </Typography>
       </Grid>
     </Grid>
   );

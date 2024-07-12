@@ -2,30 +2,22 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import { Grid, InputBase, ListItem, alpha, styled } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { NavigationPages } from "@/types/Navbar";
+import {
+  Drawer,
+  Grid,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import Image from "next/image";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import { useRouter } from "next/navigation";
-import RemoveIcon from "@mui/icons-material/Remove";
-
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { signOut } from "@/auth/helpers";
 import LoginIcon from "@mui/icons-material/Login";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Popover,
   PopoverContent,
@@ -34,60 +26,12 @@ import {
 import LoginComponent from "../Login/LoginComponent";
 import { CategoryTypes } from "@/types/category";
 import Link from "next/link";
-
-// const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-const pages: NavigationPages[] = [
-  {
-    title: "Mobiles",
-    route: "/category/Mobiles",
-    icon: <Image alt="tips" height={20} width={20} src="/smartphone.png" />,
-  },
-  {
-    title: "Jobs",
-    route: "/category/Jobs",
-    icon: <Image alt="tips" height={20} width={20} src="/suitcase.png" />,
-  },
-  {
-    title: "Sports",
-    route: "/category/Sports",
-    icon: <Image alt="tips" height={20} width={20} src="/tournament.png" />,
-  },
-];
-
-const Search = styled("div")(({ theme }: any) => ({
-  display: "flex",
-  alignItems: "center",
-  position: "relative",
-  borderRadius: "50px",
-  backgroundColor: "#eaf2ff",
-  "&:hover": {
-    backgroundColor: "#eaf2ff",
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
-  // color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    // transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
+import CloseIcon from "@mui/icons-material/Close";
+import HomeIcon from "@mui/icons-material/Home";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import FeedIcon from "@mui/icons-material/Feed";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 
 function NavbarHelper({
   isLoginUser,
@@ -109,277 +53,386 @@ function NavbarHelper({
     const search = event.target.search.value;
     history.push(`/search?search=${search}`);
   };
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
+  const toggleDrawer =
+    (anchor: "left", open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setIsOpen(!isOpen);
+      setState({ ...state, [anchor]: open });
+    };
+
+  const list = (anchor: "left") => (
+    <Box
+      sx={{ width: 320, bgcolor: "#f4f8ff", position: "relative" }}
+      role="presentation"
+      onKeyDown={toggleDrawer(anchor, false)}
+      className="min-h-screen"
+    >
+      <Grid alignItems={"center"} sx={{ bgcolor: "#023359", p: 1 }} container>
+        <Grid xs={8}>
+          <Grid xs={12} sm={3} md={2}>
+            <Image alt="logo" width={180} height={10} src="/logo.png" />
+          </Grid>
+        </Grid>
+        <Grid
+          onClick={toggleDrawer(anchor, false)}
+          justifyContent={"end"}
+          sx={{ color: "white", textAlign: "end" }}
+          xs={4}
+        >
+          <CloseIcon sx={{ fontSize: 25 }} />
+        </Grid>
+      </Grid>
+      <List>
+        {["Home"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon></HomeIcon>
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        {category.map((data: CategoryTypes, index) => (
+          <ListItem key={data?.id} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {data?.title === "Vehicles" ? (
+                  <DirectionsCarIcon />
+                ) : data?.title === "News" ? (
+                  <FeedIcon />
+                ) : data?.title === "Sports" ? (
+                  <SportsSoccerIcon />
+                ) : data?.title === "Jobs" ? null : (
+                  <PhoneAndroidIcon />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                primary={data?.title === "Jobs" ? null : data?.title}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Grid sx={{ bottom: 0, position: "absolute", ml: 2 }} container>
+        <Grid xs={0} sm={4} md={5} lg={7}></Grid>
+
+        <Grid
+          xs={0}
+          // sx={{ display: "flex" }}
+          // gap={2}
+          sm={12}
+          // md={7}
+          sx={{mb:2}}
+          // lg={5}
+          container
+        >
+          <Grid xs={4}>
+            <Typography
+              gap={2}
+              sx={{
+                fontSize: 11,
+                color: "#023359",
+                ":hover": { textDecoration: "underline" },
+              }}
+            >
+              <Link href={"/aboutus"}>About Us</Link>
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography
+              gap={2}
+              sx={{
+                fontSize: 11,
+                color: "#023359",
+                ":hover": { textDecoration: "underline" },
+              }}
+            >
+              <Link href={"/contactUs"}>Contact us</Link>
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography
+              gap={2}
+              sx={{
+                fontSize: 11,
+                color: "#023359",
+                ":hover": { textDecoration: "underline" },
+              }}
+            >
+              <Link href={"/privacyPolicy"}>Privacy Policy</Link>
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography
+              gap={2}
+              sx={{
+                fontSize: 11,
+                color: "#023359",
+                ":hover": { textDecoration: "underline" },
+              }}
+            >
+              <Link href={"/termCondition"}>Terms Condition</Link>
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography
+              gap={2}
+              sx={{
+                fontSize: 11,
+                color: "#023359",
+                ":hover": { textDecoration: "underline" },
+              }}
+            >
+              <Link href={"/faq"}>FAQ</Link>
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography
+              gap={2}
+              sx={{
+                fontSize: 11,
+                color: "#023359",
+                ":hover": { textDecoration: "underline" },
+              }}
+            >
+              <Link href={"/helpus"}>Tip Us</Link>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
+  );
   return (
     <Grid container>
-      {/* <Grid xs={0} md={1} lg={1.1} xl={2}></Grid> */}
       <Grid sx={{ m: 0, p: 0 }} xs={12}>
-        {/* <Grid sx={{ m: 0, p: 0 }} xs={12} md={10} lg={9.8} xl={8}> */}
         <AppBar sx={{ bgcolor: "#ffffff", m: 0, p: 0 }} position="static">
-          <Grid sx={{ bgcolor: "white" }} container>
-            <Grid xs={7}></Grid>
+          <Grid
+            sx={{
+              bgcolor: "white",
+              display: { xs: "none", sm: "flex" },
+            }}
+            container
+            xs={0}
+            sm={12}
+          >
+            <Grid container>
+              <Grid xs={0} sm={4} md={5} lg={7}></Grid>
 
-            <Grid sx={{ display: "flex" }} gap={2} xs={3}>
-              <Typography
-                gap={2}
-                sx={{
-                  fontSize: 11,
-                  color: "#023359",
-                  ":hover": { textDecoration: "underline" },
-                }}
-              >
-                <Link href={"/aboutus"}>About Us</Link>
-              </Typography>
-
-              <Typography
-                gap={2}
-                sx={{
-                  fontSize: 11,
-                  color: "#023359",
-                  ":hover": { textDecoration: "underline" },
-                }}
-              >
-                <Link href={"/contactUs"}>Contact us</Link>
-              </Typography>
-
-              <Typography
-                gap={2}
-                sx={{
-                  fontSize: 11,
-                  color: "#023359",
-                  ":hover": { textDecoration: "underline" },
-                }}
-              >
-                <Link href={"/privacyPolicy"}>Privacy Policy</Link>
-              </Typography>
-
-              <Typography
-                gap={2}
-                sx={{
-                  fontSize: 11,
-                  color: "#023359",
-                  ":hover": { textDecoration: "underline" },
-                }}
-              >
-                <Link href={"/termCondition"}>Terms Condition</Link>
-              </Typography>
-
-              <Typography
-                gap={2}
-                sx={{
-                  fontSize: 11,
-                  color: "#023359",
-                  ":hover": { textDecoration: "underline" },
-                }}
-              >
-                <Link href={"/faq"}>FAQ</Link>
-              </Typography>
-              <Typography
-                gap={2}
-                sx={{
-                  fontSize: 11,
-                  color: "#023359",
-                  ":hover": { textDecoration: "underline" },
-                }}
-              >
-                <Link href={"/helpus"}>Tip Us</Link>
-              </Typography>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* <AppBar sx={{ bgcolor: "#d9078f", m: 0, p: 0 }} position="static"> */}
-          {/* <Container sx={{ m: 0, p: 0 }} maxWidth="xl"> */}
-          {/* <Toolbar disableGutters> */}
-          <Box sx={{ display: { xs: "flex", sm: "none" } }}>
-            <NavigationMenu style={{ margin: 0, padding: 0 }}>
-              <NavigationMenuList style={{ margin: 0, padding: 0 }}>
-                <NavigationMenuItem style={{ margin: 0, padding: 0 }}>
-                  <NavigationMenuTrigger
-                    style={{ backgroundColor: "transparent" }}
-                    onClick={handleToggle}
-                  >
-                    {isOpen ? (
-                      <RemoveIcon className="icon animate-slideInFromTop " />
-                    ) : (
-                      <MenuIcon className="icon animate-slideInFromTop" />
-                    )}
-                  </NavigationMenuTrigger>
-
-                  <NavigationMenuContent
-                    style={{ borderRadius: "0px" }}
-                    className="w-screen  animate-slideInFromTop bg-inherit m-0 p-0  "
-                  >
-                    <List sx={{ bgcolor: "#bd047c" }}>
-                      {/* <Grid container>
-                            <Grid xs={4}>
-                              <ListItem
-                                sx={{
-                                  textAlign: "center",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  mt: 1,
-                                  borderRight: "2px solid #d6008b",
-                                  color: "white",
-                                  fontWeight: 600,
-                                }}
-                                onClick={() => history.push("/")}
-                              >
-                                <Typography textAlign="center">Home</Typography>
-                              </ListItem>
-                            </Grid>
-                            <Grid xs={4}>
-                              <ListItem
-                                sx={{
-                                  textAlign: "center",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  mt: 1,
-                                  borderRight: "2px solid #d6008b",
-                                  color: "white",
-                                  fontWeight: 600,
-                                }}
-                                onClick={() => history.push("/news")}
-                              >
-                                <Typography textAlign="center">News</Typography>
-                              </ListItem>
-                            </Grid>
-                          </Grid> */}
-                    </List>
-                    <List sx={{ bgcolor: "#bd047c" }}>
-                      <Grid sx={{ mt: 4 }} container>
-                        {pages.map((page: NavigationPages, index: number) => (
-                          <Grid key={index} xs={4}>
-                            <ListItem
-                              sx={{
-                                textAlign: "center",
-                                display: "flex",
-                                alignItems: "center",
-                                mt: 1,
-                                borderRight: "2px solid #d6008b",
-                                color: "white",
-                                fontWeight: 600,
-                              }}
-                              onClick={() => history.push(page.route)}
-                            >
-                              <Typography textAlign="center">
-                                {page.icon}
-                              </Typography>
-                              <Typography textAlign="center">
-                                {page.title}
-                              </Typography>
-                            </ListItem>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </List>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </Box>
-          {/* large  */}
-          {/* <Box
-                sx={{
-                  flexGrow: 1,
-                  display: { xs: "none", sm: "flex" },
-                  gap: 1,
-                }}
-              >
-                {pages.map((page: NavigationPages, index: number) => (
-                  <Button
-                    key={index}
-                    onClick={() => history.push(page.route)}
-                    sx={{
-                      // my: 2,
-                      color: "white",
-                      display: "flex",
-                      alignItems: "center",
-                      // gap: 1,
-                    }}
-                  >
-                    {page.icon}
-                    <Typography sx={{ display: "inline", fontWeight: 600 }}>
-                      {" "}
-                      {page.title}
-                    </Typography>
-                  </Button>
-                ))}
-                {/* <TopSearch />  
-              </Box> */}
-
-          {/* </Toolbar> */}
-          <Grid container>
-            <Grid xs={0} md={1} lg={1.1} xl={2.3}></Grid>
-            <Grid xs={12} md={10} lg={9.8} xl={7}>
               <Grid
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  // justifyContent: "center",
-                  m: 2,
-                  // textAlign: "center",
-                }}
-                // xs={}
+                xs={0}
+                sx={{ display: "flex" }}
+                gap={2}
+                sm={8}
+                md={7}
+                lg={5}
               >
-                <Grid
-                // sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+                <Typography
+                  gap={2}
+                  sx={{
+                    fontSize: 11,
+                    color: "#023359",
+                    ":hover": { textDecoration: "underline" },
+                  }}
                 >
-                  <Image
-                    alt="logo"
-                    // layout="responsive"
-                    width={180}
-                    height={20}
-                    src="/logo.png"
-                  />
-                </Grid>
-                <Grid>
-                  <form
-                    onSubmit={handleSubmit}
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      marginLeft: 50,
-                      marginTop:10
-                    }}
-                  >
-                    <Search>
-                      <button
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          border: "none",
-                          borderTopLeftRadius: "50px",
-                          borderBottomLeftRadius: "50px",
-                          color: "gray",
-                          cursor: "pointer",
-                          background: "#f0f5fe",
-                          bottom: 0,
-                          padding: 0, // Ensures no extra padding
-                          margin: 0, // Ensures no extra margin
-                        }}
-                        type="submit"
-                      >
-                        <SearchIcon />
-                      </button>
-                      <StyledInputBase
-                        name="search"
-                        placeholder="Search…"
-                        inputProps={{ "aria-label": "search" }}
-                        sx={{ width: "400px" }}
-                      />
-                    </Search>
-                  </form>
-                </Grid>
+                  <Link href={"/aboutus"}>About Us</Link>
+                </Typography>
+
+                <Typography
+                  gap={2}
+                  sx={{
+                    fontSize: 11,
+                    color: "#023359",
+                    ":hover": { textDecoration: "underline" },
+                  }}
+                >
+                  <Link href={"/contactUs"}>Contact us</Link>
+                </Typography>
+
+                <Typography
+                  gap={2}
+                  sx={{
+                    fontSize: 11,
+                    color: "#023359",
+                    ":hover": { textDecoration: "underline" },
+                  }}
+                >
+                  <Link href={"/privacyPolicy"}>Privacy Policy</Link>
+                </Typography>
+
+                <Typography
+                  gap={2}
+                  sx={{
+                    fontSize: 11,
+                    color: "#023359",
+                    ":hover": { textDecoration: "underline" },
+                  }}
+                >
+                  <Link href={"/termCondition"}>Terms Condition</Link>
+                </Typography>
+
+                <Typography
+                  gap={2}
+                  sx={{
+                    fontSize: 11,
+                    color: "#023359",
+                    ":hover": { textDecoration: "underline" },
+                  }}
+                >
+                  <Link href={"/faq"}>FAQ</Link>
+                </Typography>
+                <Typography
+                  gap={2}
+                  sx={{
+                    fontSize: 11,
+                    color: "#023359",
+                    ":hover": { textDecoration: "underline" },
+                  }}
+                >
+                  <Link href={"/helpus"}>Tip Us</Link>
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
-          {/* </Container> */}
+          {/* phone devices */}
+          <Box
+            sx={{
+              bgcolor: "#023359",
+              display: { xs: "flex", sm: "none" },
+              py: 2,
+            }}
+          >
+            <Grid container>
+              <Grid xs={1}>
+                <Button onClick={toggleDrawer("left", true)}>
+                  <MenuIcon className=" text-white" />
+                </Button>
+              </Grid>
+
+              <Grid xs={2.5}> </Grid>
+              <Grid xs={8}>
+                <Grid xs={12} sm={3} md={2}>
+                  <Image alt="logo" width={180} height={10} src="/logo.png" />
+                </Grid>
+              </Grid>
+
+              <Grid xs={12} container>
+                <Grid xs={1}></Grid>
+                <Grid xs={10}>
+                  <form onSubmit={handleSubmit}>
+                    <div className="flex justify-center  mt-3 ">
+                      <div className="relative w-full ">
+                        <input
+                          type="text"
+                          className="w-full  py-2 pl-10 pr-4 text-gray-700 bg-[#eaf2ff] border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Search mobiles, laptops, brands, and more..."
+                        />
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-3 text-gray-500"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M12.9 14.32a8 8 0 111.414-1.414l5.387 5.386a1 1 0 01-1.414 1.414l-5.387-5.386zM8 14A6 6 0 108 2a6 6 0 000 12z"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </Grid>
+                <Grid xs={1}></Grid>
+              </Grid>
+            </Grid>
+
+            <Drawer
+              anchor={"left"}
+              open={state["left"]}
+              onClose={toggleDrawer("left", false)}
+            >
+              {list("left")}
+            </Drawer>
+          </Box>
+
+          <Grid
+            sx={{
+              display: {
+                xs: "none",
+                sm: "flex",
+              },
+            }}
+          >
+            <Grid
+              sx={{
+                m: 2,
+              }}
+              container
+            >
+              <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
+              <Grid xs={12} sm={3} md={2}>
+                <Image alt="logo" width={180} height={10} src="/logo.png" />
+              </Grid>
+              <Grid xs={0} sm={1}></Grid>
+              <Grid sm={5}>
+                <form onSubmit={handleSubmit}>
+                  <div className="flex justify-center  mt-3 ">
+                    <div className="relative w-full ">
+                      <input
+                        type="text"
+                        className="sm:w-[350px] md:w-[450px]  py-2 pl-10 pr-4 text-gray-700 bg-[#eaf2ff] border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Search mobiles, laptops, brands, and more..."
+                      />
+                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg
+                          className="w-5 h-3 text-gray-500"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12.9 14.32a8 8 0 111.414-1.414l5.387 5.386a1 1 0 01-1.414 1.414l-5.387-5.386zM8 14A6 6 0 108 2a6 6 0 000 12z"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </Grid>
+            </Grid>
+          </Grid>
         </AppBar>
-        <AppBar sx={{ bgcolor: "#023359", m: 0, p: 0 }} position="static">
+        <AppBar
+          sx={{
+            bgcolor: "#023359",
+            m: 0,
+            p: 0,
+            display: {
+              xs: "none",
+              sm: "flex",
+            },
+          }}
+          position="static"
+        >
           <Grid container sx={{ m: 0, p: 0 }} xs={12}>
             <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
             <Grid xs={12} md={10} lg={9.8} xl={7}>

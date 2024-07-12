@@ -142,7 +142,7 @@ export default function Banner({
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
- 
+
   return articles ? (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -206,25 +206,23 @@ export default function Banner({
           >
             Categories
           </Typography>
-          <Grid container gap={1} xs={12}>
-            {category.map((value: CategoryTypes, index: number) => {
-              return (
+          <Box sx={{ flexGrow: 1, p: 2 }}>
+            <Grid gap={1} container   >
+              {category.map((value: CategoryTypes, index: number) => (
                 <Grid
-                  onClick={() => {
-                    history.push(`/category/${value.title}`);
-                  }}
+                  item
+                  key={value.id}
+                  xs={5.5}
+                  sm={3.5}
+                  md={2.5}
+                  lg={1.5}
+                  onClick={() => history.push(`/category/${value.title}`)}
                   sx={{
-                    p: 1,
-                    textAlign: "center",
-                    // display: "flex",
-                    alignItems: "center",
-                    // justifyContent: "center",
                     cursor: "pointer",
-                    bgcolor: "#ffffff",
-                    width: "50px",
-                    height: "120px",
+                    textAlign: "center",
+                    p: 2, 
                     borderRadius: "10px",
-                    backgroundColor:
+                    bgcolor:
                       index === 0
                         ? "#e8f6ff"
                         : index === 1
@@ -237,14 +235,18 @@ export default function Banner({
                         ? "#fff2ea"
                         : index === 5
                         ? "#e8ffe8"
-                        : "",
-                    ":hover": { backgroundColor: "#f584b7" },
+                        : index === 6
+                        ? "#e0f7fa"
+                        : "#eeeeee",
+                    ":hover": { bgcolor: "#f584b7" },
                   }}
-                  xs={1.5}
-                  key={value.id}
                 >
-                  <Typography
-                    sx={{ m: 0, p: 0, mt: 2, ml: 5, textAlign: "center" }}
+                  <Box
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      mx: "auto",
+                    }}
                   >
                     {value.title === "Vehicles" ? (
                       <Image
@@ -283,63 +285,16 @@ export default function Banner({
                         width={40}
                       />
                     )}
+                  </Box>
+                  <Typography variant="body1" mt={1}>
+                    {value.title}
                   </Typography>
-                  <br />
-                  <Typography sx={{ m: 0, p: 0 }}>{value.title}</Typography>
                 </Grid>
-              );
-            })}
-          </Grid>
+              ))}
+            </Grid>
+          </Box>
         </Paper>
-      
-        {/* <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
-          <Typography sx={{fontSize:25,mb:2,fontWeight:600}}>Top Latest Mobile</Typography>
-          <Carousel>
-            <CarouselContent>
-              {articles &&
-                articles.map((data: RecentArticleDataType) => {
-                  // if (data?.latestDevice === "latest") {
-                  return (
-                    <CarouselItem
-                      className=" basis-1/3 sm:basis-1/4 lg:basis-1/5"
-                      key={data.id}
-                    >
-                      <Image
-                        style={{ cursor: "pointer" }}
-                        alt=""
-                        src={data.image}
-                        width={300}
-                        height={300}
-                        onClick={() => {
-                          const joinTitle = data.title
-                            .split(" ")
-                            .map(
-                              (word) =>
-                                word.charAt(0).toUpperCase() + word.slice(1)
-                            )
-                            .join("-");
-                          history.push(
-                            `/details/${data.id}/${
-                              data.category
-                            }/${joinTitle}?${new URLSearchParams({
-                              page: `${Number(page) + 1}`,
-                              limit: limit,
-                            })}`,
-                            {
-                              scroll: false,
-                            }
-                          );
-                        }}
-                      />
-                      <Typography>{data?.deviceName}</Typography>
-                    </CarouselItem>
-                  );
-                  // }
-                })}
-              {/* <CarouselItem className="basis-1/3"></CarouselItem>  
-            </CarouselContent>
-          </Carousel>
-        </Paper> */}
+
         <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
           <RecentArticleComponent
             brands={brands}

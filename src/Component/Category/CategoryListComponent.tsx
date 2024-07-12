@@ -11,7 +11,7 @@ export default function CategoryListComponent({
     const history = useRouter();
   return (
     <>
-      <Container sx={{ bgcolor: "#bd047c", p: 1 }}>
+      <Container sx={{ bgcolor: "#023359", p: 1 }}>
         <Typography sx={{ fontSize: 18, fontWeight: 600, color: "#f5f5f5" }}>
           Categories
         </Typography>
@@ -22,8 +22,8 @@ export default function CategoryListComponent({
           <Typography
             sx={{
               p: 1,
-              backgroundColor: "#f2e4ea",
-              ":hover": { backgroundColor: "#f584b7" },
+              backgroundColor: "#deebff",
+              ":hover": { backgroundColor: "#023359",color:"white" },
               cursor: "pointer",
               borderBottom: "1px solid white",
             }}
