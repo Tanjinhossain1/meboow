@@ -3,8 +3,8 @@
 @tailwind utilities;
 /* globals.css */
 .container {
-    max-width: 1280px;
-  }
-body{
-    background-color: #f4f8ff;
-  }
+  max-width: 1280px;
+}
+body {
+  background-color: #f4f8ff;
+}

@@ -17,7 +17,7 @@ export default function OtherPageFooter() {
     <Grid container>
       {/* <Grid xs={0} md={1} lg={1.1} xl={2}></Grid> */}
       <Grid xs={12}>
-        <Paper sx={{ p: 5,bgcolor:"#152133"}} elevation={2}>
+        <Paper sx={{ p: 5,backgroundColor:"#152133"}} elevation={2}>
           <Grid  sx={{width: {
             xs: "100%", // 80% width on extra-small screens
             sm: "100%", // 70% width on small screens

@@ -1,6 +1,15 @@
 "use client";
-import React from "react";
-import { Grid, Paper, Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Grid,
+  Paper,
+  Box,
+  Typography,
+  IconButton,
+  Card,
+  CardMedia,
+  CardContent,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import { truncateText } from "@/utils/utils";
@@ -8,13 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import RecentArticleComponent from "./RecentArticleComponent";
 import { BrandTypes, CategoryTypes } from "@/types/category";
-import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
-import WorkIcon from "@mui/icons-material/Work";
 import BrandDisplayComponent from "./BrandDisplay";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -139,11 +142,12 @@ export default function Banner({
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
+ 
   return articles ? (
-    <Grid sx={{mt:1}} container>
+    <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
-        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+        <Paper sx={{ p: 2, mb: 2, bgcolor: "white" }} elevation={0}>
           <Typography sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}>
             Latest Article
           </Typography>
@@ -206,6 +210,9 @@ export default function Banner({
             {category.map((value: CategoryTypes, index: number) => {
               return (
                 <Grid
+                  onClick={() => {
+                    history.push(`/category/${value.title}`);
+                  }}
                   sx={{
                     p: 1,
                     textAlign: "center",
@@ -278,19 +285,61 @@ export default function Banner({
                     )}
                   </Typography>
                   <br />
-                  <Typography
-                    sx={{ m: 0, p: 0 }}
-                    onClick={() => {
-                      history.push(`/category/${value.title}`);
-                    }}
-                  >
-                    {value.title}
-                  </Typography>
+                  <Typography sx={{ m: 0, p: 0 }}>{value.title}</Typography>
                 </Grid>
               );
             })}
           </Grid>
         </Paper>
+      
+        {/* <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+          <Typography sx={{fontSize:25,mb:2,fontWeight:600}}>Top Latest Mobile</Typography>
+          <Carousel>
+            <CarouselContent>
+              {articles &&
+                articles.map((data: RecentArticleDataType) => {
+                  // if (data?.latestDevice === "latest") {
+                  return (
+                    <CarouselItem
+                      className=" basis-1/3 sm:basis-1/4 lg:basis-1/5"
+                      key={data.id}
+                    >
+                      <Image
+                        style={{ cursor: "pointer" }}
+                        alt=""
+                        src={data.image}
+                        width={300}
+                        height={300}
+                        onClick={() => {
+                          const joinTitle = data.title
+                            .split(" ")
+                            .map(
+                              (word) =>
+                                word.charAt(0).toUpperCase() + word.slice(1)
+                            )
+                            .join("-");
+                          history.push(
+                            `/details/${data.id}/${
+                              data.category
+                            }/${joinTitle}?${new URLSearchParams({
+                              page: `${Number(page) + 1}`,
+                              limit: limit,
+                            })}`,
+                            {
+                              scroll: false,
+                            }
+                          );
+                        }}
+                      />
+                      <Typography>{data?.deviceName}</Typography>
+                    </CarouselItem>
+                  );
+                  // }
+                })}
+              {/* <CarouselItem className="basis-1/3"></CarouselItem>  
+            </CarouselContent>
+          </Carousel>
+        </Paper> */}
         <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
           <RecentArticleComponent
             brands={brands}
@@ -313,7 +362,7 @@ export default function Banner({
               onClick={() => history.push("/brands")}
               // onclick={()=>history.push('/brands')}
             >
-             Mobile Brands  
+              Mobile Brands
             </Typography>
 
             <BrandDisplayComponent brands={brands} />
