@@ -28,7 +28,8 @@ export async function POST(req: Request) {
       connectivity,
       features,
       battery,
-      details
+      details,
+      prices
     } = body;
 
     console.log("body detail created", body, title, image);
@@ -58,7 +59,8 @@ export async function POST(req: Request) {
         connectivity,
         features,
         battery,
-        details
+        details,
+        prices
       })
       .returning();
 

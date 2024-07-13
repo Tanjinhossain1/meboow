@@ -62,6 +62,14 @@ const BottomMobileDetails = ({
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
         <Paper sx={{ p: 2 }} elevation={0}>
+            <Typography
+              sx={{ fontSize: 30, mb: 1, fontWeight: 600 }}
+              variant="h6"
+            >
+              Specification
+            </Typography>
+
+          {/* Render Accordion */}
           {accordionDetails.map((item, index) => {
             return (
               <Accordion

@@ -7,7 +7,7 @@ export interface MobileArticleType {
     title: string;
     market_status: string;
     release_date: string;
-    image: string;
+    image: string[];
     key_specifications: {
         processor: string;
         display: string;
@@ -32,4 +32,8 @@ export interface MobileArticleType {
     features: any[],
     battery: any[],
     details: any[],
+    prices: {
+        start_from:string;
+        gbs:string;
+    }[],
 }

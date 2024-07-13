@@ -12,24 +12,17 @@ import {
   Grid,
   Snackbar,
   Typography,
+  TextField,
+  Box,
+  IconButton,
 } from "@mui/material";
 import { BrandTypes } from "@/types/category";
 import TopForm from "./TopForm";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import DynamicForm from "./BottomForms";
-import {
-  BatteryDefaultData,
-  CameraDefaultData,
-  ConnectivityDefaultData,
-  DesignDefaultData,
-  DisplayDefaultData,
-  PerformanceDefaultData,
-  SensorsDefaultData,
-  SoftwareDefaultData,
-  SoundDefaultData,
-  StorageDefaultData,
-} from "./DefaultRhfData";
 import axios from "axios";
+import {} from "@mui/material";
+import { AddCircle, RemoveCircle } from "@mui/icons-material";
 
 export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
@@ -38,7 +31,9 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
 
   const [showSuccessText, setShowSuccessText] = useState<string>("");
-  
+  const [showErrorText, setShowErrorText] = useState<string>("");
+  const [errorOpen,setErrorOpen]  = useState<boolean>(false);
+
   const PhysicalSpecificationEditorRef = useRef<any>(null);
   const NetworkEditorRef = useRef<any>(null);
   const DisplayEditorRef = useRef<any>(null);
@@ -52,22 +47,25 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
   const BatteryEditorRef = useRef<any>(null);
   const DetailsEditorRef = useRef<any>(null);
 
-
-
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
-  const methods = useForm();
-  //   {
-  //   defaultValues: {
-  //     performance: PerformanceDefaultData,
-  //   },
-  // }
-  const fileUploadRef = useRef();
+  const methods = useForm({
+    defaultValues: {
+      prices: [{ gbs: "", start_from: "" }],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: methods.control,
+    name: "prices",
+  });
+ 
+  const fileUploadRef = useRef<string[] >([]);
+
   const { handleSubmit } = methods;
 
-  
   const handleBackdropClose = () => {
     setOpenBackDrop(false);
   };
@@ -76,12 +74,15 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
   };
 
   const onSubmit = async (data: any) => {
-    if (!fileUploadRef.current) {
-      setImageError(true);
+    if (!fileUploadRef.current[0]) {
+      // setImageError(true);
+      setErrorOpen(true)
+      setShowErrorText("Please Select Image")
       return;
     }
-    handleBackDropOpen()
-    const physicalSpecificationData = await PhysicalSpecificationEditorRef.current?.save();
+    handleBackDropOpen();
+    const physicalSpecificationData =
+      await PhysicalSpecificationEditorRef.current?.save();
     const networkData = await NetworkEditorRef.current?.save();
     const displayData = await DisplayEditorRef.current?.save();
     const processorData = await ProcessorEditorRef.current?.save();
@@ -125,17 +126,17 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
           setTimeout(() => {
             handleBackdropClose();
             window.location.reload();
-          }, 200);
+          }, 10);
         }
       })
       .catch((err) => {
         console.error("Error creating article:", err);
-        handleBackdropClose()
+        handleBackdropClose();
         // Handle error if needed
       });
     // Send data to server or process it further as needed
   };
-  
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -145,13 +146,94 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
     }
     setOpen(false);
   };
-  
+
   return (
     <Fragment>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TopForm fileUploadRef={fileUploadRef} brandsData={brands} />
-          {imageError ? <Typography sx={{color:"red",fontSize:20}}>Select Image</Typography> : null}
+          {imageError ? (
+            <Typography sx={{ color: "red", fontSize: 20 }}>
+              Select Image
+            </Typography>
+          ) : null}
+          <Grid sx={{ mt: 1 }} container>
+            <Grid xs={1.2}></Grid>
+            <Grid xs={9.8}>
+              <Accordion
+                expanded={expanded === "panel0"}
+                onChange={handleChange("panel0")}
+              >
+                <AccordionSummary
+                  aria-controls="panel0d-content"
+                  id="panel0d-header"
+                >
+                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                    Prices
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ mb: 2 }}>
+                    <Grid container spacing={2}>
+                      {fields.map((field, index) => (
+                        <Grid item xs={12} key={field.id}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 2,
+                              // border: "1px solid gray",
+                              // p: 2,
+                              borderRadius: 1,
+                            }}
+                          >
+                            <TextField
+                              {...methods.register(`prices.${index}.gbs`)}
+                              label="GBs"
+                              variant="outlined"
+                              size="small"
+                              fullWidth
+                            />
+                            <TextField
+                              {...methods.register(
+                                `prices.${index}.start_from`
+                              )}
+                              label="Start From"
+                              variant="outlined"
+                              size="small"
+                              fullWidth
+                            />
+                            {index > 0 && (
+                              <IconButton
+                                color="error"
+                                onClick={() => remove(index)}
+                              >
+                                <RemoveCircle />
+                              </IconButton>
+                            )}
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
+                    <Box sx={{ mt: 2 }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => append({ gbs: "", start_from: "" })}
+                        startIcon={<AddCircle />}
+                      >
+                        Add Price
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Button type="submit" variant="contained" color="primary">
+                    Submit
+                  </Button>
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+            <Grid xs={2}></Grid>
+          </Grid>
           <Grid sx={{ mt: 1 }} container>
             <Grid xs={1.2}></Grid>
             <Grid xs={9.8}>
@@ -164,13 +246,13 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel1d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Physical Specification
+                    Physical Specification
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <DynamicForm
-                  holderId="1"
-                   editorRef={PhysicalSpecificationEditorRef}
+                    holderId="1"
+                    editorRef={PhysicalSpecificationEditorRef}
                   />
                 </AccordionDetails>
               </Accordion>
@@ -190,12 +272,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel2d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Network
+                    Network
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="2"  editorRef={NetworkEditorRef}
-                  />
+                  <DynamicForm holderId="2" editorRef={NetworkEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -214,12 +295,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel3d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Display
+                    Display
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="3" editorRef={DisplayEditorRef}
-                  />
+                  <DynamicForm holderId="3" editorRef={DisplayEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -238,12 +318,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel4d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Processor
+                    Processor
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="4" editorRef={ProcessorEditorRef}
-                  />
+                  <DynamicForm holderId="4" editorRef={ProcessorEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -262,12 +341,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel5d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Memory
+                    Memory
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="5" editorRef={MemoryEditorRef}
-                  />
+                  <DynamicForm holderId="5" editorRef={MemoryEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -286,12 +364,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel6d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Main Camera
+                    Main Camera
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="6" editorRef={MainCameraEditorRef}
-                  />
+                  <DynamicForm holderId="6" editorRef={MainCameraEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -310,12 +387,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel7d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Selfie Camera
+                    Selfie Camera
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="7" editorRef={SelfieCameraEditorRef}
-                  />
+                  <DynamicForm holderId="7" editorRef={SelfieCameraEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -334,12 +410,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel8d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  OS
+                    OS
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="8" editorRef={OSEditorRef}
-                  />
+                  <DynamicForm holderId="8" editorRef={OSEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -358,12 +433,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel9d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Connectivity
+                    Connectivity
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="9" editorRef={ConnectivityEditorRef}
-                  />
+                  <DynamicForm holderId="9" editorRef={ConnectivityEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -382,12 +456,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel10d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Features
+                    Features
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="10" editorRef={FeaturesEditorRef}
-                  />
+                  <DynamicForm holderId="10" editorRef={FeaturesEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -406,12 +479,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel10d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Battery
+                    Battery
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="11" editorRef={BatteryEditorRef}
-                  />
+                  <DynamicForm holderId="11" editorRef={BatteryEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -430,12 +502,11 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
                   id="panel10d-header"
                 >
                   <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                  Details
+                    Details
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <DynamicForm holderId="12" editorRef={DetailsEditorRef}
-                  />
+                  <DynamicForm holderId="12" editorRef={DetailsEditorRef} />
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -478,7 +549,7 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
           </Container>
         </form>
       </FormProvider>
-      
+
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
@@ -489,6 +560,17 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
           {showSuccessText}
         </Alert>
       </Snackbar>
+      <Snackbar open={errorOpen} autoHideDuration={3000} onClose={()=>setErrorOpen(false)}>
+        <Alert
+          onClose={()=>setErrorOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {showErrorText}
+        </Alert>
+      </Snackbar>
+
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={openBackDrop}

@@ -57,7 +57,7 @@ const TopMobileDetails = ({
         <Paper elevation={0}>
           <Box sx={{ padding: 4, color: "#6b6b6b" }}>
             <Typography variant="h4" gutterBottom>
-              {mobileArticles.title}
+              {mobileArticles?.title}
             </Typography>
             <Typography variant="body2" gutterBottom>
               Market Status: <b>{mobileArticles.market_status}</b> | Released
@@ -80,7 +80,7 @@ const TopMobileDetails = ({
                     height={300}
                     width={200}
                     layout="responsive"
-                    src={mobileArticles.image}
+                    src={mobileArticles.image[0]}
                     alt={mobileArticles.title}
                     //   style={{ width: "80%" }}
                   />
@@ -99,7 +99,7 @@ const TopMobileDetails = ({
                     height={300}
                     width={200}
                     layout="responsive"
-                    src={mobileArticles.image}
+                    src={mobileArticles.image[0]}
                     alt={mobileArticles.title}
                   />
                 </Box>
@@ -126,7 +126,7 @@ const TopMobileDetails = ({
                               ? mobileArticles.key_specifications.ram_storage
                               : index === 5
                               ? mobileArticles.key_specifications.battery
-                              : index === 0
+                              : index === 6
                               ? mobileArticles.key_specifications.network
                               : mobileArticles.key_specifications.os}
                           </Typography>
@@ -148,12 +148,12 @@ const TopMobileDetails = ({
                     variant="h6"
                     gutterBottom
                   >
-                    Samsung Galaxy M34 Prices
+                    {mobileArticles.title} Prices
                   </Typography>
                   <Grid gap={1} container>
-                    {[0, 1, 3].map((number) => {
+                    {mobileArticles.prices.map((data,index) => {
                       return (
-                        <Grid item xs={12} sm={5.8} xl={5} key={number}>
+                        <Grid item xs={12} sm={5.8} xl={5} key={index}>
                           <Paper
                             elevation={3}
                             sx={{ p: 0.8, marginBottom: 2, bgcolor: "#deeff9" }}
@@ -161,12 +161,12 @@ const TopMobileDetails = ({
                             <Grid container spacing={2} alignItems="center">
                               <Grid item xs={6}>
                                 <Typography>
-                                  <b>6GB + 128GB</b>
+                                  <b>{data?.gbs}</b>
                                 </Typography>
                               </Grid>
                               <Grid item xs={6} sx={{ textAlign: "right" }}>
                                 <Typography>
-                                  Starting from <b>₹13,499</b>
+                                  Starting from <b>${data?.start_from}</b>
                                 </Typography>
                               </Grid>
                             </Grid>

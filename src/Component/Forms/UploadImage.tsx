@@ -48,7 +48,7 @@ const UploadImageField = ({name,runAfterChange,required}: ImageUploadPropsType) 
       getBase64(info?.file.originFileObj as RcFile, (url) => {
         setLoading(false);
         setImageUrl(url);
-      });  
+      });
     }
   };
 
@@ -67,14 +67,14 @@ const UploadImageField = ({name,runAfterChange,required}: ImageUploadPropsType) 
         name={name}
         listType="picture-card"
         className="avatar-uploader"
-        showUploadList={false} 
+        showUploadList={false}
         action="/api/file"
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
         {imageUrl ? <Image width={100} height={100} src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
-      
+
     </>
   );
 };

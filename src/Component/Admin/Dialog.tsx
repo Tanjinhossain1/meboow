@@ -93,7 +93,7 @@ export default function DialogComponent({
         </FormControl>
         <FileUpload
           runAfterChange={async (file) => {
-            console.log("Uploading file ", file);
+            console.log("Uploading file brand", file);
             const formData = new FormData();
             formData.append("file", file);
             try {

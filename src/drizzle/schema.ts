@@ -68,7 +68,7 @@ export const MobileArticles = pgTable(
     release_date: text('release_date').notNull(),
     key_specifications: jsonb('key_specifications').notNull(),
     brands: text('brands').notNull(),
-    image: text('image').notNull(),
+    image: jsonb('image').notNull(),
 
     physicalSpecification: jsonb("physicalSpecification"),
     network: jsonb("network"),
@@ -82,6 +82,7 @@ export const MobileArticles = pgTable(
     features: jsonb("features"),
     battery: jsonb("battery"),
     details: jsonb("details"),
+    prices: jsonb("prices"),
 
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
