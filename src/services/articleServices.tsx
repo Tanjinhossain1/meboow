@@ -2,6 +2,7 @@
 // services/articleService.ts
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
+import { MobileArticleType } from "@/types/mobiles";
 import { revalidatePath } from "next/cache";
 
 export async function fetchArticles({
@@ -62,6 +63,29 @@ export async function fetchArticles({
   };
 }
 
+export async function fetchMobileArticleDetails({ id }: { id: string }): Promise<{
+  data: MobileArticleType[];
+}> {
+  const response = await fetch(
+    `${process.env.NEXT_APP_URL}/api/article/mobile/details/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch articles: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch articles");
+  }
+
+  const data = await response.json();
+  // revalidatePath('/')
+  return {
+    data: data?.data,
+  };
+}
 export async function fetchArticlesDetails({ id }: { id: string }): Promise<{
   data: RecentArticleDataType[];
 }> {

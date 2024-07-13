@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Box,
@@ -18,6 +19,8 @@ import NetworkCellIcon from "@mui/icons-material/NetworkCell";
 import AndroidIcon from "@mui/icons-material/Android";
 import SdStorageIcon from "@mui/icons-material/SdStorage";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { MobileArticleType } from "@/types/mobiles";
 
 const specifications = [
   {
@@ -42,7 +45,11 @@ const specifications = [
   { icon: <AndroidIcon />, label: "OS", value: "Android v13" },
 ];
 
-const TopMobileDetails = () => {
+const TopMobileDetails = ({
+  mobileArticles,
+}: {
+  mobileArticles: MobileArticleType;
+}) => {
   return (
     <Grid sx={{ my: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -50,10 +57,11 @@ const TopMobileDetails = () => {
         <Paper elevation={0}>
           <Box sx={{ padding: 4, color: "#6b6b6b" }}>
             <Typography variant="h4" gutterBottom>
-              Samsung Galaxy M34
+              {mobileArticles.title}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              Market Status: Available | Released on: 07 Jul 2023
+              Market Status: <b>{mobileArticles.market_status}</b> | Released
+              on: <b>{mobileArticles.release_date}</b>
             </Typography>
 
             <Grid container sx={{ marginBottom: 2 }}>
@@ -72,8 +80,8 @@ const TopMobileDetails = () => {
                     height={300}
                     width={200}
                     layout="responsive"
-                    src="https://assets.mspimages.in/c/tr:h-300,t-true/21932-77-1.jpg"
-                    alt="Samsung Galaxy M34"
+                    src={mobileArticles.image}
+                    alt={mobileArticles.title}
                     //   style={{ width: "80%" }}
                   />
                 </Box>
@@ -91,9 +99,8 @@ const TopMobileDetails = () => {
                     height={300}
                     width={200}
                     layout="responsive"
-                    src="https://assets.mspimages.in/c/tr:h-300,t-true/21932-77-1.jpg"
-                    alt="Samsung Galaxy M34"
-                    //   style={{ width: "80%" }}
+                    src={mobileArticles.image}
+                    alt={mobileArticles.title}
                   />
                 </Box>
               </Grid>
@@ -107,16 +114,27 @@ const TopMobileDetails = () => {
                         <Box sx={{ marginLeft: 2 }}>
                           <Typography variant="body1">{spec.label}</Typography>
                           <Typography sx={{ fontSize: 12 }} variant="body2">
-                            {spec.value}
+                            {index === 0
+                              ? mobileArticles.key_specifications.processor
+                              : index === 1
+                              ? mobileArticles.key_specifications.display
+                              : index === 2
+                              ? mobileArticles.key_specifications.rearCamera
+                              : index === 3
+                              ? mobileArticles.key_specifications.frontCamera
+                              : index === 4
+                              ? mobileArticles.key_specifications.ram_storage
+                              : index === 5
+                              ? mobileArticles.key_specifications.battery
+                              : index === 0
+                              ? mobileArticles.key_specifications.network
+                              : mobileArticles.key_specifications.os}
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
                   ))}
                 </Grid>
-                <Button variant="contained" sx={{ marginTop: 2 }} href="#">
-                  View Full Specs
-                </Button>
               </Grid>
             </Grid>
 
@@ -138,7 +156,7 @@ const TopMobileDetails = () => {
                         <Grid item xs={12} sm={5.8} xl={5} key={number}>
                           <Paper
                             elevation={3}
-                            sx={{  p:0.8, marginBottom: 2 ,bgcolor:"#deeff9"}}
+                            sx={{ p: 0.8, marginBottom: 2, bgcolor: "#deeff9" }}
                           >
                             <Grid container spacing={2} alignItems="center">
                               <Grid item xs={6}>

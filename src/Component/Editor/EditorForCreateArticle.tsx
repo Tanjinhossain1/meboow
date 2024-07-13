@@ -13,12 +13,12 @@ import Delimiter from '@editorjs/delimiter';
 import Marker from "@editorjs/marker";
 
 
-const EditorForCreateArticle = ({editorRef}:{editorRef: any}) => {
+const EditorForCreateArticle = ({editorRef,holderId}:{editorRef: any,holderId?:string}) => {
 
   useEffect(() => {
     if (!editorRef.current) {
       editorRef.current = new EditorJS({
-        holder: "editorjs",
+        holder: holderId ? `editorjs-${holderId}` : `editorjs`,
         tools: {
             paragraph: {
               class: Paragraph as any,
@@ -134,9 +134,8 @@ const EditorForCreateArticle = ({editorRef}:{editorRef: any}) => {
   // };
   return (
     <>
-    
       <Container
-        id="editorjs"
+        id={holderId ? `editorjs-${holderId}` : `editorjs`}
         sx={{
           padding: "10px",
           border: "5px solid #ccc",

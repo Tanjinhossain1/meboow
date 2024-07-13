@@ -107,7 +107,7 @@ function NavbarHelper({
             </ListItemButton>
           </ListItem>
         ))}
-        {category.map((data: CategoryTypes, index) => (
+        {category?.map((data: CategoryTypes, index) => (
           <ListItem key={data?.id} disablePadding>
             <ListItemButton>
               <ListItemIcon>

@@ -58,6 +58,36 @@ export const Brands = pgTable(
 )
 
 
+export const MobileArticles = pgTable(
+  'mobile_articles',
+  {
+    id: serial('id').primaryKey(),
+
+    title: text('title').notNull(),
+    market_status: text('market_status').notNull(),
+    release_date: text('release_date').notNull(),
+    key_specifications: jsonb('key_specifications').notNull(),
+    brands: text('brands').notNull(),
+    image: text('image').notNull(),
+
+    physicalSpecification: jsonb("physicalSpecification"),
+    network: jsonb("network"),
+    display: jsonb("display"),
+    processor: jsonb("processor"),
+    memory: jsonb("memory"),
+    mainCamera: jsonb("mainCamera"),
+    selfieCamera: jsonb("selfieCamera"),
+    os: jsonb("os"),
+    connectivity: jsonb("connectivity"),
+    features: jsonb("features"),
+    battery: jsonb("battery"),
+    details: jsonb("details"),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  }
+);
+
 
 
 // for login users auth js 
