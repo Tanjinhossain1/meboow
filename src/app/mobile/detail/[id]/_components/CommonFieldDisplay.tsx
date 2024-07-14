@@ -20,13 +20,45 @@ export default function CommonFieldDisplay({ details }: { details: any[] }) {
       );
     } else if (block.type === "header") {
       const TagLevel: any = `h${block.data.level}`;
+      console.log(
+        "hea der de   ",
+        block,
+        TagLevel,
+        `text-${
+          block.data.level === 1
+            ? "4xl"
+            : block.data.level === 2
+            ? "3xl"
+            : "2xl"
+        }`
+      );
       return (
-        <TagLevel
-          key={block.id}
-          dangerouslySetInnerHTML={{
-            __html: block.data.text,
-          }}
-        ></TagLevel>
+        <h1
+        className={`text-${
+          block.data.level === 1
+            ? "4xl"
+            : block.data.level === 2
+            ? "3xl"
+            : "2xl"
+        } font-bold`} // Tailwind classes
+        key={block.id}
+        dangerouslySetInnerHTML={{
+          __html: block.data.text,
+        }}
+      />
+        // <TagLevel
+        //   className={`text-${
+        //     block.data.level === 1
+        //       ? "4xl"
+        //       : block.data.level === 2
+        //       ? "3xl"
+        //       : "2xl"
+        //   }`} // Adjust Tailwind classes as needed
+        //   key={block.id}
+        //   dangerouslySetInnerHTML={{
+        //     __html: block.data.text,
+        //   }}
+        // ></TagLevel>
       );
     } else if (block.type === "image") {
       const TagLevel: any = `h${block.data.level}`;

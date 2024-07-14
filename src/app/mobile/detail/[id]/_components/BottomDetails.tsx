@@ -80,7 +80,7 @@ const BottomMobileDetails = ({
               >
                 <AccordionItem value={`item-${index}`}>
                   <AccordionTrigger className="bg-[#d5e4f7] p-3 mb-4   hover:no-underline pr-2">
-                    <Typography sx={{ ml: 2 }}>{item?.name}</Typography>
+                    <Typography sx={{ ml: 2,fontWeight:600 }}>{item?.name}</Typography>
                   </AccordionTrigger>
                   <AccordionContent>
                     <CommonFieldDisplay

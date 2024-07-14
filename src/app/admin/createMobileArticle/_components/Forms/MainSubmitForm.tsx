@@ -63,6 +63,7 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
   });
  
   const fileUploadRef = useRef<string[] >([]);
+  const displayFileUploadRef = useRef<string[] >([]);
 
   const { handleSubmit } = methods;
 
@@ -80,6 +81,13 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
       setShowErrorText("Please Select Image")
       return;
     }
+    if (!displayFileUploadRef.current) {
+      // setImageError(true);
+      setErrorOpen(true)
+      setShowErrorText("Please Select Display Image")
+      return;
+    }
+
     handleBackDropOpen();
     const physicalSpecificationData =
       await PhysicalSpecificationEditorRef.current?.save();
@@ -98,6 +106,7 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
     const formData = {
       ...data,
       image: fileUploadRef.current,
+      display_image:displayFileUploadRef.current,
       physicalSpecification: physicalSpecificationData?.blocks,
 
       network: networkData?.blocks,
@@ -151,7 +160,7 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
     <Fragment>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TopForm fileUploadRef={fileUploadRef} brandsData={brands} />
+          <TopForm fileUploadRef={fileUploadRef} displayFileUploadRef={displayFileUploadRef} brandsData={brands} />
           {imageError ? (
             <Typography sx={{ color: "red", fontSize: 20 }}>
               Select Image

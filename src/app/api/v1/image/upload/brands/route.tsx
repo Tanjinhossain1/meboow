@@ -38,9 +38,7 @@ export async function POST(req: NextRequest) {
   // Read the file data and save it to the disk
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
-  console.log(
-    'this is the file of fiels ',files, file,arrayBuffer,buffer
-  )
+   
   await fs.writeFile(filePath, buffer);
 
   const imageUrl = `/brands/images/${uniqueFileName}`;

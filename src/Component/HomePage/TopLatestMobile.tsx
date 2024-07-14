@@ -1,21 +1,25 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Grid,
-  Paper,
-  Box,
-  Typography,
-  IconButton,
-  Card,
-} from "@mui/material";
+import { Paper, Typography, IconButton, Card, Grid } from "@mui/material";
 import Image from "next/image";
-import { RecentArticleDataType } from "@/types/RecentArticle";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/navigation";
+import { MobileArticleType } from "@/types/mobiles";
+import MemoryIcon from "@mui/icons-material/Memory";
+import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { auth } from "@/auth";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
-export default function TopLatestMobile({articles,page,limit}:{articles:RecentArticleDataType[],page:string,limit:string}) {
-    const history  = useRouter()
+export default function TopLatestMobile({
+  articles,
+  user,
+}: {
+  articles: MobileArticleType[];
+  user: any;
+}) {
+  const history = useRouter();
   const [index, setIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
 
@@ -40,67 +44,189 @@ export default function TopLatestMobile({articles,page,limit}:{articles:RecentAr
   };
 
   return (
-    <Paper sx={{ p: 2, mb: 2, width: "100%" }} elevation={0}>
-    <Typography sx={{ fontSize: 25, mb: 2, fontWeight: 600 }}>
-      Top Latest Mobile
-    </Typography>
-    <div className="flex justify-center items-center p-4 w-full ">
-      <IconButton onClick={handlePrev} disabled={index === 0}>
-        <ArrowBackIosIcon className="h-6 w-7" />
-      </IconButton>
-      <div className="w-full overflow-hidden relative">
-        <div
-          className={`flex transition-transform duration-500 ${
-            transitioning ? "ease-in-out" : ""
-          }`}
-          style={{ transform: `translateX(-${(index * 100) / 5}%)` }} // Adjusting the transform percentage
-        >
-          {articles &&
-            articles.map((data: RecentArticleDataType) => {
-              return (
-                <Card key={data.id} className="m-2 w-2/12 flex-shrink-0">
-                  {" "}
-                  {/* Ensuring 5 items are shown */}
-                  <Image
-                    style={{ cursor: "pointer" }}
-                    alt=""
-                    src={data.image}
-                    width={200}
-                    height={100}
-                    onClick={() => {
-                      const joinTitle = data.title
-                        .split(" ")
-                        .map(
-                          (word) =>
-                            word.charAt(0).toUpperCase() + word.slice(1)
-                        )
-                        .join("-");
-                      history.push(
-                        `/details/${data.id}/${
-                          data.category
-                        }/${joinTitle}?${new URLSearchParams({
-                          page: `${Number(page) + 1}`,
-                          limit: limit,
-                        })}`,
-                        {
-                          scroll: false,
-                        }
-                      );
+    <Paper sx={{ width: "100%" }} elevation={0}>
+      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+        Top Latest Mobile
+      </Typography>
+      <div className="flex justify-center items-center p-4 w-full ">
+        <IconButton onClick={handlePrev} disabled={index === 0}>
+          <ArrowBackIosIcon className="h-6 w-7" />
+        </IconButton>
+        <div className="w-full overflow-hidden relative">
+          <div
+            className={`flex w-full transition-transform duration-500 ${
+              transitioning ? "ease-in-out" : ""
+            }`}
+            style={{ transform: `translateX(-${(index * 100) / 5}%)` }} // Adjusting the transform percentage
+          >
+            {articles &&
+              articles?.map((data: MobileArticleType) => {
+                return (
+                  <Card
+                    key={data.id}
+                    className="m-2 flex-shrink-0"
+                    sx={{
+                      p: 1,
+                      border: "1px solid lightgray",
+                      borderRadius: "10px",
+                      textAlign: "center",
+                      width: "178px", // Adjusted width
+                      height: "290px", // Adjusted height
+                      position: "relative",
                     }}
-                  />
-                  <Typography>{data?.deviceName}</Typography>
-                </Card>
-              );
-            })}
+                    onClick={() => {
+                      history.push(`/mobile/detail/${data.id}`);
+                    }}
+                  >
+                    <Grid container direction="column" alignItems="center">
+                      <Grid
+                        sx={{
+                          width: "192px", // Ensure the image takes the full width of the card
+                          height: "98px", // Adjust the height for uniformity
+                        }}
+                        xs={3}
+                        // item
+                      >
+                        <Image
+                          style={{
+                            width: "195px", // Ensure the image takes the full width of the card
+                            height: "95px", // Adjust the height for uniformity
+                            cursor: "pointer",
+                            // objectFit: "cover",
+                          }}
+                          alt={data.title}
+                          src={data.display_image}
+                          layout=""
+                          width={50}
+                          height={50}
+                        />
+                      </Grid>
+                      <Grid item sx={{ width: "100%", mt: 2, height: "45px" }}>
+                        <Typography
+                          sx={{
+                            color: "#364473",
+                            // fontWeight: 600,
+                            fontSize: 15,
+                            textAlign: "center",
+                          }}
+                        >
+                          {data?.title}
+                        </Typography>
+                      </Grid>
+
+                      <Grid textAlign={"left"} item sx={{ width: "100%" }}>
+                        <Typography
+                          sx={{
+                            color: "#45517a",
+                            width: "148px",
+                            height: "14px",
+                            mt: "13px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            // fontWeight: 600,
+                            fontSize: 12,
+                            // textAlign: "center",
+                          }}
+                        >
+                          <MemoryIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
+                          {data?.key_specifications.processor}
+                        </Typography>
+                      </Grid>
+                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
+                        <Typography
+                          sx={{
+                            color: "#45517a",
+                            width: "148px",
+                            height: "14px",
+                            mt: "7px",
+                            // fontWeight: 600,
+                            fontSize: 12,
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            // textAlign: "center",
+                          }}
+                        >
+                          <CameraAltIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
+                          {data?.key_specifications.rearCamera}
+                        </Typography>
+                      </Grid>
+                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
+                        <Typography
+                          sx={{
+                            color: "#45517a",
+                            width: "148px",
+                            height: "14px",
+                            mt: "7px",
+                            fontSize: 12,
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            mb: "15px",
+                          }}
+                        >
+                          <BatteryChargingFullIcon
+                            sx={{ fontSize: 15, color: "gray" }}
+                          />{" "}
+                          {data?.key_specifications.battery}
+                        </Typography>
+                      </Grid>
+
+                      <Grid
+                        item
+                        sx={
+                          user?.role === "admin"
+                            ? {
+                                display: "flex",
+                                justifyContent: "space-around",
+                                width: "100%",
+                                mt: 1,
+                              }
+                            : {
+                                width: "100%",
+                                mt: 1,
+                              }
+                        }
+                      >
+                        <Typography
+                          sx={{
+                            color: "#055491",
+                            fontWeight: 800,
+                            fontSize: "16px",
+                            textAlign: "center",
+                          }}
+                        >
+                          ${data?.prices[0].start_from}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "#055491",
+                            fontWeight: 800,
+                            fontSize: "16px",
+                            textAlign: "center", 
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            history.push(`/admin/mobile/edit/${data.id}`);
+                          }}
+                        >
+                          {user?.role === "admin" ? <EditNoteIcon /> : null}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Card>
+                );
+              })}
+          </div>
         </div>
+        <IconButton
+          onClick={handleNext}
+          disabled={index >= articles?.length - 5}
+        >
+          <ArrowForwardIosIcon className="h-6 w-6" />
+        </IconButton>
       </div>
-      <IconButton
-        onClick={handleNext}
-        disabled={index >= articles.length - 5}
-      >
-        <ArrowForwardIosIcon className="h-6 w-6" />
-      </IconButton>
-    </div>
-  </Paper>
-  )
+    </Paper>
+  );
 }

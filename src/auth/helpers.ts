@@ -1,5 +1,5 @@
 "use server";
-import { signIn as naSignIn, signOut as naSignOut } from ".";
+import { auth, signIn as naSignIn, signOut as naSignOut } from ".";
 
 // export async function signIn(...props:any) {
 //   await naSignIn(...props)
@@ -13,7 +13,7 @@ import { signIn as naSignIn, signOut as naSignOut } from ".";
 // }
 export async function signIn(...props: any) {
   try {
-    const res:any = await naSignIn(...props);
+    const res: any = await naSignIn(...props);
     if (res.error) {
       throw new Error(res.error);
     }
@@ -31,4 +31,4 @@ export async function signIn(...props: any) {
 
 export async function signOut() {
   await naSignOut();
-}
+} 

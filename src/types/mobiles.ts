@@ -8,6 +8,7 @@ export interface MobileArticleType {
     market_status: string;
     release_date: string;
     image: string[];
+    display_image:string;
     key_specifications: {
         processor: string;
         display: string;

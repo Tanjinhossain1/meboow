@@ -1,14 +1,18 @@
-"use client";
 import React from "react";
 import { Container, Box, Paper, Typography, Button, Grid } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
-const Dashboard = () => {
-  const router = useRouter();
+const Dashboard = async () => {
+  // const router = useRouter();
 
+  const session = await auth();
+  const user = session?.user; 
+
+  if (!user) redirect("/");
   return (
     <Container>
-      <Button variant="contained" onClick={() => router.back()} sx={{ mt: 2 }}>
+      <Button variant="contained" onClick={() => redirect('/')} sx={{ mt: 2 }}>
         Back
       </Button>
       <Box
@@ -22,7 +26,7 @@ const Dashboard = () => {
         <Grid gap={2} container>
           <Grid xs={5.5}>
             <Paper
-              onClick={() => router.push("/admin/createArticle")}
+              onClick={() => redirect("/admin/createArticle")}
               sx={{
                 width: "100%",
                 p: 2,
@@ -38,7 +42,7 @@ const Dashboard = () => {
           </Grid>
           <Grid xs={5.5}>
             <Paper
-              onClick={() => router.push("/admin/createMobileArticle")}
+              onClick={() => redirect("/admin/createMobileArticle")}
               sx={{
                 width: "100%",
                 p: 2,

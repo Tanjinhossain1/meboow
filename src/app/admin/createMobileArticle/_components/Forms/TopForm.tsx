@@ -37,9 +37,11 @@ import { useFormContext } from "react-hook-form";
 export default function TopForm({
   brandsData,
   fileUploadRef,
+  displayFileUploadRef,
 }: {
   brandsData: BrandTypes[];
   fileUploadRef: any;
+  displayFileUploadRef: any;
 }) {
   const history = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -247,6 +249,41 @@ export default function TopForm({
                         name="titleImage"
                       />
                     </Grid>
+                    <Grid xs={1}>
+                      <FileUpload
+                       title="Display Image"
+                        runAfterChange={async (file) => {
+                          console.log("Uploading file ", file);
+                          const formData = new FormData();
+                          formData.append("file", file);
+                          try {
+                            const response = await axios.post(
+                              `/api/v1/image/upload/mobile/display-image`,
+                              formData,
+                              {
+                                headers: {
+                                  "Content-Type": "multipart/form-data",
+                                },
+                              }
+                            );
+
+                            if (response.data.success === 1) {
+                              console.log("File uploaded successfully", response.data);
+                              displayFileUploadRef.current = response.data?.file?.url;
+                              
+                            } else {
+                              throw new Error("Upload failed");
+                            }
+                          } catch (error) {
+                            console.error("Error uploading file:", error);
+                            throw error;
+                          }
+                        }}
+                        required
+
+                        name="displayImage"
+                      />
+                    </Grid> 
                     <Grid xs={12}>
                       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
                         Key Specifications

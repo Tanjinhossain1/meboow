@@ -69,6 +69,8 @@ export const MobileArticles = pgTable(
     key_specifications: jsonb('key_specifications').notNull(),
     brands: text('brands').notNull(),
     image: jsonb('image').notNull(),
+    // details_image:jsonb('details_image').notNull(),
+    display_image: text('display_image').notNull(),
 
     physicalSpecification: jsonb("physicalSpecification"),
     network: jsonb("network"),

@@ -155,7 +155,7 @@ const TopMobileDetails = ({
                       return (
                         <Grid item xs={12} sm={5.8} xl={5} key={index}>
                           <Paper
-                            elevation={3}
+                            elevation={0}
                             sx={{ p: 0.8, marginBottom: 2, bgcolor: "#deeff9" }}
                           >
                             <Grid container spacing={2} alignItems="center">

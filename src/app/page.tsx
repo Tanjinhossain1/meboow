@@ -5,8 +5,10 @@ import {
   fetchArticles,
   fetchBrands,
   fetchCategories,
+  fetchMobileArticles,
 } from "@/services/articleServices";
 import { Suspense } from "react";
+import { auth } from "@/auth";
 
 interface HomePropsType {
   searchParams: {
@@ -14,6 +16,7 @@ interface HomePropsType {
     limit: string;
   };
 }
+ 
 async function Home({ searchParams }: HomePropsType) {
   const { page, limit } = searchParams;
   const articles = await fetchArticles({ page, limit });
@@ -22,8 +25,14 @@ async function Home({ searchParams }: HomePropsType) {
     limit,
     latestDevice: "latest",
   });
+  const mobileArticles = await fetchMobileArticles({});
   const Category = await fetchCategories();
   const brands = await fetchBrands();
+  
+  const session = await auth()
+  const user =  session?.user;
+ 
+  
   return (
     <>
       <Suspense>
@@ -32,11 +41,13 @@ async function Home({ searchParams }: HomePropsType) {
       {articles ? (
         <Suspense>
           <Banner
+          user={user}
             brands={brands.data}
             latestArticles={LatestArticles.data}
             category={Category.data}
             articles={articles.data}
             total={articles.total}
+            mobileArticles={mobileArticles.data}
           />
         </Suspense>
       ) : null}

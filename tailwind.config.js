@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        'base': 'inherit', // Set the base font size to inherit the default browser font size
+      },
       keyframes: {
         slideInFromTop: {
           '0%': { transform: 'translateY(-100%)', opacity: '0' },

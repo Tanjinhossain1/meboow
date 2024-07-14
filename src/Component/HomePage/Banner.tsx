@@ -18,6 +18,8 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import RecentArticleComponent from "./RecentArticleComponent";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import BrandDisplayComponent from "./BrandDisplay";
+import TopLatestMobile from "./TopLatestMobile";
+import { MobileArticleType } from "@/types/mobiles";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -129,12 +131,16 @@ export default function Banner({
   category,
   latestArticles,
   brands,
+  mobileArticles,
+  user,
 }: {
   articles: RecentArticleDataType[];
   total: number;
   category: CategoryTypes[];
   latestArticles: RecentArticleDataType[];
   brands: BrandTypes[];
+  mobileArticles: MobileArticleType[];
+  user:any
 }) {
   console.log("articles articles ", articles);
   const history = useRouter();
@@ -207,7 +213,7 @@ export default function Banner({
             Categories
           </Typography>
           <Box sx={{ flexGrow: 1, p: 2 }}>
-            <Grid gap={1} container   >
+            <Grid gap={1} container>
               {category.map((value: CategoryTypes, index: number) => (
                 <Grid
                   item
@@ -220,7 +226,7 @@ export default function Banner({
                   sx={{
                     cursor: "pointer",
                     textAlign: "center",
-                    p: 2, 
+                    p: 2,
                     borderRadius: "10px",
                     bgcolor:
                       index === 0
@@ -293,6 +299,108 @@ export default function Banner({
               ))}
             </Grid>
           </Box>
+        </Paper>
+
+        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+          <TopLatestMobile user={user} articles={mobileArticles} />
+          {/* <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Popular Mobiles</h1>
+            <Carousel
+              items={[
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                {
+                  image: "/path/to/image1.jpg",
+                  rating: "4.3",
+                  title: "OnePlus Nord CE 4 5G",
+                  chipset: "Snapdragon 7 Gen 3",
+                  camera: "50 MP Rear Camera",
+                  battery: "5500 mAh Battery",
+                  price: "₹24,998",
+                },
+                // Add more items here...
+              ]}
+            />
+          </div> */}
         </Paper>
 
         <Paper sx={{ p: 2, mb: 2 }} elevation={0}>

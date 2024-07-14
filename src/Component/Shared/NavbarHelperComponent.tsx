@@ -32,6 +32,8 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FeedIcon from "@mui/icons-material/Feed";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { signOut } from "@/auth/helpers";
 
 function NavbarHelper({
   isLoginUser,
@@ -84,7 +86,7 @@ function NavbarHelper({
       <Grid alignItems={"center"} sx={{ bgcolor: "#023359", p: 1 }} container>
         <Grid xs={8}>
           <Grid xs={12} sm={3} md={2}>
-            <Image alt="logo" width={180} height={10} src="/logo.png" />
+            <Image alt="logo" width={180} height={10} src="/logo-pc-3.png" />
           </Grid>
         </Grid>
         <Grid
@@ -137,7 +139,7 @@ function NavbarHelper({
           // gap={2}
           sm={12}
           // md={7}
-          sx={{mb:2}}
+          sx={{ mb: 2 }}
           // lg={5}
           container
         >
@@ -326,7 +328,12 @@ function NavbarHelper({
               <Grid xs={2.5}> </Grid>
               <Grid xs={8}>
                 <Grid xs={12} sm={3} md={2}>
-                  <Image alt="logo" width={180} height={10} src="/logo.png" />
+                  <Image
+                    alt="logo"
+                    width={180}
+                    height={10}
+                    src="/logo-pc-2.png"
+                  />
                 </Grid>
               </Grid>
 
@@ -338,6 +345,7 @@ function NavbarHelper({
                       <div className="relative w-full ">
                         <input
                           type="text"
+                          name="search"
                           className="w-full  py-2 pl-10 pr-4 text-gray-700 bg-[#eaf2ff] border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="Search mobiles, laptops, brands, and more..."
                         />
@@ -388,7 +396,12 @@ function NavbarHelper({
             >
               <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
               <Grid xs={12} sm={3} md={2}>
-                <Image alt="logo" width={180} height={10} src="/logo.png" />
+                <Image
+                  alt="logo"
+                  width={180}
+                  height={10}
+                  src="/logo-pc-1.png"
+                />
               </Grid>
               <Grid xs={0} sm={1}></Grid>
               <Grid sm={5}>
@@ -438,7 +451,22 @@ function NavbarHelper({
             <Grid xs={12} md={10} lg={9.8} xl={7}>
               {/* <Container sx={{ m: 0, p: 0 }} maxWidth="xl"> */}
               <Grid container>
-                <Grid alignItems={"left"} container xs={11}>
+                <Grid alignItems={"left"} container xs={0.8}>
+                  <Grid sx={{ p: 1 }} xs={1}>
+                    <Typography
+                      sx={{
+                        cursor: "pointer",
+                        mr: 2,
+                      }}
+                      onClick={() => {
+                        history.push(`/`);
+                      }}
+                    >
+                      Home
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid alignItems={"left"} container xs={10.2}>
                   {category?.map((value: CategoryTypes) => {
                     return (
                       <Grid sx={{ p: 1 }} xs={1} key={value.id}>
@@ -457,21 +485,24 @@ function NavbarHelper({
                   })}
                 </Grid>
                 <Grid textAlign={"end"} xs={1}>
-                  <>
-                    <Popover>
-                      <PopoverTrigger>
-                        <LoginIcon sx={{ mt: 1 }} />
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[355px] md:w-[550px]">
-                        <LoginComponent />
-                      </PopoverContent>
-                    </Popover>
+                  {isLoginUser ? (
+                   <LogoutIcon onClick={()=>signOut()} sx={{ mt: 1 }} />
+                  ) :  <>
+                  <Popover>
+                    <PopoverTrigger>
+                      <LoginIcon sx={{ mt: 1 }} />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[355px] md:w-[550px]">
+                      <LoginComponent />
+                    </PopoverContent>
+                  </Popover>
 
-                    <GroupAddIcon
-                      sx={{ ml: 1.5, mt: 1 }}
-                      onClick={() => history.push("/register")}
-                    />
-                  </>
+                  <GroupAddIcon
+                    sx={{ ml: 1.5, mt: 1 }}
+                    onClick={() => history.push("/register")}
+                  />
+                </>}
+                 
                 </Grid>
                 {/* <Grid xs={4}>
                 <ListItem

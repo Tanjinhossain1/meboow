@@ -27,9 +27,10 @@ interface ImageUploadPropsType {
   name: string;
   runAfterChange?: (file: any)=>void;
   required?:boolean;
+  title?: string;
 }
 
-const UploadImageField = ({name,runAfterChange,required}: ImageUploadPropsType) => {
+const UploadImageField = ({name,runAfterChange,required,title}: ImageUploadPropsType) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   // const {setValue,reset} = useFormContext()
@@ -55,7 +56,7 @@ const UploadImageField = ({name,runAfterChange,required}: ImageUploadPropsType) 
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload {
+      <div style={{ marginTop: 8 }}>{title ? title : "Upload"} {
             required === true ? <sup style={{color:'red',display:"inline",fontSize:15}}>*</sup>:""
           }</div>
     </div>

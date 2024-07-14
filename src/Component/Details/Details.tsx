@@ -119,6 +119,7 @@ export default function DetailsComponent({
                       );
                     } else if (block.type === "header") {
                       const TagLevel: any = `h${block.data.level}`;
+                      console.log('header', block,TagLevel);
                       return (
                         <TagLevel
                           key={block.id}

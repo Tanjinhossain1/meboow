@@ -1,6 +1,14 @@
 @tailwind base;
+body, h1, h2, h3, h4, h5, h6, p, span, a, li {
+  font-size: revert; /* Use 'revert' to reset to user-agent styles */
+  font-weight: revert; /* Reset font weight */
+  line-height: revert; /* Reset line height */
+  font-family: revert; /* Reset font family */
+}
+
 @tailwind components;
 @tailwind utilities;
+
 /* globals.css */
 .container {
   max-width: 1280px;
