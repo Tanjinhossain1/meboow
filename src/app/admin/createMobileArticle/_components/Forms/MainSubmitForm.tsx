@@ -119,44 +119,71 @@ export default function MainSubmitForm({
       ...data,
       image: fileUploadRef.current,
       display_image: displayFileUploadRef.current,
-      physicalSpecification: physicalSpecificationData?.blocks,
+      physicalSpecification: physicalSpecificationData,
 
-      network: networkData?.blocks,
-      display: displayData?.blocks,
-      processor: processorData?.blocks,
-      memory: memoryData?.blocks,
-      mainCamera: mainCameraData?.blocks,
-      selfieCamera: selfieCameraData?.blocks,
-      os: osData?.blocks,
-      connectivity: connectivityData?.blocks,
-      features: featuresData?.blocks,
-      battery: batteryData?.blocks,
-      details: detailsData?.blocks,
+      network: networkData,
+      display: displayData,
+      processor: processorData,
+      memory: memoryData,
+      mainCamera: mainCameraData,
+      selfieCamera: selfieCameraData,
+      os: osData,
+      connectivity: connectivityData,
+      features: featuresData,
+      battery: batteryData,
+      details: detailsData,
     };
-
     console.log("Form Data:", formData);
-
-    axios
-      .post(`/api/article/mobile`, formData)
-      .then((response) => {
-        console.log("Article created successfully:", response);
-        // Do something with the response if needed
-        if (response?.data?.success) {
-          setOpen(true);
-          setShowSuccessText(
-            `Article ${isEdit?.isEdit ? "Update" : "Created"} successfully`
-          );
-          setTimeout(() => {
-            handleBackdropClose();
-            window.location.reload();
-          }, 10);
-        }
-      })
-      .catch((err) => {
-        console.error("Error creating article:", err);
-        handleBackdropClose();
-        // Handle error if needed
-      });
+    if (isEdit?.isEdit) {
+      const editFieldData = {
+        ...formData,
+        id: isEdit?.mobileArticles[0].id
+      }
+      console.log("Form Data:", editFieldData); 
+      axios
+        .put(`/api/article/mobile`, editFieldData)
+        .then((response) => {
+          console.log("Article created successfully:", response);
+          // Do something with the response if needed
+          if (response?.data?.success) {
+            setOpen(true);
+            setShowSuccessText(
+              `Article ${isEdit?.isEdit ? "Update" : "Created"} successfully`
+            );
+            setTimeout(() => {
+              handleBackdropClose();
+              window.location.reload();
+            }, 10);
+          }
+        })
+        .catch((err) => {
+          console.error("Error creating article:", err);
+          handleBackdropClose();
+          // Handle error if needed
+        });
+    } else {
+      axios
+        .post(`/api/article/mobile`, formData)
+        .then((response) => {
+          console.log("Article created successfully:", response);
+          // Do something with the response if needed
+          if (response?.data?.success) {
+            setOpen(true);
+            setShowSuccessText(
+              `Article ${isEdit?.isEdit ? "Update" : "Created"} successfully`
+            );
+            setTimeout(() => {
+              handleBackdropClose();
+              window.location.reload();
+            }, 10);
+          }
+        })
+        .catch((err) => {
+          console.error("Error creating article:", err);
+          handleBackdropClose();
+          // Handle error if needed
+        });
+    }
     // Send data to server or process it further as needed
   };
 
@@ -175,61 +202,73 @@ export default function MainSubmitForm({
       holderId: "1",
       title: "Physical Specification",
       componentRef: PhysicalSpecificationEditorRef,
+      key: "physicalSpecification",
     },
     {
       holderId: "2",
       title: "Network",
       componentRef: NetworkEditorRef,
+      key: "network",
     },
     {
       holderId: "3",
       title: "Display",
       componentRef: DisplayEditorRef,
+      key: "display",
     },
     {
       holderId: "4",
       title: "Processor",
       componentRef: ProcessorEditorRef,
+      key: "processor",
     },
     {
       holderId: "5",
       title: "Memory",
       componentRef: MemoryEditorRef,
+      key: "memory",
     },
     {
       holderId: "6",
       title: "Main Camera",
       componentRef: MainCameraEditorRef,
+      key: "mainCamera",
     },
     {
       holderId: "7",
       title: "Selfie Camera",
       componentRef: SelfieCameraEditorRef,
+      key: "selfieCamera",
     },
     {
       holderId: "8",
       title: "OS",
       componentRef: OSEditorRef,
+      key: "os",
     },
     {
       holderId: "9",
       title: "Connectivity",
       componentRef: ConnectivityEditorRef,
+      key: "connectivity",
     },
     {
       holderId: "10",
       title: "Features",
       componentRef: FeaturesEditorRef,
+      key: "features",
     },
     {
       holderId: "11",
       title: "Battery",
       componentRef: BatteryEditorRef,
+      key: "battery",
     },
     {
       holderId: "12",
       title: "Details",
       componentRef: DetailsEditorRef,
+      key: "details",
     },
   ];
   return (
@@ -251,7 +290,7 @@ export default function MainSubmitForm({
             <Grid xs={1.2}></Grid>
             <Grid xs={9.8}>
               <Accordion
-              defaultExpanded
+                defaultExpanded
                 // expanded={expanded === "panel0"}
                 // onChange={handleChange("panel0")}
               >
@@ -348,6 +387,13 @@ export default function MainSubmitForm({
                         <DynamicForm
                           holderId={otherDetails.holderId}
                           editorRef={otherDetails.componentRef}
+                          defaultEditorData={
+                            isEdit?.isEdit
+                              ? (isEdit?.mobileArticles[0] as any)[
+                                  `${otherDetails.key}`
+                                ]
+                              : undefined
+                          }
                         />
                       </AccordionDetails>
                     </Accordion>

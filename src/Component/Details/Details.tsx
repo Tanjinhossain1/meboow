@@ -106,7 +106,7 @@ export default function DetailsComponent({
                     width={0}
                     height={0}
                   />
-                  {articleDetail.content.map((block) => {
+                  {articleDetail.content?.blocks?.map((block:any) => {
                     if (block.type === "paragraph") {
                       return (
                         <div

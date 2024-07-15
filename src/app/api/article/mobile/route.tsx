@@ -1,7 +1,7 @@
 import { db } from "@/drizzle/db";
 import { MobileArticles } from "@/drizzle/schema";
 import { NextRequest, NextResponse } from "next/server";
-import { and, count, desc, ilike, or } from "drizzle-orm";
+import { and, count, desc, eq, ilike, or } from "drizzle-orm";
 import { IPaginationOptions, paginationHelpers } from "../../shared/helpers";
 import { IGenericResponse } from "@/utils/utils";
 
@@ -73,6 +73,84 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("Error creating article:", error);
+    return NextResponse.json({ error: "Internal Server Error" });
+  }
+}
+export async function PUT(req: Request) {
+  try {
+    // Parse the JSON body
+    const body = await req.json();
+
+    const {
+      id, // Assuming you have an 'id' field to identify the article to update
+      title,
+      image,
+      brands,
+      market_status,
+      release_date,
+      key_specifications,
+      physicalSpecification,
+      network,
+      display,
+      processor,
+      memory,
+      mainCamera,
+      selfieCamera,
+      os,
+      connectivity,
+      features,
+      battery,
+      details,
+      prices,
+      display_image
+    } = body;
+
+    console.log("Updating article with ID:", id);
+
+    // Check if 'id' is provided
+    if (!id) {
+      return NextResponse.json({ error: "Missing ID field for update" });
+    }
+
+    // Perform the database update using Drizzle ORM
+    const result = await db
+      .update(MobileArticles)
+      .set({
+        title,
+        image,
+        brands,
+        market_status,
+        release_date,
+        key_specifications,
+        physicalSpecification,
+        network,
+        display,
+        processor,
+        memory,
+        mainCamera,
+        selfieCamera,
+        os,
+        connectivity,
+        features,
+        battery,
+        details,
+        prices,
+        display_image
+      })
+      .where(eq(MobileArticles.id, Number(id)))
+      .returning();
+
+    if (result.length === 0) {
+      return NextResponse.json({ error: "Article not found or could not be updated" });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Successfully updated mobile article",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error updating article:", error);
     return NextResponse.json({ error: "Internal Server Error" });
   }
 }

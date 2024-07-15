@@ -1,64 +1,17 @@
-import React from "react";
-import { Container, Box, Paper, Typography, Button, Grid } from "@mui/material";
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 
-const Dashboard = async () => {
+import React from "react";
+import { auth } from "@/auth";
+import Dashboard from "./_components/Dashboard";
+
+const AdminPage = async () => {
   // const router = useRouter();
 
-  const session = await auth();
-  const user = session?.user; 
-
-  if (!user) redirect("/");
+    const session = await auth();
+    const user = session?.user;
+  
   return (
-    <Container>
-      <Button variant="contained" onClick={() => redirect('/')} sx={{ mt: 2 }}>
-        Back
-      </Button>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mt: 4,
-        }}
-      >
-        <Grid gap={2} container>
-          <Grid xs={5.5}>
-            <Paper
-              onClick={() => redirect("/admin/createArticle")}
-              sx={{
-                width: "100%",
-                p: 2,
-                mb: 4,
-                cursor: "pointer",
-                ":hover": { bgcolor: "lightgray" },
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                Create Article
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid xs={5.5}>
-            <Paper
-              onClick={() => redirect("/admin/createMobileArticle")}
-              sx={{
-                width: "100%",
-                p: 2,
-                cursor: "pointer",
-                ":hover": { bgcolor: "lightgray" },
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                Create Phone Details
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <Dashboard user={user} />
   );
 };
 
-export default Dashboard;
+export default AdminPage;

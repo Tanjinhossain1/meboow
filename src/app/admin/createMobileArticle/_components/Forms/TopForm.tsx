@@ -21,6 +21,10 @@ import {
   Typography,
   AccordionDetails,
   AccordionSummary,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
@@ -53,6 +57,39 @@ export default function TopForm({
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const { register } = useFormContext();
+
+  const [deleteMobileArticle, setDeleteMobileArticle] = React.useState(false);
+
+  const handleClickDeleteMobileArticle = () => {
+    setDeleteMobileArticle(true);
+  };
+
+  const handleCloseMobileArticleDialog = () => {
+    setDeleteMobileArticle(false);
+  };
+  const DeleteArticleFunc = () => {
+    handleBackDropOpen();
+    axios
+      .delete(`/api/article/mobile/delete/${isEdit?.mobileArticles[0].id}`)
+      .then((response) => {
+        if (response?.data?.success) {
+          setOpen(true);
+          setShowSuccessText(
+            `Article Delete successfully`
+          );
+            handleBackdropClose();
+             history.push('/')
+        }
+      })
+      .catch((err) => {
+        console.error("Error creating article:", err);
+        
+        handleBackdropClose();
+        // Handle error if needed
+      });
+
+    handleCloseMobileArticleDialog();
+  };
 
   const [brands, setBrands] = React.useState(
     isEdit?.isEdit ? isEdit?.mobileArticles[0].brands : ""
@@ -111,7 +148,7 @@ export default function TopForm({
             <Button
               onClick={() => history.push("/")}
               variant="contained"
-              color="error"
+              color="info"
               sx={{ mt: 1 }}
             >
               Back To Home
@@ -126,6 +163,16 @@ export default function TopForm({
                 Go Bottom
               </Button>
             </a>
+            {isEdit?.isEdit ? (
+              <Button
+                color="error"
+                variant="contained"
+                sx={{ mt: 1, ml: 2 }}
+                onClick={handleClickDeleteMobileArticle}
+              >
+                Delete
+              </Button>
+            ) : null}
           </div>
           <Accordion
             expanded={expanded === "panel1"}
@@ -224,7 +271,9 @@ export default function TopForm({
                         isMultiple={{
                           isMultiple: true,
                           urls: "/api/v1/image/upload/mobile",
-                          defaultImageUrls: [],
+                          defaultImageUrls: isEdit?.mobileArticles[0].image
+                            ? isEdit?.mobileArticles[0].image
+                            : [],
                           getImageDatas: (images) => {
                             console.log("Images uploaded ", images);
                             fileUploadRef.current = images;
@@ -237,16 +286,16 @@ export default function TopForm({
                     <Grid xs={1}>
                       <FileUpload
                         isSingleImage={{
-                                isSingleImage: true,
-                                urls: "/api/v1/image/upload/mobile/display-image",
-                                imageUrl:
-                                  isEdit?.mobileArticles[0].display_image ? isEdit?.mobileArticles[0].display_image  : "",
-                                getImageDatas: (image) => {
-                                  console.log("Images uploaded ", image);
-                                  displayFileUploadRef.current = image;
-                                },
-                              }
-                        }
+                          isSingleImage: true,
+                          urls: "/api/v1/image/upload/mobile/display-image",
+                          imageUrl: isEdit?.mobileArticles[0].display_image
+                            ? isEdit?.mobileArticles[0].display_image
+                            : "",
+                          getImageDatas: (image) => {
+                            console.log("Images uploaded ", image);
+                            displayFileUploadRef.current = image;
+                          },
+                        }}
                         title="Display Image"
                         required
                         name="displayImage"
@@ -515,6 +564,27 @@ export default function TopForm({
           </Accordion>
         </Grid>
       </div>
+      <Dialog
+        open={deleteMobileArticle}
+        onClose={handleCloseMobileArticleDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you Sure want to delete?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Once you delete you {"don't"} back this article.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseMobileArticleDialog}>Disagree</Button>
+          <Button color="error" onClick={DeleteArticleFunc} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Dialog
         open={brandDialogOpen}

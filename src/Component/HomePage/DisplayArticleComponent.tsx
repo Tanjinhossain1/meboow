@@ -5,6 +5,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 export default function DisplayArticleComponent({
   data,
@@ -24,20 +25,20 @@ export default function DisplayArticleComponent({
       container
       sx={{
         borderBottom: asSmall ? "1px solid lightgray" : "none",
-        border:"1px solid lightgray",
+        border: "1px solid lightgray",
         // height:"150px",
-        borderRadius:"5px",
-        mr:1,
-        p:1,
-        mb:1
+        borderRadius: "5px",
+        mr: 1,
+        p: 1,
+        mb: 1,
       }}
       xs={12}
       sm={5.6}
     >
-      <Grid xs={asSmall ? 5 : 12} sm={5.5} sx={{height:"100%"}}>
+      <Grid xs={asSmall ? 5 : 12} sm={5.5} sx={{ height: "100%" }}>
         {/* <Image src={data.image} alt={data.title} layout="fill" objectFit="cover" /> */}
         <Image
-          style={{ width: "100%", cursor: "pointer",height:"100%" }}
+          style={{ width: "100%", cursor: "pointer", height: "100%" }}
           alt=""
           src={data.image}
           // layout="responsive"
@@ -99,12 +100,27 @@ export default function DisplayArticleComponent({
             fontWeight: 500,
             mt: asSmall ? 0.5 : 2,
             ml: 1,
-            
           }}
         >
-          { formatDate(data.createdAt) }
+          {formatDate(data.createdAt)}
           {/* {asSmall ? formatDate(data.createdAt) : null} */}
         </Typography>
+        {/* {user?.role === "admin" ?  */}
+        <Typography
+          sx={{
+            color: "#055491",
+            fontWeight: 800,
+            fontSize: "16px",
+            textAlign: "center",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            history.push(`/admin/article/edit/${data.id}`);
+          }}
+        >
+          <EditNoteIcon />
+        </Typography>
+        {/* : null} */}
       </Grid>
     </Grid>
   );

@@ -6,8 +6,9 @@ import React, { Fragment } from "react";
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
 }
-export default function CommonFieldDisplay({ details }: { details: any[] }) {
-  return details.map((block) => {
+export default function CommonFieldDisplay({ details }: { details: {blocks:any[]} }) {
+  console.log('details 5465 454564 5645 64 65   ', details);
+  return details?.blocks?.map((block:any) => {
     if (block.type === "paragraph") {
       return (
         <div

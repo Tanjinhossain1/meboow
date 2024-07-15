@@ -230,7 +230,7 @@ export default function TopLatestMobile({
                         >
                           ${data?.prices[0].start_from}
                         </Typography>
-                        <Typography
+                        {user?.role === "admin" ? <Typography
                           sx={{
                             color: "#055491",
                             fontWeight: 800,
@@ -242,8 +242,8 @@ export default function TopLatestMobile({
                             history.push(`/admin/mobile/edit/${data.id}`);
                           }}
                         >
-                          {user?.role === "admin" ? <EditNoteIcon /> : null}
-                        </Typography>
+                         <EditNoteIcon /> 
+                        </Typography>: null}
                       </Grid>
                     </Grid>
                   </Card>

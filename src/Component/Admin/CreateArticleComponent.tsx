@@ -6,8 +6,13 @@ import {
   CircularProgress,
   Container,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FilledInput,
   FormControl,
+  Grid,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -27,6 +32,7 @@ import { useRouter } from "next/navigation";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DialogComponent from "./Dialog";
 import { BrandTypes, CategoryTypes } from "@/types/category";
+import { RecentArticleDataType } from "@/types/RecentArticle";
 
 const Editor = dynamic(
   () => import("../../../src/Component/Editor/EditorForCreateArticle"),
@@ -36,27 +42,72 @@ const Editor = dynamic(
 export default function CreateArticleComponent({
   categories,
   brandsData,
+  isEdit,
 }: {
   categories: CategoryTypes[];
   brandsData: BrandTypes[];
+  isEdit?: {
+    articleDetail: RecentArticleDataType;
+    isEdit: boolean;
+  };
 }) {
   const history = useRouter();
   const editorRef = useRef<EditorJS | null>(null);
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
+  console.log("isEdit?.articleDetail  ", isEdit?.articleDetail);
+  const [age, setAge] = React.useState(
+    isEdit?.isEdit ? isEdit?.articleDetail?.category : ""
+  );
+  const [brands, setBrands] = React.useState(
+    isEdit?.isEdit ? isEdit?.articleDetail?.brands : ""
+  );
+  const [latestDevice, setLatestDevice] = React.useState(
+    isEdit?.isEdit ? isEdit?.articleDetail?.latestDevice : ""
+  );
 
-  const [age, setAge] = React.useState("");
-  const [brands, setBrands] = React.useState("");
-  const [latestDevice, setLatestDevice] = React.useState("");
+  const DeleteArticleFunc = () => {
+    handleBackDropOpen();
+    axios
+      .delete(`/api/article/delete/${isEdit?.articleDetail?.id}`)
+      .then((response) => {
+        if (response?.data?.success) {
+          setOpen(true);
+          setShowSuccessText(
+            `Article Delete successfully`
+          );
+            handleBackdropClose();
+             history.push('/')
+        }
+      })
+      .catch((err) => {
+        console.error("Error creating article:", err);
+        
+        handleBackdropClose();
+        // Handle error if needed
+      });
 
-  const [unFormatFile, setUnFormatFile] = useState<any>(null);
-  const [image, setImage] = useState<string | null>(null);
-  const [imageLoad, setImageLoad] = useState<boolean>(false);
+    handleCloseMobileArticleDialog();
+  };
   const [imageRequiredError, setImageRequiredError] = useState<boolean>(false);
   const [showSuccessText, setShowSuccessText] = useState<string>("");
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [brandDialogOpen, setBrandDialogOpen] = React.useState(false);
-  const [showInNews, setShowInNews] = React.useState("");
+  const [showInNews, setShowInNews] = React.useState(
+    isEdit?.isEdit ? isEdit?.articleDetail?.showInNews : ""
+  );
+
+  const [deleteMobileArticle, setDeleteMobileArticle] = React.useState(false);
+
+  const handleClickDeleteMobileArticle = () => {
+    setDeleteMobileArticle(true);
+  };
+
+  const handleCloseMobileArticleDialog = () => {
+    setDeleteMobileArticle(false);
+  };
+
+  const imageRef = useRef<string | null>(null);
 
   const handleBrandDialogClickOpen = () => {
     setBrandDialogOpen(true);
@@ -109,34 +160,10 @@ export default function CreateArticleComponent({
     }
     setOpen(false);
   };
-  useEffect(() => {
-    if (unFormatFile) {
-      const fileData = new FormData();
-      fileData.append("file", unFormatFile);
-      fileData.append("upload_preset", "computer-services");
-      fileData.append("cloud_name", "djvcnudls");
 
-      fetch("https://api.cloudinary.com/v1_1/djvcnudls/image/upload", {
-        method: "POST",
-        body: fileData,
-      })
-        .then((res) => res.json())
-        .then((fileRepsData) => {
-          if (fileRepsData?.url) {
-            setImageLoad(false);
-            setImage(fileRepsData?.url);
-          }
-          console.log("image fileRepsData  ", fileRepsData);
-        })
-        .catch((err) => {
-          setImageLoad(false);
-          console.log(err);
-        });
-    }
-  }, [unFormatFile]);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!image) {
+    if (!imageRef.current) {
       setImageRequiredError(true);
       return;
     }
@@ -155,7 +182,7 @@ export default function CreateArticleComponent({
       {
         title: title,
         category: category,
-        image: image,
+        image: imageRef.current,
         content: fieldData?.blocks,
         latestDevice: latestDeviceValue,
         brands: brands,
@@ -166,35 +193,62 @@ export default function CreateArticleComponent({
       title: title,
       category: category,
       description: description,
-      image: image,
-      content: fieldData?.blocks,
+      image: imageRef.current,
+      content: fieldData,
       latestDevice: latestDeviceValue,
       brands: brands,
       deviceName: deviceName,
       showInNews: newsValue,
     };
-    if (image) {
+    if (imageRef.current) {
+      const updateData = {
+        ...data,
+        id: isEdit?.articleDetail?.id,
+      }
       setImageRequiredError(false);
-      await axios
-        .post(`/api/article/create`, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response: any) => {
-          console.log("create success", response);
-          if (response?.data?.success) {
-            handleClick("Article Created SuccessFully");
-            setTimeout(() => {
-              handleBackdropClose();
-              window.location.reload();
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          handleBackdropClose();
-          console.log("error", err);
-        });
+      if (isEdit?.isEdit) {
+        await axios
+          .put(`/api/article/create`, updateData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response: any) => {
+            console.log("create success", response);
+            if (response?.data?.success) {
+              handleClick("Article Updated SuccessFully");
+              
+                handleBackdropClose();
+                window.location.reload();
+             
+            }
+          })
+          .catch((err) => {
+            handleBackdropClose();
+            console.log("error", err);
+          });
+      } else {
+        await axios
+          .post(`/api/article/create`, data, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response: any) => {
+            console.log("create success", response);
+            if (response?.data?.success) {
+              handleClick("Article Created SuccessFully");
+              setTimeout(() => {
+                handleBackdropClose();
+                window.location.reload();
+              }, 0);
+            }
+          })
+          .catch((err) => {
+            handleBackdropClose();
+            console.log("error", err);
+          });
+      }
     }
     handleBackdropClose();
     // http://localhost:3002/api/v1/article/create
@@ -209,7 +263,7 @@ export default function CreateArticleComponent({
               onClick={() => history.push("/admin")}
               variant="contained"
               color="success"
-              sx={{ mt: 1,mr:1 }}
+              sx={{ mt: 1, mr: 1 }}
             >
               Back To Dashboard
             </Button>
@@ -231,6 +285,16 @@ export default function CreateArticleComponent({
                 Go Bottom
               </Button>
             </a>
+            {isEdit?.isEdit ? (
+              <Button
+                color="error"
+                variant="contained"
+                sx={{ mt: 1, ml: 2 }}
+                onClick={handleClickDeleteMobileArticle}
+              >
+                Delete
+              </Button>
+            ) : null}
           </div>
           <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
             <InputLabel sx={{ mb: 1 }} htmlFor="filled-adornment-amount">
@@ -241,6 +305,7 @@ export default function CreateArticleComponent({
               id="filled-adornment-amount"
               placeholder="Title"
               required
+              defaultValue={isEdit?.isEdit ? isEdit?.articleDetail?.title : ""}
               startAdornment={
                 <InputAdornment position="start"></InputAdornment>
               }
@@ -252,6 +317,9 @@ export default function CreateArticleComponent({
               Device Name <sup style={{ color: "red", fontSize: 20 }}>*</sup>
             </InputLabel>
             <FilledInput
+              defaultValue={
+                isEdit?.isEdit ? isEdit?.articleDetail?.deviceName : ""
+              }
               name="deviceName"
               id="filled-adornment-amount"
               placeholder="Name"
@@ -371,21 +439,32 @@ export default function CreateArticleComponent({
             }
             multiline
             rows={4}
+            defaultValue={
+              isEdit?.isEdit ? isEdit?.articleDetail.description : ""
+            }
             name={"description"}
             sx={{ width: "100%" }}
             variant="outlined"
             // value={value}
             // onChange={onChange}
           />
-          <FileUpload
-            runAfterChange={(file) => {
-              setImageLoad(true);
-              setUnFormatFile(file);
-            }}
-            required
-            name="titleImage"
-          />
-          {image === null && imageRequiredError === true ? (
+          <Grid container xs={12}>
+            <Grid xs={1}>
+              <FileUpload
+                isSingleImage={{
+                  imageUrl: isEdit?.isEdit ? isEdit?.articleDetail?.image : "",
+                  isSingleImage: true,
+                  urls: "/api/v1/image/upload/article",
+                  getImageDatas(image) {
+                    imageRef.current = image;
+                  },
+                }}
+                required
+                name="titleImage"
+              />
+            </Grid>
+          </Grid>
+          {imageRef.current === null && imageRequiredError === true ? (
             <Typography style={{ color: "red", display: "inline" }}>
               Image Required
             </Typography>
@@ -396,7 +475,12 @@ export default function CreateArticleComponent({
         {/* <button>submit</button> */}
 
         <Container component="div" sx={{ width: "100%", mt: 2 }}>
-          <Editor editorRef={editorRef} />
+          <Editor
+            defaultData={
+              isEdit?.isEdit ? isEdit?.articleDetail?.content : undefined
+            }
+            editorRef={editorRef}
+          />
         </Container>
         <Container component="main" sx={{ textAlign: "end" }} maxWidth="sm">
           <Button
@@ -433,6 +517,27 @@ export default function CreateArticleComponent({
           </div>
         </Container>
       </form>
+      <Dialog
+        open={deleteMobileArticle}
+        onClose={handleCloseMobileArticleDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you Sure want to delete?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Once you delete you {"don't"} back this article.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseMobileArticleDialog}>Disagree</Button>
+          <Button color="error" onClick={DeleteArticleFunc} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Dialog
         open={dialogOpen}
         onClose={handleDialogClose}

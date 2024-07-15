@@ -18,14 +18,15 @@ type FormValues<T> = {
 interface DynamicFormProps {
     editorRef:any;
     holderId:string;
+    defaultEditorData:any;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ editorRef,holderId }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({ editorRef,holderId ,defaultEditorData}) => {
      
-   
+   console.log('this is the dynamic form data  defaultEditorData   ', defaultEditorData)
   return (
         <Box sx={{ mb: 2 }}>
-            <Editor holderId={holderId} editorRef={editorRef} />
+            <Editor holderId={holderId} editorRef={editorRef} defaultData={defaultEditorData} />  
         </Box>
       
   );

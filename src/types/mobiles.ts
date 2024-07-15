@@ -21,18 +21,18 @@ export interface MobileArticleType {
     };
     
     brands: string;
-    physicalSpecification: any[],
-    network: any[],
-    display: any[],
-    processor: any[],
-    memory: any[],
-    mainCamera: any[],
-    selfieCamera: any[],
-    os: any[],
-    connectivity: any[],
-    features: any[],
-    battery: any[],
-    details: any[],
+    physicalSpecification: any,
+    network: any,
+    display: any,
+    processor: any,
+    memory: any,
+    mainCamera: any,
+    selfieCamera: any,
+    os: any,
+    connectivity: any,
+    features: any,
+    battery: any,
+    details: any,
     prices: {
         start_from:string;
         gbs:string;

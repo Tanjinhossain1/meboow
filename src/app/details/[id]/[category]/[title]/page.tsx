@@ -17,7 +17,7 @@ interface DetailsParams{
 export default async function Details({ params,searchParams }: DetailsParams) {
   const data = await fetchArticlesDetails({ id: params?.id });
   const Category = await fetchCategories();
-  const articles = await fetchArticles({category: params?.category,page:searchParams?.page,limit:searchParams?.limit})
+  const articles = await fetchArticles({category: params?.category,page:searchParams?.page,limit:searchParams?.limit});
   return (
     <>
     
