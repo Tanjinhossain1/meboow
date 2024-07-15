@@ -23,8 +23,19 @@ import DynamicForm from "./BottomForms";
 import axios from "axios";
 import {} from "@mui/material";
 import { AddCircle, RemoveCircle } from "@mui/icons-material";
+import { MobileArticleType } from "@/types/mobiles";
+import { RhfDefaultInitialValues } from "./DefaultRhfData";
 
-export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
+export default function MainSubmitForm({
+  brands,
+  isEdit,
+}: {
+  brands: BrandTypes[];
+  isEdit?: {
+    isEdit: boolean;
+    mobileArticles: MobileArticleType[];
+  };
+}) {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -32,7 +43,7 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
 
   const [showSuccessText, setShowSuccessText] = useState<string>("");
   const [showErrorText, setShowErrorText] = useState<string>("");
-  const [errorOpen,setErrorOpen]  = useState<boolean>(false);
+  const [errorOpen, setErrorOpen] = useState<boolean>(false);
 
   const PhysicalSpecificationEditorRef = useRef<any>(null);
   const NetworkEditorRef = useRef<any>(null);
@@ -51,19 +62,20 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
+
   const methods = useForm({
-    defaultValues: {
-      prices: [{ gbs: "", start_from: "" }],
-    },
+    defaultValues: RhfDefaultInitialValues(
+      isEdit?.isEdit ? isEdit?.mobileArticles[0] : undefined
+    ),
   });
 
   const { fields, append, remove } = useFieldArray({
     control: methods.control,
     name: "prices",
   });
- 
-  const fileUploadRef = useRef<string[] >([]);
-  const displayFileUploadRef = useRef<string[] >([]);
+
+  const fileUploadRef = useRef<string[]>([]);
+  const displayFileUploadRef = useRef<string[]>([]);
 
   const { handleSubmit } = methods;
 
@@ -77,14 +89,14 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
   const onSubmit = async (data: any) => {
     if (!fileUploadRef.current[0]) {
       // setImageError(true);
-      setErrorOpen(true)
-      setShowErrorText("Please Select Image")
+      setErrorOpen(true);
+      setShowErrorText("Please Select Image");
       return;
     }
     if (!displayFileUploadRef.current) {
       // setImageError(true);
-      setErrorOpen(true)
-      setShowErrorText("Please Select Display Image")
+      setErrorOpen(true);
+      setShowErrorText("Please Select Display Image");
       return;
     }
 
@@ -106,7 +118,7 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
     const formData = {
       ...data,
       image: fileUploadRef.current,
-      display_image:displayFileUploadRef.current,
+      display_image: displayFileUploadRef.current,
       physicalSpecification: physicalSpecificationData?.blocks,
 
       network: networkData?.blocks,
@@ -131,7 +143,9 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
         // Do something with the response if needed
         if (response?.data?.success) {
           setOpen(true);
-          setShowSuccessText("Article created successfully");
+          setShowSuccessText(
+            `Article ${isEdit?.isEdit ? "Update" : "Created"} successfully`
+          );
           setTimeout(() => {
             handleBackdropClose();
             window.location.reload();
@@ -156,11 +170,78 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
     setOpen(false);
   };
 
+  const OtherDetailsForms = [
+    {
+      holderId: "1",
+      title: "Physical Specification",
+      componentRef: PhysicalSpecificationEditorRef,
+    },
+    {
+      holderId: "2",
+      title: "Network",
+      componentRef: NetworkEditorRef,
+    },
+    {
+      holderId: "3",
+      title: "Display",
+      componentRef: DisplayEditorRef,
+    },
+    {
+      holderId: "4",
+      title: "Processor",
+      componentRef: ProcessorEditorRef,
+    },
+    {
+      holderId: "5",
+      title: "Memory",
+      componentRef: MemoryEditorRef,
+    },
+    {
+      holderId: "6",
+      title: "Main Camera",
+      componentRef: MainCameraEditorRef,
+    },
+    {
+      holderId: "7",
+      title: "Selfie Camera",
+      componentRef: SelfieCameraEditorRef,
+    },
+    {
+      holderId: "8",
+      title: "OS",
+      componentRef: OSEditorRef,
+    },
+    {
+      holderId: "9",
+      title: "Connectivity",
+      componentRef: ConnectivityEditorRef,
+    },
+    {
+      holderId: "10",
+      title: "Features",
+      componentRef: FeaturesEditorRef,
+    },
+    {
+      holderId: "11",
+      title: "Battery",
+      componentRef: BatteryEditorRef,
+    },
+    {
+      holderId: "12",
+      title: "Details",
+      componentRef: DetailsEditorRef,
+    },
+  ];
   return (
     <Fragment>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TopForm fileUploadRef={fileUploadRef} displayFileUploadRef={displayFileUploadRef} brandsData={brands} />
+          <TopForm
+            isEdit={isEdit}
+            fileUploadRef={fileUploadRef}
+            displayFileUploadRef={displayFileUploadRef}
+            brandsData={brands}
+          />
           {imageError ? (
             <Typography sx={{ color: "red", fontSize: 20 }}>
               Select Image
@@ -170,8 +251,9 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
             <Grid xs={1.2}></Grid>
             <Grid xs={9.8}>
               <Accordion
-                expanded={expanded === "panel0"}
-                onChange={handleChange("panel0")}
+              defaultExpanded
+                // expanded={expanded === "panel0"}
+                // onChange={handleChange("panel0")}
               >
                 <AccordionSummary
                   aria-controls="panel0d-content"
@@ -243,284 +325,38 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
             </Grid>
             <Grid xs={2}></Grid>
           </Grid>
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel1"}
-                onChange={handleChange("panel1")}
-              >
-                <AccordionSummary
-                  aria-controls="panel1d-content"
-                  id="panel1d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Physical Specification
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm
-                    holderId="1"
-                    editorRef={PhysicalSpecificationEditorRef}
-                  />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Design */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel2"}
-                onChange={handleChange("panel2")}
-              >
-                <AccordionSummary
-                  aria-controls="panel2d-content"
-                  id="panel2d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Network
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="2" editorRef={NetworkEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Display   */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel3"}
-                onChange={handleChange("panel3")}
-              >
-                <AccordionSummary
-                  aria-controls="panel3d-content"
-                  id="panel3d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Display
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="3" editorRef={DisplayEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Camera   */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel4"}
-                onChange={handleChange("panel4")}
-              >
-                <AccordionSummary
-                  aria-controls="panel4d-content"
-                  id="panel4d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Processor
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="4" editorRef={ProcessorEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Battery    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel5"}
-                onChange={handleChange("panel5")}
-              >
-                <AccordionSummary
-                  aria-controls="panel5d-content"
-                  id="panel5d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Memory
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="5" editorRef={MemoryEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Storage    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel6"}
-                onChange={handleChange("panel6")}
-              >
-                <AccordionSummary
-                  aria-controls="panel6d-content"
-                  id="panel6d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Main Camera
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="6" editorRef={MainCameraEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Software    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel7"}
-                onChange={handleChange("panel7")}
-              >
-                <AccordionSummary
-                  aria-controls="panel7d-content"
-                  id="panel7d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Selfie Camera
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="7" editorRef={SelfieCameraEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Connectivity    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel8"}
-                onChange={handleChange("panel8")}
-              >
-                <AccordionSummary
-                  aria-controls="panel8d-content"
-                  id="panel8d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    OS
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="8" editorRef={OSEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Sound    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel9"}
-                onChange={handleChange("panel9")}
-              >
-                <AccordionSummary
-                  aria-controls="panel9d-content"
-                  id="panel9d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Connectivity
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="9" editorRef={ConnectivityEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Sensors    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel10"}
-                onChange={handleChange("panel10")}
-              >
-                <AccordionSummary
-                  aria-controls="panel10d-content"
-                  id="panel10d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Features
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="10" editorRef={FeaturesEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-          {/* Battery    */}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel10"}
-                onChange={handleChange("panel10")}
-              >
-                <AccordionSummary
-                  aria-controls="panel10d-content"
-                  id="panel10d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Battery
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="11" editorRef={BatteryEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
-
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                expanded={expanded === "panel10"}
-                onChange={handleChange("panel10")}
-              >
-                <AccordionSummary
-                  aria-controls="panel10d-content"
-                  id="panel10d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Details
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <DynamicForm holderId="12" editorRef={DetailsEditorRef} />
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
+          {OtherDetailsForms.map((otherDetails, index) => {
+            return (
+              <Fragment key={index}>
+                <Grid sx={{ mt: 1 }} container>
+                  <Grid xs={1.2}></Grid>
+                  <Grid xs={9.8}>
+                    <Accordion
+                      defaultExpanded
+                      // expanded={expanded === `panel${index + 1}`}
+                      // onChange={handleChange(`panel${index + 1}`)}
+                    >
+                      <AccordionSummary
+                        aria-controls={`panel${index + 1}d-content`}
+                        id={`panel${index + 1}d-header`}
+                      >
+                        <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                          {otherDetails.title}
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <DynamicForm
+                          holderId={otherDetails.holderId}
+                          editorRef={otherDetails.componentRef}
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  </Grid>
+                  <Grid xs={2}></Grid>
+                </Grid>
+              </Fragment>
+            );
+          })}
 
           <Container component="main" sx={{ textAlign: "end" }} maxWidth="sm">
             <Button
@@ -569,9 +405,13 @@ export default function MainSubmitForm({ brands }: { brands: BrandTypes[] }) {
           {showSuccessText}
         </Alert>
       </Snackbar>
-      <Snackbar open={errorOpen} autoHideDuration={3000} onClose={()=>setErrorOpen(false)}>
+      <Snackbar
+        open={errorOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorOpen(false)}
+      >
         <Alert
-          onClose={()=>setErrorOpen(false)}
+          onClose={() => setErrorOpen(false)}
           severity="error"
           variant="filled"
           sx={{ width: "100%" }}

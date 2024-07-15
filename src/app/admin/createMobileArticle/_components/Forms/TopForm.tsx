@@ -33,22 +33,30 @@ import { BrandTypes, CategoryTypes } from "@/types/category";
 import DialogComponent from "@/Component/Admin/Dialog";
 import { DatePicker } from "antd";
 import { useFormContext } from "react-hook-form";
+import { MobileArticleType } from "@/types/mobiles";
 
 export default function TopForm({
   brandsData,
   fileUploadRef,
   displayFileUploadRef,
+  isEdit,
 }: {
   brandsData: BrandTypes[];
   fileUploadRef: any;
   displayFileUploadRef: any;
+  isEdit?: {
+    isEdit: boolean;
+    mobileArticles: MobileArticleType[];
+  };
 }) {
   const history = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const { register } = useFormContext();
 
-  const [brands, setBrands] = React.useState("");
+  const [brands, setBrands] = React.useState(
+    isEdit?.isEdit ? isEdit?.mobileArticles[0].brands : ""
+  );
   const [showSuccessText, setShowSuccessText] = useState<string>("");
   const [brandDialogOpen, setBrandDialogOpen] = React.useState(false);
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
@@ -128,7 +136,7 @@ export default function TopForm({
               id="panel1d-header"
             >
               <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                Key Specifications
+                Top Display Specifications
               </Typography>
             </AccordionSummary>
             <Grid container>
@@ -136,7 +144,7 @@ export default function TopForm({
               <Grid xs={9.8}>
                 <AccordionDetails>
                   <Grid gap={1} container>
-                    <Grid xs={4.5}>
+                    <Grid xs={3.5}>
                       <FormControl
                         sx={{ my: 2, width: "100%" }}
                         variant="filled"
@@ -213,37 +221,14 @@ export default function TopForm({
                     </Grid>
                     <Grid xs={1}>
                       <FileUpload
-                       
-                        runAfterChange={async (file) => {
-                          console.log("Uploading file ", file);
-                          const formData = new FormData();
-                          formData.append("file", file);
-                          try {
-                            const response = await axios.post(
-                              `/api/v1/image/upload/mobile`,
-                              formData,
-                              {
-                                headers: {
-                                  "Content-Type": "multipart/form-data",
-                                },
-                              }
-                            );
-
-                            if (response.data.success === 1) {
-                              console.log("File uploaded successfully", response.data);
-                              // fileUploadRef.current = response.data?.file?.url;
-                              if (fileUploadRef.current[0]) {
-                                fileUploadRef.current = [...fileUploadRef.current, response.data.file.url];
-                              } else {
-                                fileUploadRef.current = [response.data.file.url];
-                              }
-                            } else {
-                              throw new Error("Upload failed");
-                            }
-                          } catch (error) {
-                            console.error("Error uploading file:", error);
-                            throw error;
-                          }
+                        isMultiple={{
+                          isMultiple: true,
+                          urls: "/api/v1/image/upload/mobile",
+                          defaultImageUrls: [],
+                          getImageDatas: (images) => {
+                            console.log("Images uploaded ", images);
+                            fileUploadRef.current = images;
+                          },
                         }}
                         required
                         name="titleImage"
@@ -251,39 +236,22 @@ export default function TopForm({
                     </Grid>
                     <Grid xs={1}>
                       <FileUpload
-                       title="Display Image"
-                        runAfterChange={async (file) => {
-                          console.log("Uploading file ", file);
-                          const formData = new FormData();
-                          formData.append("file", file);
-                          try {
-                            const response = await axios.post(
-                              `/api/v1/image/upload/mobile/display-image`,
-                              formData,
-                              {
-                                headers: {
-                                  "Content-Type": "multipart/form-data",
+                        isSingleImage={{
+                                isSingleImage: true,
+                                urls: "/api/v1/image/upload/mobile/display-image",
+                                imageUrl:
+                                  isEdit?.mobileArticles[0].display_image ? isEdit?.mobileArticles[0].display_image  : "",
+                                getImageDatas: (image) => {
+                                  console.log("Images uploaded ", image);
+                                  displayFileUploadRef.current = image;
                                 },
                               }
-                            );
-
-                            if (response.data.success === 1) {
-                              console.log("File uploaded successfully", response.data);
-                              displayFileUploadRef.current = response.data?.file?.url;
-                              
-                            } else {
-                              throw new Error("Upload failed");
-                            }
-                          } catch (error) {
-                            console.error("Error uploading file:", error);
-                            throw error;
-                          }
-                        }}
+                        }
+                        title="Display Image"
                         required
-
                         name="displayImage"
                       />
-                    </Grid> 
+                    </Grid>
                     <Grid xs={12}>
                       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
                         Key Specifications

@@ -73,9 +73,7 @@ export default function TopLatestMobile({
                       width: "178px", // Adjusted width
                       height: "290px", // Adjusted height
                       position: "relative",
-                    }}
-                    onClick={() => {
-                      history.push(`/mobile/detail/${data.id}`);
+                      cursor: "pointer",
                     }}
                   >
                     <Grid container direction="column" alignItems="center">
@@ -85,6 +83,9 @@ export default function TopLatestMobile({
                           height: "98px", // Adjust the height for uniformity
                         }}
                         xs={3}
+                        onClick={() => {
+                          history.push(`/mobile/detail/${data.id}`);
+                        }}
                         // item
                       >
                         <Image
@@ -101,7 +102,13 @@ export default function TopLatestMobile({
                           height={50}
                         />
                       </Grid>
-                      <Grid item sx={{ width: "100%", mt: 2, height: "45px" }}>
+                      <Grid
+                        onClick={() => {
+                          history.push(`/mobile/detail/${data.id}`);
+                        }}
+                        item
+                        sx={{ width: "100%", mt: 2, height: "45px" }}
+                      >
                         <Typography
                           sx={{
                             color: "#364473",
@@ -114,7 +121,14 @@ export default function TopLatestMobile({
                         </Typography>
                       </Grid>
 
-                      <Grid textAlign={"left"} item sx={{ width: "100%" }}>
+                      <Grid
+                        onClick={() => {
+                          history.push(`/mobile/detail/${data.id}`);
+                        }}
+                        textAlign={"left"}
+                        item
+                        sx={{ width: "100%" }}
+                      >
                         <Typography
                           sx={{
                             color: "#45517a",
@@ -133,7 +147,14 @@ export default function TopLatestMobile({
                           {data?.key_specifications.processor}
                         </Typography>
                       </Grid>
-                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
+                      <Grid
+                        onClick={() => {
+                          history.push(`/mobile/detail/${data.id}`);
+                        }}
+                        item
+                        textAlign={"left"}
+                        sx={{ width: "100%" }}
+                      >
                         <Typography
                           sx={{
                             color: "#45517a",
@@ -152,7 +173,14 @@ export default function TopLatestMobile({
                           {data?.key_specifications.rearCamera}
                         </Typography>
                       </Grid>
-                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
+                      <Grid
+                        onClick={() => {
+                          history.push(`/mobile/detail/${data.id}`);
+                        }}
+                        item
+                        textAlign={"left"}
+                        sx={{ width: "100%" }}
+                      >
                         <Typography
                           sx={{
                             color: "#45517a",
@@ -196,6 +224,9 @@ export default function TopLatestMobile({
                             fontSize: "16px",
                             textAlign: "center",
                           }}
+                          onClick={() => {
+                            history.push(`/mobile/detail/${data.id}`);
+                          }}
                         >
                           ${data?.prices[0].start_from}
                         </Typography>
@@ -204,7 +235,7 @@ export default function TopLatestMobile({
                             color: "#055491",
                             fontWeight: 800,
                             fontSize: "16px",
-                            textAlign: "center", 
+                            textAlign: "center",
                             cursor: "pointer",
                           }}
                           onClick={() => {
