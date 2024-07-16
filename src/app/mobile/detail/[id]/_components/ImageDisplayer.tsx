@@ -7,6 +7,7 @@ import {
   Slider,
   MobileStepper,
   IconButton,
+  Typography,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -33,39 +34,21 @@ const ImageDisplay = ({
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const [selectedImageStatus, setIsSelectedImageStatus] = useState<boolean>(false);
+    const [selectIndexForDialog,setSelectedIndexForDialog] = useState<number>(0);
   const [open, setOpen] = useState(false);
 
   const [SliderIndex, setSliderIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
-
-  const handleSliderNext = () => {
-    if (SliderIndex < mobileArticles?.image?.length - 5 && !transitioning) {
-      setTransitioning(true);
-      setTimeout(() => {
-        setSliderIndex((prevIndex) => prevIndex + 2);
-        setTransitioning(false);
-      }, 500); // Match with the transition duration
-    }
-  };
-
-  const handleSliderPrev = () => {
-    if (SliderIndex > 0 && !transitioning) {
-      setTransitioning(true);
-      setTimeout(() => {
-        setSliderIndex((prevIndex) => prevIndex - 5);
-        setTransitioning(false);
-      }, 500); // Match with the transition duration
-    }
-  };
-
+ 
   const handleClickOpen = (index: number) => {
-    setSelectedIndex(index);
+    setSelectedIndexForDialog(index);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setThumbsSwiper(null)
   };
 
   const handleMouseEnter = (index: number) => {
@@ -208,14 +191,12 @@ const ImageDisplay = ({
             key={index}
             sx={{ width: 30, height: 60 }}
             className="p-4 m-1 bg-gray-200 rounded-lg"
+            onClick={() =>handleClickOpen(index)}
           >
             <div
               className="h-11 mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center"
               onMouseEnter={() => handleMouseEnter(index)}
-              onClick={() => {
-                handleClick(index);
-                handleClickOpen(index);
-              }}
+             
             >
               <Image
                 height={200}
@@ -231,6 +212,7 @@ const ImageDisplay = ({
       </Grid>
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogContent>
+          {/* <Typography sx={{fontSize:35}}>kasdjfkadjsfjad</Typography> */}
           <Box
             sx={{
               textAlign: "center",
@@ -238,6 +220,7 @@ const ImageDisplay = ({
               flexDirection: "column",
               alignItems: "center",
             }}
+            onClick={()=>setIsSelectedImageStatus(true)}
           >
             <Swiper
               spaceBetween={10}
@@ -249,13 +232,13 @@ const ImageDisplay = ({
               {mobileArticles?.image &&
                 mobileArticles?.image?.map((item: string, index: number) => {
                   return (
-                    <SwiperSlide style={{height:"500px"}} key={index}>
+                    <SwiperSlide style={{ height: "500px" }} key={index}>
                       <Box sx={{ height: "500px" }}>
                         <Image
                           height={200}
                           width={200}
                           //   layout="responsive"
-                          src={item}
+                          src={!selectedImageStatus  ? mobileArticles.image[selectIndexForDialog] : item}
                           alt={mobileArticles.title}
                           //   style={{ objectFit: "cover" }}
                         />
@@ -264,29 +247,32 @@ const ImageDisplay = ({
                   );
                 })}
             </Swiper>
+
             <Swiper
-              onSwiper={(swiper) => setThumbsSwiper(swiper)}
+              onSwiper={setThumbsSwiper}
               spaceBetween={10}
               slidesPerView={10}
               freeMode={true}
               breakpoints={{
-                0:{
-                    slidesPerView: 3,
-                },
-                640: {  // screens >= 640px
+                0: {
                   slidesPerView: 3,
                 },
-                768: {  // screens >= 768px
+                640: {
+                  // screens >= 640px
+                  slidesPerView: 3,
+                },
+                768: {
+                  // screens >= 768px
                   slidesPerView: 5,
                 },
-                1024: { // screens >= 1024px
+                1024: {
+                  // screens >= 1024px
                   slidesPerView: 10,
                 },
               }}
               watchSlidesProgress={true}
               modules={[FreeMode, Navigation, Thumbs]}
               className="mySwiper"
-              
             >
               {mobileArticles?.image &&
                 mobileArticles?.image?.map((item: string, index: number) => {
@@ -300,10 +286,7 @@ const ImageDisplay = ({
                         <div
                           className="w-8 h-16  mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center"
                           //   onMouseEnter={() => handleMouseEnter(index)}
-                          onClick={() => {
-                            handleClick(index);
-                            handleClickOpen(index);
-                          }}
+                        
                         >
                           <Image
                             height={50}
@@ -318,7 +301,7 @@ const ImageDisplay = ({
                     </SwiperSlide>
                   );
                 })}
-            </Swiper> 
+            </Swiper>
           </Box>
         </DialogContent>
       </Dialog>
@@ -327,165 +310,3 @@ const ImageDisplay = ({
 };
 
 export default ImageDisplay;
-
-// import { useState } from "react";
-// import { Grid, Box } from "@mui/material";
-// import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-// import Image from "next/image";
-// import { MobileArticleType } from "@/types/mobiles";
-
-// const ImageDisplay = ({
-//   mobileArticles,
-// }: {
-//   mobileArticles: MobileArticleType;
-// }) => {
-//   const [currentImage, setCurrentImage] = useState(mobileArticles.image[0]);
-//   const [selectedImage, setSelectedImage] = useState(mobileArticles.image[0]);
-
-//   const handleMouseEnter = (image: any) => {
-//     console.log('first image hover   ',image)
-//     setCurrentImage(image);
-//   };
-
-//   const handleMouseLeave = () => {
-//     setCurrentImage(selectedImage);
-//   };
-
-//   const handleClick = (image: any) => {
-//     setSelectedImage(image);
-//     setCurrentImage(image);
-//   };
-
-//   return (
-//     <Grid item xs={4.5} sm={5} md={4} sx={{ textAlign: "center" }}>
-//       <Box
-//         sx={{
-//           textAlign: "center",
-//           display: "flex",
-//           alignItems: "center",
-//           height: "500px",
-//         //   width: {
-//         //     xs: "350px",
-//         //   },
-//           py: 4,
-//           mx: {
-//             xs:0,
-//             sm:3
-//           },
-//           //     sm:{
-
-//           //   },
-
-//         }}
-//       >
-//         <Box
-//           sx={{
-//             ":hover": {
-//               bgcolor: "lightgray",
-//               borderRadius: 15,
-//               fontSize: 15,
-//               textAlign: "center",
-//               p: 1,
-//             },
-//             p: 1,
-//             display: { sm: "flex", xs: "none" },
-//           }}
-//         >
-//           <ArrowBackIosIcon sx={{ textAlign: "center" }} />
-//         </Box>
-
-//         <Box
-//           sx={{
-//             width: "70%",
-//             height: "70%",
-//             maxWidth: 300,
-//             mx: "auto",
-//             display: { sm: "flex", xs: "none" },
-//             alignItems: "center",
-//           }}
-//         >
-//           <Image
-//             height={300}
-//             width={300}
-//             // layout="responsive"
-//             src={currentImage}
-//             alt={mobileArticles.title}
-//             // style={{ objectFit: "cover" }}
-//           />
-//         </Box>
-//         <Box
-//           sx={{
-//             width: "350px",
-//             maxWidth: 300,
-//             height: "300px",
-//             // mx: "auto",
-//             // height: "100%",
-//             display: { sm: "none", xs: "flex" },
-//           }}
-//         >
-//           <Image
-//             height={300}
-//             width={300}
-//             // layout="responsive"
-//             src={currentImage}
-//             alt={mobileArticles.title}
-//             // style={{ objectFit: "cover" }}
-//           />
-//         </Box>
-//         <Box
-//           sx={{
-//             ":hover": {
-//               bgcolor: "lightgray",
-//               borderRadius: 15,
-//               fontSize: 15,
-//               textAlign: "center",
-//               p: 1,
-//             },
-//             p: 1,
-//             display: { sm: "flex", xs: "none" },
-//           }}
-//         >
-//           <ArrowForwardIosIcon sx={{ textAlign: "center" }} />
-//         </Box>
-//       </Box>
-
-//       <Grid
-//         container
-//         spacing={1}
-//         justifyContent="center"
-//         sx={{ mt: 2 }}
-//         onMouseLeave={handleMouseLeave}
-//       >
-//         {mobileArticles.image.slice(0, 4).map((item, index) => (
-//           <Grid
-//             item
-//             xs={4.5}
-//             sm={2.5}
-//             md={2.5}
-//             key={index}
-//             sx={{ width: 30, height: 60 }}
-//             className="p-4 m-1   bg-gray-200 rounded-lg"
-//           >
-//             <div
-//               className="h-11  mx-auto ml:1 sm:ml-3 bg-card rounded-lg flex items-center justify-center"
-//               onMouseEnter={() => handleMouseEnter(item)}
-//               onClick={() => handleClick(item)}
-//             >
-//               <Image
-//                 height={200}
-//                 width={200}
-//                 className="w-full sm:w-6    md:w-8 lg:w-6 h-full  "
-//                 src={item}
-//                 alt={mobileArticles.title}
-//                 // style={{ objectFit: "cover" }}
-//               />
-//             </div>
-//           </Grid>
-//         ))}
-//       </Grid>
-//     </Grid>
-//   );
-// };
-
-// export default ImageDisplay;
