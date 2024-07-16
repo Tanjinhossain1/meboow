@@ -8,6 +8,8 @@ import {
   Button,
   IconButton,
   Divider,
+  Pagination,
+  Link,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -21,6 +23,8 @@ import SdStorageIcon from "@mui/icons-material/SdStorage";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { MobileArticleType } from "@/types/mobiles";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ImageDisplay from "./ImageDisplayer";
 
 const specifications = [
   {
@@ -65,46 +69,10 @@ const TopMobileDetails = ({
             </Typography>
 
             <Grid container sx={{ marginBottom: 2 }}>
-              <Grid item xs={5} sm={5} md={4} sx={{ textAlign: "center" }}>
-                <Box
-                  sx={{
-                    width: "50%",
-                    height: "100%",
-                    display: {
-                      sm: "flex",
-                      xs: "none",
-                    },
-                  }}
-                >
-                  <Image
-                    height={300}
-                    width={200}
-                    layout="responsive"
-                    src={mobileArticles.image[0]}
-                    alt={mobileArticles.title}
-                    //   style={{ width: "80%" }}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    width: "100%",
-                    height: "60%",
-                    display: {
-                      sm: "none",
-                      xs: "flex",
-                    },
-                  }}
-                >
-                  <Image
-                    height={300}
-                    width={200}
-                    layout="responsive"
-                    src={mobileArticles.image[0]}
-                    alt={mobileArticles.title}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={7} sm={7} md={8}>
+              <ImageDisplay mobileArticles={mobileArticles} />
+              {/* <Grid item xs={4} sm={5} md={4} sx={{ textAlign: "center" }}></Grid> */}
+              <Grid sx={{ mt: 3 }} item xs={0} sm={0} md={0} xl={1.5}></Grid>
+              <Grid sx={{ mt: 3 }} item xs={7} sm={7} md={8} xl={6.5}>
                 <Typography variant="h6">Key Specifications</Typography>
                 <Grid container spacing={2}>
                   {specifications.map((spec, index) => (
@@ -135,47 +103,110 @@ const TopMobileDetails = ({
                     </Grid>
                   ))}
                 </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid container>
-              {/* <Grid xs={12} md={4}></Grid> */}
-              <Grid xs={12}>
-                <Divider sx={{ marginY: 2 }} />
-                <Box>
-                  <Typography
-                    sx={{ fontWeight: 600 }}
-                    variant="h6"
-                    gutterBottom
-                  >
-                    {mobileArticles.title} Prices
-                  </Typography>
-                  <Grid gap={1} container>
-                    {mobileArticles.prices.map((data,index) => {
-                      return (
-                        <Grid item xs={12} sm={5.8} xl={5} key={index}>
-                          <Paper
-                            elevation={0}
-                            sx={{ p: 0.8, marginBottom: 2, bgcolor: "#deeff9" }}
-                          >
-                            <Grid container spacing={2} alignItems="center">
-                              <Grid item xs={6}>
-                                <Typography>
-                                  <b>{data?.gbs}</b>
-                                </Typography>
-                              </Grid>
-                              <Grid item xs={6} sx={{ textAlign: "right" }}>
-                                <Typography>
-                                  Starting from <b>${data?.start_from}</b>
-                                </Typography>
-                              </Grid>
+                <Grid
+                  sx={{
+                    display: {
+                      sm: "flex",
+                      xs: "none",
+                    },
+                  }}
+                  container
+                >
+                  {/* <Grid xs={12} md={4}></Grid> */}
+                  <Grid xs={12}>
+                    <Divider sx={{ marginY: 5}} />
+                    <Box>
+                      <Typography
+                        sx={{ fontWeight: 600 }}
+                        variant="h6"
+                        gutterBottom
+                      >
+                        {mobileArticles.title} Prices
+                      </Typography>
+                      <Grid gap={1} container>
+                        {mobileArticles.prices.map((data, index) => {
+                          return (
+                            <Grid item xs={12} key={index}>
+                              <Paper
+                                elevation={0}
+                                sx={{
+                                  p: 0.8,
+                                  marginBottom: 2,
+                                  bgcolor: "#deeff9",
+                                }}
+                              >
+                                <Grid container spacing={2} alignItems="center">
+                                  <Grid item xs={6}>
+                                    <Typography>
+                                      <b>{data?.gbs}</b>
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={6} sx={{ textAlign: "right" }}>
+                                    <Typography>
+                                      Starting from <b>${data?.start_from}</b>
+                                    </Typography>
+                                  </Grid>
+                                </Grid>
+                              </Paper>
                             </Grid>
-                          </Paper>
-                        </Grid>
-                      );
-                    })}
+                          );
+                        })}
+                      </Grid>
+                    </Box>
                   </Grid>
-                </Box>
+                </Grid>
+              </Grid>
+              <Grid
+                sx={{
+                  display: {
+                    sm: "none",
+                    xs: "flex",
+                  },
+                }}
+                container
+              >
+                {/* <Grid xs={12} md={4}></Grid> */}
+                <Grid xs={12}>
+                  <Divider sx={{ marginY: 2 }} />
+                  <Box>
+                    <Typography
+                      sx={{ fontWeight: 600 }}
+                      variant="h6"
+                      gutterBottom
+                    >
+                      {mobileArticles.title} Prices
+                    </Typography>
+                    <Grid gap={1} container>
+                      {mobileArticles.prices.map((data, index) => {
+                        return (
+                          <Grid item xs={12} key={index}>
+                            <Paper
+                              elevation={0}
+                              sx={{
+                                p: 0.8,
+                                marginBottom: 2,
+                                bgcolor: "#deeff9",
+                              }}
+                            >
+                              <Grid container spacing={2} alignItems="center">
+                                <Grid item xs={6}>
+                                  <Typography>
+                                    <b>{data?.gbs}</b>
+                                  </Typography>
+                                </Grid>
+                                <Grid item xs={6} sx={{ textAlign: "right" }}>
+                                  <Typography>
+                                    Starting from <b>${data?.start_from}</b>
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </Paper>
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
+                  </Box>
+                </Grid>
               </Grid>
             </Grid>
           </Box>
