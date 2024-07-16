@@ -86,7 +86,7 @@ function NavbarHelper({
       <Grid alignItems={"center"} sx={{ bgcolor: "#023359", p: 1 }} container>
         <Grid xs={8}>
           <Grid xs={12} sm={3} md={2}>
-            <Image alt="logo" width={180} height={10} src="/logo-pc-3.png" />
+            <Image alt="logo" width={180} height={10} src="/app-logo/3.png" />
           </Grid>
         </Grid>
         <Grid
@@ -332,7 +332,7 @@ function NavbarHelper({
                     alt="logo"
                     width={180}
                     height={10}
-                    src="/logo-pc-2.png"
+                    src="/app-logo/3.png"
                   />
                 </Grid>
               </Grid>
@@ -395,18 +395,18 @@ function NavbarHelper({
               container
             >
               <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
-              <Grid xs={12} sm={3} md={2}>
+              <Grid xs={12} sm={3} md={2} xl={1}>
                 <Image
                   alt="logo"
                   width={180}
                   height={10}
-                  src="/logo-pc-1.png"
+                  src="/app-logo/4.png"
                 />
               </Grid>
               <Grid xs={0} sm={1}></Grid>
               <Grid sm={5}>
                 <form onSubmit={handleSubmit}>
-                  <div className="flex justify-center  mt-3 ">
+                  <div className="flex justify-center  mt-8 ">
                     <div className="relative w-full ">
                       <input
                         type="text"

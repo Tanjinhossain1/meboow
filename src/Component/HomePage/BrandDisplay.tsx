@@ -15,7 +15,7 @@ export default function BrandDisplayComponent({
   console.log(" brands rfghfh", brands);
   return (
     brands &&
-    brands.map((data: BrandTypes) => {
+    brands.slice(0,5).map((data: BrandTypes) => {
       return (
         <Grid
           onClick={() => history.push(`/article/brand-wise/${data.title}`)}
