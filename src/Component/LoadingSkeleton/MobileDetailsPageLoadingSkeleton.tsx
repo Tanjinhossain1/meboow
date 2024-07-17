@@ -19,6 +19,7 @@ export const TopBox = ()=>{
             <Skeleton className="h-[500px] w-full lg:w-[450px] bg-gray-700" />
           </div>
           <div className="col-span-12 sm:col-span-6 ">
+              <h3>Kye Specification</h3>
             <div className="grid grid-cols-12 gap-1 border-b-2 pb-3">
               {/* Adjusted grid structure to display two items per row */}
               {specifications.map((spec, index) => (
@@ -52,6 +53,7 @@ export const BottomBox = ()=>{
           <div className="col-span-12 md:col-span-8">
             <Skeleton className="h-[40px] w-full bg-gray-700" />
             <div className="mt-2 grid grid-cols-12 gap-4">
+           
               {[0, 1, 2, 3].map((x) => (
                 <Fragment key={x}>
                   <div className="col-span-12 sm:col-span-5 ">

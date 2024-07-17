@@ -58,7 +58,7 @@ const TopMobileDetails = ({
               {/* <Grid item xs={4} sm={5} md={4} sx={{ textAlign: "center" }}></Grid> */}
               <Grid sx={{ mt: 3 }} item xs={0} sm={0} md={0} xl={1.5}></Grid>
               <Grid sx={{ mt: 3 }} item xs={7} sm={7} md={8} xl={6.5}>
-                <Typography variant="h6">Key Specifications</Typography>
+                <Typography sx={{fontSize:25}} variant="h2">Key Specifications</Typography>
                 <Grid container spacing={2}>
                   {specifications.map((spec, index) => (
                     <Grid item xs={12} sm={6} key={index}>
