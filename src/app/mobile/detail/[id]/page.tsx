@@ -56,18 +56,18 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
 
   return (
     <Fragment> 
-      {/* <Suspense>
+      <Suspense>
         <Navbar />
-      </Suspense> */}
-      {/* {mobileArticles.data[0] ? (
+      </Suspense>
+      {mobileArticles.data[0] ? (
         <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
-      ) : null} */}
+      ) : null}
       {mobileArticles.data[0] ? (
         <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
       ) : null}
-      {/* <Suspense>
+      <Suspense>
         <Footer />
-      </Suspense> */}
+      </Suspense>
     </Fragment>
   );
 };
