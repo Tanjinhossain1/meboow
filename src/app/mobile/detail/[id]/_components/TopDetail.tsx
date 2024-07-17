@@ -1,12 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Box,
-  Typography,
-  Grid,
-  Paper,
-  Divider,
-} from "@mui/material";
+import { Box, Typography, Grid, Paper, Divider } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import MemoryIcon from "@mui/icons-material/Memory";
@@ -22,7 +16,7 @@ import { MobileArticleType } from "@/types/mobiles";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ImageDisplay from "./ImageDisplayer";
 
-const specifications = [
+export const specifications = [
   {
     icon: <MemoryIcon />,
     label: "Processor",
@@ -56,7 +50,7 @@ const TopMobileDetails = ({
       <Grid xs={12} md={10} lg={9.8} xl={7}>
         <Paper elevation={0}>
           <Box sx={{ padding: 4, color: "#6b6b6b" }}>
-            <Typography sx={{fontSize:35}} variant="h1" gutterBottom>
+            <Typography sx={{ fontSize: 35 }} variant="h1" gutterBottom>
               {mobileArticles?.title}
             </Typography>
             <Typography variant="body2" gutterBottom>
@@ -110,7 +104,7 @@ const TopMobileDetails = ({
                 >
                   {/* <Grid xs={12} md={4}></Grid> */}
                   <Grid xs={12}>
-                    <Divider sx={{ marginY: 5}} />
+                    <Divider sx={{ marginY: 5 }} />
                     <Box>
                       <Typography
                         sx={{ fontWeight: 600 }}
