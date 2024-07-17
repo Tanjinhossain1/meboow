@@ -1,13 +1,9 @@
 import React, { Fragment, Suspense } from "react";
-// import TopMobileDetails from "./_components/TopDetail";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import { fetchMobileArticleDetails } from "@/services/articleServices";
-// import BottomMobileDetails from "./_components/BottomDetails";
 import { Metadata, ResolvingMetadata } from "next";
 import dynamic from "next/dynamic";
-import Head from "next/head";
-import MobileDetailsPageLoadingSkeleton from "@/Component/LoadingSkeleton/MobileDetailsPageLoadingSkeleton";
 
 const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
 const BottomMobileDetails = dynamic(
@@ -31,7 +27,6 @@ export async function generateMetadata(
     openGraph: {
       images: [image, ...previousImages],
     },
-    // schema: schema,
   };
  
 }
@@ -61,18 +56,18 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
 
   return (
     <Fragment> 
-      {/* <Suspense> */}
+      {/* <Suspense>
         <Navbar />
-      {/* </Suspense> */}
+      </Suspense> */}
       {mobileArticles.data[0] ? (
         <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
       ) : null}
       {/* {mobileArticles.data[0] ? (
         <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
       ) : null} */}
-      {/* <Suspense> */}
+      {/* <Suspense>
         <Footer />
-      {/* </Suspense> */}
+      </Suspense> */}
     </Fragment>
   );
 };
