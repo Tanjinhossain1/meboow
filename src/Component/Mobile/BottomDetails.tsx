@@ -8,9 +8,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MobileArticleType } from "@/types/mobiles";
-import CommonFieldDisplay from "./CommonFieldDisplay";
 
 import "./mobilestyles.css";
+import CommonFieldDisplay from "./CommonFieldDisplay";
 
 
 const BottomMobileDetails = ({
