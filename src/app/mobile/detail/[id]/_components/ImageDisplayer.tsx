@@ -22,7 +22,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-import "./styles.css";
+import "./styles.css"; 
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
@@ -34,13 +34,14 @@ const ImageDisplay = ({
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedImageStatus, setIsSelectedImageStatus] = useState<boolean>(false);
-    const [selectIndexForDialog,setSelectedIndexForDialog] = useState<number>(0);
+  const [selectedImageStatus, setIsSelectedImageStatus] =
+    useState<boolean>(false);
+  const [selectIndexForDialog, setSelectedIndexForDialog] = useState<number>(0);
   const [open, setOpen] = useState(false);
 
   const [SliderIndex, setSliderIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
- 
+
   const handleClickOpen = (index: number) => {
     setSelectedIndexForDialog(index);
     setOpen(true);
@@ -48,7 +49,7 @@ const ImageDisplay = ({
 
   const handleClose = () => {
     setOpen(false);
-    setThumbsSwiper(null)
+    setThumbsSwiper(null);
   };
 
   const handleMouseEnter = (index: number) => {
@@ -133,6 +134,7 @@ const ImageDisplay = ({
           }}
         >
           <Image
+            loading="lazy"
             height={300}
             width={300}
             src={mobileArticles.image[currentIndex]}
@@ -191,14 +193,14 @@ const ImageDisplay = ({
             key={index}
             sx={{ width: 30, height: 60 }}
             className="p-4 m-1 bg-gray-200 rounded-lg"
-            onClick={() =>handleClickOpen(index)}
+            onClick={() => handleClickOpen(index)}
           >
             <div
               className="h-11 mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center"
               onMouseEnter={() => handleMouseEnter(index)}
-             
             >
               <Image
+                loading="lazy"
                 height={200}
                 width={200}
                 className="w-6 sm:w-6 md:w-8 lg:w-6 h-full"
@@ -220,7 +222,7 @@ const ImageDisplay = ({
               flexDirection: "column",
               alignItems: "center",
             }}
-            onClick={()=>setIsSelectedImageStatus(true)}
+            onClick={() => setIsSelectedImageStatus(true)}
           >
             <Swiper
               spaceBetween={10}
@@ -235,10 +237,15 @@ const ImageDisplay = ({
                     <SwiperSlide style={{ height: "500px" }} key={index}>
                       <Box sx={{ height: "500px" }}>
                         <Image
+                          loading="lazy"
                           height={200}
                           width={200}
                           //   layout="responsive"
-                          src={!selectedImageStatus  ? mobileArticles.image[selectIndexForDialog] : item}
+                          src={
+                            !selectedImageStatus
+                              ? mobileArticles.image[selectIndexForDialog]
+                              : item
+                          }
                           alt={mobileArticles.title}
                           //   style={{ objectFit: "cover" }}
                         />
@@ -286,9 +293,9 @@ const ImageDisplay = ({
                         <div
                           className="w-8 h-16  mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center"
                           //   onMouseEnter={() => handleMouseEnter(index)}
-                        
                         >
                           <Image
+                            loading="lazy"
                             height={50}
                             width={50}
                             className="w-full h-full"

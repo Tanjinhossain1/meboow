@@ -3,17 +3,20 @@ import { MobileArticleType } from "@/types/mobiles";
 import Image from "next/image";
 import React, { Fragment } from "react";
 
+
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
 }
-export default function CommonFieldDisplay({ details }: { details: {blocks:any[]} }) {
-  console.log('details 5465 454564 5645 64 65   ', details);
-  return details?.blocks?.map((block:any) => {
+export default function CommonFieldDisplay({
+  details,
+}: {
+  details: { blocks: any[] };
+}) {
+  return details?.blocks?.map((block: any) => { 
     if (block.type === "paragraph") {
-      
       return (
         <div
-          style={{ marginTop: "30px",  }}
+          style={{ marginTop: "30px" }}
           key={block.id}
           dangerouslySetInnerHTML={{
             __html: formatText(block.data.text),
@@ -21,7 +24,6 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
         />
       );
     } else if (block.type === "header") {
-      
       const TagLevel: any = `h${block.data.level === 1 ? 2 : block.data.level}`;
       console.log(
         "hea der de   ",
@@ -36,22 +38,21 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
             : "2xl"
         }`
       );
-    
+
       return (
         <TagLevel
-        className={`text-${
-          block.data.level === 1
-            ? "4xl"
-            : block.data.level === 2
-            ? "3xl"
-            : "2xl"
-        } font-bold`} // Tailwind classes
-        key={block.id}
-         
-        dangerouslySetInnerHTML={{
-          __html: block.data.text,
-        }}
-      />
+          className={`text-${
+            block.data.level === 1
+              ? "4xl"
+              : block.data.level === 2
+              ? "3xl"
+              : "2xl"
+          } font-bold`} // Tailwind classes
+          key={block.id}
+          dangerouslySetInnerHTML={{
+            __html: block.data.text,
+          }}
+        />
         // <TagLevel
         //   className={`text-${
         //     block.data.level === 1
@@ -70,6 +71,7 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
       const TagLevel: any = `h${block.data.level}`;
       return (
         <Image
+          loading="lazy"
           key={block.id}
           layout="responsive"
           width={block.data.height}
@@ -82,23 +84,29 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
       return block.data.style === "unordered" ? (
         <ul key={block.id}>
           {block.data.items.map((item: any) => {
-          const hasAnchorTag = /<a\b[^>]*>(.*?)<\/a>/i.test(item);
-            return(
+            
+            return (
               <li
-              style={{ marginTop: "10px",color: hasAnchorTag ? "#696eff" : "inherit" }}
-              key={item}
-              dangerouslySetInnerHTML={{ __html: item }}
-            ></li>
-            )
+                style={{
+                  marginTop: "10px",
+                   
+                }}
+                key={item}
+                dangerouslySetInnerHTML={{ __html: item }}
+              ></li>
+            );
           })}
         </ul>
       ) : (
         <ol key={block.id}>
-          {block.data.items.map((item: any) =>{
-          const hasAnchorTag = /<a\b[^>]*>(.*?)<\/a>/i.test(item);
+          {block.data.items.map((item: any) => { 
             return (
-              <li style={{color: hasAnchorTag ? "#696eff" : "inherit" }} key={item} dangerouslySetInnerHTML={{ __html: item }}></li>
-            )
+              <li
+                 
+                key={item}
+                dangerouslySetInnerHTML={{ __html: item }}
+              ></li>
+            );
           })}
         </ol>
       );
@@ -115,8 +123,7 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
                   key={index}
                 >
                   {row.map((cell: any, cellIndex: any) => {
-                    console.log('cell  cell',cell)
-                    const hasAnchorTag = /<a\b[^>]*>(.*?)<\/a>/i.test(cell);
+                    console.log("cell  cell", cell); 
 
                     return (
                       <td
@@ -127,8 +134,9 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
                           paddingTop: "10px",
                           paddingBottom: "10px",
                           width: cellIndex === 1 ? "50%" : "10%", // Adjust width conditionally
-                          color: hasAnchorTag ? "#696eff" : "inherit",
+                          // textDecoration: "none",
                         }}
+                        className="no-underline"
                         dangerouslySetInnerHTML={{
                           __html: cell,
                         }}

@@ -16,7 +16,9 @@ li {
   font-family: revert; /* Reset font family */
   text-decoration: revert;
 }
-
+a{
+  text-decoration: none
+}
 @tailwind components;
 @tailwind utilities;
 /* globals.css */

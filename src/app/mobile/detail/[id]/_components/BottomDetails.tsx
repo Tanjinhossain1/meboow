@@ -10,6 +10,8 @@ import {
 import { MobileArticleType } from "@/types/mobiles";
 import CommonFieldDisplay from "./CommonFieldDisplay";
 
+import "./mobilestyles.css";
+
 const BottomMobileDetails = ({
   mobileArticles,
 }: {

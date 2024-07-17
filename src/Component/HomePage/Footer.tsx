@@ -18,27 +18,27 @@ export default function Footer() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 600,color:"white" }}
                   >
                     Connect with us
                   </Typography>
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 600,color:"white" }}
                   >
                     <Link
                       target="_blank"
                       href={"https://www.facebook.com/iloveyou.tanjin"}
                     >
-                      <FacebookIcon sx={{ fontSize: 30 }} />
+                      <FacebookIcon sx={{ fontSize: 30,color:"white" }} />
                     </Link>
 
                     <Link
                       target="_blank"
                       href={"https://www.instagram.com/sktanjin/"}
                     >
-                      <InstagramIcon sx={{ fontSize: 30, ml: 2 }} />
+                      <InstagramIcon sx={{ fontSize: 30,color:"white", ml: 2 }} />
                     </Link>
                     <Link
                       target="_blank"
@@ -46,7 +46,7 @@ export default function Footer() {
                         "https://youtube.com/@developercode76?si=3zKRJ0Ts_beAoIGF"
                       }
                     >
-                      <YouTubeIcon sx={{ fontSize: 30, ml: 2 }} />
+                      <YouTubeIcon sx={{ fontSize: 30,color:"white", ml: 2 }} />
                     </Link>
                   </Typography>
                 </Grid>
@@ -55,13 +55,13 @@ export default function Footer() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 600,color:"white" }}
                   >
                     Help & Support
                   </Typography>
 
                   <Typography variant="h6" component="div">
-                    <Link href={"/contactUs"}> Contact us</Link>
+                    <Link style={{color:"white",textDecoration:"underline"}} href={"/contactUs"}> Contact us</Link>
                   </Typography>
                 </Grid>
 
@@ -69,20 +69,20 @@ export default function Footer() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 600,color:"white" }}
                   >
                     About Sell Safari
                   </Typography>
                   <Typography variant="h6" component="div">
-                    <Link href={"/aboutUs"}> About Us</Link>
+                    <Link style={{color:"white",textDecoration:"underline"}} href={"/aboutUs"}> About Us</Link>
                   </Typography>
 
                   <Typography variant="h6" component="div">
-                    <Link href={"/termCondition"}> Terms & Conditions</Link>
+                    <Link style={{color:"white",textDecoration:"underline"}} href={"/termCondition"}> Terms & Conditions</Link>
                   </Typography>
 
                   <Typography variant="h6" component="div">
-                    <Link href={"/privacyPolicy"}> Privacy Policy</Link>
+                    <Link style={{color:"white",textDecoration:"underline"}} href={"/privacyPolicy"}> Privacy Policy</Link>
                   </Typography>
                 </Grid>
               </Grid>
@@ -101,7 +101,7 @@ export default function Footer() {
                 }}
               >
                 <Typography>Copyright © Saltside Technologies</Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: 23 }}>
+                <Typography sx={{ fontWeight: 600,color:"white", fontSize: 23 }}>
                   Sell Safari
                 </Typography>
               </Container>
