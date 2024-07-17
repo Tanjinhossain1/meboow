@@ -67,9 +67,9 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       {mobileArticles.data[0] ? (
         <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
       ) : null}
-      {mobileArticles.data[0] ? (
+      {/* {mobileArticles.data[0] ? (
         <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
-      ) : null}
+      ) : null} */}
       {/* <Suspense> */}
         <Footer />
       {/* </Suspense> */}
