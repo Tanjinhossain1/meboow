@@ -59,12 +59,12 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       {/* <Suspense>
         <Navbar />
       </Suspense> */}
-      {mobileArticles.data[0] ? (
-        <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
-      ) : null}
       {/* {mobileArticles.data[0] ? (
-        <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
+        <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
       ) : null} */}
+      {mobileArticles.data[0] ? (
+        <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
+      ) : null}
       {/* <Suspense>
         <Footer />
       </Suspense> */}
