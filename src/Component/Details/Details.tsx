@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/Component/HomePage/Footer";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { CategoryTypes } from "@/types/category";
+import { BrandTypes, CategoryTypes } from "@/types/category";
 import {
   Breadcrumbs,
   Button,
@@ -14,6 +14,9 @@ import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment } from "react";
 import CategoryListComponent from "../Category/CategoryListComponent";
+import BrandListComponent from "./BrandListComponent";
+import { MobileArticleType } from "@/types/mobiles";
+import MobileListComponent from "./MobileListComponent";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -22,14 +25,18 @@ export default function DetailsComponent({
   articleDetail,
   category,
   articles,
+  brands,
+  mobileArticles,
 }: {
   articleDetail: RecentArticleDataType;
   category: CategoryTypes[];
   articles: RecentArticleDataType[];
+  brands: BrandTypes[];
+  mobileArticles: MobileArticleType[];
 }) {
   const params = useParams();
   const history = useRouter();
-  
+
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
@@ -107,7 +114,7 @@ export default function DetailsComponent({
                     width={0}
                     height={0}
                   />
-                  {articleDetail.content?.blocks?.map((block:any) => {
+                  {articleDetail.content?.blocks?.map((block: any) => {
                     if (block.type === "paragraph") {
                       return (
                         <div
@@ -120,7 +127,7 @@ export default function DetailsComponent({
                       );
                     } else if (block.type === "header") {
                       const TagLevel: any = `h${block.data.level}`;
-                      console.log('header', block,TagLevel);
+                      console.log("header", block, TagLevel);
                       return (
                         <TagLevel
                           key={block.id}
@@ -234,7 +241,9 @@ export default function DetailsComponent({
                   })}
                 </Grid>
                 <Grid xs={12} lg={0.5}></Grid>
-                <Grid xs={12} sx={{ mt: 17 }} lg={4}>
+                <Grid xs={12} sx={{ mt: 10 }} lg={4}>
+                  <MobileListComponent mobileArticles={mobileArticles} />
+                  <BrandListComponent brands={brands} />
                   <CategoryListComponent category={category} />
                 </Grid>
               </Grid>
@@ -265,21 +274,23 @@ export default function DetailsComponent({
                       return (
                         <Fragment key={article.id}>
                           <Grid
-                            onClick={() =>
-                              history.push(
-                                `/details/${article.id}/${article.category}/${joinTitle}?${new URLSearchParams({
-                                  page: `${Number(page) + 1}`,
-                                  limit: limit,
-                                })}`,
-                                {
-                                  scroll: false,
-                                }
-                              )
+                            onClick={
+                              () =>
+                                history.push(
+                                  `/details/${article.id}/${
+                                    article.category
+                                  }/${joinTitle}?${new URLSearchParams({
+                                    page: `${Number(page) + 1}`,
+                                    limit: limit,
+                                  })}`,
+                                  {
+                                    scroll: false,
+                                  }
+                                )
                               // history.push(
                               //   `/details/${article.id}/${article.category}/${joinTitle}`
                               // )
                             }
-
                             sx={{ m: 1, cursor: "pointer" }}
                             xs={3.5}
                           >

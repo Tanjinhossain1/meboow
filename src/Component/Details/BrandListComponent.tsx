@@ -1,23 +1,23 @@
-import { CategoryTypes } from "@/types/category";
+import { BrandTypes, CategoryTypes } from "@/types/category";
 import { Container, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function CategoryListComponent({
-  category,
+export default function BrandListComponent({
+  brands,
 }: {
-  category: CategoryTypes[];
+  brands: BrandTypes[];
 }) {
     const history = useRouter();
   return (
     <>
       <Container sx={{ bgcolor: "#023359", p: 1,mt:3 }}>
         <Typography sx={{ fontSize: 18, fontWeight: 600, color: "#f5f5f5" }}>
-          Categories
+          Brands
         </Typography>
       </Container>
 
-      {category.map((value: CategoryTypes) => {
+      {brands.map((value: BrandTypes) => {
         return (
           <Typography
             sx={{

@@ -1,23 +1,24 @@
-import { CategoryTypes } from "@/types/category";
+import { BrandTypes, CategoryTypes } from "@/types/category";
+import { MobileArticleType } from "@/types/mobiles";
 import { Container, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function CategoryListComponent({
-  category,
+export default function MobileListComponent({
+  mobileArticles,
 }: {
-  category: CategoryTypes[];
+  mobileArticles: MobileArticleType[];
 }) {
     const history = useRouter();
   return (
     <>
-      <Container sx={{ bgcolor: "#023359", p: 1,mt:3 }}>
+      <Container sx={{ bgcolor: "#023359", p: 1 }}>
         <Typography sx={{ fontSize: 18, fontWeight: 600, color: "#f5f5f5" }}>
-          Categories
+          Top Mobile Lists
         </Typography>
       </Container>
 
-      {category.map((value: CategoryTypes) => {
+      {mobileArticles.map((value: MobileArticleType) => {
         return (
           <Typography
             sx={{

@@ -3,7 +3,9 @@ import Navbar from "@/Component/Shared/Navbar";
 import {
   fetchArticles,
   fetchArticlesDetails,
+  fetchBrands,
   fetchCategories,
+  fetchMobileArticles,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import React from "react";
@@ -43,6 +45,8 @@ interface DetailsParams {
 export default async function Details({ params, searchParams }: DetailsParams) {
   const data = await fetchArticlesDetails({ id: params?.id });
   const Category = await fetchCategories();
+  const Brands = await fetchBrands();
+  const mobileArticles = await fetchMobileArticles({page:'1',limit:'20'});
   const articles = await fetchArticles({
     category: params?.category,
     page: searchParams?.page,
@@ -55,7 +59,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-    const joinTitle = formattedTitle
+  const joinTitle = formattedTitle
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("-");
@@ -69,6 +73,8 @@ export default async function Details({ params, searchParams }: DetailsParams) {
       <Navbar />
       {data?.data ? (
         <DetailsComponent
+        mobileArticles={mobileArticles.data}
+          brands={Brands?.data}
           articles={articles.data}
           category={Category.data}
           articleDetail={data?.data[0]}
