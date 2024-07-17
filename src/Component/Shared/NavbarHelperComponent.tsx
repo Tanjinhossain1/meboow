@@ -152,7 +152,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link href={"/aboutus"}>About Us</Link>
+              <Link style={{color:"black"}} href={"/aboutus"}>About Us</Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -164,7 +164,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link href={"/contactUs"}>Contact us</Link>
+              <Link style={{color:"black"}} href={"/contactUs"}>Contact us</Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -176,7 +176,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link href={"/privacyPolicy"}>Privacy Policy</Link>
+              <Link style={{color:"black"}} href={"/privacyPolicy"}>Privacy Policy</Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -188,7 +188,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link href={"/termCondition"}>Terms Condition</Link>
+              <Link style={{color:"black"}} href={"/termCondition"}>Terms Condition</Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -200,7 +200,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link href={"/faq"}>FAQ</Link>
+              <Link style={{color:"black"}} href={"/faq"}>FAQ</Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -212,7 +212,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link href={"/helpus"}>Tip Us</Link>
+              <Link style={{color:"black"}} href={"/helpus"}>Tip Us</Link>
             </Typography>
           </Grid>
         </Grid>
@@ -251,7 +251,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link href={"/aboutus"}>About Us</Link>
+                  <Link style={{color:"black"}} href={"/aboutus"}>About Us</Link>
                 </Typography>
 
                 <Typography
@@ -262,7 +262,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link href={"/contactUs"}>Contact us</Link>
+                  <Link style={{color:"black"}} href={"/contactUs"}>Contact us</Link>
                 </Typography>
 
                 <Typography
@@ -273,7 +273,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link href={"/privacyPolicy"}>Privacy Policy</Link>
+                  <Link style={{color:"black"}} href={"/privacyPolicy"}>Privacy Policy</Link>
                 </Typography>
 
                 <Typography
@@ -284,7 +284,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link href={"/termCondition"}>Terms Condition</Link>
+                  <Link style={{color:"black"}} href={"/termCondition"}>Terms Condition</Link>
                 </Typography>
 
                 <Typography
@@ -295,7 +295,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link href={"/faq"}>FAQ</Link>
+                  <Link style={{color:"black"}} href={"/faq"}>FAQ</Link>
                 </Typography>
                 <Typography
                   gap={2}
@@ -305,7 +305,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link rel="canonical"  href={"/helpus"}>Tip Us</Link>
+                  <Link style={{color:"black"}} rel="canonical"  href={"/helpus"}>Tip Us</Link>
                 </Typography>
               </Grid>
             </Grid>
