@@ -54,47 +54,21 @@ export async function generateMetadata(
 }
 
 // Component to render product details
-const ProductDetails = ({ params }: { params: { id: string } }) => {
-  const [mobileArticles, setMobileArticles] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    const fetchArticleDetails = async () => {
-      try {
-        const result = await fetchMobileArticleDetails({ id: params?.id });
-        setMobileArticles(result.data[0]);
-      } catch (error) {
-        console.error("Error fetching article details:", error);
-        setError("Failed to fetch article details.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticleDetails();
-  }, [params?.id]);
-
-  if (loading) {
-    return <MobileDetailsPageLoadingSkeleton />;
-  }
-
-  if (error) {
-    return <p>{error}</p>; // Display error message if fetch fails
-  }
+const ProductDetails = async ({ params }: { params: { id: string } }) => {
+  const mobileArticles = await fetchMobileArticleDetails({ id: params?.id });
 
   return (
     <Fragment>
       <Suspense fallback={<NavbarLoadingSkeleton />}>
         <Navbar />
       </Suspense>
-      {mobileArticles && (
+      {mobileArticles?.data && mobileArticles?.data[0] && (
         <Fragment>
           <Suspense fallback={<TopBox />}>
-            <TopMobileDetails mobileArticles={mobileArticles} />
+            <TopMobileDetails mobileArticles={mobileArticles?.data[0]} />
           </Suspense>
           <Suspense fallback={<BottomBox />}>
-            <BottomMobileDetails mobileArticles={mobileArticles} />
+            <BottomMobileDetails mobileArticles={mobileArticles?.data[0]} />
           </Suspense>
         </Fragment>
       )}
