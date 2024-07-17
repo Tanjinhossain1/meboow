@@ -4,10 +4,7 @@ import {
   Box,
   Dialog,
   DialogContent,
-  Slider,
   MobileStepper,
-  IconButton,
-  Typography,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -22,7 +19,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-// import "./styles.css"; 
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
@@ -38,9 +34,6 @@ const ImageDisplay = ({
     useState<boolean>(false);
   const [selectIndexForDialog, setSelectedIndexForDialog] = useState<number>(0);
   const [open, setOpen] = useState(false);
-
-  const [SliderIndex, setSliderIndex] = useState(0);
-  const [transitioning, setTransitioning] = useState(false);
 
   const handleClickOpen = (index: number) => {
     setSelectedIndexForDialog(index);
@@ -59,12 +52,6 @@ const ImageDisplay = ({
   const handleMouseLeave = () => {
     setCurrentIndex(selectedIndex);
   };
-
-  const handleClick = (index: number) => {
-    setSelectedIndex(index);
-    setCurrentIndex(index);
-  };
-
   const handleNext = () => {
     setCurrentIndex(
       (prevIndex) => (prevIndex + 1) % mobileArticles.image.length
@@ -86,13 +73,6 @@ const ImageDisplay = ({
         mobileArticles.image.length
     );
   };
-
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (typeof newValue === "number") {
-      setSelectedIndex(newValue);
-    }
-  };
-  console.log("currentIndex ", currentIndex, selectedIndex);
   return (
     <Grid item xs={12} sm={5} md={4} sx={{ textAlign: "center" }}>
       <Box
@@ -117,7 +97,6 @@ const ImageDisplay = ({
               cursor: "pointer",
             },
             p: 1,
-            // display: { sm: "flex", xs: "none" },
           }}
         >
           <ArrowBackIosIcon />
@@ -128,7 +107,6 @@ const ImageDisplay = ({
             width: "70%",
             height: "70%",
             maxWidth: 300,
-            // mx: "auto",
             display: "flex",
             alignItems: "center",
           }}
@@ -140,7 +118,6 @@ const ImageDisplay = ({
             src={mobileArticles.image[currentIndex]}
             alt={mobileArticles.title}
             onClick={() => handleClickOpen(currentIndex)}
-            // style={{ objectFit: "cover" }}
           />
         </Box>
 
@@ -156,7 +133,6 @@ const ImageDisplay = ({
               cursor: "pointer",
             },
             p: 1,
-            // display: { sm: "flex", xs: "none" },
           }}
         >
           <ArrowForwardIosIcon />
@@ -206,7 +182,6 @@ const ImageDisplay = ({
                 className="w-6 sm:w-6 md:w-8 lg:w-6 h-full"
                 src={item}
                 alt={mobileArticles.title}
-                // style={{ objectFit: "cover" }}
               />
             </div>
           </Grid>
@@ -214,7 +189,6 @@ const ImageDisplay = ({
       </Grid>
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogContent>
-          {/* <Typography sx={{fontSize:35}}>kasdjfkadjsfjad</Typography> */}
           <Box
             sx={{
               textAlign: "center",
@@ -247,7 +221,6 @@ const ImageDisplay = ({
                               : item
                           }
                           alt={mobileArticles.title}
-                          //   style={{ objectFit: "cover" }}
                         />
                       </Box>
                     </SwiperSlide>
@@ -265,15 +238,12 @@ const ImageDisplay = ({
                   slidesPerView: 3,
                 },
                 640: {
-                  // screens >= 640px
                   slidesPerView: 3,
                 },
                 768: {
-                  // screens >= 768px
                   slidesPerView: 5,
                 },
                 1024: {
-                  // screens >= 1024px
                   slidesPerView: 10,
                 },
               }}
@@ -292,7 +262,6 @@ const ImageDisplay = ({
                       >
                         <div
                           className="w-8 h-16  mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center"
-                          //   onMouseEnter={() => handleMouseEnter(index)}
                         >
                           <Image
                             loading="lazy"
@@ -301,7 +270,6 @@ const ImageDisplay = ({
                             className="w-full h-full"
                             src={item}
                             alt={mobileArticles.title}
-                            // style={{ objectFit: "cover" }}
                           />
                         </div>
                       </Box>

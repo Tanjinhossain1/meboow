@@ -1,7 +1,6 @@
 "use client";
-import { MobileArticleType } from "@/types/mobiles";
 import Image from "next/image";
-import React, { Fragment } from "react";
+import React from "react";
 
 
 function formatText(text: string) {

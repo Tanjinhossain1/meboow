@@ -8,9 +8,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MobileArticleType } from "@/types/mobiles";
-import CommonFieldDisplay from "./CommonFieldDisplay";
+// import CommonFieldDisplay from "./CommonFieldDisplay";
 
 import "./mobilestyles.css";
+import dynamic from "next/dynamic";
+
+const CommonFieldDisplay = dynamic(() => import("./CommonFieldDisplay"));
 
 const BottomMobileDetails = ({
   mobileArticles,

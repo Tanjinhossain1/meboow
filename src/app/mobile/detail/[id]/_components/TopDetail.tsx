@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import { Box, Typography, Grid, Paper, Divider } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import MemoryIcon from "@mui/icons-material/Memory";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -10,10 +8,7 @@ import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import NetworkCellIcon from "@mui/icons-material/NetworkCell";
 import AndroidIcon from "@mui/icons-material/Android";
 import SdStorageIcon from "@mui/icons-material/SdStorage";
-import Image from "next/image";
-import { useParams } from "next/navigation";
 import { MobileArticleType } from "@/types/mobiles";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ImageDisplay from "./ImageDisplayer";
 
 export const specifications = [
@@ -102,7 +97,6 @@ const TopMobileDetails = ({
                   }}
                   container
                 >
-                  {/* <Grid xs={12} md={4}></Grid> */}
                   <Grid xs={12}>
                     <Divider sx={{ marginY: 5 }} />
                     <Box>
@@ -155,7 +149,6 @@ const TopMobileDetails = ({
                 }}
                 container
               >
-                {/* <Grid xs={12} md={4}></Grid> */}
                 <Grid xs={12}>
                   <Divider sx={{ marginY: 2 }} />
                   <Box>
