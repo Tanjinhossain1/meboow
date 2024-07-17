@@ -5,11 +5,7 @@ import {
   Typography,
   Grid,
   Paper,
-  Button,
-  IconButton,
   Divider,
-  Pagination,
-  Link,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -60,7 +56,7 @@ const TopMobileDetails = ({
       <Grid xs={12} md={10} lg={9.8} xl={7}>
         <Paper elevation={0}>
           <Box sx={{ padding: 4, color: "#6b6b6b" }}>
-            <Typography variant="h4" gutterBottom>
+            <Typography sx={{fontSize:35}} variant="h1" gutterBottom>
               {mobileArticles?.title}
             </Typography>
             <Typography variant="body2" gutterBottom>

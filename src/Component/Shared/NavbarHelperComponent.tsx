@@ -86,7 +86,7 @@ function NavbarHelper({
       <Grid alignItems={"center"} sx={{ bgcolor: "#023359", p: 1 }} container>
         <Grid xs={8}>
           <Grid xs={12} sm={3} md={2}>
-            <Image alt="logo" width={180} height={10} src="/app-logo/3.png" />
+            <Image alt="logo" width={180} height={10} src="/app-logo/2.png" />
           </Grid>
         </Grid>
         <Grid
@@ -305,7 +305,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link href={"/helpus"}>Tip Us</Link>
+                  <Link rel="canonical"  href={"/helpus"}>Tip Us</Link>
                 </Typography>
               </Grid>
             </Grid>
@@ -400,13 +400,13 @@ function NavbarHelper({
                   alt="logo"
                   width={180}
                   height={10}
-                  src="/app-logo/4.png"
+                  src="/app-logo/1.png"
                 />
               </Grid>
               <Grid xs={0} sm={1}></Grid>
               <Grid sm={5}>
                 <form onSubmit={handleSubmit}>
-                  <div className="flex justify-center  mt-8 ">
+                  <div className="flex justify-center  mt-1 ">
                     <div className="relative w-full ">
                       <input
                         type="text"

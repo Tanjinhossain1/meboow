@@ -10,21 +10,24 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
   console.log('details 5465 454564 5645 64 65   ', details);
   return details?.blocks?.map((block:any) => {
     if (block.type === "paragraph") {
+      
       return (
         <div
-          style={{ marginTop: "30px" }}
+          style={{ marginTop: "30px",  }}
           key={block.id}
           dangerouslySetInnerHTML={{
             __html: formatText(block.data.text),
           }}
-        ></div>
+        />
       );
     } else if (block.type === "header") {
-      const TagLevel: any = `h${block.data.level}`;
+      
+      const TagLevel: any = `h${block.data.level === 1 ? 2 : block.data.level}`;
       console.log(
         "hea der de   ",
         block,
         TagLevel,
+        block.data.level,
         `text-${
           block.data.level === 1
             ? "4xl"
@@ -33,8 +36,9 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
             : "2xl"
         }`
       );
+    
       return (
-        <h1
+        <TagLevel
         className={`text-${
           block.data.level === 1
             ? "4xl"
@@ -43,6 +47,7 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
             : "2xl"
         } font-bold`} // Tailwind classes
         key={block.id}
+         
         dangerouslySetInnerHTML={{
           __html: block.data.text,
         }}
@@ -76,19 +81,25 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
     } else if (block.type === "list") {
       return block.data.style === "unordered" ? (
         <ul key={block.id}>
-          {block.data.items.map((item: any) => (
-            <li
-              style={{ marginTop: "10px" }}
+          {block.data.items.map((item: any) => {
+          const hasAnchorTag = /<a\b[^>]*>(.*?)<\/a>/i.test(item);
+            return(
+              <li
+              style={{ marginTop: "10px",color: hasAnchorTag ? "#696eff" : "inherit" }}
               key={item}
               dangerouslySetInnerHTML={{ __html: item }}
             ></li>
-          ))}
+            )
+          })}
         </ul>
       ) : (
         <ol key={block.id}>
-          {block.data.items.map((item: any) => (
-            <li key={item} dangerouslySetInnerHTML={{ __html: item }}></li>
-          ))}
+          {block.data.items.map((item: any) =>{
+          const hasAnchorTag = /<a\b[^>]*>(.*?)<\/a>/i.test(item);
+            return (
+              <li style={{color: hasAnchorTag ? "#696eff" : "inherit" }} key={item} dangerouslySetInnerHTML={{ __html: item }}></li>
+            )
+          })}
         </ol>
       );
     } else if (block.type === "table") {
@@ -104,6 +115,9 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
                   key={index}
                 >
                   {row.map((cell: any, cellIndex: any) => {
+                    console.log('cell  cell',cell)
+                    const hasAnchorTag = /<a\b[^>]*>(.*?)<\/a>/i.test(cell);
+
                     return (
                       <td
                         key={cellIndex}
@@ -113,11 +127,12 @@ export default function CommonFieldDisplay({ details }: { details: {blocks:any[]
                           paddingTop: "10px",
                           paddingBottom: "10px",
                           width: cellIndex === 1 ? "50%" : "10%", // Adjust width conditionally
+                          color: hasAnchorTag ? "#696eff" : "inherit",
                         }}
                         dangerouslySetInnerHTML={{
                           __html: cell,
                         }}
-                      ></td>
+                      />
                     );
                   })}
                 </tr>

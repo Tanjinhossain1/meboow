@@ -154,7 +154,7 @@ export default function Banner({
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
         <Paper sx={{ p: 2, mb: 2, bgcolor: "white" }} elevation={0}>
-          <Typography sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}>
+          <Typography variant="h1" sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}>
             Latest Article
           </Typography>
           <Grid container spacing={1}>
