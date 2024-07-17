@@ -93,6 +93,7 @@ export default function DetailsComponent({
                       fontWeight: 550,
                       color: "#333333",
                     }}
+                    variant="h1"
                   >
                     {" "}
                     {formattedTitle}
@@ -137,7 +138,7 @@ export default function DetailsComponent({
                           width={block.data.height}
                           height={block.data.height}
                           src={block.data.file.url}
-                          alt=""
+                          alt={formattedTitle}
                         ></Image>
                       );
                     } else if (block.type === "list") {

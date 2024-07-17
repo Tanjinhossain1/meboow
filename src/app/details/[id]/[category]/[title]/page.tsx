@@ -1,7 +1,30 @@
 import DetailsComponent from "@/Component/Details/Details";
 import Navbar from "@/Component/Shared/Navbar";
 import { fetchArticles, fetchArticlesDetails, fetchCategories } from "@/services/articleServices";
+import { Metadata, ResolvingMetadata } from "next";
 import React from "react";
+
+
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const articleDetail = await fetchArticlesDetails({ id: params?.id });
+  const title = articleDetail?.data[0]?.title;
+  const desc = articleDetail?.data[0]?.description.slice(0,130)
+  const previousImages = (await parent).openGraph?.images || [];
+  const image = articleDetail?.data[0].image;
+
+  return {
+    title: title,
+    description: desc,
+
+    openGraph: {
+      images: [image, ...previousImages],
+    },
+  };
+}
 
 interface DetailsParams{
   searchParams: {
