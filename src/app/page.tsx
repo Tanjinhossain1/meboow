@@ -35,9 +35,9 @@ async function Home({ searchParams }: HomePropsType) {
   
   return (
     <>
-      <Suspense>
+      {/* <Suspense>
         <Navbar />
-      </Suspense>
+      </Suspense> */}
       {articles ? (
         <Suspense>
           <Banner
