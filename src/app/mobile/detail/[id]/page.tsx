@@ -5,11 +5,13 @@ import { fetchMobileArticleDetails } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import dynamic from "next/dynamic";
 
-const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
-const BottomMobileDetails = dynamic(
-  () => import("./_components/BottomDetails")
-);
+// const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
+// const BottomMobileDetails = dynamic(
+//   () => import("./_components/BottomDetails")
+// );
 
+const TopMobileDetails = React.lazy(() => import("./_components/TopDetail"));
+const BottomMobileDetails = React.lazy(() => import("./_components/BottomDetails"));
 export async function generateMetadata(
   { params }: { params: { id: string } },
   parent: ResolvingMetadata
