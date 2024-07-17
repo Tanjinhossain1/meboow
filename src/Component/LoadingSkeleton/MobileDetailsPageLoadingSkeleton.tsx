@@ -2,8 +2,8 @@
 import React, { Fragment } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Assuming you have a custom Skeleton component
 import NavbarLoadingSkeleton from "../Shared/NavbarLoadingSkeleton";
-import { specifications } from "@/app/mobile/detail/[id]/_components/TopDetail";
 import { Box, Grid, Typography } from "@mui/material";
+import { specifications } from "../Mobile/TopDetail";
 
 export const TopBox = ()=>{
   return(
