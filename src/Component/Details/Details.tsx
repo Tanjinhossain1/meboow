@@ -252,12 +252,14 @@ export default function DetailsComponent({
                   <Typography
                     sx={{
                       mt: 1,
-                      // fontSize: 35,
+                      fontSize: 22,
                       fontWeight: 550,
                       color: "white",
                       p: 1,
                       bgcolor: "#c40069",
+
                     }}
+                    variant="h2"
                   >
                     {" "}
                     Related Posts
