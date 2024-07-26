@@ -116,14 +116,14 @@ export default function CommonFieldDisplay({
             {block.data.content.map((row: any, index: number) => {
               return (
                 <tr
-                  style={{
-                    borderBottom: "1px solid lightgray",
-                  }}
+                  // style={{
+                  //   borderBottom: "1px solid lightgray",
+                  // }}
                   key={index}
                 >
                   {row.map((cell: any, cellIndex: any) => {
                     console.log("cell  cell", cell); 
-
+                    const displayText = cellIndex === 1 ? `:  ${cell}` : cell
                     return (
                       <td
                         key={cellIndex}
@@ -137,7 +137,7 @@ export default function CommonFieldDisplay({
                         }}
                         className="no-underline"
                         dangerouslySetInnerHTML={{
-                          __html: cell,
+                          __html: displayText,
                         }}
                       />
                     );

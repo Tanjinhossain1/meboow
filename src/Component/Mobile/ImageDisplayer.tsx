@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Grid,
-  Box,
-  Dialog,
-  DialogContent,
-  MobileStepper,
-} from "@mui/material";
+import { Grid, Box, Dialog, DialogContent, MobileStepper } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Image from "next/image";
@@ -18,7 +12,6 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
@@ -212,8 +205,10 @@ const ImageDisplay = ({
                       <Box sx={{ height: "500px" }}>
                         <Image
                           loading="lazy"
-                          height={200}
-                          width={200}
+                          // height={200}
+                          // width={200}
+                          layout="fill"
+                          objectFit="contain"
                           //   layout="responsive"
                           src={
                             !selectedImageStatus
@@ -260,9 +255,7 @@ const ImageDisplay = ({
                         className=" pt-2 pl-3 m-1 bg-gray-200 rounded-lg flex-shrink-0"
                         key={index}
                       >
-                        <div
-                          className="w-8 h-16  mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center"
-                        >
+                        <div className="w-8 h-16  mx-auto sm:ml-3 bg-card rounded-lg flex items-center justify-center">
                           <Image
                             loading="lazy"
                             height={50}
