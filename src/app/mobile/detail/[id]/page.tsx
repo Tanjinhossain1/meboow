@@ -5,8 +5,10 @@ import { fetchMobileArticleDetails } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import dynamic from "next/dynamic";
 import TopMobileDetails from "@/Component/Mobile/TopDetail";
-import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
+// import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
 import Head from "next/head";
+import BottomMobileDetails from "@/Component/mobile/BottomDetails";
+import AllImageDisplaying from "@/Component/mobile/AllImageDisplay";
 
 // const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
 // const BottomMobileDetails = dynamic(
@@ -48,6 +50,9 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       ) : null}
       {mobileArticles.data[0] ? (
         <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
+      ) : null}
+      {mobileArticles.data[0] ? (
+        <AllImageDisplaying mobileArticles={mobileArticles.data[0]} />
       ) : null}
       <Footer />
     </Fragment>
