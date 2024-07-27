@@ -9,6 +9,7 @@ import TopMobileDetails from "@/Component/Mobile/TopDetail";
 import Head from "next/head";
 import BottomMobileDetails from "@/Component/mobile/BottomDetails";
 import AllImageDisplaying from "@/Component/mobile/AllImageDisplay";
+import ExpertViewComponent from "@/Component/mobile/ExpertView";
 
 // const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
 // const BottomMobileDetails = dynamic(
@@ -47,6 +48,9 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       <Navbar />
       {mobileArticles.data[0] ? (
         <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
+      ) : null}
+      {mobileArticles.data[0] ? (
+        <ExpertViewComponent mobileArticles={mobileArticles.data[0]} />
       ) : null}
       {mobileArticles.data[0] ? (
         <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
