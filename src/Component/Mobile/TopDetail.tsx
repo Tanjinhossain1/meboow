@@ -9,7 +9,8 @@ import NetworkCellIcon from "@mui/icons-material/NetworkCell";
 import AndroidIcon from "@mui/icons-material/Android";
 import SdStorageIcon from "@mui/icons-material/SdStorage";
 import { MobileArticleType } from "@/types/mobiles";
-import ImageDisplay from "./ImageDisplayer";
+import ImageDisplay from "@/Component/mobile/ImageDisplay";
+
 
 export const specifications = [
   {

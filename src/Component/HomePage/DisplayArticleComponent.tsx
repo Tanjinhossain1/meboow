@@ -69,7 +69,7 @@ export default function DisplayArticleComponent({
           sx={{
             fontSize: asSmall ? 14 : 18,
             fontWeight: 600,
-            fontFamily: "revert",
+            // fontFamily: "revert",
             ml: 1,
             cursor: "pointer",
             ":hover": { color: "#c4007c" },

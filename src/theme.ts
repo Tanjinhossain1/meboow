@@ -13,9 +13,9 @@ const theme = createTheme({
       // default: '#f5f5f5', // Customize the background color
     },
   },
-  typography: {
-    fontFamily: 'Inter, Arial, sans-serif',
-  },
+  // typography: {
+  //   fontFamily: 'Inter, Arial, sans-serif',
+  // },
 });
 
 export default theme;

@@ -205,7 +205,7 @@ export default function Banner({
           <Typography
             sx={{
               fontSize: 25,
-              fontFamily: "Arial, sans-serif",
+              // fontFamily: "Arial, sans-serif",
               fontWeight: 600,
               mb: 1,
             }}

@@ -4,8 +4,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Image from "next/image";
 import { MobileArticleType } from "@/types/mobiles";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,8 +13,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-// import required modules
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 const ImageDisplay = ({
   mobileArticles,
 }: {

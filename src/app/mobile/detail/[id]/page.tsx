@@ -5,8 +5,6 @@ import { fetchMobileArticleDetails } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import dynamic from "next/dynamic";
 import TopMobileDetails from "@/Component/Mobile/TopDetail";
-// import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
-import Head from "next/head";
 import BottomMobileDetails from "@/Component/mobile/BottomDetails";
 import AllImageDisplaying from "@/Component/mobile/AllImageDisplay";
 import ExpertViewComponent from "@/Component/mobile/ExpertView";
