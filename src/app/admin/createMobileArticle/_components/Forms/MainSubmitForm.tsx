@@ -15,6 +15,10 @@ import {
   TextField,
   Box,
   IconButton,
+  FormControl,
+  InputLabel,
+  FilledInput,
+  InputAdornment,
 } from "@mui/material";
 import { BrandTypes } from "@/types/category";
 import TopForm from "./TopForm";
@@ -25,6 +29,7 @@ import {} from "@mui/material";
 import { AddCircle, RemoveCircle } from "@mui/icons-material";
 import { MobileArticleType } from "@/types/mobiles";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
+import ExpertView from "./ExpertView";
 
 export default function MainSubmitForm({
   brands,
@@ -77,7 +82,7 @@ export default function MainSubmitForm({
   const fileUploadRef = useRef<string[]>([]);
   const displayFileUploadRef = useRef<string[]>([]);
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, register } = methods;
 
   const handleBackdropClose = () => {
     setOpenBackDrop(false);
@@ -137,9 +142,9 @@ export default function MainSubmitForm({
     if (isEdit?.isEdit) {
       const editFieldData = {
         ...formData,
-        id: isEdit?.mobileArticles[0].id
-      }
-      console.log("Form Data:", editFieldData); 
+        id: isEdit?.mobileArticles[0].id,
+      };
+      console.log("Form Data:", editFieldData);
       axios
         .put(`/api/article/mobile`, editFieldData)
         .then((response) => {
@@ -364,6 +369,34 @@ export default function MainSubmitForm({
             </Grid>
             <Grid xs={2}></Grid>
           </Grid>
+
+          <Fragment>
+            <Grid sx={{ mt: 1 }} container>
+              <Grid xs={1.2}></Grid>
+              <Grid xs={9.8}>
+                <Accordion
+                  defaultExpanded
+                  // expanded={expanded === `panel${index + 1}`}
+                  // onChange={handleChange(`panel${index + 1}`)}
+                >
+                  <AccordionSummary
+                    aria-controls={`panelmed-content`}
+                    id={`panelmed-header`}
+                  >
+                    <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                      Expert View
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                   
+                   <ExpertView rhfMethods={methods} />
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+              <Grid xs={2}></Grid>
+            </Grid>
+          </Fragment>
+
           {OtherDetailsForms.map((otherDetails, index) => {
             return (
               <Fragment key={index}>

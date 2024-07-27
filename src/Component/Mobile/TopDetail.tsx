@@ -40,10 +40,10 @@ const TopMobileDetails = ({
   mobileArticles: MobileArticleType;
 }) => {
   return (
-    <Grid sx={{ my: 1 }} container>
+    <Grid  sx={{ my: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
-        <Paper elevation={0}>
+        <Paper   elevation={0}>
           <Box sx={{ padding: 4, color: "#6b6b6b" }}>
             <Typography sx={{ fontSize: 35 }} variant="h1" gutterBottom>
               {mobileArticles?.title}

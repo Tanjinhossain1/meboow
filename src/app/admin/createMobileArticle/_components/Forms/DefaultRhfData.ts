@@ -7,7 +7,8 @@ export type FieldType = {
 };
 
 
-export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType):MobileArticleDefaultFormType => {
+export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): MobileArticleDefaultFormType => {
+    console.log('mobileArticle?.expert_view  ',mobileArticle?.expert_view)
     return {
         title: mobileArticle?.title ? mobileArticle?.title : "",
         market_status: mobileArticle?.market_status ? mobileArticle?.market_status : "",
@@ -22,6 +23,31 @@ export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType):Mobil
             battery: "",
             network: "",
             os: "",
+        },
+        expert_view: mobileArticle?.expert_view ? mobileArticle?.expert_view : {
+            total_score: "",
+            specific_score: {
+                battery: "",
+                display: "",
+                physicalSpecification: "",
+                memory: "",
+                mainCamera: "",
+                processor: "",
+                network: "",
+                selfieCamera: "",
+                connectivity: "",
+                features: "",
+                os: "",
+            },
+            article_urls: "",
+            cons: [{
+                list: "",
+            }],
+            pros: [{
+                list: "",
+            }],
+            verdict: "",
+
         },
         prices: mobileArticle?.prices ? mobileArticle.prices : [{ gbs: "", start_from: "" }],
     }

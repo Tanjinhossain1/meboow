@@ -85,6 +85,7 @@ export const MobileArticles = pgTable(
     battery: jsonb("battery"),
     details: jsonb("details"),
     prices: jsonb("prices"),
+    expert_view: jsonb("expert_view"),
 
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),

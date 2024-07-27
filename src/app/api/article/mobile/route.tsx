@@ -102,7 +102,8 @@ export async function PUT(req: Request) {
       battery,
       details,
       prices,
-      display_image
+      display_image,
+      expert_view
     } = body;
 
     console.log("Updating article with ID:", id);
@@ -135,7 +136,8 @@ export async function PUT(req: Request) {
         battery,
         details,
         prices,
-        display_image
+        display_image,
+        expert_view
       })
       .where(eq(MobileArticles.id, Number(id)))
       .returning();

@@ -123,7 +123,7 @@ export default function CommonFieldDisplay({
                 >
                   {row.map((cell: any, cellIndex: any) => {
                     console.log("cell  cell", cell); 
-                    const displayText = cellIndex === 1 ? `:  ${cell}` : cell
+                    const displayText = cellIndex === 1 ? `<b>:</b>  ${cell}` : cell
                     return (
                       <td
                         key={cellIndex}
