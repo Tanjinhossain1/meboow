@@ -1,10 +1,11 @@
-import { db } from '@/drizzle/db';
+import { getDb } from '@/drizzle/db';
 import { Category } from '@/drizzle/schema';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from "next/server"; 
 
 export async function GET(req: Request) {
     try {
+        const db = await getDb();
         // Perform the database insertion using Drizzle ORM
         const result = await db.select().from(Category).orderBy(desc(Category.createdAt)).execute();
 

@@ -1,4 +1,4 @@
-import { db } from '@/drizzle/db';
+import { getDb } from '@/drizzle/db';
 import { Category } from '@/drizzle/schema';
 import { NextResponse } from "next/server"; 
 
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         if (!title) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
-        
+        const db = await getDb();
         // Perform the database insertion using Drizzle ORM
         const result = await db.insert(Category).values({
             title,

@@ -1,4 +1,4 @@
-import { db } from "@/drizzle/db";
+import { getDb } from "@/drizzle/db";
 import { users } from "@/drizzle/schema";
 
 import { compare } from "bcryptjs";
@@ -24,6 +24,7 @@ const authOptions: NextAuthConfig = {
           throw new Error('Please provide both email and password')
         }
 
+        const db = await getDb();
         const user = await db.select().from(users).where(eq(users.email, email))
 
         if (!user[0]) {

@@ -1,4 +1,4 @@
-import { db } from "@/drizzle/db";
+import { getDb } from "@/drizzle/db";
 import { users } from "@/drizzle/schema";
 import { hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
@@ -16,7 +16,8 @@ export async function POST(req: Request) {
     if (!email || !fullName || !password || !role) {
       return NextResponse.json({ error: "Missing required fields" });
     }
-
+    
+    const db = await getDb();
     // existing user
     const existingUser = await db
       .select()
@@ -34,8 +35,7 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role,
-      })
-      .returning();
+      }) 
 
     return NextResponse.json({
       success: true,

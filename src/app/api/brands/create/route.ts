@@ -1,4 +1,4 @@
-import { db } from '@/drizzle/db';
+import { getDb } from '@/drizzle/db';
 import { TechBrands } from '@/drizzle/schema';
 import { NextResponse } from "next/server"; 
 
@@ -8,14 +8,15 @@ export async function POST(req: Request) {
         const body = await req.json()
         
         const { title ,image} = body;
-
+        
         console.log('body detail created', body, title, );
-
+        
         if (!title || !image) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
         
         // Perform the database insertion using Drizzle ORM
+        const db = await getDb();
         const result = await db.insert(TechBrands).values({
             title,
             image
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({success:true,message:"successfully created Brands",data:result})
     } catch (error) {
-        console.error('Error creating article:', error);
+        console.error('Error creating brands:', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     }
 } 

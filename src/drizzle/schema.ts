@@ -1,18 +1,20 @@
 import {
-  boolean,
-  integer,
-  jsonb,
-  pgTable,
+  // boolean,
+  // integer,
+  // json,
+  // mysqlTable,
+  json,
   primaryKey,
-  serial,
+  int,
   text,
   timestamp,
-} from 'drizzle-orm/pg-core';
+  mysqlTable
+} from 'drizzle-orm/mysql-core';
 
-export const Articles = pgTable(
+export const Articles = mysqlTable(
   'articles',
   {
-    id: serial('id').primaryKey(),
+    id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
     category: text('category').notNull(),
     description: text('description').notNull(),
@@ -21,71 +23,70 @@ export const Articles = pgTable(
     deviceName: text('deviceName'),
     showInNews: text('showInNews'),
     image: text('image').notNull(),
-    content: jsonb('content'),
+    content: json('content'),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   },
 );
 
-export const Category = pgTable(
+export const Category = mysqlTable(
   'category',
   {
-    id: serial('id').primaryKey(),
+    id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull().unique(),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
 )
 
-export const TechBrands = pgTable(
+export const TechBrands = mysqlTable(
   'techBrands',
   {
-    id: serial('id').primaryKey(),
-    title: text('title').notNull().unique(),
+    id: int('id').autoincrement().primaryKey(),
+    title: text('title').notNull(),
     image: text('image').notNull(),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
 )
-export const Brands = pgTable(
+
+export const Brands = mysqlTable(
   'brands',
   {
-    id: serial('id').primaryKey(),
-    title: text('title').notNull().unique(),
+    id: int('id').autoincrement().primaryKey(),
+    title: text('title').notNull(),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
 )
 
-
-export const MobileArticles = pgTable(
+export const MobileArticles = mysqlTable(
   'mobile_articles',
   {
-    id: serial('id').primaryKey(),
-
+    id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
     market_status: text('market_status').notNull(),
     release_date: text('release_date').notNull(),
-    key_specifications: jsonb('key_specifications').notNull(),
+    key_specifications: json('key_specifications').notNull(),
     brands: text('brands').notNull(),
-    image: jsonb('image').notNull(),
-    // details_image:jsonb('details_image').notNull(),
+    image: json('image').notNull(),
+    // details_image:json('details_image').notNull(),
     display_image: text('display_image').notNull(),
 
-    physicalSpecification: jsonb("physicalSpecification"),
-    network: jsonb("network"),
-    display: jsonb("display"),
-    processor: jsonb("processor"),
-    memory: jsonb("memory"),
-    mainCamera: jsonb("mainCamera"),
-    selfieCamera: jsonb("selfieCamera"),
-    os: jsonb("os"),
-    connectivity: jsonb("connectivity"),
-    features: jsonb("features"),
-    battery: jsonb("battery"),
-    details: jsonb("details"),
-    prices: jsonb("prices"),
-    expert_view: jsonb("expert_view"),
+    physicalSpecification: json("physicalSpecification"),
+    network: json("network"),
+    display: json("display"),
+    processor: json("processor"),
+    memory: json("memory"),
+    mainCamera: json("mainCamera"),
+    selfieCamera: json("selfieCamera"),
+    os: json("os"),
+    connectivity: json("connectivity"),
+    features: json("features"),
+    battery: json("battery"),
+    details: json("details"),
+    prices: json("prices"),
+    expert_view: json("expert_view"),
 
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -94,9 +95,9 @@ export const MobileArticles = pgTable(
 
 
 
-// for login users auth js 
+// // for login users auth js 
 
-export const users = pgTable("users", {
+export const users = mysqlTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
@@ -110,7 +111,7 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
 
-export const sessions = pgTable("session", {
+export const sessions = mysqlTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
     .notNull()
@@ -122,7 +123,7 @@ export const sessions = pgTable("session", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
 
-export const verificationTokens = pgTable(
+export const verificationTokens = mysqlTable(
   "verificationToken",
   {
     identifier: text("identifier").notNull(),

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { IGenericResponse, sendResponse } from '@/utils/utils';
 // import { ilike, and, or, desc, asc } from 'drizzle-orm/expressions';
 import { IPaginationOptions, paginationHelpers } from '@/app/api/shared/helpers';
-import { db } from "@/drizzle/db";
+import { getDb } from "@/drizzle/db";
 import { Articles } from "@/drizzle/schema";
 import { and, count, desc, ilike, or } from "drizzle-orm";
 
@@ -19,6 +19,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
 
+        const db = await getDb();
         // Perform the database insertion using Drizzle ORM
         const result = await db.insert(Articles).values({
             title,
@@ -54,8 +55,7 @@ export async function GET(req: NextRequest) {
             page: parseInt(searchParams.get('page') || '1', 10),
             // sortBy: searchParams.get('sortBy') || 'createdAt',
             // sortOrder: searchParams.get('sortOrder') || 'asc',
-        };
-        const total = (await db.select().from(Articles))
+        }; 
         // Perform the database query using Drizzle ORM
         const { data, meta } = await getAll(filters, options);
 
@@ -110,6 +110,7 @@ const getAll = async (
 
     // const orderBy: any = options.sortBy;
 
+    const db = await getDb();
     const articles = all === "all" ? await db
         .select()
         .from(Articles)

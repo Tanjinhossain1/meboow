@@ -3,11 +3,11 @@ import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import { fetchMobileArticleDetails } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
-// import dynamic from "next/dynamic";
-// import TopMobileDetails from "@/Component/Mobile/TopDetail";
-// import BottomMobileDetails from "@/Component/mobile/BottomDetails";
-// import AllImageDisplaying from "@/Component/mobile/AllImageDisplay";
-// import ExpertViewComponent from "@/Component/mobile/ExpertView";
+import TopMobileDetails from "@/Component/mobile/TopDetail";
+import ExpertViewComponent from "@/Component/mobile/ExpertView";
+import BottomMobileDetails from "@/Component/mobile/BottomDetails";
+import AllImageDisplaying from "@/Component/mobile/AllImageDisplay";
+// import dynamic from "next/dynamic"; 
 
 // const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
 // const BottomMobileDetails = dynamic(
@@ -44,7 +44,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
           key="canonical"
         />
       <Navbar />
-      {/* {mobileArticles.data[0] ? (
+      {mobileArticles.data[0] ? (
         <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
       ) : null}
       {mobileArticles.data[0] ? (
@@ -55,7 +55,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       ) : null}
       {mobileArticles.data[0] ? (
         <AllImageDisplaying mobileArticles={mobileArticles.data[0]} />
-      ) : null} */}
+      ) : null}
       <Footer />
     </Fragment>
   );

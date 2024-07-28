@@ -1,6 +1,7 @@
-import { db } from '@/drizzle/db';
+import { getDb } from '@/drizzle/db';
 import { Articles } from '@/drizzle/schema';
 import { eq } from 'drizzle-orm';
+import { MySqlRawQueryResult } from 'drizzle-orm/mysql2';
 import { NextResponse } from "next/server"; 
 
 export async function POST(req: Request) {
@@ -15,7 +16,7 @@ export async function POST(req: Request) {
         if (!title || !category || !description || !image || !content) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
-        
+        const db = await getDb();
         // Perform the database insertion using Drizzle ORM
         const result = await db.insert(Articles).values({
             title,
@@ -54,8 +55,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         if (isNaN(id)) {
             return NextResponse.json({ error: 'Invalid article ID' });
         }
-
-        const result = await db.update(Articles)
+        const db = await getDb();
+        const result:MySqlRawQueryResult = await db.update(Articles)
             .set({
                 title,
                 category,
@@ -70,7 +71,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             .where(eq(Articles.id, id));
 
         // Check if the article was successfully updated
-        if (result.affectedRows === 0) {
+        if (result) {
             return NextResponse.json({ error: 'Article not found' });
         }
 

@@ -1,7 +1,7 @@
 
 
 import { signIn } from '@/auth';
-import { db } from '@/drizzle/db';
+import { getDb } from '@/drizzle/db';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from "next/server";
 

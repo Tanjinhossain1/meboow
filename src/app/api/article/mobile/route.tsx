@@ -1,4 +1,4 @@
-import { db } from "@/drizzle/db";
+import { getDb } from "@/drizzle/db";
 import { MobileArticles } from "@/drizzle/schema";
 import { NextRequest, NextResponse } from "next/server";
 import { and, count, desc, eq, ilike, or } from "drizzle-orm";
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     if (!title || !image) {
       return NextResponse.json({ error: "Missing required fields" });
     }
-
+    const db = await getDb();
     // Perform the database insertion using Drizzle ORM
     const result = await db
       .insert(MobileArticles)
@@ -63,8 +63,7 @@ export async function POST(req: Request) {
         details,
         prices,
         display_image
-      })
-      .returning();
+      }) 
 
     return NextResponse.json({
       success: true,
@@ -112,7 +111,7 @@ export async function PUT(req: Request) {
     if (!id) {
       return NextResponse.json({ error: "Missing ID field for update" });
     }
-
+    const db = await getDb();
     // Perform the database update using Drizzle ORM
     const result = await db
       .update(MobileArticles)
@@ -139,10 +138,9 @@ export async function PUT(req: Request) {
         display_image,
         expert_view
       })
-      .where(eq(MobileArticles.id, Number(id)))
-      .returning();
+      .where(eq(MobileArticles.id, Number(id)));
 
-    if (result.length === 0) {
+    if (result) {
       return NextResponse.json({ error: "Article not found or could not be updated" });
     }
 
@@ -174,7 +172,7 @@ export async function GET(req: NextRequest) {
       // sortBy: searchParams.get('sortBy') || 'createdAt',
       // sortOrder: searchParams.get('sortOrder') || 'asc',
     };
-    const total = await db.select().from(MobileArticles);
+    // const total = await db.select().from(MobileArticles);
     // Perform the database query using Drizzle ORM
     const { data, meta } = await getAll(filters, options);
 
@@ -213,7 +211,7 @@ const getAll = async (
   }
 
   // const orderBy: any = options.sortBy;
-
+  const db = await getDb();
   const mobileArticles =
     all === "all"
       ? await db
