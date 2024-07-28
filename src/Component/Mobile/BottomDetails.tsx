@@ -137,7 +137,10 @@ const BottomMobileDetails = ({
                 </div>
               </Box>
 
-              <Grid sx={{ pl:1,mt:2,  pb: 1,position:"relative" }} container>
+              <Grid
+                sx={{ pl: 1, mt: 2, pb: 1, position: "relative" }}
+                container
+              >
                 <div className="flex justify-center items-center w-full ">
                   <div className="w-full overflow-hidden relative">
                     <div
@@ -150,23 +153,30 @@ const BottomMobileDetails = ({
                     >
                       {accordionDetails.map((item, index) => {
                         return (
-                          <Grid  className="min-w-[100px]   mr-2 flex-shrink-0" key={index} xs={2}>
+                          <Grid
+                            className="min-w-[100px]   mr-2 flex-shrink-0"
+                            key={index}
+                            xs={2}
+                          >
                             <Link
                               to={`item-${index}`}
                               smooth={true}
                               duration={500}
                             >
                               <Button
-                              onClick={()=>setSelectedIndex(index)}
+                                onClick={() => setSelectedIndex(index)}
                                 size="small"
-                          
                                 sx={{
-                                  width:"100%",
+                                  width: "100%",
                                   border: "1px solid lightgray",
                                   px: 1,
                                   borderRadius: 15,
-                                  bgcolor: selectedIndex === index ? "#023359" : "white",
-                                  color: selectedIndex === index ? "white" : "black",
+                                  bgcolor:
+                                    selectedIndex === index
+                                      ? "#023359"
+                                      : "white",
+                                  color:
+                                    selectedIndex === index ? "white" : "black",
                                 }}
                               >
                                 {index === 0 ? `Physical` : item?.name}
