@@ -3,16 +3,12 @@ import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import { fetchMobileArticleDetails } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
-import TopMobileDetails from "@/Component/mobile/TopDetail";
-import ExpertViewComponent from "@/Component/mobile/ExpertView";
-import BottomMobileDetails from "@/Component/mobile/BottomDetails";
-import AllImageDisplaying from "@/Component/mobile/AllImageDisplay";
-// import dynamic from "next/dynamic"; 
+import dynamic from "next/dynamic";
 
-// const TopMobileDetails = dynamic(() => import("./_components/TopDetail"));
-// const BottomMobileDetails = dynamic(
-//   () => import("./_components/BottomDetails")
-// );
+const TopMobileDetails = dynamic(() => import("@/Component/mobile/TopDetail"));
+const ExpertViewComponent = dynamic(() => import("@/Component/mobile/ExpertView"));
+const BottomMobileDetails = dynamic(() => import("@/Component/mobile/BottomDetails"));
+const AllImageDisplaying = dynamic(() => import("@/Component/mobile/AllImageDisplay"));
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
