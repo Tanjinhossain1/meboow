@@ -13,11 +13,12 @@ interface CategoryPropsType {
       category: string;
     };
   }
+ 
 export default async function CategoryPage({ searchParams,params }: CategoryPropsType) {
     const { page, limit } = searchParams;
     const articles = await fetchArticles({ page, limit,category:params?.category });
     const Category = await fetchCategories();
-  
+    console.log('Category.data Category.data', articles,articles.data)
   return (
     <Suspense>
       <Navbar />

@@ -71,7 +71,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             .where(eq(Articles.id, id));
 
         // Check if the article was successfully updated
-        if (result) {
+        if (!result) {
             return NextResponse.json({ error: 'Article not found' });
         }
 

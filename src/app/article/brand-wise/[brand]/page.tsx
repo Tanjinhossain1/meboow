@@ -13,6 +13,7 @@ interface CategoryPropsType {
       brand: string;
     };
   }
+
 export default async function ArticleBrandWisePage({ searchParams,params }: CategoryPropsType) {
     const { page, limit } = searchParams;
     const articles = await fetchArticles({ page, limit,brands:params?.brand });

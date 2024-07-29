@@ -76,10 +76,10 @@ export default function CategoryPageComponent({
   };
 
   useEffect(() => {
-    if (categoryWiseArticles.length === total) {
+    if (categoryWiseArticles?.length === total) {
       setIsHideLoadMore(true);
     }
-  }, [categoryWiseArticles.length, total]);
+  }, [categoryWiseArticles?.length, total]);
 
   return (
     <>

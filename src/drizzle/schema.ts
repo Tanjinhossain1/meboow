@@ -33,7 +33,7 @@ export const Category = mysqlTable(
   'category',
   {
     id: int('id').autoincrement().primaryKey(),
-    title: text('title').notNull().unique(),
+    title: text('title').notNull(),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
@@ -50,15 +50,15 @@ export const TechBrands = mysqlTable(
   }
 )
 
-export const Brands = mysqlTable(
-  'brands',
-  {
-    id: int('id').autoincrement().primaryKey(),
-    title: text('title').notNull(),
-    createdAt: timestamp('createdAt').defaultNow().notNull(),
-    updateAt: timestamp('updateAt').defaultNow().notNull(),
-  }
-)
+// export const Brands = mysqlTable(
+//   'brands',
+//   {
+//     id: int('id').autoincrement().primaryKey(),
+//     title: text('title').notNull(),
+//     createdAt: timestamp('createdAt').defaultNow().notNull(),
+//     updateAt: timestamp('updateAt').defaultNow().notNull(),
+//   }
+// )
 
 export const MobileArticles = mysqlTable(
   'mobile_articles',
@@ -98,9 +98,7 @@ export const MobileArticles = mysqlTable(
 // // for login users auth js 
 
 export const users = mysqlTable("users", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+  id: int("id").autoincrement().primaryKey(),
   // name: text("name"),
   fullName: text("fullName").notNull(),
   email: text("email").notNull(),
@@ -111,28 +109,30 @@ export const users = mysqlTable("users", {
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
 
-export const sessions = mysqlTable("session", {
-  sessionToken: text("sessionToken").primaryKey(),
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  // userName: text("userName")
-  //   .notNull()
-  //   .references(() => users, { onDelete: "cascade" }),
+// export const sessions = mysqlTable("session", {
+//   id: int("userId").primaryKey().autoincrement()
+//     .notNull(),
+//   userId: int("userId")
+//     .notNull(),
+//     // .references(() => users.id, { onDelete: "cascade" }),
+//   sessionToken: text("sessionToken"),
+//   // userName: text("userName")
+//   //   .notNull()
+//   //   .references(() => users, { onDelete: "cascade" }),
 
-  expires: timestamp("expires", { mode: "date" }).notNull(),
-})
+//   expires: timestamp("expires", { mode: "date" }).notNull(),
+// })
 
-export const verificationTokens = mysqlTable(
-  "verificationToken",
-  {
-    identifier: text("identifier").notNull(),
-    token: text("token").notNull(),
-    expires: timestamp("expires", { mode: "date" }).notNull(),
-  },
-  (verificationToken) => ({
-    compositePk: primaryKey({
-      columns: [verificationToken.identifier, verificationToken.token],
-    }),
-  })
-)
+// export const verificationTokens = mysqlTable(
+//   "verificationToken",
+//   {
+//     identifier: text("identifier").notNull(),
+//     token: text("token").notNull(),
+//     expires: timestamp("expires", { mode: "date" }).notNull(),
+//   },
+//   (verificationToken) => ({
+//     compositePk: primaryKey({
+//       columns: [verificationToken.identifier, verificationToken.token],
+//     }),
+//   })
+// )

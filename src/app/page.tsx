@@ -9,6 +9,7 @@ import {
 } from "@/services/articleServices";
 import { Suspense } from "react";
 import { auth } from "@/auth";
+import HomePageLoadingSkeleton from "@/Component/LoadingSkeleton/HomePageLoadingSkeleton";
 
 interface HomePropsType {
   searchParams: {
@@ -31,14 +32,12 @@ async function Home({ searchParams }: HomePropsType) {
   
   const session = await auth()
   const user =  session?.user;
- 
-  
   return (
     <>
       <Suspense>
         <Navbar />
       </Suspense>
-      {articles ? (
+      {articles.data[0] ? (
         <Suspense>
           <Banner
           user={user}
@@ -50,7 +49,7 @@ async function Home({ searchParams }: HomePropsType) {
             mobileArticles={mobileArticles.data}
           />
         </Suspense>
-      ) : null}
+      ) :   <HomePageLoadingSkeleton isOffNavbar />}
       <Suspense>
         <Footer />
       </Suspense>

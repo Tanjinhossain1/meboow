@@ -5,6 +5,7 @@ import {
 } from "@/services/articleServices";
 import React, { Fragment } from "react";
 
+
 export default async function page({ params }: { params: { id: string } }) {
   const mobileArticles = await fetchMobileArticleDetails({ id: params?.id });
   const brands = await fetchBrands();

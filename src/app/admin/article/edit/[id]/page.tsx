@@ -11,6 +11,7 @@ const CreateArticleComponent = dynamic(
   { ssr: false }
 );
 
+
 export default async function EditArticlePage({
   params,
 }: {

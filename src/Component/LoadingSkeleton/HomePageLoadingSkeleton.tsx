@@ -2,10 +2,13 @@ import React, { Fragment } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Assuming you have a custom Skeleton component
 import NavbarLoadingSkeleton from "../Shared/NavbarLoadingSkeleton";
 
-export default function HomePageLoadingSkeleton() {
+export default function HomePageLoadingSkeleton({isOffNavbar}:{isOffNavbar?:boolean}) {
   return (
     <Fragment>
+      {
+        isOffNavbar ? null :
       <NavbarLoadingSkeleton />
+      }
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-0 md:col-span-1 lg:col-span-1 xl:col-span-2"></div>
         <div className="col-span-12 md:col-span-10 lg:col-span-9 xl:col-span-8">

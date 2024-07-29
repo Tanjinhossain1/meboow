@@ -41,7 +41,6 @@ export default function DetailsComponent({
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
 
-  console.log("articleDetail  ", articleDetail.content);
   const rawTitle = params?.title as string;
   const decodedTitle = decodeURIComponent(rawTitle);
 
@@ -115,6 +114,7 @@ export default function DetailsComponent({
                     height={0}
                   />
                   {articleDetail.content?.blocks?.map((block: any) => {
+                    console.log('block   ',block)
                     if (block.type === "paragraph") {
                       return (
                         <div
@@ -265,7 +265,7 @@ export default function DetailsComponent({
                     Related Posts
                   </Typography>
                   <Grid container>
-                    {articles.map((article: RecentArticleDataType) => {
+                    {articles?.map((article: RecentArticleDataType) => {
                       const joinTitle = article.title
                         .split(" ")
                         .map(

@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       .insert(MobileArticles)
       .values({
         title,
-        image,
+        image: JSON.stringify(image),
         brands,
         market_status,
         release_date,
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
       data: result,
     });
   } catch (error) {
-    console.error("Error creating article:", error);
+    console.error("Error creating article POST:", error);
     return NextResponse.json({ error: "Internal Server Error" });
   }
 }
@@ -79,7 +79,6 @@ export async function PUT(req: Request) {
   try {
     // Parse the JSON body
     const body = await req.json();
-
     const {
       id, // Assuming you have an 'id' field to identify the article to update
       title,
@@ -140,7 +139,7 @@ export async function PUT(req: Request) {
       })
       .where(eq(MobileArticles.id, Number(id)));
 
-    if (result) {
+    if (!result) {
       return NextResponse.json({ error: "Article not found or could not be updated" });
     }
 
@@ -239,13 +238,24 @@ const getAll = async (
     .where(and(...whereConditions))
     .execute()
     .then((res) => res[0].count);
+    // const articleData = {
+    //   ...mobileArticles,
+    //   key_specification:
+    // }
 
+    const parsedArticles = mobileArticles.map((article:any) => ({
+      ...article,
+      key_specifications: JSON.parse(article.key_specifications),
+      image: JSON.parse(article.image),
+      prices: JSON.parse(article.prices),
+      // parse other JSON fields as needed
+    }));
   return {
     meta: {
       total,
       page,
       limit,
     },
-    data: mobileArticles,
+    data: parsedArticles,
   };
 };

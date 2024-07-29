@@ -13,8 +13,9 @@ import React from "react";
 export async function generateMetadata(
   { params }: { params: { id: string } },
   parent: ResolvingMetadata
-): Promise<Metadata> {
+): Promise<Metadata | undefined> {
   const articleDetail = await fetchArticlesDetails({ id: params?.id });
+  if(articleDetail?.data[0]){
   const title = articleDetail?.data[0]?.title;
   const desc = articleDetail?.data[0]?.description.slice(0, 130);
   const previousImages = (await parent).openGraph?.images || [];
@@ -29,6 +30,7 @@ export async function generateMetadata(
     },
   };
 }
+}
 
 interface DetailsParams {
   searchParams: {
@@ -42,6 +44,7 @@ interface DetailsParams {
     title: string;
   };
 }
+
 export default async function Details({ params, searchParams }: DetailsParams) {
   const data = await fetchArticlesDetails({ id: params?.id });
   const Category = await fetchCategories();
@@ -63,6 +66,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("-");
+    console.log('articleDetail   ',articles.data)
   return (
     <>
       <link
@@ -71,9 +75,9 @@ export default async function Details({ params, searchParams }: DetailsParams) {
         key="canonical"
       />
       <Navbar />
-      {data?.data ? (
+      {data?.data && mobileArticles.data && data?.data[0] ? (
         <DetailsComponent
-        mobileArticles={mobileArticles.data}
+         mobileArticles={mobileArticles.data}
           brands={Brands?.data}
           articles={articles.data}
           category={Category.data}

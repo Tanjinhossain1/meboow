@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { IGenericResponse, sendResponse } from '@/utils/utils';
+import { IGenericResponse, likeInsensitive, sendResponse } from '@/utils/utils';
 // import { ilike, and, or, desc, asc } from 'drizzle-orm/expressions';
 import { IPaginationOptions, paginationHelpers } from '@/app/api/shared/helpers';
 import { getDb } from "@/drizzle/db";
 import { Articles } from "@/drizzle/schema";
-import { and, count, desc, ilike, or } from "drizzle-orm";
+import { and, count, desc, ilike, or, sql } from "drizzle-orm";
 
 export async function POST(req: Request) {
     try {
@@ -35,7 +35,8 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Internal Server Error' });
     }
 }
-
+ 
+  
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
@@ -58,7 +59,7 @@ export async function GET(req: NextRequest) {
         }; 
         // Perform the database query using Drizzle ORM
         const { data, meta } = await getAll(filters, options);
-
+        console.log('this is the server data of results   ',data,meta)
         return NextResponse.json({
             statusCode: 200,
             success: true,
@@ -68,7 +69,7 @@ export async function GET(req: NextRequest) {
             // total
         });
     } catch (error) {
-        console.error('Error fetching articles:', error);
+        console.error('Error fetching articles: top', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     }
 }
@@ -81,28 +82,28 @@ const getAll = async (
     const whereConditions = [];
 
     if (category) {
-        const searchConditions = ilike(Articles["category"], `%${category}%`)
+        const searchConditions = likeInsensitive(Articles["category"], `%${category}%`)
 
         whereConditions.push(searchConditions);
     }
     if (showInNews) {
-        const searchConditions = ilike(Articles["showInNews"], `%${showInNews}%`)
+        const searchConditions = likeInsensitive(Articles["showInNews"], `%${showInNews}%`)
 
         whereConditions.push(searchConditions);
     }
     if (latestDevice) {
-        const searchConditions = ilike(Articles["latestDevice"], `%${latestDevice}%`)
+        const searchConditions = likeInsensitive(Articles["latestDevice"], `%${latestDevice}%`)
 
         whereConditions.push(searchConditions);
     }
     if (brands) {
-        const searchConditions = ilike(Articles["brands"], `%${brands}%`)
+        const searchConditions = likeInsensitive(Articles["brands"], `%${brands}%`)
 
         whereConditions.push(searchConditions);
     }
     if (searchTerm) {
         const searchConditions = ['title', 'category', 'description'].map((field) =>
-            ilike((Articles as any)[field], `%${searchTerm}%`)
+            likeInsensitive((Articles as any)[field], `%${searchTerm}%`)
         );
 
         whereConditions.push(or(...searchConditions));

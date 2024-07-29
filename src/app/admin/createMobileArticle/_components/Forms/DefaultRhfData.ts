@@ -8,7 +8,7 @@ export type FieldType = {
 
 
 export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): MobileArticleDefaultFormType => {
-    console.log('mobileArticle?.expert_view  ',mobileArticle?.expert_view)
+    console.log('mobileArticle?.expert_view  ',mobileArticle)
     return {
         title: mobileArticle?.title ? mobileArticle?.title : "",
         market_status: mobileArticle?.market_status ? mobileArticle?.market_status : "",

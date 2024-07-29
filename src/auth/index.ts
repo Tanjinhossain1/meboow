@@ -16,46 +16,71 @@ const authOptions: NextAuthConfig = {
         email: { label: "Email", type: 'email' },
         password: { label: "Password", type: 'password' },
       },
-
-      authorize: async (credentials:any) => {
+      authorize: async (credentials) => {
         const email = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
         if (!email || !password) {
-          throw new Error('Please provide both email and password')
+          throw new Error('Please provide both email and password');
         }
 
         const db = await getDb();
-        const user = await db.select().from(users).where(eq(users.email, email))
+        const user = await db.select().from(users).where(eq(users.email, email));
 
         if (!user[0]) {
-          throw new Error('Invalid Email')
+          throw new Error('Invalid Email');
         }
-        const isMatched = await compare(password, user[0]?.password)
-        console.log('this inside credintioal ', isMatched, password, user[0]?.password)
-        if (password === user[0]?.password) {
-          console.log('Password Match')
-          const userData = {
-            fullName: user[0].fullName,
-            email: user[0].email,
-            id: user[0].id,
-            role: user[0].role,
-          }
-          return userData;
-        } else if (!isMatched) {
-          throw new Error('Password did not matched')
+        const isMatched = await compare(password, user[0]?.password);
+        if (!isMatched) {
+          throw new Error('Password did not match');
         }
-        const userData = {
+
+        const userData: User = {
           fullName: user[0].fullName,
           email: user[0].email,
-          id: user[0].id,
+          id: user[0].id.toString(), // Ensure id is a string
           role: user[0].role,
-        }
+        };
         return userData;
       },
+      // authorize: async (credentials:any) => {
+      //   const email = credentials?.email as string | undefined;
+      //   const password = credentials?.password as string | undefined;
+      //   if (!email || !password) {
+      //     throw new Error('Please provide both email and password')
+      //   }
+
+      //   const db = await getDb();
+      //   const user = await db.select().from(users).where(eq(users.email, email))
+
+      //   if (!user[0]) {
+      //     throw new Error('Invalid Email')
+      //   }
+      //   const isMatched = await compare(password, user[0]?.password)
+      //   console.log('this inside credintioal ', isMatched, password, user[0]?.password)
+      //   if (password === user[0]?.password) {
+      //     console.log('Password Match')
+      //     const userData = {
+      //       fullName: user[0].fullName,
+      //       email: user[0].email,
+      //       id: user[0].id,
+      //       role: user[0].role,
+      //     }
+      //     return userData;
+      //   } else if (!isMatched) {
+      //     throw new Error('Password did not matched')
+      //   }
+      //   const userData = {
+      //     fullName: user[0].fullName,
+      //     email: user[0].email,
+      //     id: user[0].id,
+      //     role: user[0].role,
+      //   }
+      //   return userData;
+      // },
     })
   ],
   callbacks: {
-    async jwt({ token, user }:any) {
+    async jwt({ token, user }: any) {
       console.log('user  token 1: ', token, user)
       if (user) {
         token.email = user.email;
@@ -65,7 +90,7 @@ const authOptions: NextAuthConfig = {
       }
       return token;
     },
-    async session({ session, token }:any) {
+    async session({ session, token }: any) {
       console.log('user  token 2:  ', token, session)
       session.user.email = token?.email as string;
       session.user.fullName = token?.fullName as string;

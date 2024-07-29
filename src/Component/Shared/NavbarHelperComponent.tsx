@@ -51,7 +51,7 @@ function NavbarHelper({
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log("search  ", event);
+    console.log("search  ", event.target.search.value);
     const search = event.target.search.value;
     history.push(`/search?search=${search}`);
   };
@@ -410,6 +410,7 @@ function NavbarHelper({
                     <div className="relative w-full ">
                       <input
                         type="text"
+                        name="search"
                         className="sm:w-[350px] md:w-[450px]  py-2 pl-10 pr-4 text-gray-700 bg-[#eaf2ff] border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Search mobiles, laptops, brands, and more..."
                       />

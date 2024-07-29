@@ -9,10 +9,5 @@ export default defineConfig({
   out: './drizzle', // Output directory for generated files
   dbCredentials: {
    url: process.env.DATABASE_URL || "",
-  //  host: "82.197.82.40",
-  //  user: "u561151798_safarilistDev",
-  //  database: "u561151798_safarilist_dev",
-  //  password:"Workwithmht671@",
-  //  port: 3306
   },
 });

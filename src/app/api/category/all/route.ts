@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     try {
         const db = await getDb();
         // Perform the database insertion using Drizzle ORM
-        const result = await db.select().from(Category).orderBy(desc(Category.createdAt)).execute();
+        const result = await db.select().from(Category).orderBy(desc(Category.createdAt))
 
         return NextResponse.json({success:true,message:"successfully Get all Category",data:result})
     } catch (error) {

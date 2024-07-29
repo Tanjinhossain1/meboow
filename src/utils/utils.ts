@@ -2,6 +2,14 @@ import { Response } from 'express';
 import { NextResponse } from 'next/server';
 // utils/formatDate.js
 import { format } from 'date-fns';
+import { sql } from 'drizzle-orm';
+
+
+
+
+export const likeInsensitive = (column:any, value:any) => {
+  return sql`${sql.raw('LOWER(')}${column}${sql.raw(')')} LIKE LOWER(${value})`;
+};
 
 export function formatDate(isoDateString:string) {
   // Parse the ISO date string into a Date object

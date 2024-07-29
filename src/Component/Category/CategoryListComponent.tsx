@@ -17,7 +17,7 @@ export default function CategoryListComponent({
         </Typography>
       </Container>
 
-      {category.map((value: CategoryTypes) => {
+      {category?.map((value: CategoryTypes) => {
         return (
           <Typography
             sx={{
