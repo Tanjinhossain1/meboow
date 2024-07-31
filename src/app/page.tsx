@@ -37,7 +37,7 @@ async function Home({ searchParams }: HomePropsType) {
       <Suspense>
         <Navbar />
       </Suspense>
-      {articles.data[0] ? (
+      {articles.data && articles.data[0] ? (
         <Suspense>
           <Banner
           user={user}
