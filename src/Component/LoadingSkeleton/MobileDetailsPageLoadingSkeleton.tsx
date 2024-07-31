@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Assuming you have a custom Skeleton component
 import NavbarLoadingSkeleton from "../Shared/NavbarLoadingSkeleton";
 import { Box, Grid, Typography } from "@mui/material";
-import { specifications } from "../mobile/TopDetail";
+import { specifications } from "../Mobile/TopDetail";
 
 export const TopBox = ()=>{
   return(

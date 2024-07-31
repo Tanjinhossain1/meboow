@@ -5,10 +5,10 @@ import { fetchMobileArticleDetails, fetchMobileArticles } from "@/services/artic
 import { Metadata, ResolvingMetadata } from "next";
 import dynamic from "next/dynamic";
 
-const TopMobileDetails = dynamic(() => import("@/Component/mobile/TopDetail"));
-const ExpertViewComponent = dynamic(() => import("@/Component/mobile/ExpertView"));
-const BottomMobileDetails = dynamic(() => import("@/Component/mobile/BottomDetails"));
-const AllImageDisplaying = dynamic(() => import("@/Component/mobile/AllImageDisplay"));
+const TopMobileDetails = dynamic(() => import("@/Component/Mobile/TopDetail"));
+const ExpertViewComponent = dynamic(() => import("@/Component/Mobile/ExpertView"));
+const BottomMobileDetails = dynamic(() => import("@/Component/Mobile/BottomDetails"));
+const AllImageDisplaying = dynamic(() => import("@/Component/Mobile/AllImageDisplay"));
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
