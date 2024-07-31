@@ -6,9 +6,13 @@ import * as schema from './schema';
 let database: ReturnType<typeof drizzle> | null = null;
 
 export async function getDb() {
-  if (!database) {
-    const connection = await mysql.createConnection(process.env.DATABASE_URL!);
-    database = drizzle(connection, { schema,mode: "default"  });
+  try {
+    if (!database) {
+      const connection = await mysql.createConnection(process.env.DATABASE_URL!);
+      database = drizzle(connection, { schema, mode: "default" });
+      return database;
+    }
+  } catch (error) {
+    console.log('database connection error ', error)
   }
-  return database;
 }

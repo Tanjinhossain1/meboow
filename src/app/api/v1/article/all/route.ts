@@ -20,6 +20,9 @@ export async function POST(req: Request) {
         }
 
         const db = await getDb();
+        console.log(
+            'connected to the db: get all articles ---> api/v1/article/all'
+        )
         // Perform the database insertion using Drizzle ORM
         const result = await db.insert(Articles).values({
             title,
@@ -112,6 +115,9 @@ const getAll = async (
     // const orderBy: any = options.sortBy;
 
     const db = await getDb();
+    console.log(
+        'connected to the db: get all articles ---> api/v1/article/all'
+    )
     const articles = all === "all" ? await db
         .select()
         .from(Articles)

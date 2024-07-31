@@ -16,7 +16,10 @@ export async function POST(req: Request) {
         if (!title || !category || !description || !image || !content) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
-        const db = await getDb();
+        const db = await getDb(); 
+         console.log(
+            'connected to the db: create articles ---> api/article/create'
+        )
         // Perform the database insertion using Drizzle ORM
         const result = await db.insert(Articles).values({
             title,
@@ -56,6 +59,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             return NextResponse.json({ error: 'Invalid article ID' });
         }
         const db = await getDb();
+        console.log(
+            'connected to the db: update  articles ---> api/v1/article/all'
+        )
         const result:MySqlRawQueryResult = await db.update(Articles)
             .set({
                 title,
