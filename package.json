@@ -9,10 +9,10 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "test:prod": "next lint --fix && next build",
-    "db:generate": "dotenv drizzle-kit generate",
+    "db:generate": "drizzle-kit generate",
     "db:introspect": "dotenv drizzle-kit introspect",
     "db:migrate": "dotenv tsx src/server/db/migrate.ts",
-    "db:push": "dotenv drizzle-kit push",
+    "db:push": "drizzle-kit push",
     "db:drop-migration": "drizzle-kit drop",
     "db:studio": "dotenv drizzle-kit studio"
   },
