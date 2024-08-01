@@ -12,7 +12,7 @@ export async function GET(req: Request,{ params }: { params: { id: string } }) {
         const data = await db.select().from(Articles).where(eq(Articles.id, Number(params?.id)))
         const parsedArticles = data.map((article:any) => ({
             ...article,
-            content: JSON.parse(article.content),
+            // content: JSON.parse(article.content),
             // parse other JSON fields as needed
           }));
         return NextResponse.json({

@@ -15,7 +15,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
   const articleDetail = await fetchArticlesDetails({ id: params?.id });
-  if(articleDetail?.data[0]){
+  if(articleDetail?.data && articleDetail?.data[0]){
   const title = articleDetail?.data[0]?.title;
   const desc = articleDetail?.data[0]?.description.slice(0, 130);
   const previousImages = (await parent).openGraph?.images || [];

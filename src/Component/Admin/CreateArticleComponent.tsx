@@ -219,7 +219,9 @@ export default function CreateArticleComponent({
               handleClick("Article Updated SuccessFully");
               
                 handleBackdropClose();
-                window.location.reload();
+                setTimeout(() => {
+                  window.location.reload();
+                }, 200);
              
             }
           })
