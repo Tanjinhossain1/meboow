@@ -40,7 +40,7 @@ const RegisterComponent = () => {
             title: response?.data?.message,
           });
           const data = response?.data?.data[0];
-
+          console.log('first data', data)
           await signIn("credentials", {
             redirect: false,
             email: data?.email,

@@ -24,12 +24,14 @@ export default function RecentArticleComponent({
   category,
   latestArticles,
   brands,
+  user
 }: {
   articles: RecentArticleDataType[];
   total: number;
   category: CategoryTypes[];
   latestArticles: RecentArticleDataType[];
   brands: BrandTypes[];
+  user:any
 }) {
   const [isHideLoadMore, setIsHideLoadMore] = useState<boolean>(false);
   const history = useRouter();
@@ -71,7 +73,7 @@ export default function RecentArticleComponent({
               console.log(data);
               return (
                 <Fragment key={data.id}>
-                  <DisplayArticleComponent  data={data} />
+                  <DisplayArticleComponent user={user}  data={data} />
                 </Fragment>
               );
             })}
@@ -82,7 +84,7 @@ export default function RecentArticleComponent({
               console.log(data);
               return (
                 <Fragment key={data.id}>
-                  <DisplayArticleComponent asSmall  data={data} />
+                  <DisplayArticleComponent user={user} asSmall  data={data} />
                 </Fragment>
               );
             })}

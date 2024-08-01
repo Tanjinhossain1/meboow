@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({success:true,message:"successfully created article",data:result})
     } catch (error) {
-        console.error('Error creating article:', error);
+        console.error('Error creating article: api/article/create', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     }
 } 
@@ -83,7 +83,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
         return NextResponse.json({ success: true, message: 'Article updated successfully', data: result });
     } catch (error) {
-        console.error('Error updating article:', error);
+        console.error('Error updating article: api/article/create', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     }
 }

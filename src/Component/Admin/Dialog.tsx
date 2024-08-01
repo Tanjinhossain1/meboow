@@ -91,6 +91,8 @@ export default function DialogComponent({
             startAdornment={<InputAdornment position="start"></InputAdornment>}
           />
         </FormControl>
+        {
+          isBrand ? 
         <FileUpload
           runAfterChange={async (file) => {
             console.log("Uploading file brand", file);
@@ -120,7 +122,8 @@ export default function DialogComponent({
           }}
           required
           name="titleImage"
-        />
+        /> : null
+      }
         <Container sx={{ display: "flex", justifyContent: "end", gap: 3 }}>
           <Button color="error" onClick={handleDialogClose} variant="contained">
             Cancel

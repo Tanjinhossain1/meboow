@@ -18,6 +18,7 @@ const ImageDisplay = ({
 }: {
   mobileArticles: MobileArticleType;
 }) => {
+  console.log('mobileArticles  ',mobileArticles)
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);

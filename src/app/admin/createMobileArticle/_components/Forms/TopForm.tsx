@@ -272,7 +272,7 @@ export default function TopForm({
                           isMultiple: true,
                           urls: "/api/v1/image/upload/mobile",
                           defaultImageUrls: isEdit?.mobileArticles[0].image
-                            ? isEdit?.mobileArticles[0].image
+                            ? isEdit?.mobileArticles[0].image 
                             : [],
                           getImageDatas: (images) => {
                             console.log("Images uploaded ", images);

@@ -10,9 +10,11 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 export default function DisplayArticleComponent({
   data,
   asSmall,
+  user
 }: {
   data: RecentArticleDataType;
   asSmall?: boolean;
+  user: any; // Replace with actual user data type
 }) {
   const history = useRouter();
 
@@ -105,7 +107,7 @@ export default function DisplayArticleComponent({
           {formatDate(data.createdAt)}
           {/* {asSmall ? formatDate(data.createdAt) : null} */}
         </Typography>
-        {/* {user?.role === "admin" ?  */}
+        {user?.role === "admin" ? 
         <Typography
           sx={{
             color: "#055491",
@@ -120,7 +122,7 @@ export default function DisplayArticleComponent({
         >
           <EditNoteIcon />
         </Typography>
-        {/* : null} */}
+        : null}
       </Grid>
     </Grid>
   );

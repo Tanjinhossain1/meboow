@@ -29,8 +29,9 @@ const authOptions: NextAuthConfig = {
         if (!user[0]) {
           throw new Error('Invalid Email');
         }
+        console.log('first password of email in credential  ',password,user[0].password);
         const isMatched = await compare(password, user[0]?.password);
-        if (!isMatched) {
+        if (password !== user[0]?.password) {
           throw new Error('Password did not match');
         }
 

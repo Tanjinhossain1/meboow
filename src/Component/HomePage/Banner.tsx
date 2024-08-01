@@ -410,6 +410,7 @@ export default function Banner({
             category={category}
             total={total}
             articles={articles}
+            user={user}
           />
         </Paper>
         <Paper sx={{ p: 2, mb: 2 }} elevation={0}>

@@ -30,7 +30,8 @@ export async function POST(req: Request) {
       battery,
       details,
       prices,
-      display_image
+      display_image,
+      expert_view
     } = body;
 
     console.log("body detail created", body, title, image);
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
       .insert(MobileArticles)
       .values({
         title,
-        image: JSON.stringify(image),
+        image: image,
         brands,
         market_status,
         release_date,
@@ -62,7 +63,8 @@ export async function POST(req: Request) {
         battery,
         details,
         prices,
-        display_image
+        display_image,
+        expert_view
       }) 
 
     return NextResponse.json({
@@ -245,10 +247,6 @@ const getAll = async (
 
     const parsedArticles = mobileArticles.map((article:any) => ({
       ...article,
-      key_specifications: JSON.parse(article.key_specifications),
-      image: JSON.parse(article.image),
-      prices: JSON.parse(article.prices),
-      // parse other JSON fields as needed
     }));
   return {
     meta: {

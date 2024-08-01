@@ -35,12 +35,20 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role,
-      }) 
-
+      })
+      const insertedId = result[0]?.insertId;
+    
+      // Fetch the newly created user
+      const newUser = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, insertedId));
+  
+  
     return NextResponse.json({
       success: true,
       message: "successfully created User",
-      data: result,
+      data: newUser,
     });
   } catch (error) {
     console.error("Error creating article:", error);
