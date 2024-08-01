@@ -7,7 +7,7 @@ import { Articles } from "@/drizzle/schema";
 import { and, count, desc, ilike, or, sql } from "drizzle-orm";
 
 export async function POST(req: Request) {
-    try {
+    
         // Parse the JSON body
         const body = await req.json()
 
@@ -33,15 +33,12 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json({ success: true, message: "successfully created article", data: result })
-    } catch (error) {
-        console.error('Error creating article:', error);
-        return NextResponse.json({ error: 'Internal Server Error' });
-    }
+  
 }
  
   
 export async function GET(req: NextRequest) {
-    try {
+    
         const { searchParams } = new URL(req.url);
 
         const filters = {
@@ -71,10 +68,7 @@ export async function GET(req: NextRequest) {
             data,
             // total
         });
-    } catch (error) {
-        console.error('Error fetching articles: top', error);
-        return NextResponse.json({ error: 'Internal Server Error' });
-    }
+    
 }
 const getAll = async (
     filters: any,

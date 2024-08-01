@@ -3,7 +3,11 @@
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
+import axios from "axios";
 import { revalidatePath } from "next/cache";
+
+
+
 
 export async function fetchArticles({
   page = "1",
@@ -27,6 +31,7 @@ export async function fetchArticles({
   limit: number;
   total: number;
 }> {
+  
     let url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}`;
     if (category) {
       url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}`;
@@ -40,20 +45,20 @@ export async function fetchArticles({
       url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
     }
 
-    console.log("test 1 ", url, category);
-
+    // const response = await axios.get(url);
+    console.log("test 1 ", url);
     const response = await fetch(url, {
       cache: "no-store",
     });
-
+    
     if (!response.ok) {
       console.error(
         `Failed to fetch articles: ${response.status} ${response.statusText}`
       );
-      throw new Error("Failed to fetch articles");
+       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data =  await response.json();
     revalidatePath("/");
     return {
       data: data.data,
@@ -61,7 +66,6 @@ export async function fetchArticles({
       limit: data.meta?.limit,
       total: data.meta?.total,
     };
-
 }
 export async function fetchMobileArticles({
   page = "1",
@@ -85,67 +89,67 @@ export async function fetchMobileArticles({
   limit: number;
   total: number;
 }> {
-    let url = `${process.env.NEXT_APP_URL}/api/article/mobile`;
-    if (category) {
-      url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}`;
-    } else if (search) {
-      url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&searchTerm=${search}`;
-    } else if (showInNews) {
-      url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&showInNews=${showInNews}`;
-    } else if (latestDevice) {
-      url = `${process.env.NEXT_APP_URL}/api/v1/article/all?latestDevice=${latestDevice}&all=all`;
-    } else if (brands) {
-      url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
-    }
+  let url = `${process.env.NEXT_APP_URL}/api/article/mobile`;
+  if (category) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}`;
+  } else if (search) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&searchTerm=${search}`;
+  } else if (showInNews) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&showInNews=${showInNews}`;
+  } else if (latestDevice) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?latestDevice=${latestDevice}&all=all`;
+  } else if (brands) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
+  }
 
-    console.log("test 1 ", url, category);
+  console.log("test 1 ", url, category);
 
-    const response = await fetch(url, {
-      cache: "no-store",
-    });
+  const response = await fetch(url, {
+    cache: "no-store",
+  });
 
-    if (!response.ok) {
-      console.error(
-        `Failed to fetch mobile articles: ${response.status} ${response.statusText}`
-      );
-      throw new Error("Failed to fetch articles");
-    }
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch mobile articles: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch articles");
+  }
 
-    const data = await response.json();
-    revalidatePath("/");
-    return {
-      data: data.data,
-      page: data.meta?.page,
-      limit: data.meta?.limit,
-      total: data.meta?.total,
-    };
+  const data = await response.json();
+  revalidatePath("/");
+  return {
+    data: data.data,
+    page: data.meta?.page,
+    limit: data.meta?.limit,
+    total: data.meta?.total,
+  };
 
 }
 
 export async function fetchMobileArticleDetails({ id }: { id: string }): Promise<{
   data: MobileArticleType[];
 }> {
-    const response = await fetch(
-      `${process.env.NEXT_APP_URL}/api/article/mobile/details/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
-
-    if (!response.ok) {
-      console.error(
-        `Failed to fetch articles: ${response.status} ${response.statusText}`
-      );
-      throw new Error("Failed to fetch mobile details articles");
+  const response = await fetch(
+    `${process.env.NEXT_APP_URL}/api/article/mobile/details/${id}`,
+    {
+      cache: "no-store",
     }
+  );
 
-    const data = await response.json();
-    // revalidatePath('/')
-    return {
-      data: data?.data,
-    };
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch articles: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch mobile details articles");
+  }
 
-  
+  const data = await response.json();
+  // revalidatePath('/')
+  return {
+    data: data?.data,
+  };
+
+
 }
 export async function fetchArticlesDetails({ id }: { id: string }): Promise<{
   data: RecentArticleDataType[];
@@ -153,70 +157,70 @@ export async function fetchArticlesDetails({ id }: { id: string }): Promise<{
 
 
 
-    const response = await fetch(
-      `${process.env.NEXT_APP_URL}/api/article/detail/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
-
-    if (!response.ok) {
-      console.error(
-        `Failed to fetch articles: ${response.status} ${response.statusText}`
-      );
-      throw new Error("Failed to fetch articles details");
+  const response = await fetch(
+    `${process.env.NEXT_APP_URL}/api/article/detail/${id}`,
+    {
+      cache: "no-store",
     }
+  );
 
-    const data = await response.json();
-    // revalidatePath('/')
-    return {
-      data: data?.data,
-    };
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch articles: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch articles details");
+  }
+
+  const data = await response.json();
+  // revalidatePath('/')
+  return {
+    data: data?.data,
+  };
 
 }
 
 export async function fetchCategories(): Promise<{
   data: CategoryTypes[];
 }> {
- 
-    const response = await fetch(`${process.env.NEXT_APP_URL}/api/category/all`, {
-      cache: "no-store",
-    });
 
-    if (!response.ok) {
-      console.error(
-        `Failed to fetch Category: ${response.status} ${response.statusText}`
-      );
-      throw new Error("Failed to fetch Category");
-    }
+  const response = await fetch(`${process.env.NEXT_APP_URL}/api/category/all`, {
+    cache: "no-store",
+  });
 
-    const data = await response.json();
-    // revalidatePath('/')
-    return {
-      data: data?.data,
-    };
- 
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch Category: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch Category");
+  }
+
+  const data = await response.json();
+  // revalidatePath('/')
+  return {
+    data: data?.data,
+  };
+
 }
 
 export async function fetchBrands(): Promise<{
   data: BrandTypes[];
 }> {
-    const response = await fetch(`${process.env.NEXT_APP_URL}/api/brands/all`, {
-      cache: "no-store",
-    });
+  const response = await fetch(`${process.env.NEXT_APP_URL}/api/brands/all`, {
+    cache: "no-store",
+  });
 
-    if (!response.ok) {
-      console.error(
-        `Failed to fetch brands: ${response.status} ${response.statusText}`
-      );
-      throw new Error("Failed to fetch Brands");
-    }
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch brands: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch Brands");
+  }
 
-    const data = await response.json();
-    // revalidatePath('/')
-    return {
-      data: data?.data,
-    };
+  const data = await response.json();
+  // revalidatePath('/')
+  return {
+    data: data?.data,
+  };
 }
 
 // "use server";
