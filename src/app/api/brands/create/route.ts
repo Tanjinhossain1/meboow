@@ -1,8 +1,10 @@
 import { getDb } from '@/drizzle/db';
 import { TechBrands } from '@/drizzle/schema';
+import { revalidatePath, unstable_noStore } from 'next/cache';
 import { NextResponse } from "next/server"; 
 
 export async function POST(req: Request) {
+    unstable_noStore()
     try {
         // Parse the JSON body
         const body = await req.json()
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
             title,
             image
         });
-
+        revalidatePath('/')
         return NextResponse.json({success:true,message:"successfully created Brands",data:result})
     } catch (error) {
         console.error('Error creating brands:', error);

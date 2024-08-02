@@ -136,7 +136,7 @@ export default function CategoryPageComponent({
                       console.log(data);
                       return (
                         <Fragment key={data.id}>
-                          <DisplayArticleComponent data={data} />
+                          <DisplayArticleComponent   data={data} />
                         </Fragment>
                       );
                     })}

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -32,8 +32,9 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FeedIcon from "@mui/icons-material/Feed";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import LogoutIcon from '@mui/icons-material/Logout';
-import { signOut } from "@/auth/helpers";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { signOut } from "next-auth/react";
+import BackdropProviderContext from "../BackdropProvider";
 
 function NavbarHelper({
   isLoginUser,
@@ -44,6 +45,7 @@ function NavbarHelper({
 }) {
   const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
+  const { handleOpen, handleClose } = useContext(BackdropProviderContext);
   console.log("user  ", isLoginUser);
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -152,7 +154,9 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{color:"black"}} href={"/aboutus"}>About Us</Link>
+              <Link style={{ color: "black" }} href={"/aboutus"}>
+                About Us
+              </Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -164,7 +168,9 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{color:"black"}} href={"/contactUs"}>Contact us</Link>
+              <Link style={{ color: "black" }} href={"/contactUs"}>
+                Contact us
+              </Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -176,7 +182,9 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{color:"black"}} href={"/privacyPolicy"}>Privacy Policy</Link>
+              <Link style={{ color: "black" }} href={"/privacyPolicy"}>
+                Privacy Policy
+              </Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -188,7 +196,9 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{color:"black"}} href={"/termCondition"}>Terms Condition</Link>
+              <Link style={{ color: "black" }} href={"/termCondition"}>
+                Terms Condition
+              </Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -200,7 +210,9 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{color:"black"}} href={"/faq"}>FAQ</Link>
+              <Link style={{ color: "black" }} href={"/faq"}>
+                FAQ
+              </Link>
             </Typography>
           </Grid>
           <Grid xs={4}>
@@ -212,7 +224,9 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{color:"black"}} href={"/helpus"}>Tip Us</Link>
+              <Link style={{ color: "black" }} href={"/helpus"}>
+                Tip Us
+              </Link>
             </Typography>
           </Grid>
         </Grid>
@@ -251,7 +265,9 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{color:"black"}} href={"/aboutus"}>About Us</Link>
+                  <Link style={{ color: "black" }} href={"/aboutus"}>
+                    About Us
+                  </Link>
                 </Typography>
 
                 <Typography
@@ -262,7 +278,9 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{color:"black"}} href={"/contactUs"}>Contact us</Link>
+                  <Link style={{ color: "black" }} href={"/contactUs"}>
+                    Contact us
+                  </Link>
                 </Typography>
 
                 <Typography
@@ -273,7 +291,9 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{color:"black"}} href={"/privacyPolicy"}>Privacy Policy</Link>
+                  <Link style={{ color: "black" }} href={"/privacyPolicy"}>
+                    Privacy Policy
+                  </Link>
                 </Typography>
 
                 <Typography
@@ -284,7 +304,9 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{color:"black"}} href={"/termCondition"}>Terms Condition</Link>
+                  <Link style={{ color: "black" }} href={"/termCondition"}>
+                    Terms Condition
+                  </Link>
                 </Typography>
 
                 <Typography
@@ -295,7 +317,9 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{color:"black"}} href={"/faq"}>FAQ</Link>
+                  <Link style={{ color: "black" }} href={"/faq"}>
+                    FAQ
+                  </Link>
                 </Typography>
                 <Typography
                   gap={2}
@@ -305,7 +329,13 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{color:"black"}} rel="canonical"  href={"/helpus"}>Tip Us</Link>
+                  <Link
+                    style={{ color: "black" }}
+                    rel="canonical"
+                    href={"/helpus"}
+                  >
+                    Tip Us
+                  </Link>
                 </Typography>
               </Grid>
             </Grid>
@@ -487,23 +517,34 @@ function NavbarHelper({
                 </Grid>
                 <Grid textAlign={"end"} xs={1}>
                   {isLoginUser ? (
-                   <LogoutIcon onClick={()=>signOut()} sx={{ mt: 1 }} />
-                  ) :  <>
-                  <Popover>
-                    <PopoverTrigger>
-                      <LoginIcon sx={{ mt: 1 }} />
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[355px] md:w-[550px]">
-                      <LoginComponent />
-                    </PopoverContent>
-                  </Popover>
+                    <LogoutIcon
+                      sx={{ cursor: "pointer", mt: 1 }}
+                      onClick={() => {
+                         
+                          handleOpen(); 
+                        signOut();
+                       setTimeout(() => {
+                        handleClose();
+                       }, 1000);
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <Popover>
+                        <PopoverTrigger>
+                          <LoginIcon sx={{ mt: 1 }} />
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[355px] md:w-[550px]">
+                          <LoginComponent />
+                        </PopoverContent>
+                      </Popover>
 
-                  <GroupAddIcon
-                    sx={{ ml: 1.5, mt: 1 }}
-                    onClick={() => history.push("/register")}
-                  />
-                </>}
-                 
+                      <GroupAddIcon
+                        sx={{ ml: 1.5, mt: 1 }}
+                        onClick={() => history.push("/register")}
+                      />
+                    </>
+                  )}
                 </Grid>
                 {/* <Grid xs={4}>
                 <ListItem

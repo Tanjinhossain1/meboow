@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       .values({
         fullName,
         email,
-        password: hashedPassword,
+        password: password,
         role,
       })
       const insertedId = result[0]?.insertId;

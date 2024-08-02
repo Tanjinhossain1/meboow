@@ -1,6 +1,6 @@
-import { handlers } from "@/auth";
-import { getDb } from "@/drizzle/db";
-import { MobileArticles } from "@/drizzle/schema";
+import { authConfig } from "@/lib/auth";
+import NextAuth from "next-auth/next";
 
-export const { GET, POST } = handlers;
+const handler = NextAuth(authConfig);
 
+export { handler as GET, handler as POST };

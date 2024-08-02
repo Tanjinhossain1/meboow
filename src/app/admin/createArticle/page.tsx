@@ -11,7 +11,7 @@ const CreateArticleComponent = dynamic(
 export default async function CreateArticle() {
   const categories = await fetchCategories();
   const brands = await fetchBrands();
-  console.log("categories   ", categories);
+  // console.log("categories   ", categories);
   return (
     <Suspense>
       <CreateArticleComponent brandsData={brands.data} categories={categories.data} />

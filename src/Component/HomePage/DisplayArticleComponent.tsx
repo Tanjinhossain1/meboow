@@ -14,7 +14,7 @@ export default function DisplayArticleComponent({
 }: {
   data: RecentArticleDataType;
   asSmall?: boolean;
-  user: any; // Replace with actual user data type
+  user?: any; // Replace with actual user data type
 }) {
   const history = useRouter();
 

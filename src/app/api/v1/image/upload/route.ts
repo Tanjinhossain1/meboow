@@ -5,7 +5,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
-const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'images');
+const uploadDir = path.join(process.cwd(), 'public',`${process.env.IMAGES_FILE_DIRECTORY}`, 'uploads', 'images');
 
 // Ensure the upload directory exists
 const ensureUploadDirExists = async () => {
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
   await fs.writeFile(filePath, buffer);
 
-  const imageUrl = `/uploads/images/${uniqueFileName}`;
+  const imageUrl = `/${process.env.IMAGES_FILE_DIRECTORY}/uploads/images/${uniqueFileName}`;
 
   return NextResponse.json({ success: 1, file: { url: imageUrl } });
 }

@@ -1,27 +1,49 @@
 "use client";
-import { signIn } from "@/auth/helpers";
 import { Input } from "@/components/ui/input";
+import { hash } from "bcryptjs";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import BackdropProviderContext from "../BackdropProvider";
+import SnackbarProviderContext from "../SnackbarProvider";
 
 const LoginComponent = () => {
-  const [error, setError] = useState(null);
+  
+  const {handleOpen,handleClose} = useContext(BackdropProviderContext)
+  const { handleOpen:SnackbarOpen,handleClose:SnackbarClose } = useContext(SnackbarProviderContext)
+
+  const [error, setError] = useState<string>("");
   const router = useRouter();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setError(null);
+    setError("");
 
+    const data = new FormData(e.currentTarget);
+    handleOpen()
     try {
+      console.log({        email: data.get("email"),
+        password: data.get("password"),})
+  
+      // if (signInResponse && !signInResponse.error) {
+      //   //Redirect to homepage (/timeline)
+      //   router.push("/");
+      // } else {
+      //   console.log("Error: ", signInResponse);
+      //   setError("Your Email or Password is wrong!");
+      // }
       const res = await signIn("credentials", {
         redirect: false,
-        email: e.target.email.value,
-        password: e.target.password.value,
+        email: data.get("email"),
+        password: data.get("password"),
       });
-      window.location.reload()
-      router.push(res);
+      // window.location.reload()
+      handleClose()
+      SnackbarOpen('Login Success',"success")
+      router.push('/');
       console.log("Login successful", res);
     } catch (err: any) {
+      handleClose()
       console.error("Login error", err.message);
       setError(err.message || 'An error occurred');
     }

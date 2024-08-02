@@ -3,14 +3,15 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
-import { signIn } from "@/auth/helpers";
+import { signIn } from "next-auth/react";
+import BackdropProviderContext from "../BackdropProvider";
+import { useContext } from "react";
+import SnackbarProviderContext from "../SnackbarProvider";
 
 const RegisterComponent = () => {
   const router = useRouter();
-  const { toast } = useToast();
-
+  const { handleOpen:SnackbarOpen,handleClose:SnackbarClose } = useContext(SnackbarProviderContext)
+  const {handleOpen,handleClose} = useContext(BackdropProviderContext)
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const fullName = event.target.fullName.value;
@@ -20,25 +21,20 @@ const RegisterComponent = () => {
       fullName,
       email,
       password,
-      role: "user",
+      role: "admin",
     };
+    handleOpen()
     axios
       .post(`/api/auth/register`, data)
       .then(async (response: any) => {
         console.log("response in register ", response);
         if (response?.data?.error) {
           console.log("error in register ", response?.data?.error);
-          toast({
-            variant: "destructive",
-            title: response?.data?.error,
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
+          SnackbarOpen(response?.data?.error,"error");
+          handleClose()
         }
         if (response.data.success) {
-          toast({
-            variant: "default",
-            title: response?.data?.message,
-          });
+          SnackbarOpen(response?.data?.message,"success")
           const data = response?.data?.data[0];
           console.log('first data', data)
           await signIn("credentials", {
@@ -46,12 +42,14 @@ const RegisterComponent = () => {
             email: data?.email,
             password: data?.password,
           });
+          handleClose()
           router.push("/");
         }
       })
       .catch((error) => {
+        handleClose()
         console.log("error in register ", error);
-      });
+      }); 
   };
   return (
     <div className="my-10 max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white border border-[#121212]  dark:bg-black">

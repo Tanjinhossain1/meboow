@@ -9,7 +9,6 @@ import { MobileArticleType } from "@/types/mobiles";
 import MemoryIcon from "@mui/icons-material/Memory";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { auth } from "@/auth";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 export default function TopLatestMobile({

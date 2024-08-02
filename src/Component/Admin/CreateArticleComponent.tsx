@@ -33,6 +33,9 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DialogComponent from "./Dialog";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { RecentArticleDataType } from "@/types/RecentArticle";
+import { unstable_noStore } from "next/cache";
+// import {} from 'next'
+
 
 const Editor = dynamic(
   () => import("../../../src/Component/Editor/EditorForCreateArticle"),
@@ -51,11 +54,12 @@ export default function CreateArticleComponent({
     isEdit: boolean;
   };
 }) {
+  
   const history = useRouter();
   const editorRef = useRef<EditorJS | null>(null);
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
-  console.log("isEdit?.articleDetail  ", isEdit?.articleDetail);
+  console.log("isEdit?.articleDetail  ",categories);
   const [age, setAge] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.category : ""
   );
@@ -234,7 +238,7 @@ export default function CreateArticleComponent({
           .post(`/api/article/create`, data, {
             headers: {
               "Content-Type": "application/json",
-            },
+            }, 
           })
           .then((response: any) => {
             console.log("create success", response);

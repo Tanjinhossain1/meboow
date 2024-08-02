@@ -1,8 +1,5 @@
 
-
-import { signIn } from '@/auth';
-import { getDb } from '@/drizzle/db';
-import { desc } from 'drizzle-orm';
+import { signIn } from "next-auth/react";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

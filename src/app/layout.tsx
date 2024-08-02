@@ -4,6 +4,8 @@ import "./globals.css";
 import React from "react";
 import ThemeProvider from "@/Component/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { BackdropProviderComponent } from "@/Component/BackdropProvider";
+import { SnackbarProviderComponent } from "@/Component/SnackbarProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +23,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* <ThemeProvider> */}
-          {children}
-          <Toaster />
+        <BackdropProviderComponent>
+          <SnackbarProviderComponent>
+            {children}
+            </SnackbarProviderComponent>
+        </BackdropProviderComponent>
+        <Toaster />
         {/* </ThemeProvider> */}
       </body>
     </html>

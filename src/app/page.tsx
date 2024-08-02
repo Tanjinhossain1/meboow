@@ -8,8 +8,9 @@ import {
   fetchMobileArticles,
 } from "@/services/articleServices";
 import { Suspense } from "react";
-import { auth } from "@/auth";
 import HomePageLoadingSkeleton from "@/Component/LoadingSkeleton/HomePageLoadingSkeleton";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/auth";
 
 interface HomePropsType {
   searchParams: {
@@ -30,7 +31,10 @@ async function Home({ searchParams }: HomePropsType) {
   const Category = await fetchCategories();
   const brands = await fetchBrands();
   
-  const session = await auth()
+  const session = await getServerSession(authConfig);
+  console.log(
+    'this is the user  in app/page',session?.user
+  )
   const user =  session?.user;
   return (
     <>

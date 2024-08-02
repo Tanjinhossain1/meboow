@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'images');
+const uploadDir = path.join(process.cwd(), 'public', `${process.env.IMAGES_FILE_DIRECTORY}`,'uploads', 'images');
 
 // Ensure the upload directory exists
 const ensureUploadDirExists = async () => {
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     // Write the image data to the file
     await fs.promises.writeFile(filePath, response.data);
 
-    const imageUrl = `/uploads/images/${fileName}`;
+    const imageUrl = `/${process.env.IMAGES_FILE_DIRECTORY}/uploads/images/${fileName}`;
 
     return NextResponse.json({ success: 1, file: { url: imageUrl } });
   } catch (error) {

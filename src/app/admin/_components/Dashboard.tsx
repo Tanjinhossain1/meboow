@@ -3,7 +3,6 @@
 import React from "react";
 import { Container, Box, Paper, Typography, Button, Grid } from "@mui/material";
 import { redirect, useRouter } from "next/navigation";
-import { auth } from "@/auth";
 
 const Dashboard = ({user}:any) => {
     const router = useRouter()

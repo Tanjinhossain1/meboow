@@ -9,6 +9,7 @@ export async function GET(req: Request) {
         // Perform the database insertion using Drizzle ORM
         const result = await db.select().from(Category).orderBy(desc(Category.createdAt))
 
+        console.log('category  ',result)
         return NextResponse.json({success:true,message:"successfully Get all Category",data:result})
     } catch (error) {
         console.error('Error creating article:', error);

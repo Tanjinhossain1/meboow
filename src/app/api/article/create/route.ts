@@ -2,9 +2,11 @@ import { getDb } from '@/drizzle/db';
 import { Articles } from '@/drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { MySqlRawQueryResult } from 'drizzle-orm/mysql2';
+import { revalidatePath, unstable_noStore } from 'next/cache';
 import { NextResponse } from "next/server"; 
 
 export async function POST(req: Request) {
+    unstable_noStore()
     try {
         // Parse the JSON body
         const body = await req.json()
@@ -32,7 +34,8 @@ export async function POST(req: Request) {
             deviceName,
             showInNews
         });
-
+        
+        revalidatePath('/')
         return NextResponse.json({success:true,message:"successfully created article",data:result})
     } catch (error) {
         console.error('Error creating article: api/article/create', error);
@@ -40,6 +43,7 @@ export async function POST(req: Request) {
     }
 } 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
+    unstable_noStore()
     try {
         // Parse the JSON body
         const body = await req.json();
