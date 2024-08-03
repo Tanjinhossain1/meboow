@@ -94,32 +94,40 @@ export default function DialogComponent({
         {
           isBrand ? 
         <FileUpload
-          runAfterChange={async (file) => {
-            console.log("Uploading file brand", file);
-            const formData = new FormData();
-            formData.append("file", file);
-            try {
-              const response = await axios.post(
-                `/api/v1/image/upload/brands`,
-                formData,
-                {
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
-                }
-              );
+        isSingleImage={{
+          imageUrl:  "",
+          isSingleImage: true,
+          urls: "/api/v1/image/upload/article",
+          getImageDatas(image) {
+            fileUploadRef.current = image;
+          },
+        }}
+          // runAfterChange={async (file) => {
+          //   console.log("Uploading file brand", file);
+          //   const formData = new FormData();
+          //   formData.append("file", file);
+          //   try {
+          //     const response = await axios.post(
+          //       `/api/v1/image/upload/brands`,
+          //       formData,
+          //       {
+          //         headers: {
+          //           "Content-Type": "multipart/form-data",
+          //         },
+          //       }
+          //     );
 
-              if (response.data.success === 1) {
-                console.log("File uploaded successfully", response.data);
-                fileUploadRef.current = response.data?.file?.url;
-              } else {
-                throw new Error("Upload failed");
-              }
-            } catch (error) {
-              console.error("Error uploading file:", error);
-              throw error;
-            }
-          }}
+          //     if (response.data.success === 1) {
+          //       console.log("File uploaded successfully", response.data);
+          //       fileUploadRef.current = response.data?.file?.url;
+          //     } else {
+          //       throw new Error("Upload failed");
+          //     }
+          //   } catch (error) {
+          //     console.error("Error uploading file:", error);
+          //     throw error;
+          //   }
+          // }}
           required
           name="titleImage"
         /> : null

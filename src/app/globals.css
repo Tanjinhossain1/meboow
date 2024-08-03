@@ -99,3 +99,9 @@ body {
   color: black !important;
   font-size: 20 !important;
 }
+
+
+.custom-list li::marker {
+  color: red;
+  font-size: 1rem; 
+}

@@ -111,7 +111,7 @@ const ContentBox = ({
         );
       }}
     >
-      <Image src={image} alt={title} layout="fill" objectFit="cover" />
+      <Image src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`} alt={title} layout="fill" objectFit="cover" />
     </Box>
     <Title
       sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}

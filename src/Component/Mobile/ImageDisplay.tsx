@@ -18,7 +18,7 @@ const ImageDisplay = ({
 }: {
   mobileArticles: MobileArticleType;
 }) => {
-  console.log('mobileArticles  ',mobileArticles)
+  console.log("mobileArticles  ", mobileArticles);
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -107,7 +107,7 @@ const ImageDisplay = ({
             loading="lazy"
             height={300}
             width={300}
-            src={mobileArticles.image[currentIndex]}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobileArticles.image[currentIndex]}`}
             alt={mobileArticles.title}
             onClick={() => handleClickOpen(currentIndex)}
           />
@@ -172,7 +172,7 @@ const ImageDisplay = ({
                 height={200}
                 width={200}
                 className="w-6 sm:w-6 md:w-8 lg:w-6 h-full"
-                src={item}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${item}`}
                 alt={mobileArticles.title}
               />
             </div>
@@ -209,11 +209,7 @@ const ImageDisplay = ({
                           layout="fill"
                           objectFit="contain"
                           //   layout="responsive"
-                          src={
-                            !selectedImageStatus
-                              ? mobileArticles.image[selectIndexForDialog]
-                              : item
-                          }
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${ !selectedImageStatus  ? mobileArticles.image[selectIndexForDialog] : item }`}
                           alt={mobileArticles.title}
                         />
                       </Box>
@@ -260,7 +256,7 @@ const ImageDisplay = ({
                             height={50}
                             width={50}
                             className="w-full h-full"
-                            src={item}
+                            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${item}`}
                             alt={mobileArticles.title}
                           />
                         </div>

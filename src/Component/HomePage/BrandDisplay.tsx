@@ -37,7 +37,7 @@ export default function BrandDisplayComponent({
           >
             <Image
               alt={data?.title}
-              src={data?.image}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data?.image}`}
               width={
                 data?.title === "Samsung"
                   ? 90

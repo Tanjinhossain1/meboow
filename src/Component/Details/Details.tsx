@@ -107,14 +107,14 @@ export default function DetailsComponent({
 
                   <Image
                     style={{ marginTop: "20px" }}
-                    src={articleDetail.image}
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${articleDetail.image}`}
                     alt={articleDetail.title}
                     layout="responsive"
                     width={0}
                     height={0}
                   />
                   {articleDetail.content?.blocks?.map((block: any) => {
-                    console.log('block   ',block)
+                    console.log("block   ", block);
                     if (block.type === "paragraph") {
                       return (
                         <div
@@ -137,14 +137,18 @@ export default function DetailsComponent({
                         ></TagLevel>
                       );
                     } else if (block.type === "image") {
-                      const TagLevel: any = `h${block.data.level}`;
+                      const parsedUrl = new URL(block.data.file.url);
+
+                      // Extract the pathname starting from /get
+                      const extractedPath = parsedUrl.pathname;
+                      console.log('first pathname', extractedPath)
                       return (
                         <Image
                           key={block.id}
                           layout="responsive"
                           width={block.data.height}
                           height={block.data.height}
-                          src={block.data.file.url}
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${extractedPath}`}
                           alt={formattedTitle}
                         ></Image>
                       );
@@ -257,7 +261,6 @@ export default function DetailsComponent({
                       color: "white",
                       p: 1,
                       bgcolor: "#c40069",
-
                     }}
                     variant="h2"
                   >
@@ -298,7 +301,7 @@ export default function DetailsComponent({
                           >
                             <Image
                               style={{ marginTop: "20px" }}
-                              src={article.image}
+                              src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
                               alt={article.title}
                               layout="responsive"
                               width={0}

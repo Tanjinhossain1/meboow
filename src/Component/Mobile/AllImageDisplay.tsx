@@ -92,7 +92,7 @@ const AllImageDisplaying = ({
                           loading="lazy"
                           layout="fill"
                           objectFit="contain"
-                          src={item}
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${item}`}
                           alt={mobileArticles.title}
                         />
                       </Box>

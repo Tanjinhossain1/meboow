@@ -83,11 +83,15 @@ const UploadImageField = ({
           const formData = new FormData();
           formData.append("file", file);
           try {
-            const response = await axios.post(`${isMultiple?.urls}`, formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            });
+            const response = await axios.post(
+              `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/upload`,
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            );
 
             if (response.data.success === 1) {
               console.log("File uploaded successfully", response.data);
@@ -115,7 +119,7 @@ const UploadImageField = ({
           formData.append("file", file);
           try {
             const response = await axios.post(
-              `${isSingleImage?.urls}`,
+              `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/upload`,
               formData,
               {
                 headers: {
@@ -128,7 +132,6 @@ const UploadImageField = ({
               console.log("File uploaded successfully", response.data);
               setImageUrl(response.data?.file?.url);
               setLoading(false);
-              // }
             } else {
               setLoading(false);
               throw new Error("Upload failed");
@@ -204,12 +207,27 @@ const UploadImageField = ({
           <Image
             width={50}
             height={50}
-            src={imageUrl}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${imageUrl}`}
             alt="avatar"
             style={{ width: "100%" }}
           />
           <IconButton
-            onClick={() => setImageUrl("")}
+            onClick={() => {
+              axios
+                .delete(
+                  `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/delete/${imageUrl}`
+                )
+                .then((response) => {
+                  console.log("first response ", response.data);
+                })
+                .catch((err) => {
+                  console.log(
+                    "error in :- src/component/forms/uploadImage",
+                    err
+                  );
+                });
+              setImageUrl("");
+            }}
             aria-label="delete"
             // sx={{ position: "absolute",  zIndex: 1000,p:0}}
           >
@@ -225,12 +243,17 @@ const UploadImageField = ({
                 <Image
                   width={50}
                   height={50}
-                  src={img}
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${img}`}
                   alt="avatar"
                   style={{ width: "100%" }}
                 />
                 <IconButton
-                  onClick={() => handleDeleteImage(index)}
+                  onClick={() => {
+                    axios.delete(
+                      `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/delete/${img}`
+                    );
+                    handleDeleteImage(index);
+                  }}
                   aria-label="delete"
                   sx={{ position: "absolute", zIndex: 1000, p: 0 }}
                 >

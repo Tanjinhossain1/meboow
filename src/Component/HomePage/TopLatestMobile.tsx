@@ -95,7 +95,7 @@ export default function TopLatestMobile({
                             // objectFit: "cover",
                           }}
                           alt={data.title}
-                          src={data.display_image}
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
                           layout=""
                           width={50}
                           height={50}

@@ -38,11 +38,10 @@ export default function DisplayArticleComponent({
       sm={5.6}
     >
       <Grid xs={asSmall ? 5 : 12} sm={5.5} sx={{ height: "100%" }}>
-        {/* <Image src={data.image} alt={data.title} layout="fill" objectFit="cover" /> */}
         <Image
           style={{ width: "100%", cursor: "pointer", height: "100%" }}
           alt=""
-          src={data.image}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.image}`}
           // layout="responsive"
           width={300}
           height={300}

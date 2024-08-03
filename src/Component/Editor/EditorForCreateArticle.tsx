@@ -47,7 +47,7 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
 
                     try {
                       const response = await axios.post(
-                        `/api/v1/image/upload`,
+                        `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/upload`,
                         formData,
                         {
                           headers: {
@@ -56,8 +56,9 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
                         }
                       );
 
+                      console.log('first upload successful ',response)
                       if (response.data.success === 1) {
-                        return response.data;
+                        return {success:1,file:{url:`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${response.data.file?.url}`}};
                       } else {
                         throw new Error("Upload failed");
                       }
