@@ -39,7 +39,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
     <Fragment>
         <link
           rel="canonical"
-          href={`${process.env.NEXT_APP_URL}/mobile/detail/${params?.id}`}
+          href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/detail/${params?.id}`}
           key="canonical"
         />
       <Navbar />
