@@ -1,17 +1,24 @@
 import React, { useEffect } from "react";
 import EditorJS from "@editorjs/editorjs";
-import Paragraph from '@editorjs/paragraph';
+import Paragraph from "@editorjs/paragraph";
 import Header from "@editorjs/header";
 import Table from "@editorjs/table";
 import List from "@editorjs/list";
 import axios from "axios";
 import { ResizableImageTool } from "./EditorImage";
 import { Container } from "@mui/material";
-import Delimiter from '@editorjs/delimiter';
-import Marker from "@editorjs/marker";
+import Delimiter from "@editorjs/delimiter";
+import Marker from "@editorjs/marker"; 
 
-const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRef: any, holderId?: string, defaultData?: any }) => {
-
+const EditorForCreateArticle = ({
+  editorRef,
+  holderId,
+  defaultData,
+}: {
+  editorRef: any;
+  holderId?: string;
+  defaultData?: any;
+}) => {
   useEffect(() => {
     const initializeEditor = async () => {
       if (!editorRef.current) {
@@ -22,7 +29,7 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
           tools: {
             paragraph: {
               class: Paragraph as any,
-              inlineToolbar: true
+              inlineToolbar: true,
             },
             header: {
               class: Header as any,
@@ -38,7 +45,7 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
             },
             image: {
               class: ResizableImageTool as any,
-              inlineToolbar: ['link'],
+              inlineToolbar: ["link"],
               config: {
                 uploader: {
                   async uploadByFile(file: File) {
@@ -56,9 +63,14 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
                         }
                       );
 
-                      console.log('first upload successful ',response)
+                      console.log("first upload successful ", response);
                       if (response.data.success === 1) {
-                        return {success:1,file:{url:`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${response.data.file?.url}`}};
+                        return {
+                          success: 1,
+                          file: {
+                            url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${response.data.file?.url}`,
+                          },
+                        };
                       } else {
                         throw new Error("Upload failed");
                       }
@@ -69,8 +81,8 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
                   },
                   async uploadByUrl(url: any) {
                     const data = {
-                      url
-                    }
+                      url,
+                    };
                     const response = await axios.post(
                       `/api/v1/image/upload/byUrl`,
                       data,
@@ -95,18 +107,24 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
             delimiter: {
               class: Delimiter as any,
               inlineToolbar: true,
-              shortcut: 'CMD+SHIFT+ENTER',
+              shortcut: "CMD+SHIFT+ENTER",
             },
             marker: {
               class: Marker as any,
               inlineToolbar: true,
-            },
+              toolbox:{data: {}}, 
+            }, 
+        
           },
           onReady: () => {
             console.log("Editor.js is ready to work!");
           },
           onChange: (api: any, event: any) => {
-            console.log(api, "Now I know that Editor's content changed!", event);
+            console.log(
+              api,
+              "Now I know that Editor's content changed!",
+              event
+            );
           },
         });
 
@@ -142,7 +160,7 @@ const EditorForCreateArticle = ({ editorRef, holderId, defaultData }: { editorRe
           xs: "95%",
           md: "600%",
         },
-        margin: "auto"
+        margin: "auto",
       }}
     />
   );

@@ -360,10 +360,7 @@ export default function MainSubmitForm({
                         Add Price
                       </Button>
                     </Box>
-                  </Box>
-                  <Button type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
+                  </Box> 
                 </AccordionDetails>
               </Accordion>
             </Grid>

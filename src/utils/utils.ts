@@ -5,7 +5,15 @@ import { format } from 'date-fns';
 import { sql } from 'drizzle-orm';
 
 
-
+export function cleanText(text:string) {
+  // Remove index numbers and dots
+  let cleanedText = text
+  
+  // Remove &nbsp; and replace with a normal space
+  cleanedText = cleanedText.replace(/&nbsp;/g, ' ');
+  
+  return cleanedText;
+}
 
 export const likeInsensitive = (column:any, value:any) => {
   return sql`${sql.raw('LOWER(')}${column}${sql.raw(')')} LIKE LOWER(${value})`;

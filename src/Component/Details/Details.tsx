@@ -18,6 +18,7 @@ import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType } from "@/types/mobiles";
 import MobileListComponent from "./MobileListComponent";
+import { cleanText } from "@/utils/utils";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -155,6 +156,7 @@ export default function DetailsComponent({
                           .split(" ")
                           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                           .join("_");
+                          
                           return(
                           <Link
                             style={{ textDecoration: "none"
@@ -179,7 +181,7 @@ export default function DetailsComponent({
                                   ":hover": { textDecoration: "underline" },
                                 }}
                               >
-                                {header}
+                                {cleanText(header)}
                               </Typography>
                             </Box>
                           </Link>)
@@ -230,8 +232,9 @@ export default function DetailsComponent({
                         ></Image>
                       );
                     } else if (block.type === "list") {
+                      console.log("first list   ",block)
                       return block.data.style === "unordered" ? (
-                        <ul key={block.id}>
+                        <ul style={{ listStyleType: "disc",marginLeft:"20px" }} key={block.id}>
                           {block.data.items.map((item: any) => (
                             <li
                               style={{ marginTop: "10px" }}
@@ -241,10 +244,11 @@ export default function DetailsComponent({
                           ))}
                         </ul>
                       ) : (
-                        <ol key={block.id}>
+                        <ol style={{ listStyleType: "decimal",marginLeft:"20px",marginTop:"3px" }} key={block.id}>
                           {block.data.items.map((item: any) => (
                             <li
                               key={item}
+                              style={{marginTop:"5px"}}
                               dangerouslySetInnerHTML={{ __html: item }}
                             ></li>
                           ))}
