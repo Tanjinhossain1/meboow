@@ -3,6 +3,7 @@ import Footer from "@/Component/HomePage/Footer";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import {
+  Box,
   Breadcrumbs,
   Button,
   Grid,
@@ -12,7 +13,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType } from "@/types/mobiles";
@@ -41,8 +42,26 @@ export default function DetailsComponent({
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
 
+  const [tableOfContents, setTableOfContents] = useState<string[]>([]);
+
   const rawTitle = params?.title as string;
   const decodedTitle = decodeURIComponent(rawTitle);
+
+  useEffect(() => {
+    articleDetail.content?.blocks?.forEach((block: any) => {
+      if (block.type === "header") {
+        console.log("header of content ", block);
+        const headerText = block?.data?.text;
+        setTableOfContents((prev) => {
+          // Check if header already exists
+          if (!prev.includes(headerText)) {
+            return [...prev, headerText];
+          }
+          return prev;
+        });
+      }
+    });
+  }, [articleDetail]);
 
   const formattedTitle = decodedTitle
     .split("-")
@@ -113,23 +132,69 @@ export default function DetailsComponent({
                     width={0}
                     height={0}
                   />
+
                   {articleDetail.content?.blocks?.map((block: any) => {
                     console.log("block   ", block);
                     if (block.type === "paragraph") {
-                      return (
-                        <div
-                          style={{ marginTop: "30px" }}
-                          key={block.id}
-                          dangerouslySetInnerHTML={{
-                            __html: formatText(block.data.text),
-                          }}
-                        ></div>
-                      );
+                      if (block.data.text === "table of content admin") {
+                      return(
+                        <Box
+                        sx={{
+                          p: 2,
+                          border: "1px solid gray",
+                          borderRadius: 1,
+                          mt: 2,
+                        }}
+                      >
+                        <Typography sx={{fontSize:20,fontWeight:600}}>Table Of Contents</Typography>
+                        {tableOfContents.map((header, index) => (
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            href={`#${header}`}
+                            key={index}
+                          >
+                            <Box
+                              sx={{
+                                color: "#007dd1",
+                                display: "flex",
+                                gap: 1,
+                                textDecoration: "none",
+                              }}
+                            >
+                              <span>{index + 1}. </span>
+                              <Typography
+                                sx={{
+                                  display: "inline",
+                                  fontSize: 16,
+                                  color: "#007dd1",
+                                  ":hover": { textDecoration: "underline" },
+                                }}
+                              >
+                                {header}
+                              </Typography>
+                            </Box>
+                          </Link>
+                        ))}
+                      </Box>
+                      )
+                      } else {
+                        return (
+                          <div
+                            style={{ marginTop: "30px" }}
+                            key={block.id}
+                            dangerouslySetInnerHTML={{
+                              __html: formatText(block.data.text),
+                            }}
+                          ></div>
+                        );
+                      }
                     } else if (block.type === "header") {
                       const TagLevel: any = `h${block.data.level}`;
                       console.log("header", block, TagLevel);
+
                       return (
                         <TagLevel
+                          id={block.data.text}
                           key={block.id}
                           dangerouslySetInnerHTML={{
                             __html: block.data.text,
@@ -141,7 +206,7 @@ export default function DetailsComponent({
 
                       // Extract the pathname starting from /get
                       const extractedPath = parsedUrl.pathname;
-                      console.log('first pathname', extractedPath)
+                      console.log("first pathname", extractedPath);
                       return (
                         <Image
                           key={block.id}

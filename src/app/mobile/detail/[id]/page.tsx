@@ -2,11 +2,13 @@ import React, { Fragment, Suspense } from "react";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import {
+  fetchArticles,
   fetchMobileArticleDetails,
   fetchMobileArticles,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import dynamic from "next/dynamic";
+import LatestNews from "@/Component/Mobile/LatestNews";
 
 const TopMobileDetails = dynamic(() => import("@/Component/Mobile/TopDetail"));
 const ExpertViewComponent = dynamic(
@@ -42,6 +44,7 @@ export async function generateMetadata(
 
 const ProductDetails = async ({ params }: { params: { id: string } }) => {
   const mobileArticles = await fetchMobileArticleDetails({ id: params?.id });
+  const articles = await fetchArticles({ page:'1',limit:'12' });
   console.log(" this is the data mobile   ", mobileArticles);
   return (
     <Fragment>
@@ -56,6 +59,9 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
           {" "}
           <TopMobileDetails mobileArticles={mobileArticles.data[0]} />
           <ExpertViewComponent mobileArticles={mobileArticles.data[0]} />
+          {
+            articles?.data && articles?.data[0] ? <LatestNews articles={articles?.data} /> : null
+          }
           <BottomMobileDetails mobileArticles={mobileArticles.data[0]} />
           <AllImageDisplaying mobileArticles={mobileArticles.data[0]} />
         </>

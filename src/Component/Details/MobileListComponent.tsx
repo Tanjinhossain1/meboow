@@ -30,7 +30,7 @@ export default function MobileListComponent({
             }}
             key={value.id}
             onClick={() => {
-              history.push(`/category/${value.title}`);
+              history.push(`/mobile/detail/${value.id}`);
             }}
           >
             {value.title}

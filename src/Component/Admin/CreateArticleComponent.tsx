@@ -36,7 +36,6 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import { unstable_noStore } from "next/cache";
 // import {} from 'next'
 
-
 const Editor = dynamic(
   () => import("../../../src/Component/Editor/EditorForCreateArticle"),
   { ssr: false }
@@ -54,12 +53,11 @@ export default function CreateArticleComponent({
     isEdit: boolean;
   };
 }) {
-  
   const history = useRouter();
   const editorRef = useRef<EditorJS | null>(null);
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
-  console.log("isEdit?.articleDetail  ",categories);
+  console.log("isEdit?.articleDetail  ", categories);
   const [age, setAge] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.category : ""
   );
@@ -77,16 +75,14 @@ export default function CreateArticleComponent({
       .then((response) => {
         if (response?.data?.success) {
           setOpen(true);
-          setShowSuccessText(
-            `Article Delete successfully`
-          );
-            handleBackdropClose();
-             history.push('/')
+          setShowSuccessText(`Article Delete successfully`);
+          handleBackdropClose();
+          history.push("/");
         }
       })
       .catch((err) => {
         console.error("Error creating article:", err);
-        
+
         handleBackdropClose();
         // Handle error if needed
       });
@@ -208,7 +204,7 @@ export default function CreateArticleComponent({
       const updateData = {
         ...data,
         id: isEdit?.articleDetail?.id,
-      }
+      };
       setImageRequiredError(false);
       if (isEdit?.isEdit) {
         await axios
@@ -221,12 +217,11 @@ export default function CreateArticleComponent({
             console.log("create success", response);
             if (response?.data?.success) {
               handleClick("Article Updated SuccessFully");
-              
-                handleBackdropClose();
-                setTimeout(() => {
-                  window.location.reload();
-                }, 200);
-             
+
+              handleBackdropClose();
+              setTimeout(() => {
+                window.location.reload();
+              }, 200);
             }
           })
           .catch((err) => {
@@ -238,7 +233,7 @@ export default function CreateArticleComponent({
           .post(`/api/article/create`, data, {
             headers: {
               "Content-Type": "application/json",
-            }, 
+            },
           })
           .then((response: any) => {
             console.log("create success", response);

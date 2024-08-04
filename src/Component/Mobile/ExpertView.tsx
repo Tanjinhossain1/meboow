@@ -123,10 +123,10 @@ const ExpertViewComponent = ({
             </Typography> */}
             <Grid sx={{ mb: 4 }} container spacing={2} alignItems="center">
               {Object.entries(mobileArticles?.expert_view?.specific_score).map(([key, value]) => {
-                const fillPercentage = (value / 10) * 100;
-                const colorIndex = Math.floor(value) - 1;
+                const fillPercentage = (+value / 10) * 100;
+                const colorIndex = Math.floor(+value) - 1;
                 return (
-                  <Grid
+                 value > 0 ? <Grid
                     alignItems={"center"}
                     textAlign={"center"}
                     item
@@ -138,14 +138,14 @@ const ExpertViewComponent = ({
                       style={{ fontSize: "30px" }}
                       strokeColor={colors[colorIndex]}
                       type="circle"
-                      percent={(value / 10) * 100}
-                      format={(percent) => value}
+                      percent={(+value / 10) * 100}
+                      format={(percent) => +value}
                       size={40}
                     />
                     <Typography sx={{ textAlign: "center" }} variant="body1">
                       {key === "physicalSpecification" ? "Physical" : transformKey(key)}
                     </Typography>
-                  </Grid>
+                  </Grid>:null
                 );
               })}
             </Grid>
@@ -227,7 +227,7 @@ const ExpertViewComponent = ({
                 {mobileArticles?.expert_view?.verdict}
               </Typography>
               <Typography
-                onClick={() => router.push(``)}
+                onClick={() => router.push(mobileArticles?.expert_view?.article_urls)}
                 sx={{
                   textAlign: "end",
                   fontWeight: 600,
