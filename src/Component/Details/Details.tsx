@@ -136,7 +136,7 @@ export default function DetailsComponent({
                   {articleDetail.content?.blocks?.map((block: any) => {
                     console.log("block   ", block);
                     if (block.type === "paragraph") {
-                      if (block.data.text === "table of content admin") {
+                      if (block.data.text === "toc admin") {
                       return(
                         <Box
                         sx={{
@@ -144,13 +144,22 @@ export default function DetailsComponent({
                           border: "1px solid gray",
                           borderRadius: 1,
                           mt: 2,
+                          bgcolor:"#f9f9f9" 
                         }}
+                        className="lg:w-2/4"
+                        key={block.id}
                       >
-                        <Typography sx={{fontSize:20,fontWeight:600}}>Table Of Contents</Typography>
-                        {tableOfContents.map((header, index) => (
+                        <Typography sx={{fontSize:15,mb:0.5,fontWeight:600}}>Table Of Contents</Typography>
+                        {tableOfContents.map((header, index) => {
+                          const formateHeader = header
+                          .split(" ")
+                          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                          .join("_");
+                          return(
                           <Link
-                            style={{ textDecoration: "none" }}
-                            href={`#${header}`}
+                            style={{ textDecoration: "none"
+                            }}
+                            href={`#${formateHeader}`}
                             key={index}
                           >
                             <Box
@@ -158,14 +167,14 @@ export default function DetailsComponent({
                                 color: "#007dd1",
                                 display: "flex",
                                 gap: 1,
-                                textDecoration: "none",
+                                textDecoration: "none"
                               }}
                             >
                               <span>{index + 1}. </span>
                               <Typography
                                 sx={{
                                   display: "inline",
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   color: "#007dd1",
                                   ":hover": { textDecoration: "underline" },
                                 }}
@@ -173,8 +182,8 @@ export default function DetailsComponent({
                                 {header}
                               </Typography>
                             </Box>
-                          </Link>
-                        ))}
+                          </Link>)
+                      })}
                       </Box>
                       )
                       } else {
@@ -191,10 +200,13 @@ export default function DetailsComponent({
                     } else if (block.type === "header") {
                       const TagLevel: any = `h${block.data.level}`;
                       console.log("header", block, TagLevel);
-
+                      const formateHeader = block.data.text
+                      .split(" ")
+                      .map((word:any) => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join("_");
                       return (
                         <TagLevel
-                          id={block.data.text}
+                          id={formateHeader}
                           key={block.id}
                           dangerouslySetInnerHTML={{
                             __html: block.data.text,
