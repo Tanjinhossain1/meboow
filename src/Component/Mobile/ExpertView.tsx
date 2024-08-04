@@ -6,57 +6,20 @@ import {
   Grid,
   Paper,
   Divider,
-  Card,
-  CardContent,
-  CircularProgress,
 } from "@mui/material";
-import MemoryIcon from "@mui/icons-material/Memory";
-import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
-import NetworkCellIcon from "@mui/icons-material/NetworkCell";
-import AndroidIcon from "@mui/icons-material/Android";
-import SdStorageIcon from "@mui/icons-material/SdStorage";
 import { MobileArticleType } from "@/types/mobiles";
-import { styled } from "@mui/system";
 import { Progress } from "antd";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Image from "next/image";
-
-const pros = [
-  "Striking, bright and vivid display",
-  "Anti-reflective coating is a godsend",
-  "Excellent and reliable battery life",
-  "Circle to search and Generative Edit are useful tools",
-  "Great camera setup, useful 5x periscope lens",
-  "Good performance",
-  "7 years of software updates",
-];
-
-const cons = [
-  "Costlier than ever",
-  "Unwieldy size, sharp edges",
-  "Charging speeds need an upgrade",
-  "Some AI features need refinement",
-];
-
-const ratings = [
-  { label: "Design", value: 1 },
-  { label: "Display", value: 2 },
-  { label: "Performance", value: 3.5 },
-  { label: "Battery", value: 4.5 },
-  { label: "Camera", value: 5.5 },
-  { label: "Software", value: 6.5 },
-  { label: "Sound", value: 7.5 },
-  { label: "Usage", value: 8.0 },
-  { label: "VFM", value: 9 },
-  { label: "VFM", value: 10 },
-];
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
+import { useRouter } from "next/navigation";
+import { formatDate_into_month_date_string } from "@/utils/utils";
+ 
 const ExpertViewComponent = ({
   mobileArticles,
 }: {
   mobileArticles: MobileArticleType;
 }) => {
+  const router = useRouter();
   const colors = [
     "#ff0000", // red for 1
     "#f96500", // orange for 2
@@ -69,24 +32,99 @@ const ExpertViewComponent = ({
     "#62b299", // blue for 9
     "#62b299", // violet for 10
   ];
-
+  console.log('mobileArticles  ',mobileArticles)
+  const transformKey = (key:string) => {
+    return key
+      .split(/(?=[A-Z])/)
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
   return (
     <Grid sx={{ my: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
         <Paper elevation={0}>
           <Box className="lg:w-3/4" sx={{ padding: 2 }}>
-            <Typography sx={{ fontSize: 25, fontWeight: 600 }} variant="h4">
-              Expert View
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+             <Box>
+             <Typography sx={{ fontSize: 25, fontWeight: 600 }} variant="h4">
+                Expert View
+              </Typography>
+              <Typography sx={{ fontSize: 12,color:"gray" }}  >
+                on {formatDate_into_month_date_string(mobileArticles.updatedAt)}
+              </Typography>
+              </Box>
+              <Box
+                sx={{
+                  // display: "flex",
+                  alignItems: "center",
+                  // justifyContent: "space-between",
+                  mt: 2,
+                  border: "1px solid #75b09a",
+                  borderRadius: 1,
+                  bgcolor: "#f4faf7",
+                  px: 1.5,
+                  py: 0.5,
+                }}
+              >
+                <Grid alignItems={"center"} xs={12} container>
+                  <Grid xs={2}>
+                    <Progress
+                      // style={{ fontSize: "30px" }}
+                      strokeColor={"#62b299"}
+                      type="circle"
+                      percent={(8 / 10) * 100}
+                      format={(percent) => undefined}
+                      size={25}
+                    />
+                  </Grid>
+                  <Grid xs={6}>
+                    <Typography
+                      variant="caption"
+                      component="div"
+                      color="textSecondary"
+                      sx={{ fontSize: 18, ml: 1 }}
+                    >
+                      <b>{mobileArticles?.expert_view?.total_score}</b>/<span>10</span>
+                    </Typography>
+                  </Grid>
+                  <Grid xs={4}>
+                    <Box>
+                      <Typography
+                        variant="caption"
+                        component="div"
+                        color="textSecondary"
+                        sx={{ fontSize: 12, m: 0, ml: 1 }}
+                      >
+                        Expert
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        component="div"
+                        color="textSecondary"
+                        sx={{ fontSize: 12, m: 0, ml: 1, mt: -0.8 }}
+                      >
+                        Score
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
             <Divider sx={{ my: 2 }} />
             {/* <Typography variant="subtitle2">
                 Feb 11, 2024
             </Typography> */}
-            <Grid sx={{mb:4}} container spacing={2} alignItems="center">
-              {ratings.map((rating) => {
-                const fillPercentage = (rating.value / 10) * 100;
-                const colorIndex = Math.floor(rating.value) - 1;
+            <Grid sx={{ mb: 4 }} container spacing={2} alignItems="center">
+              {Object.entries(mobileArticles?.expert_view?.specific_score).map(([key, value]) => {
+                const fillPercentage = (value / 10) * 100;
+                const colorIndex = Math.floor(value) - 1;
                 return (
                   <Grid
                     alignItems={"center"}
@@ -94,18 +132,18 @@ const ExpertViewComponent = ({
                     item
                     xs={4}
                     sm={2}
-                    key={rating.label}
+                    key={key}
                   >
                     <Progress
                       style={{ fontSize: "30px" }}
                       strokeColor={colors[colorIndex]}
                       type="circle"
-                      percent={(rating.value / 10) * 100}
-                      format={(percent) => rating.value}
+                      percent={(value / 10) * 100}
+                      format={(percent) => value}
                       size={40}
                     />
                     <Typography sx={{ textAlign: "center" }} variant="body1">
-                      {rating.label}
+                      {key === "physicalSpecification" ? "Physical" : transformKey(key)}
                     </Typography>
                   </Grid>
                 );
@@ -129,10 +167,14 @@ const ExpertViewComponent = ({
                       <b>P</b>ros
                     </Typography>
                   </Box>
-                  <Box  component="ul">
-                    {pros.map((pro, index) => (
-                      <Typography  component="li" key={index}>
-                        {pro}
+                  <Box
+                    className="custom-list-pros"
+                    sx={{ pl: 2, listStyleType: "disc" }}
+                    component="ul"
+                  >
+                    {mobileArticles?.expert_view?.pros.map((pro:{list:string}, index) => (
+                      <Typography component="li" key={index}>
+                        {pro.list}
                       </Typography>
                     ))}
                   </Box>
@@ -155,16 +197,52 @@ const ExpertViewComponent = ({
                       <b>C</b>ons
                     </Typography>
                   </Box>
-                  <Box className="custom-list" sx={{ pl: 2, listStyleType: 'disc'}} component="ul">
-                    {cons.map((con, index) => (
+                  <Box
+                    className="custom-list-cons"
+                    sx={{ pl: 2, listStyleType: "disc" }}
+                    component="ul"
+                  >
+                    {mobileArticles?.expert_view?.cons.map((con:{list:string}, index) => (
                       <Typography component="li" key={index}>
-                        {con}
+                        {con.list}
                       </Typography>
                     ))}
                   </Box>
                 </Paper>
               </Grid>
             </Grid>
+            <Box sx={{ mt: 4 }}>
+              <Box sx={{ display: "flex", mb: 1 }}>
+                <Image
+                  alt="verdict"
+                  src={"/comment.png"}
+                  width={30}
+                  height={10}
+                />
+                <Typography sx={{ fontSize: 23, fontWeight: 600, ml: 2 }}>
+                  Verdict
+                </Typography>
+              </Box>
+              <Typography sx={{ fontSize: 15 }}>
+                {mobileArticles?.expert_view?.verdict}
+              </Typography>
+              <Typography
+                onClick={() => router.push(``)}
+                sx={{
+                  textAlign: "end",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  color: "#007fdb",
+                  ":hover": {
+                    textDecoration: "underline",
+                    textDecorationColor: "#007fdb",
+                  },
+                }}
+              >
+                Read {mobileArticles?.title} Review
+                <KeyboardArrowRightOutlinedIcon sx={{ fontSize: 20 }} />
+              </Typography>
+            </Box>
           </Box>
         </Paper>
       </Grid>

@@ -27,6 +27,13 @@ export const truncateText = (text: string, maxLength: number) => {
 };
 
 
+export const formatDate_into_month_date_string = (dateString:string) => {
+  const options:any = { year: 'numeric', month: 'short', day: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', options);
+};
+
+
 
 type IApiReponse<T> = {
   statusCode: number;
