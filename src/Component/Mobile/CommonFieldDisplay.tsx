@@ -67,7 +67,6 @@ export default function CommonFieldDisplay({
         // ></TagLevel>
       );
     } else if (block.type === "image") {
-      const TagLevel: any = `h${block.data.level}`;
       return (
         <Image
           loading="lazy"
@@ -76,7 +75,7 @@ export default function CommonFieldDisplay({
           width={block.data.height}
           height={block.data.height}
           src={block.data.file.url}
-          alt=""
+          alt={block.data.file.url}
         ></Image>
       );
     } else if (block.type === "list") {

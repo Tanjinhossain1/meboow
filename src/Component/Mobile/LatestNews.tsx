@@ -108,7 +108,7 @@ export default function LatestNews({
                             height: "100%",
                             borderRadius:"10px"
                           }}
-                          alt=""
+                          alt={data?.title}
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.image}`}
                           // layout="responsive"
                           width={300}
