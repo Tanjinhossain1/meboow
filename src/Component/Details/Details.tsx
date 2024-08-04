@@ -210,6 +210,7 @@ export default function DetailsComponent({
                         <TagLevel
                           id={formateHeader}
                           key={block.id}
+                          style={{marginTop:"10px"}}
                           dangerouslySetInnerHTML={{
                             __html: block.data.text,
                           }}
@@ -234,7 +235,7 @@ export default function DetailsComponent({
                     } else if (block.type === "list") {
                       console.log("first list   ",block)
                       return block.data.style === "unordered" ? (
-                        <ul style={{ listStyleType: "disc",marginLeft:"20px" }} key={block.id}>
+                        <ul style={{ listStyleType: "disc",marginLeft:"30px" }} key={block.id}>
                           {block.data.items.map((item: any) => (
                             <li
                               style={{ marginTop: "10px" }}
@@ -244,7 +245,7 @@ export default function DetailsComponent({
                           ))}
                         </ul>
                       ) : (
-                        <ol style={{ listStyleType: "decimal",marginLeft:"20px",marginTop:"3px" }} key={block.id}>
+                        <ol style={{ listStyleType: "decimal",marginLeft:"30px",marginTop:"3px" }} key={block.id}>
                           {block.data.items.map((item: any) => (
                             <li
                               key={item}
