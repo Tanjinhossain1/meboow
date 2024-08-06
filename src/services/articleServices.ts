@@ -19,7 +19,8 @@ export async function fetchArticles({
   search,
   latestDevice,
   brands,
-  showInNews
+  showInNews,
+  allArticles,
 }: {
   page?: string;
   limit?: string;
@@ -28,6 +29,7 @@ export async function fetchArticles({
   latestDevice?: string;
   brands?: string;
   showInNews?: string;
+  allArticles?: boolean;
 }): Promise<{
   data: RecentArticleDataType[];
   page: number;
@@ -46,6 +48,8 @@ export async function fetchArticles({
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?latestDevice=${latestDevice}&all=all`;
   } else if (brands) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
+  }else if(allArticles){
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all`;
   }
 
   // const response = await axios.get(url);

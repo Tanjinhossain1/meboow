@@ -14,8 +14,7 @@
     "db:migrate": "dotenv tsx src/server/db/migrate.ts",
     "db:push": "drizzle-kit push",
     "db:drop-migration": "drizzle-kit drop",
-    "db:studio": "dotenv drizzle-kit studio",
-    "generate-sitemap": "node src/app/generate-sitemap.ts"
+    "db:studio": "dotenv drizzle-kit studio"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.1",
