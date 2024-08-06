@@ -30,6 +30,7 @@ import { AddCircle, RemoveCircle } from "@mui/icons-material";
 import { MobileArticleType } from "@/types/mobiles";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
 import ExpertView from "./ExpertView";
+import EditorForCreateArticle from "./EditorForSpecification/EditorForSpecification";
 
 export default function MainSubmitForm({
   brands,
@@ -41,6 +42,9 @@ export default function MainSubmitForm({
     mobileArticles: MobileArticleType[];
   };
 }) {
+
+  const [value, setValue] = useState('');
+
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -78,6 +82,14 @@ export default function MainSubmitForm({
     control: methods.control,
     name: "prices",
   });
+  const {
+    fields: custom_fields,
+    append: custom_field_append,
+    remove: custom_field_remove,
+  } = useFieldArray({
+    control: methods.control,
+    name: "custom_specification_fields",
+  });
 
   const fileUploadRef = useRef<string[]>([]);
   const displayFileUploadRef = useRef<string[]>([]);
@@ -92,18 +104,18 @@ export default function MainSubmitForm({
   };
 
   const onSubmit = async (data: any) => {
-    if (!fileUploadRef.current[0]) {
-      // setImageError(true);
-      setErrorOpen(true);
-      setShowErrorText("Please Select Image");
-      return;
-    }
-    if (!displayFileUploadRef.current) {
-      // setImageError(true);
-      setErrorOpen(true);
-      setShowErrorText("Please Select Display Image");
-      return;
-    }
+    // if (!fileUploadRef.current[0]) {
+    //   // setImageError(true);
+    //   setErrorOpen(true);
+    //   setShowErrorText("Please Select Image");
+    //   return;
+    // }
+    // if (!displayFileUploadRef.current) {
+    //   // setImageError(true);
+    //   setErrorOpen(true);
+    //   setShowErrorText("Please Select Display Image");
+    //   return;
+    // }
 
     handleBackDropOpen();
     const physicalSpecificationData =
@@ -200,8 +212,7 @@ export default function MainSubmitForm({
       return;
     }
     setOpen(false);
-  };
-
+  }; 
   const OtherDetailsForms = [
     {
       holderId: "1",
@@ -276,10 +287,11 @@ export default function MainSubmitForm({
       key: "details",
     },
   ];
+
   return (
     <Fragment>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="w-3/4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
           <TopForm
             isEdit={isEdit}
             fileUploadRef={fileUploadRef}
@@ -360,7 +372,7 @@ export default function MainSubmitForm({
                         Add Price
                       </Button>
                     </Box>
-                  </Box> 
+                  </Box>
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -385,15 +397,13 @@ export default function MainSubmitForm({
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                   
-                   <ExpertView rhfMethods={methods} />
+                    <ExpertView rhfMethods={methods} />
                   </AccordionDetails>
                 </Accordion>
               </Grid>
               <Grid xs={2}></Grid>
             </Grid>
           </Fragment>
-
           {OtherDetailsForms.map((otherDetails, index) => {
             return (
               <Fragment key={index}>
@@ -433,6 +443,83 @@ export default function MainSubmitForm({
               </Fragment>
             );
           })}
+
+          {/* <Grid sx={{ mt: 1 }} container>
+            <Grid xs={1.2}></Grid>
+            <Grid xs={9.8}>
+              {custom_fields.map((field, index) => {
+                // {OtherDetailsForms.map((otherDetails, index) => {
+
+                return (
+                  <Accordion
+                    key={index}
+                    defaultExpanded
+                    // expanded={expanded === `panel${index + 1}`}
+                    // onChange={handleChange(`panel${index + 1}`)}
+                  >
+                    <AccordionSummary
+                      aria-controls={`panel${index + 1}d-content`}
+                      id={`panel${index + 1}d-header`}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width:"100%"
+                        }}
+                      >
+                        <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                          Specifications: {field.display_name}
+                        </Typography>
+                        <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                          {index > 0 && (
+                            <IconButton
+                              color="error"
+                              onClick={() => custom_field_remove(index)}
+                            >
+                              <RemoveCircle />
+                            </IconButton>
+                          )}
+                        </Typography>
+                      </Box>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Grid sx={{ mt: 1 }} container>
+                        <Grid xs={1.2}></Grid>
+                        <Grid xs={9.8}>
+                          <TextField
+                            {...methods.register(
+                              `custom_specification_fields.${index}.display_name`
+                            )}
+                            label="Display Name"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            required
+                            sx={{mb:3}}
+                          /> 
+                          <EditorForCreateArticle name={`custom_specification_fields.${index}.value`}  holderId={`${index + 1}`} /> 
+                        </Grid>
+                        <Grid xs={2}></Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                );
+              })}
+              <Box   sx={{ mt: 2, textAlign: "end", mb: 4 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    custom_field_append({ display_name: "", value: "" })
+                  }
+                  startIcon={<AddCircle />}
+                >
+                  Add Field
+                </Button>
+              </Box>
+            </Grid>
+          </Grid> */}
 
           <Container component="main" sx={{ textAlign: "end" }} maxWidth="sm">
             <Button

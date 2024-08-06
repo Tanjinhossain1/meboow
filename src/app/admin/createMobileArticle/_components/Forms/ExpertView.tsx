@@ -110,6 +110,15 @@ export default function ExpertView({
   const { register } = useFormContext();
 
   const {
+    fields: score_fields,
+    append: score_field_append,
+    remove: score_field_remove,
+  } = useFieldArray({
+    control: rhfMethods.control,
+    name: "expert_view.specific_final_score",
+  });
+
+  const {
     fields: consFields,
     append: consAppend,
     remove: consRemove,
@@ -168,7 +177,69 @@ export default function ExpertView({
             Spec Score
           </Typography>
         </Grid>
-        {OtherDetailsForms.map((otherDetails, index) => {
+        {/* <Grid container>
+          {score_fields.map((field, index) => {
+            // {OtherDetailsForms.map((otherDetails, index) => {
+
+            return (
+              <Fragment key={index}>
+                <Grid xs={3}>
+                  <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
+                    {/* <InputLabel sx={{ mb: 1 }} htmlFor="filled-adornment-amount">
+                    {field.name ? field.name : "Field name "}
+                    <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                  </InputLabel>  
+                    <Grid gap={1} container>
+                      <Grid xs={6.5}>
+                        <TextField
+                          {...rhfMethods.register(
+                            `expert_view.specific_final_score.${index}.name`
+                          )}
+                          label="Display Name"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          required
+                          sx={{ mb: 3 }}
+                        />
+                      </Grid>
+                      <Grid sx={{display:"flex"}} xs={5}>
+                        <TextField
+                          size="small"
+                          {...register(
+                            `expert_view.specific_final_score.${index}.value`,
+                            {
+                              required: true,
+                            }
+                          )}
+                          onKeyPress={(e) =>
+                            handleKeyPress(e, score_field_append)
+                          }
+                          inputProps={{ step: 0.1 }}
+                          //   name="title"
+                          id="filled-adornment-amount"
+                          placeholder={"Value"}
+                          required
+                          type="number"
+                           
+                        />
+                        {index > 0 && (
+                          <IconButton
+                            color="error"
+                            onClick={() => prosRemove(index)}
+                          >
+                            <RemoveCircle />
+                          </IconButton>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
+              </Fragment>
+            );
+          })}
+        </Grid> */}
+         {OtherDetailsForms.map((otherDetails, index) => {
           return (
             <Fragment key={index}>
               <Grid xs={1.8}>
@@ -199,8 +270,8 @@ export default function ExpertView({
               </Grid>
             </Fragment>
           );
-        })}
-        
+        })}  
+
         <Grid xs={12}>
           {" "}
           <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
@@ -259,7 +330,6 @@ export default function ExpertView({
                 variant="outlined"
                 size="small"
                 fullWidth
-
                 onKeyPress={(e) => handleKeyPress(e, consAppend)}
               />
               {index > 0 && (
@@ -303,13 +373,14 @@ export default function ExpertView({
           <TextField
             label={
               <span>
-              Url  {/* Url <sup style={{ color: "red", fontSize: 12 }}>*</sup> */}
+                Url{" "}
+                {/* Url <sup style={{ color: "red", fontSize: 12 }}>*</sup> */}
               </span>
-            } 
+            }
             rows={4}
             {...rhfMethods.register(`expert_view.article_urls`)}
             // name={"verdict"}
-            sx={{ width: "100%" }} 
+            sx={{ width: "100%" }}
             size="small"
             // value={value}
             // onChange={onChange}

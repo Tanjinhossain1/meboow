@@ -1,26 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import EditorJS from "@editorjs/editorjs";
 import Paragraph from "@editorjs/paragraph";
 import Header from "@editorjs/header";
 import Table from "@editorjs/table";
 import List from "@editorjs/list";
-import axios from "axios";
-import { ResizableImageTool } from "./EditorImage";
+import axios from "axios"; 
 import { Container } from "@mui/material";
 import Delimiter from "@editorjs/delimiter";
 import Marker from "@editorjs/marker"; 
+import { ResizableImageTool } from "@/Component/Editor/EditorImage";
+import { useFormContext } from "react-hook-form";
 
 const EditorForCreateArticle = ({
-  editorRef,
   holderId,
   defaultData,
-  isMobileArticle,
+  name
 }: {
-  editorRef: any;
+  name: string;
   holderId?: string;
   defaultData?: any;
-  isMobileArticle?: boolean;
 }) => {
+  const editorRef = useRef<any>(null);
+  const { setValue } = useFormContext();
+  console.log('editor js holder id is  ' , holderId);
   useEffect(() => {
     const initializeEditor = async () => {
       if (!editorRef.current) {
@@ -121,17 +123,19 @@ const EditorForCreateArticle = ({
           onReady: () => {
             console.log("Editor.js is ready to work!");
           },
-          onChange: (api: any, event: any) => {
+          onChange: async (api: any, event: any) => {
             console.log(
               api,
               "Now I know that Editor's content changed!",
               event
             );
+            const outputData = await editorRef.current.save();
+            setValue(name, outputData);
           },
         });
 
         // Load default data if available
-        // if (defaultData) {
+        // if (defaultData) {PhysicalSpecificationEditorRef.current?.save()
         //   console.log('this is the default data    ',defaultData);
         //   await editorInstance.isReady;
         //   editorInstance.render(defaultData)
@@ -150,7 +154,7 @@ const EditorForCreateArticle = ({
     //   }
     // };
   }, [editorRef, defaultData, holderId]);
-
+ 
   return (
     <Container
       id={holderId ? `editorjs-${holderId}` : `editorjs`}
@@ -158,9 +162,9 @@ const EditorForCreateArticle = ({
         padding: "10px",
         border: "5px solid #ccc",
         borderRadius: "4px",
-        width:isMobileArticle ?  "700px" :{
-         xs:"95%",
-         md:"600%",
+        width: {
+          xs: "95%",
+          md: "600%",
         },
         margin: "auto",
       }}

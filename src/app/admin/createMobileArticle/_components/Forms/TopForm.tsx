@@ -542,6 +542,7 @@ export default function TopForm({
                       name="brands"
                       onChange={handleBrandChange}
                       size="small"
+                      required
                     >
                       {brandsData?.map((brand) => {
                         return (

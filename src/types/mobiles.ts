@@ -20,6 +20,7 @@ export interface MobileArticleType {
         os: string;
     };
     expert_view: {
+        specific_final_score: { name: string, value: string | number }[],
         total_score: number;
         specific_score: {
             battery: number;
@@ -83,6 +84,7 @@ export interface MobileArticleDefaultFormType {
     };
     expert_view: {
         total_score: number | string;
+        specific_final_score: { name: string, value: string | number }[],
         specific_score: {
             battery: number | string;
             display: number | string;
@@ -110,6 +112,10 @@ export interface MobileArticleDefaultFormType {
         article_urls: string
     },
     brands: string;
+    custom_specification_fields: {
+        display_name: string;
+        value: string;
+    }[];
     // physicalSpecification: any[],
     // network: any[],
     // display: any[],

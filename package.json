@@ -14,7 +14,8 @@
     "db:migrate": "dotenv tsx src/server/db/migrate.ts",
     "db:push": "drizzle-kit push",
     "db:drop-migration": "drizzle-kit drop",
-    "db:studio": "dotenv drizzle-kit studio"
+    "db:studio": "dotenv drizzle-kit studio",
+    "generate-sitemap": "node src/app/generate-sitemap.ts"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.1",
@@ -73,6 +74,7 @@
     "react-dom": "^19.0.0-rc-06d0b89e-20240801",
     "react-easing-scroll": "latest",
     "react-hook-form": "^7.52.1",
+    "react-quill": "^2.0.0",
     "react-scroll": "^1.9.0",
     "react-smooth-scroll-hook": "^1.3.4",
     "swiper": "^11.1.5",

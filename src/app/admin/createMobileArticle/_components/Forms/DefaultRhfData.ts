@@ -8,7 +8,7 @@ export type FieldType = {
 
 
 export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): MobileArticleDefaultFormType => {
-    console.log('mobileArticle?.expert_view  ',mobileArticle)
+    console.log('mobileArticle?.expert_view  ', mobileArticle)
     return {
         title: mobileArticle?.title ? mobileArticle?.title : "",
         market_status: mobileArticle?.market_status ? mobileArticle?.market_status : "",
@@ -24,8 +24,18 @@ export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): Mobi
             network: "",
             os: "",
         },
+        custom_specification_fields: [{
+            display_name: "",
+            value: "",
+        }],
         expert_view: mobileArticle?.expert_view ? mobileArticle?.expert_view : {
             total_score: "",
+            specific_final_score: [
+                {
+                    name: "",
+                    value: "",
+                },
+            ],
             specific_score: {
                 battery: "",
                 display: "",

@@ -26,7 +26,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ editorRef,holderId ,defaultEd
    console.log('this is the dynamic form data  defaultEditorData   ', defaultEditorData)
   return (
         <Box sx={{ mb: 2 }}>
-            <Editor holderId={holderId} editorRef={editorRef} defaultData={defaultEditorData} />  
+            <Editor isMobileArticle holderId={holderId} editorRef={editorRef} defaultData={defaultEditorData} />  
         </Box>
       
   );
