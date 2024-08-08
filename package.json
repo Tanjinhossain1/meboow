@@ -14,8 +14,7 @@
     "db:migrate": "dotenv tsx src/server/db/migrate.ts",
     "db:push": "drizzle-kit push",
     "db:drop-migration": "drizzle-kit drop",
-    "db:studio": "dotenv drizzle-kit studio",
-    "postbuild": "next-sitemap"
+    "db:studio": "dotenv drizzle-kit studio"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.1",
@@ -64,7 +63,6 @@
     "next": "^15.0.0-rc.0",
     "next-auth": "^4.22.1",
     "next-connect": "^1.0.0",
-    "next-sitemap": "^4.2.3",
     "path": "^0.12.7",
     "pg": "^8.12.0",
     "postgres": "^3.4.4",
