@@ -236,7 +236,7 @@ function NavbarHelper({
   return (
     <Grid container>
       <Grid sx={{ m: 0, p: 0 }} xs={12}>
-        <AppBar sx={{ bgcolor: "#ffffff", m: 0, p: 0 }} position="static">
+        <AppBar  sx={{ bgcolor: "#ffffff", m: 0, p: 0 }} position="static">
           <Grid
             sx={{
               bgcolor: "white",
@@ -245,6 +245,7 @@ function NavbarHelper({
             container
             xs={0}
             sm={12}
+            className="lg:max-w-[1000px] mx-auto" 
           >
             <Grid container>
               <Grid xs={0} sm={4} md={5} lg={7}></Grid>
@@ -417,6 +418,9 @@ function NavbarHelper({
                 sm: "flex",
               },
             }}
+            container
+            xs={12}
+            className="lg:max-w-[1000px] mx-auto" 
           >
             <Grid
               sx={{
@@ -424,11 +428,11 @@ function NavbarHelper({
               }}
               container
             >
-              <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
-              <Grid xs={12} sm={3} md={2} xl={1}>
+              {/* <Grid xs={0} md={1} lg={1.1} xl={0.5}></Grid> */}
+              <Grid xs={12} sm={3} md={2} xl={3}>
                 <Image
                   alt="logo"
-                  width={180}
+                  width={300}
                   height={10}
                   src="/app-logo/1.png"
                 />
@@ -477,9 +481,9 @@ function NavbarHelper({
           }}
           position="static"
         >
-          <Grid container sx={{ m: 0, p: 0 }} xs={12}>
-            <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
-            <Grid xs={12} md={10} lg={9.8} xl={7}>
+          <Grid className="lg:max-w-[1000px] mx-auto"  container sx={{ m: 0, p: 0 }} xs={12}>
+            {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
+            <Grid xs={12} md={10} lg={9.8} xl={12}>
               {/* <Container sx={{ m: 0, p: 0 }} maxWidth="xl"> */}
               <Grid container>
                 <Grid alignItems={"left"} container xs={0.8}>
@@ -623,7 +627,7 @@ function NavbarHelper({
               </Grid>
               {/* </Container> */}
             </Grid>
-            <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
+            {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
           </Grid>
         </AppBar>
       </Grid>

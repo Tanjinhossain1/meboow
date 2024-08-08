@@ -20,6 +20,8 @@ import { BrandTypes, CategoryTypes } from "@/types/category";
 import BrandDisplayComponent from "./BrandDisplay";
 import TopLatestMobile from "./TopLatestMobile";
 import { MobileArticleType } from "@/types/mobiles";
+import PhoneFinder from "../Common/PhoneFinder";
+import MobileReviews from "./Component/MobileReviews";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -28,10 +30,10 @@ const HoverBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "100%",
   "&:hover .title": {
-    transform: "translateY(-200%)",
+    transform: "translateY(-280%)",
   },
   "&:hover .bigTitle": {
-    transform: "translateY(-900%)",
+    transform: "translateY(-660%)",
   },
   "&:hover .description": {
     transform: "translateY(0)",
@@ -77,6 +79,7 @@ const ContentBox = ({
   isBig,
   page,
   limit,
+  tooSmall
 }: {
   image: string;
   category: string;
@@ -87,13 +90,14 @@ const ContentBox = ({
   page: string;
   limit: string;
   isBig?: boolean;
+  tooSmall?: boolean;
 }) => (
   <HoverBox>
     <Box
       sx={{
         position: "relative",
         width: "100%",
-        height: isBig ? "470px" : "228px",
+        height: isBig ? "355px" : "170px",
       }}
       onClick={() => {
         const joinTitle = title
@@ -111,7 +115,11 @@ const ContentBox = ({
         );
       }}
     >
-      <Image src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`} alt={title}  layout="fill"  />
+      <Image
+        src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
+        alt={title}
+        layout="fill"
+      />
     </Box>
     <Title
       sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
@@ -120,7 +128,7 @@ const ContentBox = ({
       {title}
     </Title>
     <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
-      {isBig ? description : truncateText(description, 190)}
+      {isBig ? description : truncateText(description,tooSmall?100: 190)}
     </Description>
   </HoverBox>
 );
@@ -140,25 +148,69 @@ export default function Banner({
   latestArticles: RecentArticleDataType[];
   brands: BrandTypes[];
   mobileArticles: MobileArticleType[];
-  user:any
+  user: any;
 }) {
   console.log("articles articles ", articles);
   const history = useRouter();
-  
+
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
-
+  const SampleBrands = [
+    "SAMSUNG",
+    "APPLE",
+    "HUAWEI",
+    "NOKIA",
+    "SONY",
+    "LG",
+    "HTC",
+    "MOTOROLA",
+    "LENOVO",
+    "XIAOMI",
+    "GOOGLE",
+    "HONOR",
+    "OPPO",
+    "REALME",
+    "ONEPLUS",
+    "NOTHING",
+    "VIVO",
+    "MEIZU",
+    "ASUS",
+    "ALCATEL",
+    "ZTE",
+    "MICROSOFT",
+    "UMIDIGI",
+    "ENERGIZER",
+    "CAT",
+    "SHARP",
+    "MICROMAX",
+    "INFINIX",
+    "ULEFONE",
+    "TECNO",
+    "DOOGEE",
+    "BLACKVIEW",
+    "CUBOT",
+    "OUKITEL",
+    "ITEL",
+    "TCL",
+  ];
   return articles ? (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
-        <Paper sx={{ p: 2, mb: 2, bgcolor: "white" }} elevation={0}>
-          <Typography  variant="h1" sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}>
+        <Paper
+          className="lg:max-w-[1000px] mx-auto"
+          sx={{ p: 2, mb: 2, bgcolor: "white" }}
+          elevation={0}
+        >
+          <Typography
+            variant="h1"
+            sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}
+          >
             Latest Article
           </Typography>
           <Grid container spacing={1}>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={6.5}>
               <ContentBox
                 page={page}
                 limit={limit}
@@ -171,7 +223,7 @@ export default function Banner({
                 isBig
               />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={5.5}>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={12}>
                   <ContentBox
@@ -185,7 +237,7 @@ export default function Banner({
                     description={articles[1]?.description}
                   />
                 </Grid>
-                <Grid item xs={6} sm={12}>
+                <Grid item xs={6} sm={6}>
                   <ContentBox
                     page={page}
                     limit={limit}
@@ -195,13 +247,41 @@ export default function Banner({
                     image={articles[2]?.image}
                     title={articles[2]?.title}
                     description={articles[2]?.description}
+                    tooSmall
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <ContentBox
+                    page={page}
+                    limit={limit}
+                    category={articles[3]?.category}
+                    id={articles[3]?.id}
+                    history={history}
+                    image={articles[3]?.image}
+                    title={articles[3]?.title}
+                    description={articles[3]?.description}
+                    tooSmall
                   />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
+
+          <Grid sx={{my:4}} container>
+            <Grid xs={12} sm={6} md={4}>
+              <PhoneFinder brands={SampleBrands} />
+            </Grid>
+            <Grid sx={{pl:2}} xs={12} sm={6} md={8}>
+              <MobileReviews />
+              
+            </Grid>
+          </Grid>
         </Paper>
-        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+        <Paper
+          className="lg:max-w-[1000px] mx-auto"
+          sx={{ p: 2, mb: 2 }}
+          elevation={0}
+        >
           <Typography
             sx={{
               fontSize: 25,
@@ -301,109 +381,19 @@ export default function Banner({
           </Box>
         </Paper>
 
-        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+        <Paper
+          className="lg:max-w-[1000px] mx-auto"
+          sx={{ p: 2, mb: 2 }}
+          elevation={0}
+        >
           <TopLatestMobile user={user} articles={mobileArticles} />
-          {/* <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Popular Mobiles</h1>
-            <Carousel
-              items={[
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                {
-                  image: "/path/to/image1.jpg",
-                  rating: "4.3",
-                  title: "OnePlus Nord CE 4 5G",
-                  chipset: "Snapdragon 7 Gen 3",
-                  camera: "50 MP Rear Camera",
-                  battery: "5500 mAh Battery",
-                  price: "₹24,998",
-                },
-                // Add more items here...
-              ]}
-            />
-          </div> */}
         </Paper>
 
-        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+        <Paper
+          className="lg:max-w-[1000px] mx-auto"
+          sx={{ p: 2, mb: 2 }}
+          elevation={0}
+        >
           <RecentArticleComponent
             brands={brands}
             latestArticles={latestArticles}
@@ -413,7 +403,11 @@ export default function Banner({
             user={user}
           />
         </Paper>
-        <Paper sx={{ p: 2, mb: 2 }} elevation={0}>
+        <Paper
+          className="lg:max-w-[1000px] mx-auto"
+          sx={{ p: 2, mb: 2 }}
+          elevation={0}
+        >
           <Grid gap={1} container>
             <Typography
               sx={{
