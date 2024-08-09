@@ -22,6 +22,12 @@ import TopLatestMobile from "./TopLatestMobile";
 import { MobileArticleType } from "@/types/mobiles";
 import PhoneFinder from "../Common/PhoneFinder";
 import MobileReviews from "./Component/MobileReviews";
+import PopularMobiles from "./Component/PopularMobiles";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -79,7 +85,7 @@ const ContentBox = ({
   isBig,
   page,
   limit,
-  tooSmall
+  tooSmall,
 }: {
   image: string;
   category: string;
@@ -100,12 +106,8 @@ const ContentBox = ({
         height: isBig ? "355px" : "170px",
       }}
       onClick={() => {
-        const joinTitle = title
-          .split(" ")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join("-");
         history.push(
-          `/details/${id}/${category}/${joinTitle}?${new URLSearchParams({
+          `/details/${id}/${category}?${new URLSearchParams({
             page: `${Number(page) + 1}`,
             limit: limit,
           })}`,
@@ -128,7 +130,7 @@ const ContentBox = ({
       {title}
     </Title>
     <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
-      {isBig ? description : truncateText(description,tooSmall?100: 190)}
+      {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
     </Description>
   </HoverBox>
 );
@@ -141,8 +143,10 @@ export default function Banner({
   brands,
   mobileArticles,
   user,
+  mobilesArticles,
 }: {
   articles: RecentArticleDataType[];
+  mobilesArticles: RecentArticleDataType[];
   total: number;
   category: CategoryTypes[];
   latestArticles: RecentArticleDataType[];
@@ -266,16 +270,40 @@ export default function Banner({
               </Grid>
             </Grid>
           </Grid>
+          <Grid container>
+            <Grid xs={12}>
+              <ResizablePanelGroup
+                direction="horizontal"
+                className="min-h-[200px] max-w-md rounded-lg border"
+              >
+                <ResizablePanel defaultSize={75}>
+                  <PhoneFinder brands={SampleBrands} />
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={200}>
+                  <MobileReviews mobilesArticles={mobilesArticles} />
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </Grid>
+          </Grid>
 
-          <Grid sx={{my:4}} container>
+          {/* <Grid sx={{ my: 4 }} container>
             <Grid xs={12} sm={6} md={4}>
               <PhoneFinder brands={SampleBrands} />
             </Grid>
-            <Grid sx={{pl:2}} xs={12} sm={6} md={8}>
-              <MobileReviews />
-              
+            <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
+              <MobileReviews mobilesArticles={mobilesArticles} />
             </Grid>
           </Grid>
+
+          <Grid sx={{ my: 4 }} container>
+            <Grid xs={12} sm={6} md={4}>
+              <PhoneFinder brands={SampleBrands} />
+            </Grid>
+            <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
+              <PopularMobiles user={user} articles={mobileArticles} />
+            </Grid>
+          </Grid> */}
         </Paper>
         <Paper
           className="lg:max-w-[1000px] mx-auto"

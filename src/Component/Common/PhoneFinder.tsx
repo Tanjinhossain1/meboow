@@ -4,7 +4,7 @@ import React from 'react'
 export default function PhoneFinder({brands}:{brands:string[]}) {
 // export default function PhoneFinder({brands}:{brands:BrandTypes[]}) {
   return (
-    <div className="  mx-auto">
+    <div className=" mx-auto">
     <div className="bg-[#023359] text-white text-center py-2 rounded-t-lg">
       <h2 className="text-lg font-bold">
         <i className="fas fa-search"></i> PHONE FINDER

@@ -53,7 +53,7 @@ export default function DisplayArticleComponent({
             history.push(
               `/details/${data.id}/${
                 data.category
-              }/${joinTitle}?${new URLSearchParams({
+              }?${new URLSearchParams({
                 page: `${Number(page) + 1}`,
                 limit: limit,
               })}`,
@@ -76,14 +76,11 @@ export default function DisplayArticleComponent({
             ":hover": { color: "#c4007c" },
           }}
           onClick={() => {
-            const joinTitle = data.title
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join("-");
+          
             history.push(
               `/details/${data.id}/${
                 data.category
-              }/${joinTitle}?${new URLSearchParams({
+              }?${new URLSearchParams({
                 page: `${Number(page) + 1}`,
                 limit: limit,
               })}`,

@@ -57,21 +57,12 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   });
   const decodedTitle = decodeURIComponent(params?.title);
 
-  const formattedTitle = decodedTitle
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-
-  const joinTitle = formattedTitle
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("-");
     console.log('articleDetail   ',articles.data)
   return (
     <>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_URL}/details/${params.id}/${params.category}/${joinTitle}`}
+        href={`${process.env.NEXT_APP_URL}/details/${params.id}/${params.category}`}
         key="canonical"
       />
       <Navbar />

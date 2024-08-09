@@ -45,8 +45,8 @@ export default function DetailsComponent({
 
   const [tableOfContents, setTableOfContents] = useState<string[]>([]);
 
-  const rawTitle = params?.title as string;
-  const decodedTitle = decodeURIComponent(rawTitle);
+  // const rawTitle = params?.title as string;
+  // const decodedTitle = decodeURIComponent(rawTitle);
 
   useEffect(() => {
     articleDetail.content?.blocks?.forEach((block: any) => {
@@ -64,10 +64,10 @@ export default function DetailsComponent({
     });
   }, [articleDetail]);
 
-  const formattedTitle = decodedTitle
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  // const formattedTitle = decodedTitle
+  //   .split("-")
+  //   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //   .join(" ");
 
   return (
     <>
@@ -87,7 +87,7 @@ export default function DetailsComponent({
                 >
                   {params?.category}
                 </Link>
-                <Typography sx={{ fontSize: 12 }}>{formattedTitle}</Typography>
+                <Typography sx={{ fontSize: 12 }}>{articleDetail?.title}</Typography>
               </Breadcrumbs>
               <Button
                 sx={{
@@ -122,7 +122,7 @@ export default function DetailsComponent({
                     variant="h1"
                   >
                     {" "}
-                    {formattedTitle}
+                    {articleDetail?.title}
                   </Typography>
 
                   <Image
@@ -229,7 +229,7 @@ export default function DetailsComponent({
                           width={block.data.height}
                           height={block.data.height}
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${extractedPath}`}
-                          alt={formattedTitle}
+                          alt={articleDetail?.title}
                         ></Image>
                       );
                     } else if (block.type === "list") {
@@ -351,13 +351,6 @@ export default function DetailsComponent({
                   </Typography>
                   <Grid container>
                     {articles?.map((article: RecentArticleDataType) => {
-                      const joinTitle = article.title
-                        .split(" ")
-                        .map(
-                          (word: any) =>
-                            word.charAt(0).toUpperCase() + word.slice(1)
-                        )
-                        .join("-");
                       return (
                         <Fragment key={article.id}>
                           <Grid
@@ -366,7 +359,7 @@ export default function DetailsComponent({
                                 history.push(
                                   `/details/${article.id}/${
                                     article.category
-                                  }/${joinTitle}?${new URLSearchParams({
+                                  }?${new URLSearchParams({
                                     page: `${Number(page) + 1}`,
                                     limit: limit,
                                   })}`,

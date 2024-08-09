@@ -18,7 +18,7 @@ interface HomePropsType {
     limit: string;
   };
 }
- 
+
 async function Home({ searchParams }: HomePropsType) {
   const { page, limit } = searchParams;
   const articles = await fetchArticles({ page, limit });
@@ -27,15 +27,18 @@ async function Home({ searchParams }: HomePropsType) {
     limit,
     latestDevice: "latest",
   });
+  const MobilesArticles = await fetchArticles({
+    page,
+    limit,
+    category: "Mobiles",
+  });
   const mobileArticles = await fetchMobileArticles({});
   const Category = await fetchCategories();
   const brands = await fetchBrands();
-  
+
   const session = await getServerSession(authConfig);
-  console.log(
-    'this is the user  in app/page',session?.user
-  )
-  const user =  session?.user;
+  console.log("this is the user  in app/page", session?.user);
+  const user = session?.user;
   return (
     <>
       <Suspense>
@@ -44,7 +47,8 @@ async function Home({ searchParams }: HomePropsType) {
       {articles.data && articles.data[0] ? (
         <Suspense>
           <Banner
-          user={user}
+          mobilesArticles={MobilesArticles.data}
+            user={user}
             brands={brands.data}
             latestArticles={LatestArticles.data}
             category={Category.data}
@@ -53,7 +57,9 @@ async function Home({ searchParams }: HomePropsType) {
             mobileArticles={mobileArticles.data}
           />
         </Suspense>
-      ) :   <HomePageLoadingSkeleton isOffNavbar />}
+      ) : (
+        <HomePageLoadingSkeleton isOffNavbar />
+      )}
       <Suspense>
         <Footer />
       </Suspense>

@@ -18,11 +18,8 @@ export async function GET() {
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
         articles.forEach((article) => {
-            const joinTitle = article.title
-                .split(" ")
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join("-");
-            sitemapStream.write({ url: `/details/${article.id}/${article.category}/${joinTitle}`, lastmod: new Date() });
+          
+            sitemapStream.write({ url: `/details/${article.id}/${article.category}`, lastmod: new Date() });
         })
         
         sitemapStream.end();
