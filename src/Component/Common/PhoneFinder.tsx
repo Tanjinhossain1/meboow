@@ -15,7 +15,7 @@ export default function PhoneFinder({brands}:{brands:string[]}) {
       // {brands.map((brand:BrandTypes, index) => (
         <a
           key={index}
-          href="#"
+          href={`/mobile/brand-wise/${brand}`}
           className="text-gray-800  p-[5px] text-[11px] border-l font-semibold   hover:text-white hover:bg-[#023359]"
         >
           {brand}
@@ -25,7 +25,7 @@ export default function PhoneFinder({brands}:{brands:string[]}) {
     </div>
     <div className="flex justify-between bg-[#023359] p-2 rounded-b-lg">
       <a
-        href="#"
+        href="/brands"
         className="text-white text-sm font-semibold hover:underline"
       >
         ALL BRANDS

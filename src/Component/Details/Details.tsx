@@ -1,5 +1,4 @@
 "use client";
-import Footer from "@/Component/HomePage/Footer";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import {
@@ -400,7 +399,6 @@ export default function DetailsComponent({
           </Grid>
           <Grid xs={0} md={1} lg={1.1} xl={2}></Grid>
         </Grid>
-        <Footer />
       </>
     </>
   );

@@ -31,6 +31,7 @@ import { MobileArticleType } from "@/types/mobiles";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
 import ExpertView from "./ExpertView";
 import EditorForCreateArticle from "./EditorForSpecification/EditorForSpecification";
+import DevicesDetails from "./DevicesDetails";
 
 export default function MainSubmitForm({
   brands,
@@ -74,7 +75,7 @@ export default function MainSubmitForm({
 
   const methods = useForm({
     defaultValues: RhfDefaultInitialValues(
-      isEdit?.isEdit ? isEdit?.mobileArticles[0] : undefined
+      isEdit?.isEdit && isEdit?.mobileArticles[0] ? isEdit?.mobileArticles[0] : undefined
     ),
   });
 
@@ -298,6 +299,7 @@ export default function MainSubmitForm({
             displayFileUploadRef={displayFileUploadRef}
             brandsData={brands}
           />
+          <DevicesDetails isEdit={isEdit} />
           {imageError ? (
             <Typography sx={{ color: "red", fontSize: 20 }}>
               Select Image

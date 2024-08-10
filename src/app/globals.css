@@ -100,12 +100,4 @@ body {
   font-size: 20 !important;
 }
 
-
-.custom-list-pros li::marker {
-  color: green;
-  font-size: 1.5rem; 
-}
-.custom-list-cons li::marker {
-  color: red;
-  font-size: 1.5rem; 
-}
+ 

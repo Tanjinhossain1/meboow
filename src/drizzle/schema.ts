@@ -88,6 +88,10 @@ export const MobileArticles = mysqlTable(
     prices: json("prices"),
     expert_view: json("expert_view"),
 
+    is_daily_interest:text('is_daily_interest'),
+    is_by_fans:text('is_by_fans'),
+    is_latest_device:text('is_latest_device'),
+
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   }

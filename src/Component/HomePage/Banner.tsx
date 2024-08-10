@@ -28,6 +28,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import Categories from "./Component/Categories";
+import NewsAndReviews from "./Component/NewsAndReviews";
+import TopDevicesTable from "./Component/TopDevicesTable";
+import LatestDevices from "./Component/LatestDevices";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -144,19 +148,28 @@ export default function Banner({
   mobileArticles,
   user,
   mobilesArticles,
+  newsAndReviews,
+  dailyInterestMobiles,
+  byFansMobiles,
+  latestDeviceMobiles,
 }: {
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
   total: number;
   category: CategoryTypes[];
   latestArticles: RecentArticleDataType[];
+  newsAndReviews: RecentArticleDataType[];
   brands: BrandTypes[];
   mobileArticles: MobileArticleType[];
+  dailyInterestMobiles:MobileArticleType[];
+  byFansMobiles:MobileArticleType[];
+  latestDeviceMobiles:MobileArticleType[];
   user: any;
 }) {
   console.log("articles articles ", articles);
   const history = useRouter();
 
+  console.log("dailyInterestMobiles,byFansMobiles,latestDeviceMobiles  ", dailyInterestMobiles,byFansMobiles,latestDeviceMobiles);
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
@@ -270,24 +283,13 @@ export default function Banner({
               </Grid>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid xs={12}>
-              <ResizablePanelGroup
-                direction="horizontal"
-                className="min-h-[200px] max-w-md rounded-lg border"
-              >
-                <ResizablePanel defaultSize={75}>
-                  <PhoneFinder brands={SampleBrands} />
-                </ResizablePanel>
-                <ResizableHandle withHandle />
-                <ResizablePanel defaultSize={200}>
-                  <MobileReviews mobilesArticles={mobilesArticles} />
-                </ResizablePanel>
-              </ResizablePanelGroup>
-            </Grid>
-          </Grid>
+          {/* <Grid container>
+            <Grid xs={12}> */}
 
-          {/* <Grid sx={{ my: 4 }} container>
+          {/* </Grid>
+          </Grid> */}
+
+          <Grid sx={{ my: 4 }} container>
             <Grid xs={12} sm={6} md={4}>
               <PhoneFinder brands={SampleBrands} />
             </Grid>
@@ -295,163 +297,42 @@ export default function Banner({
               <MobileReviews mobilesArticles={mobilesArticles} />
             </Grid>
           </Grid>
+          <Grid sx={{ my: 4 }} container>
+            <Grid item xs={12} sm={6} md={4}>
+              <MobileReviews isTrending mobilesArticles={mobilesArticles} />
+            </Grid>
+            <Grid item sx={{ pl: 2, height: "350px" }} xs={12} sm={6} md={8}>
+              <PopularMobiles user={user} articles={mobileArticles} />
+              <Categories category={category} />
+              <Grid gap={1} container>
+                <Typography
+                  sx={{
+                    mb: 1,
+                    // borderBottom: "2px solid lightgray",
+                    fontSize: 25,
+                    mt: 2,
+                    width: "100%",
+                    fontWeight: 600,
+                  }}
+                  onClick={() => history.push("/brands")}
+                  // onclick={()=>history.push('/brands')}
+                >
+                  Mobile Brands
+                </Typography>
+
+                <BrandDisplayComponent brands={brands} />
+              </Grid>
+            </Grid>
+          </Grid>
 
           <Grid sx={{ my: 4 }} container>
             <Grid xs={12} sm={6} md={4}>
-              <PhoneFinder brands={SampleBrands} />
+              <TopDevicesTable byFans={byFansMobiles} dailyInterest={dailyInterestMobiles} />
+              <LatestDevices mobiles={latestDeviceMobiles} />
             </Grid>
-            <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
-              <PopularMobiles user={user} articles={mobileArticles} />
+            <Grid sx={{ pl: 2, mt: 2 }} xs={12} sm={6} md={8}>
+              <NewsAndReviews mobilesArticles={newsAndReviews} />
             </Grid>
-          </Grid> */}
-        </Paper>
-        <Paper
-          className="lg:max-w-[1000px] mx-auto"
-          sx={{ p: 2, mb: 2 }}
-          elevation={0}
-        >
-          <Typography
-            sx={{
-              fontSize: 25,
-              // fontFamily: "Arial, sans-serif",
-              fontWeight: 600,
-              mb: 1,
-            }}
-          >
-            Categories
-          </Typography>
-          <Box sx={{ flexGrow: 1, p: 2 }}>
-            <Grid gap={1} container>
-              {category.map((value: CategoryTypes, index: number) => (
-                <Grid
-                  item
-                  key={value.id}
-                  xs={5.5}
-                  sm={3.5}
-                  md={2.5}
-                  lg={1.5}
-                  onClick={() => history.push(`/category/${value.title}`)}
-                  sx={{
-                    cursor: "pointer",
-                    textAlign: "center",
-                    p: 2,
-                    borderRadius: "10px",
-                    bgcolor:
-                      index === 0
-                        ? "#e8f6ff"
-                        : index === 1
-                        ? "#eeeeff"
-                        : index === 2
-                        ? "#fff6df"
-                        : index === 3
-                        ? "#eef0f5"
-                        : index === 4
-                        ? "#fff2ea"
-                        : index === 5
-                        ? "#e8ffe8"
-                        : index === 6
-                        ? "#e0f7fa"
-                        : "#eeeeee",
-                    ":hover": { bgcolor: "#f584b7" },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      mx: "auto",
-                    }}
-                  >
-                    {value.title === "Vehicles" ? (
-                      <Image
-                        alt={value.title}
-                        src="/category/car.png"
-                        height={40}
-                        width={40}
-                      />
-                    ) : value.title === "News" ? (
-                      <Image
-                        alt={value.title}
-                        src="/category/world-news.png"
-                        height={40}
-                        width={40}
-                      />
-                    ) : // <NewspaperIcon sx={{ fontSize: 40 }} />
-                    value.title === "Sports" ? (
-                      <Image
-                        alt={value.title}
-                        src="/category/basketball.png"
-                        height={40}
-                        width={40}
-                      />
-                    ) : value.title === "Jobs" ? (
-                      <Image
-                        alt={value.title}
-                        src="/category/case.png"
-                        height={40}
-                        width={40}
-                      />
-                    ) : (
-                      <Image
-                        alt={value.title}
-                        src="/category/phone.png"
-                        height={40}
-                        width={40}
-                      />
-                    )}
-                  </Box>
-                  <Typography variant="body1" mt={1}>
-                    {value.title}
-                  </Typography>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        </Paper>
-
-        <Paper
-          className="lg:max-w-[1000px] mx-auto"
-          sx={{ p: 2, mb: 2 }}
-          elevation={0}
-        >
-          <TopLatestMobile user={user} articles={mobileArticles} />
-        </Paper>
-
-        <Paper
-          className="lg:max-w-[1000px] mx-auto"
-          sx={{ p: 2, mb: 2 }}
-          elevation={0}
-        >
-          <RecentArticleComponent
-            brands={brands}
-            latestArticles={latestArticles}
-            category={category}
-            total={total}
-            articles={articles}
-            user={user}
-          />
-        </Paper>
-        <Paper
-          className="lg:max-w-[1000px] mx-auto"
-          sx={{ p: 2, mb: 2 }}
-          elevation={0}
-        >
-          <Grid gap={1} container>
-            <Typography
-              sx={{
-                mb: 1,
-                // borderBottom: "2px solid lightgray",
-                fontSize: 25,
-                width: "100%",
-                fontWeight: 600,
-              }}
-              onClick={() => history.push("/brands")}
-              // onclick={()=>history.push('/brands')}
-            >
-              Mobile Brands
-            </Typography>
-
-            <BrandDisplayComponent brands={brands} />
           </Grid>
         </Paper>
       </Grid>

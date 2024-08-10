@@ -74,16 +74,14 @@ export default function TopForm({
       .then((response) => {
         if (response?.data?.success) {
           setOpen(true);
-          setShowSuccessText(
-            `Article Delete successfully`
-          );
-            handleBackdropClose();
-             history.push('/')
+          setShowSuccessText(`Article Delete successfully`);
+          handleBackdropClose();
+          history.push("/");
         }
       })
       .catch((err) => {
         console.error("Error creating article:", err);
-        
+
         handleBackdropClose();
         // Handle error if needed
       });
@@ -135,7 +133,7 @@ export default function TopForm({
   return (
     <div>
       <div style={{ width: "100%" }}>
-        <Grid sx={{ width: "80%", mx: "auto" }}>
+        <Grid sx={{ width: "100%", mx: "auto" }}>
           <div style={{ marginBottom: "20px" }} id="top">
             <Button
               onClick={() => history.push("/admin")}
@@ -272,7 +270,7 @@ export default function TopForm({
                           isMultiple: true,
                           urls: "/api/v1/image/upload/mobile",
                           defaultImageUrls: isEdit?.mobileArticles[0].image
-                            ? isEdit?.mobileArticles[0].image 
+                            ? isEdit?.mobileArticles[0].image
                             : [],
                           getImageDatas: (images) => {
                             console.log("Images uploaded ", images);

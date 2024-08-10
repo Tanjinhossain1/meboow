@@ -1,4 +1,5 @@
 import DetailsComponent from "@/Component/Details/Details";
+import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import {
   fetchArticles,
@@ -75,6 +76,8 @@ export default async function Details({ params, searchParams }: DetailsParams) {
           articleDetail={data?.data[0]}
         />
       ) : null}
+      
+      <Footer />
     </>
   );
 }

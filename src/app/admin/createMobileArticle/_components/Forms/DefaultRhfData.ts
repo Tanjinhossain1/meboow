@@ -14,6 +14,9 @@ export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): Mobi
         market_status: mobileArticle?.market_status ? mobileArticle?.market_status : "",
         release_date: mobileArticle?.release_date ? mobileArticle?.release_date : "",
         brands: mobileArticle?.brands ? mobileArticle?.brands : "",
+        is_daily_interest: mobileArticle?.is_daily_interest ? mobileArticle?.is_daily_interest : "",
+        is_by_fans: mobileArticle?.is_by_fans ? mobileArticle?.is_by_fans : "",
+        is_latest_device: mobileArticle?.is_latest_device ? mobileArticle?.is_latest_device : "",
         key_specifications: mobileArticle?.key_specifications ? mobileArticle?.key_specifications : {
             processor: "",
             display: "",

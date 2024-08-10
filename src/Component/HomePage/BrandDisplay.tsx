@@ -32,7 +32,7 @@ export default function BrandDisplayComponent({
               border: "1px solid lightgray",
               p: 2,
               cursor: "pointer",
-              height: "60px",
+              height: "50px",
             }}
           >
             <Image

@@ -1,9 +1,9 @@
 import { getDb } from "@/drizzle/db";
 import { MobileArticles } from "@/drizzle/schema";
 import { NextRequest, NextResponse } from "next/server";
-import { and, count, desc, eq, ilike, or } from "drizzle-orm";
+import { and, count, desc, eq, or } from "drizzle-orm";
 import { IPaginationOptions, paginationHelpers } from "../../shared/helpers";
-import { IGenericResponse } from "@/utils/utils";
+import { IGenericResponse, likeInsensitive } from "@/utils/utils";
 
 export async function POST(req: Request) {
   try {
@@ -31,7 +31,10 @@ export async function POST(req: Request) {
       details,
       prices,
       display_image,
-      expert_view
+      expert_view,
+      is_by_fans,
+      is_daily_interest,
+      is_latest_device,
     } = body;
 
     console.log("body detail created", body, title, image);
@@ -41,31 +44,32 @@ export async function POST(req: Request) {
     }
     const db = await getDb();
     // Perform the database insertion using Drizzle ORM
-    const result = await db
-      .insert(MobileArticles)
-      .values({
-        title,
-        image: image,
-        brands,
-        market_status,
-        release_date,
-        key_specifications,
-        physicalSpecification,
-        network,
-        display,
-        processor,
-        memory,
-        mainCamera,
-        selfieCamera,
-        os,
-        connectivity,
-        features,
-        battery,
-        details,
-        prices,
-        display_image,
-        expert_view
-      }) 
+    const result = await db.insert(MobileArticles).values({
+      title,
+      image: image,
+      brands,
+      market_status,
+      release_date,
+      key_specifications,
+      physicalSpecification,
+      network,
+      display,
+      processor,
+      memory,
+      mainCamera,
+      selfieCamera,
+      os,
+      connectivity,
+      features,
+      battery,
+      details,
+      prices,
+      display_image,
+      expert_view,
+      is_by_fans,
+      is_daily_interest,
+      is_latest_device,
+    });
 
     return NextResponse.json({
       success: true,
@@ -103,7 +107,11 @@ export async function PUT(req: Request) {
       details,
       prices,
       display_image,
-      expert_view
+      expert_view,
+
+      is_by_fans,
+      is_daily_interest,
+      is_latest_device,
     } = body;
 
     console.log("Updating article with ID:", id);
@@ -137,12 +145,18 @@ export async function PUT(req: Request) {
         details,
         prices,
         display_image,
-        expert_view
+        expert_view,
+
+        is_by_fans,
+        is_daily_interest,
+        is_latest_device,
       })
       .where(eq(MobileArticles.id, Number(id)));
 
     if (!result) {
-      return NextResponse.json({ error: "Article not found or could not be updated" });
+      return NextResponse.json({
+        error: "Article not found or could not be updated",
+      });
     }
 
     return NextResponse.json({
@@ -165,6 +179,10 @@ export async function GET(req: NextRequest) {
       id: searchParams.get("id"),
       all: searchParams.get("all"),
       brands: searchParams.get("brands"),
+
+      is_by_fans: searchParams.get("is_by_fans"),
+      is_daily_interest: searchParams.get("is_daily_interest"),
+      is_latest_device: searchParams.get("is_latest_device"),
     };
 
     const options = {
@@ -195,17 +213,52 @@ const getAll = async (
   options: IPaginationOptions
 ): Promise<IGenericResponse<any[]>> => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
-  const { searchTerm, all, brands } = filters;
+  const {
+    searchTerm,
+    all,
+    brands,
+    is_by_fans,
+    is_daily_interest,
+    is_latest_device,
+  } = filters;
   const whereConditions = [];
-
+console.log('checking the data is coing ',is_by_fans,
+  is_daily_interest,
+  is_latest_device)
   if (brands) {
-    const searchConditions = ilike(MobileArticles["brands"], `%${brands}%`);
+    const searchConditions = likeInsensitive(MobileArticles["brands"], `%${brands}%`);
 
     whereConditions.push(searchConditions);
   }
+  if (is_by_fans) {
+    const searchConditions = likeInsensitive(
+      MobileArticles["is_by_fans"],
+      `%${is_by_fans}%`
+    );
+
+    whereConditions.push(searchConditions);
+  }
+  if (is_daily_interest) {
+    const searchConditions = likeInsensitive(
+      MobileArticles["is_daily_interest"],
+      `%${is_daily_interest}%`
+    );
+
+    whereConditions.push(searchConditions);
+  }
+
+  if (is_latest_device) {
+    const searchConditions = likeInsensitive(
+      MobileArticles["is_latest_device"],
+      `%${is_latest_device}%`
+    );
+
+    whereConditions.push(searchConditions);
+  }
+
   if (searchTerm) {
     const searchConditions = ["title", "description"].map((field) =>
-      ilike((MobileArticles as any)[field], `%${searchTerm}%`)
+      likeInsensitive((MobileArticles as any)[field], `%${searchTerm}%`)
     );
 
     whereConditions.push(or(...searchConditions));
@@ -240,14 +293,14 @@ const getAll = async (
     .where(and(...whereConditions))
     .execute()
     .then((res) => res[0].count);
-    // const articleData = {
-    //   ...mobileArticles,
-    //   key_specification:
-    // }
+  // const articleData = {
+  //   ...mobileArticles,
+  //   key_specification:
+  // }
 
-    const parsedArticles = mobileArticles.map((article:any) => ({
-      ...article,
-    }));
+  const parsedArticles = mobileArticles.map((article: any) => ({
+    ...article,
+  }));
   return {
     meta: {
       total,

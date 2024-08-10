@@ -21,6 +21,7 @@ export async function fetchArticles({
   brands,
   showInNews,
   allArticles,
+  showInNewsWithAll,
 }: {
   page?: string;
   limit?: string;
@@ -30,6 +31,7 @@ export async function fetchArticles({
   brands?: string;
   showInNews?: string;
   allArticles?: boolean;
+  showInNewsWithAll?: string;
 }): Promise<{
   data: RecentArticleDataType[];
   page: number;
@@ -48,8 +50,10 @@ export async function fetchArticles({
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?latestDevice=${latestDevice}&all=all`;
   } else if (brands) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
-  }else if(allArticles){
+  } else if (allArticles) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all`;
+  } else if (showInNewsWithAll) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?showInNews=${showInNewsWithAll}`;
   }
 
   // const response = await axios.get(url);
@@ -82,17 +86,21 @@ export async function fetchMobileArticles({
   limit = "6",
   category,
   search,
-  latestDevice,
   brands,
-  showInNews
+  is_daily_interest,
+  is_by_fans,
+  is_latest_device,
+
 }: {
   page?: string;
   limit?: string;
   category?: string;
   search?: string;
-  latestDevice?: string;
   brands?: string;
-  showInNews?: string;
+  is_daily_interest?: string
+  is_by_fans?: string
+  is_latest_device?: string
+
 }): Promise<{
   data: MobileArticleType[];
   page: number;
@@ -100,16 +108,16 @@ export async function fetchMobileArticles({
   total: number;
 }> {
   let url = `${process.env.NEXT_APP_URL}/api/article/mobile`;
-  if (category) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}`;
-  } else if (search) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&searchTerm=${search}`;
-  } else if (showInNews) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&showInNews=${showInNews}`;
-  } else if (latestDevice) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?latestDevice=${latestDevice}&all=all`;
+  if (search) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&searchTerm=${search}`;
   } else if (brands) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&brands=${brands}`;
+  } else if (is_daily_interest) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_daily_interest=${is_daily_interest}`;
+  } else if (is_by_fans) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_by_fans=${is_by_fans}`;
+  } else if (is_latest_device) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_latest_device=${is_latest_device}`;
   }
 
   console.log("test 1 ", url, category);

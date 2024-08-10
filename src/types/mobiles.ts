@@ -9,6 +9,10 @@ export interface MobileArticleType {
     release_date: string;
     image: string[];
     display_image: string;
+    is_daily_interest: string;
+    is_by_fans: string;
+    is_latest_device: string;
+
     key_specifications: {
         processor: string;
         display: string;
@@ -70,6 +74,10 @@ export interface MobileArticleDefaultFormType {
     title: string;
     market_status: string;
     release_date: string;
+    
+    is_daily_interest?: string;
+    is_by_fans?: string;
+    is_latest_device?: string;
     // image: string[];
     // display_image:string;
     key_specifications: {

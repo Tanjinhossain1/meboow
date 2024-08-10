@@ -217,7 +217,7 @@ export default function PopularMobiles({
                         }
                       >
                         {
-                            !data?.prices[0].start_from ? <Typography
+                            data?.prices[0].start_from ? <Typography
                             sx={{
                               color: "#055491",
                               fontWeight: 800,
@@ -232,7 +232,7 @@ export default function PopularMobiles({
                           </Typography> : null
                         }
                         
-                        {/* {user?.role === "admin" ? <Typography
+                        {user?.role === "admin" ? <Typography
                           sx={{
                             color: "#055491",
                             fontWeight: 800,
@@ -245,7 +245,7 @@ export default function PopularMobiles({
                           }}
                         >
                          <EditNoteIcon /> 
-                        </Typography>: null} */}
+                        </Typography>: null}
                       </Grid>
                     </Grid>
                   </Card>
