@@ -22,6 +22,7 @@ export const Articles = mysqlTable(
     brands: text('brands'),
     deviceName: text('deviceName'),
     showInNews: text('showInNews'),
+    best_reviews: text('best_reviews'),
     image: text('image').notNull(),
     content: json('content'),
     createdAt: timestamp('createdAt').defaultNow().notNull(),

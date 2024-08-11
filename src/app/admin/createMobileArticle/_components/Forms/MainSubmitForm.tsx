@@ -324,7 +324,7 @@ export default function MainSubmitForm({
                 <AccordionDetails>
                   <Box sx={{ mb: 2 }}>
                     <Grid container spacing={2}>
-                      {fields.map((field, index) => (
+                      {fields?.map((field, index) => (
                         <Grid item xs={12} key={field.id}>
                           <Box
                             sx={{
@@ -406,7 +406,7 @@ export default function MainSubmitForm({
               <Grid xs={2}></Grid>
             </Grid>
           </Fragment>
-          {OtherDetailsForms.map((otherDetails, index) => {
+          {OtherDetailsForms?.map((otherDetails, index) => {
             return (
               <Fragment key={index}>
                 <Grid sx={{ mt: 1 }} container>

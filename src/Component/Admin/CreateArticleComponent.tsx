@@ -67,6 +67,9 @@ export default function CreateArticleComponent({
   const [latestDevice, setLatestDevice] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.latestDevice : ""
   );
+  const [best_reviews, setBest_reviews] = React.useState(
+    isEdit?.isEdit ? isEdit?.articleDetail?.best_reviews : ""
+  );
 
   const DeleteArticleFunc = () => {
     handleBackDropOpen();
@@ -142,6 +145,9 @@ export default function CreateArticleComponent({
   const handleLatestChange = (event: SelectChangeEvent) => {
     setLatestDevice(event.target.value);
   };
+  const handleBest_reviewsChange = (event: SelectChangeEvent) => {
+    setBest_reviews(event.target.value);
+  };
   const handleNewsChange = (event: SelectChangeEvent) => {
     setShowInNews(event.target.value);
   };
@@ -176,6 +182,7 @@ export default function CreateArticleComponent({
     const brands = (event.target as any)?.brands?.value;
     const deviceName = (event.target as any)?.deviceName?.value;
     const newsValue = (event.target as any)?.showInNews?.value;
+    const bestReviews = (event.target as any)?.best_reviews?.value;
     console.log(
       "submit data  ",
 
@@ -196,6 +203,7 @@ export default function CreateArticleComponent({
       image: imageRef.current,
       content: fieldData,
       latestDevice: latestDeviceValue,
+      best_reviews:bestReviews,
       brands: brands,
       deviceName: deviceName,
       showInNews: newsValue,
@@ -347,6 +355,25 @@ export default function CreateArticleComponent({
             >
               <MenuItem value={"show"}>YES</MenuItem>
               <MenuItem value={"notShow"}>NO</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl
+            variant="filled"
+            sx={{ my: 1, minWidth: "100%", display: "flex" }}
+          >
+            <InputLabel id="demo-simple-select-filled-label">
+              Best Reviews<sup style={{ color: "red", fontSize: 20 }}>*</sup>
+            </InputLabel>
+
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={best_reviews}
+              name="best_reviews"
+              onChange={handleBest_reviewsChange}
+            >
+              <MenuItem value={"YES"}>YES</MenuItem>
+              <MenuItem value={"NO"}>NO</MenuItem>
             </Select>
           </FormControl>
           <FormControl

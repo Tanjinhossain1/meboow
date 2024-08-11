@@ -15,7 +15,7 @@ export default function BrandDisplayComponent({
   console.log(" brands rfghfh", brands);
   return (
     brands &&
-    brands.slice(0,5).map((data: BrandTypes) => {
+    brands.slice(0,10)?.map((data: BrandTypes) => {
       return (
         <Grid
           key={data?.id}
@@ -24,7 +24,7 @@ export default function BrandDisplayComponent({
           md={2}
 
         >
-         <Link href={`/article/brand-wise/${data.title}`}>
+         <Link href={`/mobile/brand-wise/${data.title}`}>
          <Box
             sx={{
               display: "flex",

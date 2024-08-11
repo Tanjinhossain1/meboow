@@ -11,7 +11,7 @@ export default function PhoneFinder({brands}:{brands:string[]}) {
       </h2>
     </div>
     <div className="grid grid-cols-4   bg-gray-100  py-1 rounded-b-lg">
-      {brands.map((brand, index) => (
+      {brands?.map((brand, index) => (
       // {brands.map((brand:BrandTypes, index) => (
         <a
           key={index}

@@ -33,6 +33,7 @@ import NewsAndReviews from "./Component/NewsAndReviews";
 import TopDevicesTable from "./Component/TopDevicesTable";
 import LatestDevices from "./Component/LatestDevices";
 import Link from "next/link";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -80,7 +81,7 @@ const Description = styled(Typography)(({ theme }) => ({
   zIndex: 0,
 }));
 
-const ContentBox = ({
+export const ContentBox = ({
   image,
   title,
   category,
@@ -108,7 +109,7 @@ const ContentBox = ({
       sx={{
         position: "relative",
         width: "100%",
-        height: isBig ? "355px" : "170px",
+        height: isBig ? "348px" : "170px",
       }}
       // onClick={() => {
       //   history.push(
@@ -143,7 +144,7 @@ const ContentBox = ({
     >
       <Title
         sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
-        className={isBig ? "bigTitle" : "title"}
+        className={isBig ? "bigTitle" : "title overflow-hidden text-ellipsis line-clamp-3 text-sm"}
       >
         {title}
       </Title>
@@ -154,13 +155,50 @@ const ContentBox = ({
         limit: limit,
       })}`}
     >
-      <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
+      <Description  sx={{ fontSize: isBig ? 12 : 11 }} className="description">
         {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
       </Description>
     </Link>
   </HoverBox>
 );
-
+export const SampleBrands = [
+  "SAMSUNG",
+  "APPLE",
+  "HUAWEI",
+  "NOKIA",
+  "SONY",
+  "LG",
+  "HTC",
+  "MOTOROLA",
+  "LENOVO",
+  "XIAOMI",
+  "GOOGLE",
+  "HONOR",
+  "OPPO",
+  "REALME",
+  "ONEPLUS",
+  "NOTHING",
+  "VIVO",
+  "MEIZU",
+  "ASUS",
+  "ALCATEL",
+  "ZTE",
+  "MICROSOFT",
+  "UMIDIGI",
+  "ENERGIZER",
+  "CAT",
+  "SHARP",
+  "MICROMAX",
+  "INFINIX",
+  "ULEFONE",
+  "TECNO",
+  "DOOGEE",
+  "BLACKVIEW",
+  "CUBOT",
+  "OUKITEL",
+  "ITEL",
+  "TCL",
+];
 export default function Banner({
   articles,
   total,
@@ -200,44 +238,7 @@ export default function Banner({
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
-  const SampleBrands = [
-    "SAMSUNG",
-    "APPLE",
-    "HUAWEI",
-    "NOKIA",
-    "SONY",
-    "LG",
-    "HTC",
-    "MOTOROLA",
-    "LENOVO",
-    "XIAOMI",
-    "GOOGLE",
-    "HONOR",
-    "OPPO",
-    "REALME",
-    "ONEPLUS",
-    "NOTHING",
-    "VIVO",
-    "MEIZU",
-    "ASUS",
-    "ALCATEL",
-    "ZTE",
-    "MICROSOFT",
-    "UMIDIGI",
-    "ENERGIZER",
-    "CAT",
-    "SHARP",
-    "MICROMAX",
-    "INFINIX",
-    "ULEFONE",
-    "TECNO",
-    "DOOGEE",
-    "BLACKVIEW",
-    "CUBOT",
-    "OUKITEL",
-    "ITEL",
-    "TCL",
-  ];
+  
   return articles ? (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -268,7 +269,7 @@ export default function Banner({
               />
             </Grid>
             <Grid item xs={12} sm={5.5}>
-              <Grid container spacing={2}>
+              <Grid container spacing={1}>
                 <Grid item xs={6} sm={12}>
                   <ContentBox
                     page={page}
@@ -321,9 +322,10 @@ export default function Banner({
               <PhoneFinder brands={SampleBrands} />
             </Grid>
             <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
-              <MobileReviews mobilesArticles={mobilesArticles} />
+              <MobileReviews mobilesArticles={mobilesArticles} /> 
             </Grid>
           </Grid>
+
           <Grid sx={{ my: 4 }} container>
             <Grid item xs={12} sm={6} md={4}>
               <MobileReviews  isTrending mobilesArticles={latestArticles} />
@@ -348,6 +350,13 @@ export default function Banner({
                 </Typography>
 
                 <BrandDisplayComponent brands={brands} />
+                <Grid display={'flex'} justifyContent={'end'} xs={12}>
+                  
+                <Link href={'/brands'}>
+                <Typography sx={{fontSize:16,fontWeight:600,color:"#0a76d9",":hover":{textDecoration:"underline"}}}>
+                  List Of Brands <KeyboardArrowRightIcon sx={{fontSize:14}} />
+                  </Typography></Link>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

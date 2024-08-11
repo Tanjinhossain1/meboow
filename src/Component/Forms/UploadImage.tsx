@@ -238,7 +238,7 @@ const UploadImageField = ({
       <Grid container gap={1}>
         {isMultiple
           ? imageUrls &&
-            imageUrls.map((img, index) => (
+            imageUrls?.map((img, index) => (
               <Grid sx={{ mt: index >= 3 ? 2 : 0 }} item xs={2.8} key={index}>
                 <Image
                   width={50}

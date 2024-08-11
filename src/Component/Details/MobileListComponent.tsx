@@ -1,6 +1,6 @@
-import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
 import { Container, Typography } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -9,7 +9,6 @@ export default function MobileListComponent({
 }: {
   mobileArticles: MobileArticleType[];
 }) {
-    const history = useRouter();
   return (
     <>
       <Container sx={{ bgcolor: "#023359", p: 1 }}>
@@ -18,8 +17,9 @@ export default function MobileListComponent({
         </Typography>
       </Container>
 
-      {mobileArticles.map((value: MobileArticleType) => {
+      {mobileArticles?.map((value: MobileArticleType) => {
         return (
+          <Link href={`/mobile/detail/${value.id}`}>
           <Typography
             sx={{
               p: 1,
@@ -29,12 +29,11 @@ export default function MobileListComponent({
               borderBottom: "1px solid white",
             }}
             key={value.id}
-            onClick={() => {
-              history.push(`/mobile/detail/${value.id}`);
-            }}
+             
           >
             {value.title}
           </Typography>
+          </Link>
         );
       })}
     </>

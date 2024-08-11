@@ -7,6 +7,7 @@ export interface RecentArticleDataType {
     category: string;
     content:any;
     latestDevice: string,
+    best_reviews: string,
     brands: string,
     updateAt: string;
     createdAt: string;

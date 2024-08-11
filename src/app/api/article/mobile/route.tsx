@@ -193,6 +193,7 @@ export async function GET(req: NextRequest) {
     };
     // const total = await db.select().from(MobileArticles);
     // Perform the database query using Drizzle ORM
+    console.log('checking the data is coing searchTermsearchTermsearchTerm filtersfiltersfiltersfilters',filters)
     const { data, meta } = await getAll(filters, options);
 
     return NextResponse.json({
@@ -222,7 +223,7 @@ const getAll = async (
     is_latest_device,
   } = filters;
   const whereConditions = [];
-console.log('checking the data is coing ',is_by_fans,
+console.log('checking the data is coing searchTermsearchTermsearchTerm ',searchTerm,
   is_daily_interest,
   is_latest_device)
   if (brands) {
@@ -257,7 +258,7 @@ console.log('checking the data is coing ',is_by_fans,
   }
 
   if (searchTerm) {
-    const searchConditions = ["title", "description"].map((field) =>
+    const searchConditions = ["title"].map((field) =>
       likeInsensitive((MobileArticles as any)[field], `%${searchTerm}%`)
     );
 

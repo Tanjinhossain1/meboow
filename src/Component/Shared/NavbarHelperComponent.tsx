@@ -215,20 +215,7 @@ function NavbarHelper({
               </Link>
             </Typography>
           </Grid>
-          <Grid xs={4}>
-            <Typography
-              gap={2}
-              sx={{
-                fontSize: 11,
-                color: "#023359",
-                ":hover": { textDecoration: "underline" },
-              }}
-            >
-              <Link style={{ color: "black" }} href={"/helpus"}>
-                Tip Us
-              </Link>
-            </Typography>
-          </Grid>
+           
         </Grid>
       </Grid>
     </Box>
@@ -322,22 +309,7 @@ function NavbarHelper({
                     FAQ
                   </Link>
                 </Typography>
-                <Typography
-                  gap={2}
-                  sx={{
-                    fontSize: 11,
-                    color: "#023359",
-                    ":hover": { textDecoration: "underline" },
-                  }}
-                >
-                  <Link
-                    style={{ color: "black" }}
-                    rel="canonical"
-                    href={"/helpus"}
-                  >
-                    Tip Us
-                  </Link>
-                </Typography>
+                 
               </Grid>
             </Grid>
           </Grid>
@@ -488,17 +460,19 @@ function NavbarHelper({
               <Grid container>
                 <Grid alignItems={"left"} container xs={0.8}>
                   <Grid sx={{ p: 1 }} xs={1}>
+                    <Link href={'/'}>
                     <Typography
                       sx={{
-                        cursor: "pointer",
+                        // cursor: "pointer",
                         mr: 2,
                       }}
-                      onClick={() => {
-                        history.push(`/`);
-                      }}
+                      // onClick={() => {
+                      //   history.push(`/`);
+                      // }}
                     >
                       Home
                     </Typography>
+                    </Link>
                   </Grid>
                 </Grid>
                 <Grid alignItems={"left"} container xs={10.2}>

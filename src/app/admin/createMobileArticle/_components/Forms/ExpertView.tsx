@@ -239,7 +239,7 @@ export default function ExpertView({
             );
           })}
         </Grid> */}
-         {OtherDetailsForms.map((otherDetails, index) => {
+         {OtherDetailsForms?.map((otherDetails, index) => {
           return (
             <Fragment key={index}>
               <Grid xs={1.8}>
@@ -278,7 +278,7 @@ export default function ExpertView({
             List of Pros
           </Typography>
         </Grid>
-        {prosFields.map((field, index) => (
+        {prosFields?.map((field, index) => (
           <Grid item xs={2} key={field.id}>
             <Box
               sx={{
@@ -312,7 +312,7 @@ export default function ExpertView({
             List of Cons
           </Typography>
         </Grid>
-        {consFields.map((field, index) => (
+        {consFields?.map((field, index) => (
           <Grid item xs={2} key={field.id}>
             <Box
               sx={{

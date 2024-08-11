@@ -10,7 +10,7 @@ export async function GET(req: Request,{ params }: { params: { id: string } }) {
             'connected to the db: detail   articles ---> api/article/detail/id'
         )
         const data = await db.select().from(Articles).where(eq(Articles.id, Number(params?.id)))
-        const parsedArticles = data.map((article:any) => ({
+        const parsedArticles = data?.map((article:any) => ({
             ...article,
           }));
         return NextResponse.json({

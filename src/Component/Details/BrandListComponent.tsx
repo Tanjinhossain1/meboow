@@ -17,7 +17,7 @@ export default function BrandListComponent({
         </Typography>
       </Container>
 
-      {brands.map((value: BrandTypes) => {
+      {brands?.map((value: BrandTypes) => {
         return (
           <Typography
             sx={{

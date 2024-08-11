@@ -69,7 +69,7 @@ export default function RecentArticleComponent({
 
         <Grid sx={{ mt: 2,display:{sm: "flex",xs:"none"} }} container>
           {articles &&
-            articles.map((data: RecentArticleDataType) => {
+            articles?.map((data: RecentArticleDataType) => {
               console.log(data);
               return (
                 <Fragment key={data.id}>
@@ -80,7 +80,7 @@ export default function RecentArticleComponent({
         </Grid>
         <Grid sx={{ mt: 2,display:{sm: "none",xs:"flex"} }} container>
           {articles &&
-            articles.map((data: RecentArticleDataType) => {
+            articles?.map((data: RecentArticleDataType) => {
               console.log(data);
               return (
                 <Fragment key={data.id}>

@@ -69,12 +69,10 @@ export default function DetailsComponent({
   //   .join(" ");
 
   return (
-    <>
-      <>
-        <Grid container>
-          <Grid xs={0} md={1} lg={1.1} xl={2}></Grid>
-          <Grid xs={12} md={10} lg={9.8} xl={8}>
-            <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
+   
+        <Grid  container>
+           
+            <Paper className="md:max-w-[1000px] mx-auto" sx={{ p: 2, mb: 2 }} elevation={2}>
               <Breadcrumbs sx={{ fontSize: 12 }} aria-label="breadcrumb">
                 <Link underline="hover" color="inherit" href="/">
                   Home
@@ -150,7 +148,7 @@ export default function DetailsComponent({
                         key={block.id}
                       >
                         <Typography sx={{fontSize:15,mb:0.5,fontWeight:600}}>Table Of Contents</Typography>
-                        {tableOfContents.map((header, index) => {
+                        {tableOfContents?.map((header, index) => {
                           const formateHeader = header
                           .split(" ")
                           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -396,10 +394,9 @@ export default function DetailsComponent({
                 <Grid xs={12} sx={{ mt: 17 }} lg={4}></Grid>
               </Grid>
             </Paper>
-          </Grid>
-          <Grid xs={0} md={1} lg={1.1} xl={2}></Grid>
+          
         </Grid>
-      </>
-    </>
+      
+    
   );
 }

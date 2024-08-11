@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         // Parse the JSON body
         const body = await req.json()
         
-        const { title, category, description, image, content,latestDevice,brands,deviceName,showInNews } = body;
+        const { title, category, description, image, content,latestDevice,brands,deviceName,showInNews ,best_reviews} = body;
 
         console.log('body detail created', body, title, category, description, image, deviceName, content,showInNews);
 
@@ -32,7 +32,8 @@ export async function POST(req: Request) {
             latestDevice,
             brands,
             deviceName,
-            showInNews
+            showInNews,
+            best_reviews
         });
         
         revalidatePath('/')
@@ -48,7 +49,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         // Parse the JSON body
         const body = await req.json();
         
-        const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews,id } = body;
+        const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews,id ,best_reviews} = body;
 
         console.log('Body details for update:', body);
 
@@ -76,7 +77,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
                 latestDevice,
                 brands,
                 deviceName,
-                showInNews
+                showInNews,
+                best_reviews
             })
             .where(eq(Articles.id, id));
 

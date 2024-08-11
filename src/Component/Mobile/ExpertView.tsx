@@ -122,7 +122,7 @@ const ExpertViewComponent = ({
                 Feb 11, 2024
             </Typography> */}
             <Grid sx={{ mb: 4 }} container spacing={2} alignItems="center">
-              {Object.entries(mobileArticles?.expert_view?.specific_score).map(([key, value]) => {
+              {Object.entries(mobileArticles?.expert_view?.specific_score)?.map(([key, value]) => {
                 const fillPercentage = (+value / 10) * 100;
                 const colorIndex = Math.floor(+value) - 1;
                 return (

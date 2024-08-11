@@ -1,15 +1,15 @@
-"use client"
+
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';  
-import { useRouter } from "next/navigation";
 import OtherPageFooter from "@/Component/Shared/Footer";
+import Navbar from "@/Component/Shared/Navbar";
+import Footer from "@/Component/HomePage/Footer";
 
-export default function AboutUs() {
-    const history = useRouter()
+export default function AboutUs() { 
   return (
     <Grid container>
+      <Navbar />
       <Container
         sx={{
           width: {
@@ -24,10 +24,8 @@ export default function AboutUs() {
         }}
       >
         <Container sx={{mt:4}}>
-            <Container onClick={()=>history.back()} sx={{width:"100%",bgcolor:"#eb94d7",p:1}}>
-            <ArrowBackIcon  sx={{fontSize:30,color:"whitesmoke"}} />
-            </Container>
-          <Paper sx={{ textAlign: "center", p: 5 }} elevation={2}>
+           
+          <Paper  className="md:max-w-[1000px] mx-auto" sx={{ textAlign: "center", p: 5 }} elevation={2}>
             <Image
               src="/compliant.png"
               alt=""
@@ -53,9 +51,7 @@ export default function AboutUs() {
           </Paper>
         </Container>
       </Container>
-      <div style={{marginTop:5,width:"100%",}}>
-      <OtherPageFooter />
-      </div>
+     <Footer />
     </Grid>
   );
 }

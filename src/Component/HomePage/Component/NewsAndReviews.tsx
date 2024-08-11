@@ -48,7 +48,7 @@ export default function NewsAndReviews({
       >
         {mobilesArticles
           .slice(1, mobilesArticles.length)
-          .map((article: RecentArticleDataType) => (
+          ?.map((article: RecentArticleDataType) => (
             <Fragment key={article.id}>
               <SwiperSlide>
                 {/* Content Section */}

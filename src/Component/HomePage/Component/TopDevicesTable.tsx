@@ -19,7 +19,7 @@ const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dail
             </TableRow>
           </TableHead>
           <TableBody>
-            {dailyInterest.map((row,index) => (
+            {dailyInterest?.map((row,index) => (
               <TableRow className={index % 2 !== 0 ? 'bg-[#e8f6e9]' : ''} key={row.id}>
                 <TableCell className='p-1' sx={{m:0,p:0}}>{index + 1}.</TableCell>
                 <TableCell  className='p-1' sx={{m:0,p:0,":hover":{color:"red"}}}>
@@ -43,7 +43,7 @@ const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dail
             </TableRow>
           </TableHead>
           <TableBody>
-            {byFans.map((row,index) => (
+            {byFans?.map((row,index) => (
               <TableRow className={index % 2 !== 0 ? 'bg-[#e8eff6]' : ''} key={row.id}>
                 <TableCell className='p-1' sx={{p:0,m:0}}>{index + 1}.</TableCell>
                 <TableCell className='p-1' sx={{m:0,p:0,":hover":{color:"red"}}}>

@@ -29,7 +29,7 @@ export default function Categories({
       </Typography>
       <Box sx={{ flexGrow: 1, p: 2 }}>
         <Grid gap={1} container>
-          {category.map((value: CategoryTypes, index: number) => (
+          {category?.map((value: CategoryTypes, index: number) => (
             <Grid
               item
               key={value.id}

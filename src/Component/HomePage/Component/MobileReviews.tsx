@@ -128,7 +128,7 @@ export default function MobileReviews({
         </Grid>
       </Grid>
       {isTrending ? (
-        mobilesArticles.slice(1, 5).map((article: RecentArticleDataType) => (
+        mobilesArticles.slice(1, 5)?.map((article: RecentArticleDataType) => (
           <Fragment key={article.id}>
             {/* Content Section */}
             <Grid sx={{ display: "flex", mt: 1 }} container spacing={2}>
@@ -208,7 +208,7 @@ export default function MobileReviews({
         >
           {mobilesArticles
             .slice(1, mobilesArticles.length)
-            .map((article: RecentArticleDataType) => (
+            ?.map((article: RecentArticleDataType) => (
               <Fragment key={article.id}>
                 <SwiperSlide style={{ height: "200px" }}>
                   {/* Content Section */}
