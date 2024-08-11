@@ -40,14 +40,23 @@ export default function MobileReviews({
           alignItems="center"
         >
           <div style={{ width: "100%" }}>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
-              alt="Article Image"
-              layout="responsive"
-              width={10} // Aspect ratio: width
-              height={40} // Aspect ratio: height
-              className="object-cover"
-            />
+            <Link
+              href={`/details/${mobilesArticles[0]?.id}/${
+                mobilesArticles[0]?.category
+              }?${new URLSearchParams({
+                page: `2`,
+                limit: "3",
+              })}`}
+            >
+              <Image
+                src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
+                alt="Article Image"
+                layout="responsive"
+                width={10} // Aspect ratio: width
+                height={40} // Aspect ratio: height
+                className="object-cover"
+              />
+            </Link>
           </div>
         </Grid>
         <Grid item xs={isTrending ? 12 : 8}>
@@ -70,13 +79,32 @@ export default function MobileReviews({
               {formatDate(mobilesArticles[0]?.updateAt)}
             </Typography>
           )}
-          <p className="text-sm font-bold text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
-            {mobilesArticles[0]?.title}
-          </p>
-          {isTrending ? null : (
-            <p className="text-[12px] mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
-              {mobilesArticles[0]?.description}
+          <Link
+            href={`/details/${mobilesArticles[0]?.id}/${
+              mobilesArticles[0]?.category
+            }?${new URLSearchParams({
+              page: `2`,
+              limit: "3",
+            })}`}
+          >
+            <p className="text-sm hover:text-red-600 font-bold text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
+              {mobilesArticles[0]?.title}
             </p>
+          </Link>
+          {isTrending ? null : (
+            <Link
+              href={`/details/${mobilesArticles[0]?.id}/${
+                mobilesArticles[0]?.category
+              }?${new URLSearchParams({
+                page: `2`,
+                limit: "3",
+              })}`}
+            >
+              {" "}
+              <p className="text-[12px] mt-2 hover:text-red-600 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                {mobilesArticles[0]?.description}
+              </p>
+            </Link>
           )}
           {isTrending ? (
             <Typography sx={{ fontSize: 12, textAlign: "left" }}>
@@ -112,20 +140,38 @@ export default function MobileReviews({
                 alignItems="center"
               >
                 <div style={{ width: "100%" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                    alt="Article Image"
-                    layout="responsive"
-                    width={10} // Aspect ratio: width
-                    height={40} // Aspect ratio: height
-                    className="object-cover"
-                  />
+                  <Link
+                    href={`/details/${article?.id}/${
+                      article.category
+                    }?${new URLSearchParams({
+                      page: `2`,
+                      limit: "3",
+                    })}`}
+                  >
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
+                      alt="Article Image"
+                      layout="responsive"
+                      width={10} // Aspect ratio: width
+                      height={40} // Aspect ratio: height
+                      className="object-cover"
+                    />
+                  </Link>
                 </div>
               </Grid>
               <Grid item xs={8}>
-                <p className="text-xs font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
+              <Link
+                    href={`/details/${article?.id}/${
+                      article.category
+                    }?${new URLSearchParams({
+                      page: `2`,
+                      limit: "3",
+                    })}`}
+                  >
+                <p className="text-xs hover:text-red-600 font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                   {article.title}
                 </p>
+                </Link>
                 <Typography sx={{ fontSize: 12, textAlign: "left", mt: 1 }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -175,14 +221,23 @@ export default function MobileReviews({
                       alignItems="center"
                     >
                       <div style={{ width: "100%" }}>
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                          alt="Article Image"
-                          layout="responsive"
-                          width={10} // Aspect ratio: width
-                          height={40} // Aspect ratio: height
-                          className="object-cover"
-                        />
+                        <Link
+                          href={`/details/${article?.id}/${
+                            article?.category
+                          }?${new URLSearchParams({
+                            page: `2`,
+                            limit: "3",
+                          })}`}
+                        >
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
+                            alt="Article Image"
+                            layout="responsive"
+                            width={10} // Aspect ratio: width
+                            height={40} // Aspect ratio: height
+                            className="object-cover"
+                          />
+                        </Link>
                       </div>
                     </Grid>
                     <Grid item xs={8}>

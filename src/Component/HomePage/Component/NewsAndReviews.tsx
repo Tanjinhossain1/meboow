@@ -13,6 +13,7 @@ import "swiper/css/scrollbar";
 import "./MobileReviews.css";
 import Image from "next/image";
 import { formatDate } from "@/utils/utils";
+import Link from "next/link";
 
 // import required modules
 export default function NewsAndReviews({
@@ -60,6 +61,13 @@ export default function NewsAndReviews({
                     alignItems="center"
                   >
                     <div style={{ width: "100%" }}>
+                      <Link   href={`/details/${article?.id}/${
+                      article.category
+                    }?${new URLSearchParams({
+                      page: `2`,
+                      limit: "3",
+                    })}`}>
+
                       <Image
                         src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
                         alt="Article Image"
@@ -67,7 +75,8 @@ export default function NewsAndReviews({
                         width={10} // Aspect ratio: width
                         height={40} // Aspect ratio: height
                         className="object-cover"
-                      />
+                        />
+                        </Link>
                     </div>
                   </Grid>
                   <Grid item xs={12}>
@@ -88,12 +97,28 @@ export default function NewsAndReviews({
                       </svg>
                       {formatDate(article.updateAt)}
                     </Typography>
-                    <p className="text-sm font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                    <Link   href={`/details/${article?.id}/${
+                      article.category
+                    }?${new URLSearchParams({
+                      page: `2`,
+                      limit: "3",
+                    })}`}>
+
+                    <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                       {article.title}
                     </p>
-                    <p className="text-[12px] mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                    </Link>
+                    <Link   href={`/details/${article?.id}/${
+                      article.category
+                    }?${new URLSearchParams({
+                      page: `2`,
+                      limit: "3",
+                    })}`}>
+
+                    <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
                       {article?.description}
                     </p>
+                    </Link>
                   </Grid>
                 </Grid>
               </SwiperSlide>

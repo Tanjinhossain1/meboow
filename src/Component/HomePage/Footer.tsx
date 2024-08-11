@@ -48,25 +48,27 @@ export default async function Footer() {
                 container
                 style={{ listStyleType: "none", padding: 0 }}
               >
-                {mobileArticles?.data && mobileArticles?.data?.map((item, index) => (
-                  <Grid xs={5.5} key={index}>
-                    <Typography
-                      component="a"
-                      href="#"
-                    className="overflow-hidden text-ellipsis line-clamp-1"
-                      sx={{
-                        color: "#fff",
-                        m: 0,
-                        p: 0,
-                        fontSize: 13,
-                        textDecoration: "none",
-                        "&:hover": { textDecoration: "underline" },
-                      }}
-                    >
-                      <KeyboardArrowRightIcon sx={{ fontSize: 11 }} /> {item.title}
-                    </Typography>
-                  </Grid>
-                ))}
+                {mobileArticles?.data &&
+                  mobileArticles?.data?.map((item, index) => (
+                    <Grid xs={5.5} key={index}>
+                      <Typography
+                        component="a"
+                        href={`/mobile/detail/${item.id}`}
+                        className="overflow-hidden text-ellipsis line-clamp-1 hover:text-red-500"
+                        sx={{
+                          color: "#fff",
+                          m: 0,
+                          p: 0,
+                          fontSize: 13,
+                          textDecoration: "none",
+                          "&:hover": { textDecoration: "underline" },
+                        }}
+                      >
+                        <KeyboardArrowRightIcon sx={{ fontSize: 11 }} />{" "}
+                        {item.title}
+                      </Typography>
+                    </Grid>
+                  ))}
               </Grid>
             </Grid>
             <Grid item xs={12} sm={0.4}>
@@ -90,25 +92,32 @@ export default async function Footer() {
                 container
                 style={{ listStyleType: "none", padding: 0 }}
               >
-                {newsAndReviews?.data&& newsAndReviews?.data?.map((item, index) => (
-                  <Grid xs={5.5} key={index}>
-                    <Typography
-                    className="overflow-hidden text-ellipsis line-clamp-1"
-                      component="a"
-                      href="#"
-                      sx={{
-                        color: "#fff",
-                        m: 0,
-                        p: 0,
-                        textDecoration: "none",
-                        fontSize: 13,
-                        "&:hover": { textDecoration: "underline" },
-                      }}
-                    >
-                      <KeyboardArrowRightIcon sx={{ fontSize: 11 }} /> {item.title}
-                    </Typography>
-                  </Grid>
-                ))}
+                {newsAndReviews?.data &&
+                  newsAndReviews?.data?.map((item, index) => (
+                    <Grid xs={5.5} key={index}>
+                      <Typography
+                        className="overflow-hidden text-ellipsis line-clamp-1"
+                        component="a"
+                        href={`/details/${item?.id}/${
+                          item.category
+                        }?${new URLSearchParams({
+                          page: `2`,
+                          limit: "3",
+                        })}`}
+                        sx={{
+                          color: "#fff",
+                          m: 0,
+                          p: 0,
+                          textDecoration: "none",
+                          fontSize: 13,
+                          "&:hover": { textDecoration: "underline" },
+                        }}
+                      >
+                        <KeyboardArrowRightIcon sx={{ fontSize: 11 }} />{" "}
+                        {item.title}
+                      </Typography>
+                    </Grid>
+                  ))}
               </Grid>
             </Grid>
           </Grid>
@@ -258,7 +267,6 @@ export default async function Footer() {
                   </Link>
                 </Typography>
               </Box>
-             
             </Grid>
             <Grid xs={3}></Grid>
             <Grid item xs={12} md={3}>
@@ -327,9 +335,12 @@ export default async function Footer() {
             alignItems="center"
             mt={2}
           >
-            <Grid display="flex" 
-            justifyContent="center"
-            alignItems="center"  container>
+            <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              container
+            >
               <Grid xs={5}>
                 <Image
                   alt="logo"
@@ -338,11 +349,10 @@ export default async function Footer() {
                   src="/app-logo/3.png"
                 />
               </Grid>
-              <Grid xs={5}> 
+              <Grid xs={5}>
                 <Typography variant="body2">
                   &copy; MHT Digital Media Private Limited
                 </Typography>
-             
               </Grid>
               <Grid xs={2}>
                 <Typography variant="body2">

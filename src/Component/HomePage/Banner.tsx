@@ -32,11 +32,12 @@ import Categories from "./Component/Categories";
 import NewsAndReviews from "./Component/NewsAndReviews";
 import TopDevicesTable from "./Component/TopDevicesTable";
 import LatestDevices from "./Component/LatestDevices";
+import Link from "next/link";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
   overflow: "hidden",
-  cursor: "pointer",
+  // cursor: "pointer",
   width: "100%",
   height: "100%",
   "&:hover .title": {
@@ -109,33 +110,54 @@ const ContentBox = ({
         width: "100%",
         height: isBig ? "355px" : "170px",
       }}
-      onClick={() => {
-        history.push(
-          `/details/${id}/${category}?${new URLSearchParams({
-            page: `${Number(page) + 1}`,
-            limit: limit,
-          })}`,
-          {
-            scroll: false,
-          }
-        );
-      }}
+      // onClick={() => {
+      //   history.push(
+      //     `/details/${id}/${category}?${new URLSearchParams({
+      //       page: `${Number(page) + 1}`,
+      //       limit: limit,
+      //     })}`,
+      //     {
+      //       scroll: false,
+      //     }
+      //   );
+      // }}
     >
-      <Image
-        src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
-        alt={title}
-        layout="fill"
-      />
+      <Link
+        href={`/details/${id}/${category}?${new URLSearchParams({
+          page: `${Number(page) + 1}`,
+          limit: limit,
+        })}`}
+      >
+        <Image
+          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
+          alt={title}
+          layout="fill"
+        />
+      </Link>
     </Box>
-    <Title
-      sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
-      className={isBig ? "bigTitle" : "title"}
+    <Link
+      href={`/details/${id}/${category}?${new URLSearchParams({
+        page: `${Number(page) + 1}`,
+        limit: limit,
+      })}`}
     >
-      {title}
-    </Title>
-    <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
-      {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
-    </Description>
+      <Title
+        sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
+        className={isBig ? "bigTitle" : "title"}
+      >
+        {title}
+      </Title>
+    </Link>
+    <Link
+      href={`/details/${id}/${category}?${new URLSearchParams({
+        page: `${Number(page) + 1}`,
+        limit: limit,
+      })}`}
+    >
+      <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
+        {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
+      </Description>
+    </Link>
   </HoverBox>
 );
 
@@ -161,15 +183,20 @@ export default function Banner({
   newsAndReviews: RecentArticleDataType[];
   brands: BrandTypes[];
   mobileArticles: MobileArticleType[];
-  dailyInterestMobiles:MobileArticleType[];
-  byFansMobiles:MobileArticleType[];
-  latestDeviceMobiles:MobileArticleType[];
+  dailyInterestMobiles: MobileArticleType[];
+  byFansMobiles: MobileArticleType[];
+  latestDeviceMobiles: MobileArticleType[];
   user: any;
 }) {
   console.log("articles articles ", articles);
   const history = useRouter();
 
-  console.log("dailyInterestMobiles,byFansMobiles,latestDeviceMobiles  ", dailyInterestMobiles,byFansMobiles,latestDeviceMobiles);
+  console.log(
+    "dailyInterestMobiles,byFansMobiles,latestDeviceMobiles  ",
+    dailyInterestMobiles,
+    byFansMobiles,
+    latestDeviceMobiles
+  );
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
@@ -299,7 +326,7 @@ export default function Banner({
           </Grid>
           <Grid sx={{ my: 4 }} container>
             <Grid item xs={12} sm={6} md={4}>
-              <MobileReviews isTrending mobilesArticles={mobilesArticles} />
+              <MobileReviews  isTrending mobilesArticles={latestArticles} />
             </Grid>
             <Grid item sx={{ pl: 2, height: "350px" }} xs={12} sm={6} md={8}>
               <PopularMobiles user={user} articles={mobileArticles} />
@@ -327,7 +354,10 @@ export default function Banner({
 
           <Grid sx={{ my: 4 }} container>
             <Grid xs={12} sm={6} md={4}>
-              <TopDevicesTable byFans={byFansMobiles} dailyInterest={dailyInterestMobiles} />
+              <TopDevicesTable
+                byFans={byFansMobiles}
+                dailyInterest={dailyInterestMobiles}
+              />
               <LatestDevices mobiles={latestDeviceMobiles} />
             </Grid>
             <Grid sx={{ pl: 2, mt: 2 }} xs={12} sm={6} md={8}>

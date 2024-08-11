@@ -354,7 +354,7 @@ export default function CreateArticleComponent({
             sx={{ my: 1, minWidth: "100%", display: "flex" }}
           >
             <InputLabel id="demo-simple-select-filled-label">
-              Latest Device <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+              Is Trending <sup style={{ color: "red", fontSize: 20 }}>*</sup>
             </InputLabel>
 
             <Select
@@ -365,8 +365,8 @@ export default function CreateArticleComponent({
               name="latestDevice"
               onChange={handleLatestChange}
             >
-              <MenuItem value={"latest"}>Latest</MenuItem>
-              <MenuItem value={"old"}>Old</MenuItem>
+              <MenuItem value={"latest"}>YES</MenuItem>
+              <MenuItem value={"old"}>NO</MenuItem>
             </Select>
           </FormControl>
 
