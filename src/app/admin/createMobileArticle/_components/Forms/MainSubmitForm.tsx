@@ -67,6 +67,7 @@ export default function MainSubmitForm({
   const FeaturesEditorRef = useRef<any>(null);
   const BatteryEditorRef = useRef<any>(null);
   const DetailsEditorRef = useRef<any>(null);
+  const ContentEditorRef = useRef<any>(null);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -132,6 +133,7 @@ export default function MainSubmitForm({
     const featuresData = await FeaturesEditorRef.current?.save();
     const batteryData = await BatteryEditorRef.current?.save();
     const detailsData = await DetailsEditorRef.current?.save();
+    const contentData = await ContentEditorRef.current?.save();
 
     const formData = {
       ...data,
@@ -150,6 +152,7 @@ export default function MainSubmitForm({
       features: featuresData,
       battery: batteryData,
       details: detailsData,
+      content: contentData
     };
     console.log("Form Data:", formData);
     if (isEdit?.isEdit) {
@@ -215,71 +218,77 @@ export default function MainSubmitForm({
     setOpen(false);
   }; 
   const OtherDetailsForms = [
+    // {
+    //   holderId: "1",
+    //   title: "Physical Specification",
+    //   componentRef: PhysicalSpecificationEditorRef,
+    //   key: "physicalSpecification",
+    // },
+    // {
+    //   holderId: "2",
+    //   title: "Network",
+    //   componentRef: NetworkEditorRef,
+    //   key: "network",
+    // },
+    // {
+    //   holderId: "3",
+    //   title: "Display",
+    //   componentRef: DisplayEditorRef,
+    //   key: "display",
+    // },
+    // {
+    //   holderId: "4",
+    //   title: "Processor",
+    //   componentRef: ProcessorEditorRef,
+    //   key: "processor",
+    // },
+    // {
+    //   holderId: "5",
+    //   title: "Memory",
+    //   componentRef: MemoryEditorRef,
+    //   key: "memory",
+    // },
+    // {
+    //   holderId: "6",
+    //   title: "Main Camera",
+    //   componentRef: MainCameraEditorRef,
+    //   key: "mainCamera",
+    // },
+    // {
+    //   holderId: "7",
+    //   title: "Selfie Camera",
+    //   componentRef: SelfieCameraEditorRef,
+    //   key: "selfieCamera",
+    // },
+    // {
+    //   holderId: "8",
+    //   title: "OS",
+    //   componentRef: OSEditorRef,
+    //   key: "os",
+    // },
+    // {
+    //   holderId: "9",
+    //   title: "Connectivity",
+    //   componentRef: ConnectivityEditorRef,
+    //   key: "connectivity",
+    // },
+    // {
+    //   holderId: "10",
+    //   title: "Features",
+    //   componentRef: FeaturesEditorRef,
+    //   key: "features",
+    // },
+    // {
+    //   holderId: "11",
+    //   title: "Battery",
+    //   componentRef: BatteryEditorRef,
+    //   key: "battery",
+    // },
     {
-      holderId: "1",
-      title: "Physical Specification",
-      componentRef: PhysicalSpecificationEditorRef,
-      key: "physicalSpecification",
-    },
-    {
-      holderId: "2",
-      title: "Network",
-      componentRef: NetworkEditorRef,
-      key: "network",
-    },
-    {
-      holderId: "3",
-      title: "Display",
-      componentRef: DisplayEditorRef,
-      key: "display",
-    },
-    {
-      holderId: "4",
-      title: "Processor",
-      componentRef: ProcessorEditorRef,
-      key: "processor",
-    },
-    {
-      holderId: "5",
-      title: "Memory",
-      componentRef: MemoryEditorRef,
-      key: "memory",
-    },
-    {
-      holderId: "6",
-      title: "Main Camera",
-      componentRef: MainCameraEditorRef,
-      key: "mainCamera",
-    },
-    {
-      holderId: "7",
-      title: "Selfie Camera",
-      componentRef: SelfieCameraEditorRef,
-      key: "selfieCamera",
-    },
-    {
-      holderId: "8",
-      title: "OS",
-      componentRef: OSEditorRef,
-      key: "os",
-    },
-    {
-      holderId: "9",
-      title: "Connectivity",
-      componentRef: ConnectivityEditorRef,
-      key: "connectivity",
-    },
-    {
-      holderId: "10",
-      title: "Features",
-      componentRef: FeaturesEditorRef,
-      key: "features",
-    },
-    {
-      holderId: "11",
-      title: "Battery",
-      componentRef: BatteryEditorRef,
-      key: "battery",
+      holderId: "18",
+      title: "Content",
+      componentRef: ContentEditorRef,
+      key: "content",
     },
     {
       holderId: "12",

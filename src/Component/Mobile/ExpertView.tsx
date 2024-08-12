@@ -13,6 +13,7 @@ import Image from "next/image";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import { useRouter } from "next/navigation";
 import { formatDate_into_month_date_string } from "@/utils/utils";
+import Link from "next/link";
  
 const ExpertViewComponent = ({
   mobileArticles,
@@ -226,8 +227,11 @@ const ExpertViewComponent = ({
               <Typography sx={{ fontSize: 15 }}>
                 {mobileArticles?.expert_view?.verdict}
               </Typography>
+              {
+                mobileArticles?.expert_view?.article_urls ? 
+              <Link href={mobileArticles?.expert_view?.article_urls}>
               <Typography
-                onClick={() => router.push(mobileArticles?.expert_view?.article_urls)}
+                
                 sx={{
                   textAlign: "end",
                   fontWeight: 600,
@@ -242,6 +246,8 @@ const ExpertViewComponent = ({
                 Read {mobileArticles?.title} Review
                 <KeyboardArrowRightOutlinedIcon sx={{ fontSize: 20 }} />
               </Typography>
+              </Link>: null
+              }
             </Box>
           </Box>
         </Paper>

@@ -28,7 +28,7 @@ export default function MobileReviews({
         {isTrending ? "Trending" : "Mobile Reviews"}
       </Typography>
       <Grid
-        sx={{ display: "flex", mt: 1, mb: isTrending ? 0 : 3 }}
+        sx={{ display: "flex", mt: 1, mb: isTrending ? 0 : 2 }}
         container
         spacing={2}
       >

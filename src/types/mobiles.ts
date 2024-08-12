@@ -56,6 +56,7 @@ export interface MobileArticleType {
     physicalSpecification: any,
     network: any,
     display: any,
+    content: any,
     processor: any,
     memory: any,
     mainCamera: any,

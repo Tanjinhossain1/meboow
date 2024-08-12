@@ -468,7 +468,7 @@ export default function CreateArticleComponent({
             multiline
             rows={4}
             defaultValue={
-              isEdit?.isEdit ? isEdit?.articleDetail.description : ""
+              isEdit?.isEdit ? isEdit?.articleDetail?.description : ""
             }
             name={"description"}
             sx={{ width: "100%" }}

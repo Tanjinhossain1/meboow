@@ -77,3 +77,7 @@ export const sendResponse = <T>(res: any, data: IApiReponse<T>): void => {
 };
 
 
+export const stripLinks = (htmlString:string) => {
+  const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+  return doc.body.textContent || "";
+};

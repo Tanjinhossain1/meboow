@@ -88,6 +88,7 @@ export const MobileArticles = mysqlTable(
     details: json("details"),
     prices: json("prices"),
     expert_view: json("expert_view"),
+    content: json("content"),
 
     is_daily_interest:text('is_daily_interest'),
     is_by_fans:text('is_by_fans'),

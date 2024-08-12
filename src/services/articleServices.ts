@@ -22,6 +22,7 @@ export async function fetchArticles({
   showInNews,
   allArticles,
   showInNewsWithAll,
+  best_reviews,
 }: {
   page?: string;
   limit?: string;
@@ -32,6 +33,7 @@ export async function fetchArticles({
   showInNews?: string;
   allArticles?: boolean;
   showInNewsWithAll?: string;
+  best_reviews?: string;
 }): Promise<{
   data: RecentArticleDataType[];
   page: number;
@@ -54,6 +56,8 @@ export async function fetchArticles({
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all`;
   } else if (showInNewsWithAll) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?showInNews=${showInNewsWithAll}`;
+  }else if (best_reviews) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?best_reviews=${best_reviews}`;
   }
 
   // const response = await axios.get(url);

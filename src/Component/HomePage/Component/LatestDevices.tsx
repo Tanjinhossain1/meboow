@@ -14,7 +14,7 @@ export default function LatestDevices({
       <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 3, mb: 1 }}>
         Latest Devices
       </Typography>
-      <Grid container>
+      <Grid sx={{mb:2}} container>
         {mobiles?.slice(0, 6)?.map((mobile: MobileArticleType) => {
           return (
             <Grid

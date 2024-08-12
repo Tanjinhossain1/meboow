@@ -23,17 +23,47 @@ export default function NewsAndReviews({
   mobilesArticles: RecentArticleDataType[];
   isTrending?: boolean;
 }) {
-  console.log(
-    "mobilesArticlesmobilesArticlesmobilesArticles ",
-    mobilesArticles
+  const [progress, setProgress] = useState(
+    mobilesArticles.length >= 6 ? 0 : 100
   );
+  const swiperRef = useRef<any>(null);
+
+  const updateProgress = () => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current.swiper;
+      const totalSlides = swiper.slides.length;
+      const visibleSlides = 7;
+      const currentIndex = swiper.activeIndex;
+      const progressRatio = (currentIndex + visibleSlides) / totalSlides;
+      setProgress(progressRatio);
+    }
+  };
+  
+  useEffect(() => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current.swiper;
+      swiper.on("slideChange", updateProgress);
+      updateProgress(); // Initial update
+
+      return () => {
+        swiper.off("slideChange", updateProgress);
+      };
+    }
+  }, []);
 
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
         News And Reviews
       </Typography>
+      <div className="h-1 bg-gray-200 rounded-full overflow-hidden mb-4">
+        <div
+          className="bg-blue-600 h-full transition-all duration-300"
+          style={{ width: `${progress * 100}%` }}
+        ></div>
+      </div>
       <Swiper
+        ref={swiperRef}
         slidesPerView={3}
         grid={{
           rows: 2,
@@ -42,7 +72,7 @@ export default function NewsAndReviews({
         pagination={{
           clickable: true,
         }}
-        style={{height:"800px"}}
+        style={{ height: "800px" }}
         modules={[SwiperGrid, Scrollbar]}
         //  pagination={{ clickable: true, el: '.swiper-pagination', type: 'progressbar' }}
       >
@@ -61,22 +91,23 @@ export default function NewsAndReviews({
                     alignItems="center"
                   >
                     <div style={{ width: "100%" }}>
-                      <Link   href={`/details/${article?.id}/${
-                      article.category
-                    }?${new URLSearchParams({
-                      page: `2`,
-                      limit: "3",
-                    })}`}>
-
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                        alt="Article Image"
-                        layout="responsive"
-                        width={10} // Aspect ratio: width
-                        height={40} // Aspect ratio: height
-                        className="object-cover"
+                      <Link
+                        href={`/details/${article?.id}/${
+                          article.category
+                        }?${new URLSearchParams({
+                          page: `2`,
+                          limit: "3",
+                        })}`}
+                      >
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
+                          alt="Article Image"
+                          layout="responsive"
+                          width={10} // Aspect ratio: width
+                          height={40} // Aspect ratio: height
+                          className="object-cover"
                         />
-                        </Link>
+                      </Link>
                     </div>
                   </Grid>
                   <Grid item xs={12}>
@@ -97,27 +128,29 @@ export default function NewsAndReviews({
                       </svg>
                       {formatDate(article.updateAt)}
                     </Typography>
-                    <Link   href={`/details/${article?.id}/${
-                      article.category
-                    }?${new URLSearchParams({
-                      page: `2`,
-                      limit: "3",
-                    })}`}>
-
-                    <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
-                      {article.title}
-                    </p>
+                    <Link
+                      href={`/details/${article?.id}/${
+                        article.category
+                      }?${new URLSearchParams({
+                        page: `2`,
+                        limit: "3",
+                      })}`}
+                    >
+                      <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                        {article.title}
+                      </p>
                     </Link>
-                    <Link   href={`/details/${article?.id}/${
-                      article.category
-                    }?${new URLSearchParams({
-                      page: `2`,
-                      limit: "3",
-                    })}`}>
-
-                    <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
-                      {article?.description}
-                    </p>
+                    <Link
+                      href={`/details/${article?.id}/${
+                        article.category
+                      }?${new URLSearchParams({
+                        page: `2`,
+                        limit: "3",
+                      })}`}
+                    >
+                      <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                        {article?.description}
+                      </p>
                     </Link>
                   </Grid>
                 </Grid>

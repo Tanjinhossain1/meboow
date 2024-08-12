@@ -22,6 +22,7 @@ import { Link, animateScroll as scroll } from "react-scroll";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import NewCommonFieldDisplay from "./NewCommonFieldDisplay";
 
 const BottomMobileDetails = ({
   mobileArticles,
@@ -75,8 +76,12 @@ const BottomMobileDetails = ({
     },
   ];
 
+  const extractedData = mobileArticles?.content?.blocks
+    .filter((item:any) => item.type === "table" && item.data.withHeadings)
+    .map((item:any) => item.data.content[0][0]); // Extract the first string of the first row and first index
+ 
   const handleNext = () => {
-    if (index < accordionDetails.length - 5 && !transitioning) {
+    if (index < extractedData.length - 5 && !transitioning) {
       setTransitioning(true);
       setTimeout(() => {
         setIndex((prevIndex) => prevIndex + 5);
@@ -94,6 +99,7 @@ const BottomMobileDetails = ({
       }, 500); // Match with the transition duration
     }
   };
+  
   return (
     <Grid sx={{ my: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -129,7 +135,7 @@ const BottomMobileDetails = ({
 
                   <IconButton
                     onClick={handleNext}
-                    disabled={index >= accordionDetails?.length - 5}
+                    disabled={index >= extractedData?.length - 5}
                     className="bg-gray-300 mt-2 mr-2"
                   >
                     <ArrowForwardIosIcon className="h-6 w-6" />
@@ -151,7 +157,7 @@ const BottomMobileDetails = ({
                         transform: `translateX(-${(index * 100) / 5}%)`,
                       }} // Adjusting the transform percentage
                     >
-                      {accordionDetails.map((item, index) => {
+                      {extractedData.map((item:string, index:number) => {
                         return (
                           <Grid
                             className="min-w-[100px]   mr-2 flex-shrink-0"
@@ -159,7 +165,7 @@ const BottomMobileDetails = ({
                             xs={2}
                           >
                             <Link
-                              to={`item-${index}`}
+                              to={`item-${item}`}
                               smooth={true}
                               duration={500}
                             >
@@ -179,7 +185,7 @@ const BottomMobileDetails = ({
                                     selectedIndex === index ? "white" : "black",
                                 }}
                               >
-                                {index === 0 ? `Physical` : item?.name}
+                                {item}
                               </Button>
                             </Link>
                           </Grid>
@@ -191,33 +197,31 @@ const BottomMobileDetails = ({
               </Grid>
             </Box>
 
-            {accordionDetails.map((item, index) => {
-              return (
-                <Accordion
-                  id={`item-${index}`}
-                  key={index}
-                  type="multiple"
-                  defaultValue={[`item-${index}`]}
-                  className="w-[98%] border m-2  mb-2 rounded-b-xl "
-                >
-                  <AccordionItem
-                    className="border-0 m-0 p-0"
-                    value={`item-${index}`}
-                  >
-                    <AccordionTrigger className="bg-[#d5e4f7]       hover:no-underline pr-2">
-                      <Typography sx={{ ml: 2, fontWeight: 600 }}>
-                        {item?.name}
-                      </Typography>
-                    </AccordionTrigger>
-                    <AccordionContent style={{ margin: 0, padding: 0 }}>
-                      <CommonFieldDisplay
-                        details={(mobileArticles as any)[`${item.key}`]}
-                      />
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              );
-            })}
+            {/* {accordionDetails.map((item, index) => {
+              return ( */}
+            {/* <Accordion
+              id={`item-${index}`}
+              key={index}
+              type="multiple"
+              defaultValue={[`item-${index}`]}
+              className="w-[98%] border m-2  mb-2 rounded-b-xl "
+            >
+              <AccordionItem
+                className="border-0 m-0 p-0"
+                value={`item-${index}`}
+              >
+                <AccordionTrigger className="bg-[#d5e4f7]       hover:no-underline pr-2">
+                  <Typography sx={{ ml: 2, fontWeight: 600 }}>
+                    {/* {item?.name} 
+                  </Typography>
+                </AccordionTrigger>
+                <AccordionContent style={{ margin: 0, padding: 0 }}> */}
+                  <NewCommonFieldDisplay details={mobileArticles?.content} />
+                {/* </AccordionContent>
+              </AccordionItem>
+            </Accordion> */}
+            {/* );
+            })} */}
           </Box>
         </Paper>
         <Paper sx={{ p: 2, mt: 2 }} elevation={0}>
@@ -227,8 +231,8 @@ const BottomMobileDetails = ({
           >
             Description
           </Typography>
-
           <CommonFieldDisplay details={mobileArticles.details} />
+          {/* <NewCommonFieldDisplay details={mobileArticles.details} /> */}
         </Paper>
       </Grid>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
