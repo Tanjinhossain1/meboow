@@ -77,7 +77,16 @@ export const sendResponse = <T>(res: any, data: IApiReponse<T>): void => {
 };
 
 
-export const stripLinks = (htmlString:string) => {
-  const doc = new DOMParser().parseFromString(htmlString, 'text/html');
-  return doc.body.textContent || "";
+// export const stripLinks = (htmlString:string) => {
+//   const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+//   return doc.body.textContent || "";
+// };
+export const stripLinks = (htmlString: string) => {
+  if (typeof window !== 'undefined') {
+    const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+    return doc.body.textContent || "";
+  }
+
+  // If on the server, return a placeholder or a simplified version
+  return htmlString.replace(/<[^>]*>/g, '');
 };

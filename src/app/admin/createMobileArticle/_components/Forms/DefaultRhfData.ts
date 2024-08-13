@@ -26,6 +26,11 @@ export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): Mobi
             battery: "",
             network: "",
             os: "",
+            pixel: "",
+            camera: "",
+            ram_chipset: "",
+            review:"",
+            thickness: "",
         },
         custom_specification_fields: [{
             display_name: "",

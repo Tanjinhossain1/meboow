@@ -27,12 +27,13 @@ export default function NewCommonFieldDisplay({
   return (
     <div className="container mx-auto p-2">
       {details?.blocks.map((section) => (
+        section?.type === "table"?
         <DeviceTable
-          key={section.id}
-          title={section.data.content[0][0]} // You may adjust this based on the actual title of each section
-          content={section.data.content}
-          withHeadings={section.data.withHeadings}
-        />
+          key={section?.id}
+          title={section?.data?.content[0][0]} // You may adjust this based on the actual title of each section
+          content={section?.data?.content}
+          withHeadings={section?.data?.withHeadings}
+        />:null
       ))}
     </div>
   );
@@ -80,7 +81,7 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
       </div>
       <table className="w-full text-left">
         <tbody>
-          {content.map((row: any, rowIndex: any) => (
+          {content?.map((row: any, rowIndex: any) => (
             <tr className="ml-1" key={rowIndex}>
               {row.map((cell: any, cellIndex: any) =>
                 cell === title || cell === "" ? null : (

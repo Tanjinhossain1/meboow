@@ -99,7 +99,17 @@ export const MobileArticles = mysqlTable(
   }
 );
 
-
+// opinion about mobile 
+export const Opinion = mysqlTable("opinion", {
+  id: int("id").autoincrement().primaryKey(),
+  // name: text("name"),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  comments: text("comments").notNull(),
+  mobileId:int("mobileId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
 
 // // for login users auth js 
 

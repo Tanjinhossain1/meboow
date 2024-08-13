@@ -316,17 +316,17 @@ export default function TopForm({
                           sx={{ mb: 1 }}
                           htmlFor="filled-adornment-amount"
                         >
-                          Processor{" "}
+                          Thickness{" "}
                           <sup style={{ color: "red", fontSize: 20 }}>*</sup>
                         </InputLabel>
                         <FilledInput
                           size="small"
-                          {...register("key_specifications.processor", {
+                          {...register("key_specifications.thickness", {
                             required: true,
                           })}
-                          name="key_specifications.processor"
+                          name="key_specifications.thickness"
                           id="filled-adornment-amount"
-                          placeholder="Processor Name"
+                          placeholder="Thickness Name"
                           required
                           startAdornment={
                             <InputAdornment position="start"></InputAdornment>
@@ -335,6 +335,32 @@ export default function TopForm({
                       </FormControl>
                     </Grid>
                     <Grid xs={2.9}>
+                      <FormControl
+                        sx={{ my: 2, width: "100%" }}
+                        variant="filled"
+                      >
+                        <InputLabel
+                          sx={{ mb: 1 }}
+                          htmlFor="filled-adornment-amount"
+                        >
+                          OS <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                        </InputLabel>
+                        <FilledInput
+                          size="small"
+                          {...register("key_specifications.os", {
+                            required: true,
+                          })}
+                          name="key_specifications.os"
+                          id="filled-adornment-amount"
+                          placeholder="OS"
+                          required
+                          startAdornment={
+                            <InputAdornment position="start"></InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+                    {/* <Grid xs={2.9}>
                       <FormControl
                         sx={{ my: 2, width: "100%" }}
                         variant="filled"
@@ -360,8 +386,8 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={2.9}>
+                    </Grid> */}
+                    {/* <Grid xs={2.9}>
                       <FormControl
                         sx={{ my: 2, width: "100%" }}
                         variant="filled"
@@ -387,8 +413,8 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={2.9}>
+                    </Grid> */}
+                    {/* <Grid xs={2.9}>
                       <FormControl
                         sx={{ my: 2, width: "100%" }}
                         variant="filled"
@@ -414,8 +440,8 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={2.9}>
+                    </Grid> */}
+                     <Grid xs={2.9}>
                       <FormControl
                         sx={{ my: 2, width: "100%" }}
                         variant="filled"
@@ -424,7 +450,7 @@ export default function TopForm({
                           sx={{ mb: 1 }}
                           htmlFor="filled-adornment-amount"
                         >
-                          RAM | Storage{" "}
+                           Storage{" "}
                           <sup style={{ color: "red", fontSize: 20 }}>*</sup>
                         </InputLabel>
                         <FilledInput
@@ -442,6 +468,88 @@ export default function TopForm({
                         />
                       </FormControl>
                     </Grid>
+                     <Grid xs={2.9}>
+                      <FormControl
+                        sx={{ my: 2, width: "100%" }}
+                        variant="filled"
+                      >
+                        <InputLabel
+                          sx={{ mb: 1 }}
+                          htmlFor="filled-adornment-amount"
+                        >
+                           Pixel{" "}
+                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                        </InputLabel>
+                        <FilledInput
+                          size="small"
+                          {...register("key_specifications.pixel", {
+                            required: true,
+                          })}
+                          name="key_specifications.pixel"
+                          id="filled-adornment-amount"
+                          placeholder="Pixel"
+                          required
+                          startAdornment={
+                            <InputAdornment position="start"></InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+                     <Grid xs={2.9}>
+                      <FormControl
+                        sx={{ my: 2, width: "100%" }}
+                        variant="filled"
+                      >
+                        <InputLabel
+                          sx={{ mb: 1 }}
+                          htmlFor="filled-adornment-amount"
+                        >
+                           Camera{" "}
+                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                        </InputLabel>
+                        <FilledInput
+                          size="small"
+                          {...register("key_specifications.camera", {
+                            required: true,
+                          })}
+                          name="key_specifications.camera"
+                          id="filled-adornment-amount"
+                          placeholder="Camera"
+                          required
+                          startAdornment={
+                            <InputAdornment position="start"></InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid xs={2.9}>
+                      <FormControl
+                        sx={{ my: 2, width: "100%" }}
+                        variant="filled"
+                      >
+                        <InputLabel
+                          sx={{ mb: 1 }}
+                          htmlFor="filled-adornment-amount"
+                        >
+                           Ram Chipset{" "}
+                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                        </InputLabel>
+                        <FilledInput
+                          size="small"
+                          {...register("key_specifications.ram_chipset", {
+                            required: true,
+                          })}
+                          name="key_specifications.ram_chipset"
+                          id="filled-adornment-amount"
+                          placeholder="RAM | Chipset"
+                          required
+                          startAdornment={
+                            <InputAdornment position="start"></InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+                   
                     <Grid xs={2.9}>
                       <FormControl
                         sx={{ my: 2, width: "100%" }}
@@ -478,6 +586,30 @@ export default function TopForm({
                           sx={{ mb: 1 }}
                           htmlFor="filled-adornment-amount"
                         >
+                          Review Url{" "}
+                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                        </InputLabel>
+                        <FilledInput
+                          size="small"
+                          {...register("key_specifications.review")}
+                          name="key_specifications.review"
+                          id="filled-adornment-amount"
+                          placeholder="Review"
+                          startAdornment={
+                            <InputAdornment position="start"></InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+                    {/* <Grid xs={2.9}>
+                      <FormControl
+                        sx={{ my: 2, width: "100%" }}
+                        variant="filled"
+                      >
+                        <InputLabel
+                          sx={{ mb: 1 }}
+                          htmlFor="filled-adornment-amount"
+                        >
                           Network{" "}
                           <sup style={{ color: "red", fontSize: 20 }}>*</sup>
                         </InputLabel>
@@ -495,33 +627,8 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={2.9}>
-                      <FormControl
-                        sx={{ my: 2, width: "100%" }}
-                        variant="filled"
-                      >
-                        <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          OS <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel>
-                        <FilledInput
-                          size="small"
-                          {...register("key_specifications.os", {
-                            required: true,
-                          })}
-                          name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="OS"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                    </Grid>
+                    </Grid> */}
+                   
                   </Grid>
 
                   <FormControl

@@ -6,13 +6,17 @@ import React, { Fragment } from "react";
 
 export default function LatestDevices({
   mobiles,
+  isRelated,
+  name
 }: {
   mobiles: MobileArticleType[];
+  isRelated?:boolean;
+  name?:string;
 }) {
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 3, mb: 1 }}>
-        Latest Devices
+      {isRelated ? `Popular From ${name} `: "Latest Devices"}  
       </Typography>
       <Grid sx={{mb:2}} container>
         {mobiles?.slice(0, 6)?.map((mobile: MobileArticleType) => {

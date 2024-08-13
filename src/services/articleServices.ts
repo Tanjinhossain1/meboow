@@ -4,7 +4,7 @@ import { Category } from "@/drizzle/schema";
 // services/articleService.ts
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
-import { MobileArticleType } from "@/types/mobiles";
+import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import axios from "axios";
 import { desc } from "drizzle-orm";
 import { revalidatePath, unstable_noStore } from "next/cache";
@@ -135,6 +135,52 @@ export async function fetchMobileArticles({
       `Failed to fetch mobile articles: ${response.status} ${response.statusText}`
     );
     throw new Error("Failed to fetch articles");
+  }
+
+  const data = await response.json();
+  revalidatePath("/");
+  return {
+    data: data.data,
+    page: data.meta?.page,
+    limit: data.meta?.limit,
+    total: data.meta?.total,
+  };
+
+}
+export async function fetchMobileOpinions({
+  page = "1",
+  limit = "20",
+  mobileId,
+  search
+}: {
+  page?: string;
+  limit?: string;
+  mobileId?:string
+  search?:string
+}): Promise<{
+  data: MobileOpinionType[];
+  page: number;
+  limit: number;
+  total: number;
+}> {
+  let url = `${process.env.NEXT_APP_URL}/api/article/mobile/opinion`;
+  if (search) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile/opinion?page=${page}&limit=${limit}&searchTerm=${search}`;
+  } else if (mobileId) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile/opinion?page=${page}&limit=${limit}&mobileId=${mobileId}`;
+  }  
+
+  console.log("test 1 ", url, mobileId);
+
+  const response = await fetch(url, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch mobile article Opinion: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch Opinion");
   }
 
   const data = await response.json();

@@ -18,13 +18,15 @@ import Link from "next/link";
 export default function MobileReviews({
   mobilesArticles,
   isTrending,
+  isGap,
 }: {
   mobilesArticles: RecentArticleDataType[];
   isTrending?: boolean;
+  isGap?: boolean;
 }) {
   return (
     <Fragment>
-      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+      <Typography sx={{ fontSize: 25, fontWeight: 600,mt:isGap ? 4: 0 }}>
         {isTrending ? "Trending" : "Mobile Reviews"}
       </Typography>
       <Grid

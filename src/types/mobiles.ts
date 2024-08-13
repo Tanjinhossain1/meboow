@@ -1,5 +1,16 @@
 
 
+export interface MobileOpinionType {
+    id:number;
+    createdAt: string;
+    updatedAt: string;
+    name:string;
+    email: string;
+    comments: string;
+    mobileId:string;
+}
+
+
 export interface MobileArticleType {
     id: number;
     createdAt: string;
@@ -22,6 +33,12 @@ export interface MobileArticleType {
         battery: string;
         network: string;
         os: string;
+        thickness: string;
+        pixel: string;
+        camera: string;
+        ram_chipset: string;
+        review:string
+
     };
     expert_view: {
         specific_final_score: { name: string, value: string | number }[],
@@ -75,7 +92,7 @@ export interface MobileArticleDefaultFormType {
     title: string;
     market_status: string;
     release_date: string;
-    
+
     is_daily_interest?: string;
     is_by_fans?: string;
     is_latest_device?: string;
@@ -90,6 +107,11 @@ export interface MobileArticleDefaultFormType {
         battery: string;
         network: string;
         os: string;
+        thickness: string;
+        pixel: string;
+        camera: string;
+        ram_chipset: string;
+        review:string
     };
     expert_view: {
         total_score: number | string;

@@ -9,7 +9,7 @@ import {
   fetchMobileOpinions,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
-import MainMobileDetails from "./_components/MainMobileDetails";
+import MainMobileDetails from "../_components/MainMobileDetails";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 
@@ -21,7 +21,7 @@ export async function generateMetadata(
   const mobileArticles = await fetchMobileArticleDetails({ id: params?.id });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
     const title = mobileArticles?.data[0]?.title;
-    const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile details and specifications this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of details of this phone.`;
+    const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile Images and specifications this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of Images of ${mobileArticles?.data[0]?.title}.`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = mobileArticles?.data[0]?.display_image;
     return {
@@ -49,9 +49,9 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
     is_latest_device: "YES",
   });
   const RelatedMobileDevices = await fetchMobileArticles({brands:mobileArticles.data[0].brands,page:'1',limit:'10'});
+  const AllMobilesOpinion = await fetchMobileOpinions({mobileId:params?.id});
   console.log(" this is the data mobile   ", mobileArticles);
   const brands = await fetchBrands();
-  const AllMobilesOpinion = await fetchMobileOpinions({mobileId:params?.id});
   
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
@@ -66,7 +66,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       <Navbar />
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>
-        <MainMobileDetails user={user} allMobilesOpinion={AllMobilesOpinion.data} brands={brands.data} relatedMobileDevices={RelatedMobileDevices.data} latestDevices={LatestDeviceMobiles.data} latestArticles={LatestArticles.data} articles={articles.data} mobileArticles={mobileArticles.data[0]} />
+        <MainMobileDetails allMobilesOpinion={AllMobilesOpinion.data} user={user} isOpinion brands={brands.data} relatedMobileDevices={RelatedMobileDevices.data} latestDevices={LatestDeviceMobiles.data} latestArticles={LatestArticles.data} articles={articles.data} mobileArticles={mobileArticles.data[0]} />
         </>
       ) : null}
       <Footer />

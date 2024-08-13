@@ -14,25 +14,25 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import { useRouter } from "next/navigation";
 import { formatDate_into_month_date_string } from "@/utils/utils";
 import Link from "next/link";
- 
+
+export const colors = [
+  "#ff0000", // red for 1
+  "#f96500", // orange for 2
+  "#db8f00", // yellow for 3
+  "#dbaf00", // chartreuse for 4
+  "#00ad9f", // green for 5
+  "#00c0de", // spring green for 6
+  "#b8d833", // cyan for 7
+  "#62b299", // azure for 8
+  "#62b299", // blue for 9
+  "#62b299", // violet for 10
+];
 const ExpertViewComponent = ({
   mobileArticles,
 }: {
   mobileArticles: MobileArticleType;
 }) => {
   const router = useRouter();
-  const colors = [
-    "#ff0000", // red for 1
-    "#f96500", // orange for 2
-    "#db8f00", // yellow for 3
-    "#dbaf00", // chartreuse for 4
-    "#00ad9f", // green for 5
-    "#00c0de", // spring green for 6
-    "#b8d833", // cyan for 7
-    "#62b299", // azure for 8
-    "#62b299", // blue for 9
-    "#62b299", // violet for 10
-  ];
   console.log('mobileArticles  ',mobileArticles)
   const transformKey = (key:string) => {
     return key
@@ -41,11 +41,11 @@ const ExpertViewComponent = ({
       .join(' ');
   };
   return (
-    <Grid sx={{ my: 1 }} container>
-      <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
-      <Grid xs={12} md={10} lg={9.8} xl={7}>
+    <Grid xs={12} sx={{ my: 1 }} container>
+      {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
+      <Grid xs={12} md={10} lg={9.8} xl={7}> */}
         <Paper elevation={0}>
-          <Box className="lg:w-3/4" sx={{ padding: 2 }}>
+          <Box  sx={{ padding: 2 }}>
             <Box
               sx={{
                 display: "flex",
@@ -251,8 +251,8 @@ const ExpertViewComponent = ({
             </Box>
           </Box>
         </Paper>
-      </Grid>
-      <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
+      {/* </Grid> */}
+    {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
     </Grid>
   );
 };
