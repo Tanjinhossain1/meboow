@@ -145,13 +145,13 @@ export default function ExpertView({
   return (
     <Fragment>
       <Grid gap={1} container>
-        <Grid xs={12}>
+        {/* <Grid xs={12}>
           {" "}
           <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
             Total Score
           </Typography>
-        </Grid>
-        <Grid xs={5}>
+        </Grid> */}
+        {/* <Grid xs={5}>
           <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
             <InputLabel sx={{ mb: 1 }} htmlFor="filled-adornment-amount">
               Total Score <sup style={{ color: "red", fontSize: 20 }}>*</sup>
@@ -170,7 +170,7 @@ export default function ExpertView({
               }
             />
           </FormControl>
-        </Grid>
+        </Grid> */}
         <Grid xs={12}>
           {" "}
           <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
