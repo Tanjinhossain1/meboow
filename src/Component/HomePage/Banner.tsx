@@ -19,7 +19,7 @@ import RecentArticleComponent from "./RecentArticleComponent";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import BrandDisplayComponent from "./BrandDisplay";
 import TopLatestMobile from "./TopLatestMobile";
-import { MobileArticleType } from "@/types/mobiles";
+import { MobileArticleType, MobileTagsType } from "@/types/mobiles";
 import PhoneFinder from "../Common/PhoneFinder";
 import MobileReviews from "./Component/MobileReviews";
 import PopularMobiles from "./Component/PopularMobiles";
@@ -34,6 +34,7 @@ import TopDevicesTable from "./Component/TopDevicesTable";
 import LatestDevices from "./Component/LatestDevices";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Tags from "@/app/mobile/detail/[id]/_components/Tags";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -212,6 +213,7 @@ export default function Banner({
   dailyInterestMobiles,
   byFansMobiles,
   latestDeviceMobiles,
+  tags
 }: {
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
@@ -225,6 +227,7 @@ export default function Banner({
   byFansMobiles: MobileArticleType[];
   latestDeviceMobiles: MobileArticleType[];
   user: any;
+  tags:MobileTagsType[]
 }) {
   console.log("articles articles ", articles);
   const history = useRouter();
@@ -332,6 +335,7 @@ export default function Banner({
             </Grid>
             <Grid item sx={{ pl: 2, height: "350px" }} xs={12} sm={6} md={8}>
               <PopularMobiles user={user} articles={mobileArticles} />
+              <Tags tags={tags} />
               <Categories category={category} />
               <Grid gap={1} container>
                 <Typography

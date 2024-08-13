@@ -18,15 +18,20 @@ import BackdropProviderContext from "@/Component/BackdropProvider";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/utils/utils";
+import { RecentArticleDataType } from "@/types/RecentArticle";
 
 export default function Opinion({
   mobileDetail,
   user,
   allMobilesOpinion,
+  isArticle,
+  articleDetail,
 }: {
-  mobileDetail: MobileArticleType;
+  mobileDetail?: MobileArticleType;
   allMobilesOpinion?: MobileOpinionType[];
   user: any;
+  isArticle?: boolean;
+  articleDetail?: RecentArticleDataType;
 }) {
   const router = useRouter();
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
@@ -60,15 +65,26 @@ export default function Opinion({
       ...data,
       mobileId: mobileDetail?.id,
     };
+    const finalValueArticle = {
+      ...data,
+      articleId: articleDetail?.id,
+    };
     axios
-      .post(`/api/article/mobile/opinion`, finalValue)
+      .post(
+        isArticle ? `/api/article/opinion` : `/api/article/mobile/opinion`,
+        isArticle ? finalValueArticle : finalValue
+      )
       .then((response) => {
-        console.log("Article created successfully:", response);
+        console.log("Oninion created successfully:", response);
         // Do something with the response if needed
         if (response?.data?.success) {
           handleClose();
           SnackbarOpen("Successfully Post Your Opinion", "success");
-          router.push(`/mobile/detail/${mobileDetail?.id}/opinion`);
+          router.push(
+            isArticle
+              ? `/details/${articleDetail?.id}/News?page=2&limit=3`
+              : `/mobile/detail/${mobileDetail?.id}/opinion`
+          );
         }
       })
       .catch((err) => {
@@ -80,10 +96,11 @@ export default function Opinion({
     console.log(finalValue);
   };
   return (
-    <Fragment>
-          <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-            Opinion
-          </Typography>
+    <Grid container>
+      <Grid sx={{mt:isArticle? 3:0}} xs={12}>
+      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>{isArticle ? "Post Your Opinion" :"Opinion"}</Typography>
+      </Grid>
+      <br />
       <FormProvider {...methods}>
         <Box
           component="form"
@@ -92,9 +109,9 @@ export default function Opinion({
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            mt:2,
+            mt: 2,
           }}
-          className="md:w-3/4 mx-auto"
+          className={isArticle ? `w-full`:`md:w-3/4 mx-auto`}
         >
           <Grid gap={2} container>
             <Grid xs={12} md={5.8}>
@@ -150,54 +167,57 @@ export default function Opinion({
         </Box>
       </FormProvider>
       <Grid
-        sx={{ mt: 2, border: "1px solid gray", mx: "auto", width: "90%" }}
+        sx={{
+          mt: 2,
+          border: "1px solid gray",
+          mx: "auto",
+          width:isArticle ? "100%": "90%",
+          mb: 4,
+        }}
         container
       >
         <Paper sx={{ width: "100%" }} elevation={1}>
           <Typography sx={{ fontSize: 20, fontWeight: 600, p: 1 }}>
-            {mobileDetail?.title} - USER OPINIONS AND REVIEWS
+            {mobileDetail?.title || articleDetail?.title} -{" "}
+            <i>"USER OPINIONS AND REVIEWS"</i>
           </Typography>
         </Paper>
         <Grid sx={{ bgcolor: "lightgray" }} container>
-          {allMobilesOpinion?.map((comment: MobileOpinionType,index:number) => (
-            <Paper sx={{ width: "100%",mt: index >= 1 ? 3:1 }} elevation={1}>
-              <Grid sx={{ p: 1 }} key={comment.id} container>
-                <Avatar sx={{ bgcolor: "#E91E63" }}>
-                  {comment.name.slice(0, 1)}
-                </Avatar>
+          {allMobilesOpinion && allMobilesOpinion[0] ? null : (
+            <Typography sx={{ textAlign: "center" }}>No Opinion Yet</Typography>
+          )}
+          {allMobilesOpinion?.map(
+            (comment: MobileOpinionType, index: number) => (
+              <Paper
+                sx={{ width: "100%", mt: index >= 1 ? 3 : 1 }}
+                elevation={1}
+              >
+                <Grid sx={{ p: 1 }} key={comment.id} container>
+                  <Grid xs={12}>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between",alignItems: "center"}}
+                    >
+                      <Box sx={{ display: "flex" ,alignItems:"center"}}>
+                        <Avatar sx={{ bgcolor: "#E91E63" }}>
+                          {comment.name.slice(0, 1)}
+                        </Avatar>
+                        <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                          {comment.name}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" color="textSecondary">
+                        {formatDate(comment.updatedAt)}
+                      </Typography>
+                    </Box>
+                  </Grid>
 
-                <Grid xs={12}>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                      {comment.name}
-                    </Typography>
-
-                    <Typography variant="body2" color="textSecondary">
-                      {formatDate(comment.updatedAt)}
-                    </Typography>
-                  </Box>
+                  <Typography sx={{ mt: 1 }}>{comment.comments}</Typography>
                 </Grid>
-
-                <Typography sx={{ mt: 1 }}>{comment.comments}</Typography>
-              </Grid>
-            </Paper>
-          ))}
+              </Paper>
+            )
+          )}
         </Grid>
       </Grid>
-      {/* <Grid container>
-     {
-        allMobilesOpinion?.map((opinion)=>{
-            return(
-                <Grid xs={12} container key={opinion?.id}>
-                    <Typography>{opinion?.name} - {opinion?.comments}</Typography>
-                    <hr />
-                </Grid>
-            )
-        })
-      }
-     </Grid> */}
-    </Fragment>
+    </Grid>
   );
 }

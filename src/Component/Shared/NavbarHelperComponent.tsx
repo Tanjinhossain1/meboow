@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Dialog,
   Drawer,
   Grid,
   ListItem,
@@ -35,6 +36,8 @@ import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "next-auth/react";
 import BackdropProviderContext from "../BackdropProvider";
+import TagIcon from '@mui/icons-material/Tag';
+import CreateTag from "./CreateTag";
 
 function NavbarHelper({
   isLoginUser,
@@ -46,9 +49,19 @@ function NavbarHelper({
   const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
+  
+  const [tagsDialogOpen, setTagsDialogOpen] = React.useState(false);
   console.log("user  ", isLoginUser);
   const handleToggle = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleTagsDialogClose = () => {
+    setTagsDialogOpen(false);
+  };
+  
+  const handleTagsDialogClickOpen = () => {
+    setTagsDialogOpen(true);
   };
 
   const handleSubmit = (event: any) => {
@@ -107,7 +120,7 @@ function NavbarHelper({
               <ListItemIcon>
                 <HomeIcon></HomeIcon>
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText sx={{color:"white"}} primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -465,6 +478,7 @@ function NavbarHelper({
                       sx={{
                         // cursor: "pointer",
                         mr: 2,
+                        color:"white"
                       }}
                       // onClick={() => {
                       //   history.push(`/`);
@@ -493,8 +507,9 @@ function NavbarHelper({
                     );
                   })}
                 </Grid>
-                <Grid textAlign={"end"} xs={1}>
+                <Grid alignItems={"center"} textAlign={"end"} xs={1}>
                   {isLoginUser ? (
+                    <>
                     <LogoutIcon
                       sx={{ cursor: "pointer", mt: 1 }}
                       onClick={() => {
@@ -506,6 +521,12 @@ function NavbarHelper({
                        }, 1000);
                       }}
                     />
+                    {
+                      isLoginUser.role === "admin" ?
+                    <TagIcon onClick={handleTagsDialogClickOpen}  sx={{cursor: "pointer",ml:2,mt:1}} />:null
+                    }
+                    
+                    </>
                   ) : (
                     <>
                       <Popover>
@@ -605,6 +626,14 @@ function NavbarHelper({
           </Grid>
         </AppBar>
       </Grid>
+      <Dialog
+        open={tagsDialogOpen}
+        onClose={handleTagsDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <CreateTag />
+      </Dialog>
     </Grid>
   );
 }

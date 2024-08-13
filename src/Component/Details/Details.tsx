@@ -15,9 +15,10 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment, useEffect, useState } from "react";
 import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
-import { MobileArticleType } from "@/types/mobiles";
+import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import MobileListComponent from "./MobileListComponent";
 import { cleanText } from "@/utils/utils";
+import Opinion from "@/app/mobile/detail/[id]/_components/Opinion";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -28,12 +29,16 @@ export default function DetailsComponent({
   articles,
   brands,
   mobileArticles,
+  user,
+  articlesOpinion
 }: {
   articleDetail: RecentArticleDataType;
   category: CategoryTypes[];
   articles: RecentArticleDataType[];
   brands: BrandTypes[];
   mobileArticles: MobileArticleType[];
+  user:any;
+  articlesOpinion:MobileOpinionType[]
 }) {
   const params = useParams();
   const history = useRouter();
@@ -71,7 +76,6 @@ export default function DetailsComponent({
   return (
    
         <Grid  container>
-           
             <Paper className="md:max-w-[1000px] mx-auto" sx={{ p: 2, mb: 2 }} elevation={2}>
               <Breadcrumbs sx={{ fontSize: 12 }} aria-label="breadcrumb">
                 <Link underline="hover" color="inherit" href="/">
@@ -329,6 +333,9 @@ export default function DetailsComponent({
                   <BrandListComponent brands={brands} />
                   <CategoryListComponent category={category} />
                 </Grid>
+              </Grid>
+              <Grid xs={12} md={7.5} container>
+                <Opinion user={user} isArticle articleDetail={articleDetail} allMobilesOpinion={articlesOpinion} />
               </Grid>
               <Grid sx={{ mt: 3 }} container>
                 <Grid xs={12} lg={7.5}>

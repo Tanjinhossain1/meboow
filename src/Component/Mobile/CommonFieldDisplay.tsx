@@ -110,40 +110,69 @@ export default function CommonFieldDisplay({
       );
     } else if (block.type === "table") {
       return (
-        <table key={block.id} className="w-full text-left mt-2">
+        <table
+          key={block.id}
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            borderRadius: "10px",
+            marginTop: "30px",
+          }}
+        >
+          <thead>
+            {/* {block.data.withHeadings && ( */}
+            <tr>
+              {block.data.content[0].map(
+                (heading: any, index: number) => (
+                  <th
+                    key={index}
+                    style={{
+                      padding: "8px",
+                      textAlign: "left",
+                      backgroundColor: "#e6e6e6",
+                      // border: "1px solid #dddddd",
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: heading,
+                    }}
+                  ></th>
+                )
+              )}
+            </tr>
+            {/* )} */}
+          </thead>
           <tbody>
-            {block.data.content.map((row: any, index: number) => {
-              return (
-                <tr
-                  // style={{
-                  //   borderBottom: "1px solid lightgray",
-                  // }}
-                  key={index}
-                >
-                  {row.map((cell: any, cellIndex: any) => {
-                    console.log("cell  cell", cell); 
-                    const displayText = cellIndex === 1 ? `<b>:</b>  ${cell}` : cell
-                    return (
-                      <td
-                        key={cellIndex}
-                        style={{
-                          padding: "8px", // Adjust padding uniformly
-                          textAlign: "left",
-                          paddingTop: "10px",
-                          paddingBottom: "10px",
-                          width: cellIndex === 1 ? "50%" : "10%", // Adjust width conditionally
-                          // textDecoration: "none",
-                        }}
-                        className="no-underline"
-                        dangerouslySetInnerHTML={{
-                          __html: displayText,
-                        }}
-                      />
-                    );
-                  })}
-                </tr>
-              );
-            })}
+            {block.data.content.map(
+              (row: any, index: number) => {
+                if (index !== 0) {
+                  return (
+                    <tr
+                      style={{
+                        backgroundColor:
+                          index % 2 === 0
+                            ? "#e6e6e6"
+                            : "#f5f5f5",
+                      }}
+                      key={index}
+                    >
+                      {row.map((cell: any, cellIndex: any) => (
+                        <td
+                          key={cellIndex}
+                          style={{
+                            padding: "8px",
+                            textAlign: "left",
+                            // border: "1px solid #dddddd",
+                          }}
+                          dangerouslySetInnerHTML={{
+                            __html: cell,
+                          }}
+                        ></td>
+                      ))}
+                    </tr>
+                  );
+                }
+              }
+            )}
           </tbody>
         </table>
       );

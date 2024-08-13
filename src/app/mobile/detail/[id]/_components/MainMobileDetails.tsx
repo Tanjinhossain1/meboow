@@ -8,13 +8,15 @@ import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
 import ExpertViewComponent from "@/Component/Mobile/ExpertView";
 import LatestNews from "@/Component/Mobile/LatestNews";
 import { BrandTypes } from "@/types/category";
-import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
+import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { Grid, Paper } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import React, { Fragment } from "react";
 import IphoneCard from "./TopSortDetails";
 import Image from "next/image";
 import Opinion from "./Opinion";
+import Link from "next/link";
+import Tags from "./Tags";
 
 export default function MainMobileDetails({
   mobileArticles,
@@ -27,6 +29,7 @@ export default function MainMobileDetails({
   isOpinion,
   user,
   allMobilesOpinion,
+  tags,
 }: {
   mobileArticles: MobileArticleType;
   latestDevices: MobileArticleType[];
@@ -38,21 +41,25 @@ export default function MainMobileDetails({
   isOpinion?: boolean;
   allMobilesOpinion?: MobileOpinionType[];
   user?: any;
+  tags?: MobileTagsType[]
 }) {
   return (
     <Fragment>
       {" "}
       {/* <TopMobileDetails mobileArticles={mobileArticles.data[0]} /> */}
-      <Grid container> 
-        <Paper elevation={0} className=" max-w-full md:max-w-[1000px] mx-auto p-1">
+      <Grid container>
+        <Paper
+          elevation={0}
+          className=" max-w-full md:max-w-[1000px] mx-auto p-1"
+        >
           <Grid container>
             <Grid
               item
               sx={{
                 mt: 1,
                 mr: {
-                    xs: 0,
-                    md: 1,
+                  xs: 0,
+                  md: 1,
                 },
                 display: {
                   xs: "none",
@@ -78,14 +85,14 @@ export default function MainMobileDetails({
                 isRelated
                 mobiles={relatedMobileDevices}
               />
-            </Grid> 
+            </Grid>
             <Grid container item xs={12} sm={8}>
               <IphoneCard
                 isPicture={isPicture}
                 isOpinion={isOpinion}
                 mobileDetail={mobileArticles}
-              /> 
-              
+              />
+
               {isPicture ? (
                 <Grid sx={{ mt: 2 }} container>
                   {mobileArticles?.image?.map((image) => {
@@ -121,6 +128,58 @@ export default function MainMobileDetails({
                   {" "}
                   <BottomMobileDetails mobileArticles={mobileArticles} />
                   <ExpertViewComponent mobileArticles={mobileArticles} />
+                  <Grid container>
+                    <Paper
+                      elevation={1}
+                      className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
+                    >
+                      {mobileArticles?.key_specifications?.review ? (
+                        <Link href={mobileArticles?.key_specifications?.review}>
+                          <Button
+                            sx={{ color: "white" }}
+                            className="hover:bg-red-600 px-3"
+                          >
+                            Review
+                          </Button>
+                        </Link>
+                      ) : null}
+                      {isOpinion ? null : (
+                        <Link
+                          href={`/mobile/detail/${mobileArticles?.id}/opinion`}
+                        >
+                          <Button
+                            sx={{ color: "white" }}
+                            className="hover:bg-red-600 px-3"
+                          >
+                            Opinions
+                          </Button>
+                        </Link>
+                      )}
+                      {isPicture || isOpinion ? (
+                        <Link href={`/mobile/detail/${mobileArticles?.id}`}>
+                          <Button
+                            sx={{ color: "white" }}
+                            className="hover:bg-red-600 px-3"
+                          >
+                            Specification
+                          </Button>
+                        </Link>
+                      ) : null}
+                      {isPicture ? null : (
+                        <Link
+                          href={`/mobile/detail/${mobileArticles?.id}/pictures`}
+                        >
+                          <Button
+                            sx={{ color: "white" }}
+                            className="hover:bg-red-600 px-3"
+                          >
+                            Picture
+                          </Button>
+                        </Link>
+                      )}
+                    </Paper>
+                  </Grid>
+                  <Tags tags={tags} />
                   <Opinion
                     allMobilesOpinion={allMobilesOpinion}
                     user={user}
@@ -130,7 +189,6 @@ export default function MainMobileDetails({
               )}
             </Grid>
           </Grid>
-         
         </Paper>
       </Grid>
       {/* <ExpertViewComponent mobileArticles={mobileArticles} />

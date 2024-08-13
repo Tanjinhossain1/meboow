@@ -111,6 +111,26 @@ export const Opinion = mysqlTable("opinion", {
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
 
+export const ArticleOpinion = mysqlTable("articles_opinion", {
+  id: int("id").autoincrement().primaryKey(),
+  // name: text("name"),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  comments: text("comments").notNull(),
+  articleId:int("articleId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
+
+// opinion about mobile 
+export const Tags = mysqlTable("tags", {
+  id: int("id").autoincrement().primaryKey(),
+  // name: text("name"),
+  name: text("name").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
+
 // // for login users auth js 
 
 export const users = mysqlTable("users", {

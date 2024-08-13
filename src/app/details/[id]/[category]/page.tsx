@@ -1,7 +1,9 @@
 import DetailsComponent from "@/Component/Details/Details";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
+import { authConfig } from "@/lib/auth";
 import {
+  fetchArticleOpinions,
   fetchArticles,
   fetchArticlesDetails,
   fetchBrands,
@@ -9,6 +11,7 @@ import {
   fetchMobileArticles,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 export async function generateMetadata(
@@ -51,14 +54,16 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const Category = await fetchCategories();
   const Brands = await fetchBrands();
   const mobileArticles = await fetchMobileArticles({page:'1',limit:'20'});
+  const articlesOpinion = await fetchArticleOpinions({page:'1',limit:'20',articleId: params?.id});
   const articles = await fetchArticles({
     category: params?.category,
     page: searchParams?.page,
     limit: searchParams?.limit,
   });
-  const decodedTitle = decodeURIComponent(params?.title);
-
-    console.log('articleDetail   ',articles.data)
+  
+  const session = await getServerSession(authConfig);
+  console.log("this is the user  in app/page", session);
+  const user = session?.user;
   return (
     <>
       <link
@@ -69,6 +74,8 @@ export default async function Details({ params, searchParams }: DetailsParams) {
       <Navbar />
       {data?.data && mobileArticles.data && data?.data[0] ? (
         <DetailsComponent
+        user={user}
+        articlesOpinion={articlesOpinion.data}
          mobileArticles={mobileArticles.data}
           brands={Brands?.data}
           articles={articles.data}

@@ -4,7 +4,7 @@ import { Category } from "@/drizzle/schema";
 // services/articleService.ts
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
-import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
+import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
 import axios from "axios";
 import { desc } from "drizzle-orm";
 import { revalidatePath, unstable_noStore } from "next/cache";
@@ -181,6 +181,95 @@ export async function fetchMobileOpinions({
       `Failed to fetch mobile article Opinion: ${response.status} ${response.statusText}`
     );
     throw new Error("Failed to fetch Opinion");
+  }
+
+  const data = await response.json();
+  revalidatePath("/");
+  return {
+    data: data.data,
+    page: data.meta?.page,
+    limit: data.meta?.limit,
+    total: data.meta?.total,
+  };
+
+}
+export async function fetchArticleOpinions({
+  page = "1",
+  limit = "20",
+  articleId,
+  search
+}: {
+  page?: string;
+  limit?: string;
+  articleId?:string
+  search?:string
+}): Promise<{
+  data: MobileOpinionType[];
+  page: number;
+  limit: number;
+  total: number;
+}> {
+  let url = `${process.env.NEXT_APP_URL}/api/article/opinion`;
+  if (search) {
+    url = `${process.env.NEXT_APP_URL}/api/article/opinion?page=${page}&limit=${limit}&searchTerm=${search}`;
+  } else if (articleId) {
+    url = `${process.env.NEXT_APP_URL}/api/article/opinion?page=${page}&limit=${limit}&articleId=${articleId}`;
+  }  
+
+  console.log("test 1 ", url, articleId);
+
+  const response = await fetch(url, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch article Opinion: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch article Opinion");
+  }
+
+  const data = await response.json();
+  revalidatePath("/");
+  return {
+    data: data.data,
+    page: data.meta?.page,
+    limit: data.meta?.limit,
+    total: data.meta?.total,
+  };
+
+}
+export async function fetchMobileTags({
+  page = "1",
+  limit = "20",
+  search
+}: {
+  page?: string;
+  limit?: string;
+  mobileId?:string
+  search?:string
+}): Promise<{
+  data: MobileTagsType[];
+  page: number;
+  limit: number;
+  total: number;
+}> {
+  let url = `${process.env.NEXT_APP_URL}/api/article/mobile/tags`;
+  if (search) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile/tags?page=${page}&limit=${limit}&searchTerm=${search}`;
+  }
+
+  console.log("test 1 ", url);
+
+  const response = await fetch(url, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch mobile article Tags: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch Tags");
   }
 
   const data = await response.json();

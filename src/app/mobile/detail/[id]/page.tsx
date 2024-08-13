@@ -7,6 +7,7 @@ import {
   fetchMobileArticleDetails,
   fetchMobileArticles,
   fetchMobileOpinions,
+  fetchMobileTags,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import MainMobileDetails from "./_components/MainMobileDetails";
@@ -52,6 +53,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
   console.log(" this is the data mobile   ", mobileArticles);
   const brands = await fetchBrands();
   const AllMobilesOpinion = await fetchMobileOpinions({mobileId:params?.id});
+  const AllMobilesTags = await fetchMobileTags({});
   
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
@@ -66,7 +68,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
       <Navbar />
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>
-        <MainMobileDetails user={user} allMobilesOpinion={AllMobilesOpinion.data} brands={brands.data} relatedMobileDevices={RelatedMobileDevices.data} latestDevices={LatestDeviceMobiles.data} latestArticles={LatestArticles.data} articles={articles.data} mobileArticles={mobileArticles.data[0]} />
+        <MainMobileDetails tags={AllMobilesTags.data} user={user} allMobilesOpinion={AllMobilesOpinion.data} brands={brands.data} relatedMobileDevices={RelatedMobileDevices.data} latestDevices={LatestDeviceMobiles.data} latestArticles={LatestArticles.data} articles={articles.data} mobileArticles={mobileArticles.data[0]} />
         </>
       ) : null}
       <Footer />

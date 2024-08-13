@@ -8,6 +8,13 @@ export interface MobileOpinionType {
     email: string;
     comments: string;
     mobileId:string;
+    articleId:string;
+}
+export interface MobileTagsType {
+    id:number;
+    createdAt: string;
+    updatedAt: string;
+    name:string; 
 }
 
 
