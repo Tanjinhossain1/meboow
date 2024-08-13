@@ -44,7 +44,7 @@ export default function DevicesDetails({
 
   return (
     <Fragment>
-      <Paper className="mx-auto w-3/4" sx={{p:2,my:2}}>
+      <Paper className="mx-auto md:max-w-[1000px]" sx={{p:2,my:2}}>
         <Typography sx={{fontSize:24,fontWeight:600}}>Devices Details</Typography>
         <Grid gap={1}  container>
           <Grid xs={3.7}>

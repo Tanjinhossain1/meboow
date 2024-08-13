@@ -126,7 +126,7 @@ export default function MobileCommonDetails({
                             <MemoryIcon
                               sx={{ fontSize: 15, color: "gray" }}
                             />{" "}
-                            {data?.key_specifications.processor}
+                            {data?.key_specifications.ram_chipset}
                           </Typography>
                         </Link>
                       </Grid>
@@ -149,7 +149,7 @@ export default function MobileCommonDetails({
                             <CameraAltIcon
                               sx={{ fontSize: 15, color: "gray" }}
                             />{" "}
-                            {data?.key_specifications.rearCamera}
+                            {data?.key_specifications.camera}
                           </Typography>
                         </Link>
                       </Grid>

@@ -143,7 +143,7 @@ export default function PopularMobiles({
                           }}
                         >
                           <MemoryIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
-                          {data?.key_specifications.processor}
+                          {data?.key_specifications.ram_chipset}
                         </Typography>
                       </Grid>
                       <Grid
@@ -169,7 +169,7 @@ export default function PopularMobiles({
                           }}
                         >
                           <CameraAltIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
-                          {data?.key_specifications.rearCamera}
+                          {data?.key_specifications.camera}
                         </Typography>
                       </Grid>
                       <Grid

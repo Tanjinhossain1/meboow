@@ -43,8 +43,7 @@ export default function MainSubmitForm({
     mobileArticles: MobileArticleType[];
   };
 }) {
-
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
@@ -76,7 +75,9 @@ export default function MainSubmitForm({
 
   const methods = useForm({
     defaultValues: RhfDefaultInitialValues(
-      isEdit?.isEdit && isEdit?.mobileArticles[0] ? isEdit?.mobileArticles[0] : undefined
+      isEdit?.isEdit && isEdit?.mobileArticles[0]
+        ? isEdit?.mobileArticles[0]
+        : undefined
     ),
   });
 
@@ -106,18 +107,18 @@ export default function MainSubmitForm({
   };
 
   const onSubmit = async (data: any) => {
-    // if (!fileUploadRef.current[0]) {
-    //   // setImageError(true);
-    //   setErrorOpen(true);
-    //   setShowErrorText("Please Select Image");
-    //   return;
-    // }
-    // if (!displayFileUploadRef.current) {
-    //   // setImageError(true);
-    //   setErrorOpen(true);
-    //   setShowErrorText("Please Select Display Image");
-    //   return;
-    // }
+    if (!fileUploadRef.current[0]) {
+      // setImageError(true);
+      setErrorOpen(true);
+      setShowErrorText("Please Select Image");
+      return;
+    }
+    if (!displayFileUploadRef.current) {
+      // setImageError(true);
+      setErrorOpen(true);
+      setShowErrorText("Please Select Display Image");
+      return;
+    }
 
     handleBackDropOpen();
     const physicalSpecificationData =
@@ -152,7 +153,7 @@ export default function MainSubmitForm({
       features: featuresData,
       battery: batteryData,
       details: detailsData,
-      content: contentData
+      content: contentData,
     };
     console.log("Form Data:", formData);
     if (isEdit?.isEdit) {
@@ -216,7 +217,7 @@ export default function MainSubmitForm({
       return;
     }
     setOpen(false);
-  }; 
+  };
   const OtherDetailsForms = [
     // {
     //   holderId: "1",
@@ -314,113 +315,13 @@ export default function MainSubmitForm({
               Select Image
             </Typography>
           ) : null}
-          <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              <Accordion
-                defaultExpanded
-                // expanded={expanded === "panel0"}
-                // onChange={handleChange("panel0")}
-              >
-                <AccordionSummary
-                  aria-controls="panel0d-content"
-                  id="panel0d-header"
-                >
-                  <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                    Prices
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Box sx={{ mb: 2 }}>
-                    <Grid container spacing={2}>
-                      {fields?.map((field, index) => (
-                        <Grid item xs={12} key={field.id}>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 2,
-                              // border: "1px solid gray",
-                              // p: 2,
-                              borderRadius: 1,
-                            }}
-                          >
-                            <TextField
-                              {...methods.register(`prices.${index}.gbs`)}
-                              label="GBs"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                            />
-                            <TextField
-                              {...methods.register(
-                                `prices.${index}.start_from`
-                              )}
-                              label="Start From"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                            />
-                            {index > 0 && (
-                              <IconButton
-                                color="error"
-                                onClick={() => remove(index)}
-                              >
-                                <RemoveCircle />
-                              </IconButton>
-                            )}
-                          </Box>
-                        </Grid>
-                      ))}
-                    </Grid>
-                    <Box sx={{ mt: 2 }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => append({ gbs: "", start_from: "" })}
-                        startIcon={<AddCircle />}
-                      >
-                        Add Price
-                      </Button>
-                    </Box>
-                  </Box>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid xs={2}></Grid>
-          </Grid>
 
-          <Fragment>
-            <Grid sx={{ mt: 1 }} container>
-              <Grid xs={1.2}></Grid>
-              <Grid xs={9.8}>
-                <Accordion
-                  defaultExpanded
-                  // expanded={expanded === `panel${index + 1}`}
-                  // onChange={handleChange(`panel${index + 1}`)}
-                >
-                  <AccordionSummary
-                    aria-controls={`panelmed-content`}
-                    id={`panelmed-header`}
-                  >
-                    <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                      Expert View
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <ExpertView rhfMethods={methods} />
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-              <Grid xs={2}></Grid>
-            </Grid>
-          </Fragment>
           {OtherDetailsForms?.map((otherDetails, index) => {
             return (
               <Fragment key={index}>
-                <Grid sx={{ mt: 1 }} container>
-                  <Grid xs={1.2}></Grid>
-                  <Grid xs={9.8}>
+                <Grid className="md:max-w-[1000px] mx-auto" sx={{ mt: 1 }} container>
+                  {/* <Grid xs={1.2}></Grid> */}
+                  <Grid xs={12}>
                     <Accordion
                       defaultExpanded
                       // expanded={expanded === `panel${index + 1}`}
@@ -449,89 +350,112 @@ export default function MainSubmitForm({
                       </AccordionDetails>
                     </Accordion>
                   </Grid>
-                  <Grid xs={2}></Grid>
+                  {/* <Grid xs={2}></Grid> */}
                 </Grid>
               </Fragment>
             );
           })}
 
-          {/* <Grid sx={{ mt: 1 }} container>
-            <Grid xs={1.2}></Grid>
-            <Grid xs={9.8}>
-              {custom_fields.map((field, index) => {
-                // {OtherDetailsForms.map((otherDetails, index) => {
-
-                return (
-                  <Accordion
-                    key={index}
-                    defaultExpanded
-                    // expanded={expanded === `panel${index + 1}`}
-                    // onChange={handleChange(`panel${index + 1}`)}
+          <Fragment>
+            <Grid
+              className="md:max-w-[1000px] mx-auto"
+              sx={{ mt: 1 }}
+              container
+            > 
+              <Grid xs={12}>
+                <Accordion
+                  defaultExpanded
+                  // expanded={expanded === `panel${index + 1}`}
+                  // onChange={handleChange(`panel${index + 1}`)}
+                >
+                  <AccordionSummary
+                    aria-controls={`panelmed-content`}
+                    id={`panelmed-header`}
                   >
-                    <AccordionSummary
-                      aria-controls={`panel${index + 1}d-content`}
-                      id={`panel${index + 1}d-header`}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width:"100%"
-                        }}
-                      >
-                        <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                          Specifications: {field.display_name}
-                        </Typography>
-                        <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                    <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                      Expert View
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ExpertView rhfMethods={methods} />
+                  </AccordionDetails>
+                </Accordion>
+              </Grid> 
+            </Grid>
+          </Fragment>
+
+          <Grid  className="md:max-w-[1000px] mx-auto"  sx={{ mt: 1 }} container>
+            <Accordion
+              defaultExpanded
+              
+              // expanded={expanded === "panel0"}
+              // onChange={handleChange("panel0")}
+            >
+              <AccordionSummary
+                aria-controls="panel0d-content"
+                id="panel0d-header"
+               
+              >
+                <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+                  Prices
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box sx={{ mb: 2 }}>
+                  <Grid container spacing={2}>
+                    {fields?.map((field, index) => (
+                      <Grid item xs={12} key={field.id}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            // border: "1px solid gray",
+                            // p: 2,
+                            borderRadius: 1,
+                          }}
+                        >
+                          <TextField
+                            {...methods.register(`prices.${index}.gbs`)}
+                            label="GBs"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                          />
+                          <TextField
+                            {...methods.register(`prices.${index}.start_from`)}
+                            label="Start From"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                          />
                           {index > 0 && (
                             <IconButton
                               color="error"
-                              onClick={() => custom_field_remove(index)}
+                              onClick={() => remove(index)}
                             >
                               <RemoveCircle />
                             </IconButton>
                           )}
-                        </Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Grid sx={{ mt: 1 }} container>
-                        <Grid xs={1.2}></Grid>
-                        <Grid xs={9.8}>
-                          <TextField
-                            {...methods.register(
-                              `custom_specification_fields.${index}.display_name`
-                            )}
-                            label="Display Name"
-                            variant="outlined"
-                            size="small"
-                            fullWidth
-                            required
-                            sx={{mb:3}}
-                          /> 
-                          <EditorForCreateArticle name={`custom_specification_fields.${index}.value`}  holderId={`${index + 1}`} /> 
-                        </Grid>
-                        <Grid xs={2}></Grid>
+                        </Box>
                       </Grid>
-                    </AccordionDetails>
-                  </Accordion>
-                );
-              })}
-              <Box   sx={{ mt: 2, textAlign: "end", mb: 4 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() =>
-                    custom_field_append({ display_name: "", value: "" })
-                  }
-                  startIcon={<AddCircle />}
-                >
-                  Add Field
-                </Button>
-              </Box>
-            </Grid>
-          </Grid> */}
-
+                    ))}
+                  </Grid>
+                  <Box sx={{ mt: 2 }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => append({ gbs: "", start_from: "" })}
+                      startIcon={<AddCircle />}
+                    >
+                      Add Price
+                    </Button>
+                  </Box>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        
           <Container component="main" sx={{ textAlign: "end" }} maxWidth="sm">
             <Button
               type="submit"
