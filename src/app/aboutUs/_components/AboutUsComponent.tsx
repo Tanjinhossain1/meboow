@@ -26,7 +26,7 @@ export default function AboutUsComponent() {
             </Container>
             <Paper className="md:max-w-[1000px] mx-auto" sx={{ p: 5 }} elevation={2}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Image src="/ask.png" alt="" width={350} height={350} />
+                <Image src="/ask.png" alt="question" width={350} height={350} />
               </Box>
               <Typography sx={{ mt: 3, fontSize: 25, fontWeight: 600 }}>
                 About Sell Safari

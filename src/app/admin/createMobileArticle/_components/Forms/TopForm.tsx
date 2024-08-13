@@ -25,6 +25,7 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
+  FormHelperText,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
@@ -317,18 +318,17 @@ export default function TopForm({
                         </InputLabel> */}
                         <FormControl variant="outlined">
                           <InputLabel id="number-select-label">
-                          Total Score
+                            Total Score
                           </InputLabel>
                           <Select
                             {...register("expert_view.total_score", {
-                              required: "Total Score is Required",
+                              required: "Score is Required",
                             })}
                             labelId="number-select-label"
-                            defaultValue={1} // Default value set to 1
                             label="Total Score"
-                            required
+                            // required
                             sx={{ height: "40px" }}
-                            error={!!errors.total_score}
+                            error={!!(errors.expert_view as any)?.total_score}
                             // helperText={errors.total_score?.message as string}
                           >
                             {Array.from({ length: 10 }, (_, i) => i + 1).map(
@@ -339,6 +339,11 @@ export default function TopForm({
                               )
                             )}
                           </Select>
+                          {(errors.expert_view as any)?.total_score && (
+                            <FormHelperText sx={{color:"red"}}>
+                              {(errors.expert_view as any)?.total_score.message}
+                            </FormHelperText>
+                          )}
                         </FormControl>
                         {/* <TextField
                           size="small"
@@ -424,8 +429,8 @@ export default function TopForm({
                           // name="key_specifications.thickness"
                           id="filled-adornment-amount"
                           placeholder="Thickness"
-                          error={!!errors?.thickness}
-                          helperText={errors?.thickness?.message as string}
+                          error={!!(errors?.key_specifications as any)?.thickness}
+                          helperText={(errors?.key_specifications as any)?.thickness?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -458,8 +463,8 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Os"
-                          error={!!errors?.os}
-                          helperText={errors?.os?.message as string}
+                          error={!!(errors?.key_specifications as any)?.os}
+                          helperText={(errors?.key_specifications as any)?.os?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -488,13 +493,13 @@ export default function TopForm({
                         <TextField
                           size="small"
                           {...register("key_specifications.ram_storage", {
-                            required: "Ram Storage is Required",
+                            required: " Storage is Required",
                           })}
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
-                          placeholder="Ram Storage"
-                          error={!!errors?.ram_storage}
-                          helperText={errors?.ram_storage?.message as string}
+                          placeholder=" Storage"
+                          error={!!(errors?.key_specifications as any)?.ram_storage}
+                          helperText={(errors?.key_specifications as any)?.ram_storage?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -528,8 +533,8 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Pixel"
-                          error={!!errors?.pixel}
-                          helperText={errors?.pixel?.message as string}
+                          error={!!(errors?.key_specifications as any)?.pixel}
+                          helperText={(errors?.key_specifications as any)?.pixel?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -563,8 +568,8 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Camera"
-                          error={!!errors?.camera}
-                          helperText={errors?.camera?.message as string}
+                          error={!!(errors?.key_specifications as any )?.camera}
+                          helperText={(errors?.key_specifications as any )?.camera?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -598,8 +603,8 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Ram Chipset"
-                          error={!!errors?.ram_chipset}
-                          helperText={errors?.ram_chipset?.message as string}
+                          error={!!(errors?.key_specifications as any)?.ram_chipset}
+                          helperText={(errors?.key_specifications as any)?.ram_chipset?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -634,8 +639,8 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Battery"
-                          error={!!errors?.battery}
-                          helperText={errors?.battery?.message as string}
+                          error={!!(errors?.key_specifications as any)?.battery}
+                          helperText={(errors?.key_specifications as any)?.battery?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -669,8 +674,8 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="review"
-                          error={!!errors?.review}
-                          helperText={errors?.review?.message as string}
+                          error={!!(errors?.key_specifications as any)?.review}
+                          helperText={(errors?.key_specifications as any)?.review?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -708,6 +713,7 @@ export default function TopForm({
                           sx={{ height: "40px" }}
                           size="small"
                           label="Brands"
+                        
                           // required
                         >
                           {brandsData?.map((brand) => {
@@ -719,7 +725,11 @@ export default function TopForm({
                           })}
                           {/* <MenuItem value={"mobile"}>Mobile</MenuItem> */}
                         </Select>
-
+                        {(errors?.brands as any) && (
+                            <FormHelperText sx={{color:"red"}}>
+                              {(errors?.brands as any).message}
+                            </FormHelperText>
+                          )}
                         <IconButton onClick={handleBrandDialogClickOpen}>
                           <AddCircleIcon
                             color="success"

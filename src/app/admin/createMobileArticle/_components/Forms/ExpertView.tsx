@@ -26,6 +26,7 @@ import {
   DialogActions,
   DialogContentText,
   Box,
+  FormHelperText,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import React, { Fragment, useEffect, useRef, useState } from "react";
@@ -48,13 +49,8 @@ import { RemoveCircle } from "@mui/icons-material";
 const OtherDetailsForms = [
   {
     holderId: "1",
-    title: "Physical Specification",
-    key: "physicalSpecification",
-  },
-  {
-    holderId: "2",
-    title: "Network",
-    key: "network",
+    title: "Design",
+    key: "design",
   },
   {
     holderId: "3",
@@ -62,44 +58,34 @@ const OtherDetailsForms = [
     key: "display",
   },
   {
+    holderId: "2",
+    title: "Performance",
+    key: "performance",
+  },
+  {
     holderId: "4",
-    title: "Processor",
-    key: "processor",
+    title: "Camera",
+    key: "camera",
   },
   {
     holderId: "5",
-    title: "Memory",
-    key: "memory",
-  },
-  {
-    holderId: "6",
-    title: "Main Camera",
-    key: "mainCamera",
-  },
-  {
-    holderId: "7",
-    title: "Selfie Camera",
-    key: "selfieCamera",
-  },
-  {
-    holderId: "8",
-    title: "OS",
-    key: "os",
-  },
-  {
-    holderId: "9",
     title: "Connectivity",
     key: "connectivity",
   },
   {
-    holderId: "10",
+    holderId: "6",
     title: "Features",
     key: "features",
   },
   {
-    holderId: "11",
+    holderId: "7",
     title: "Battery",
     key: "battery",
+  },
+  {
+    holderId: "8",
+    title: "Usability",
+    key: "usability",
   },
 ];
 export default function ExpertView({
@@ -107,7 +93,7 @@ export default function ExpertView({
 }: {
   rhfMethods: UseFormReturn<MobileArticleDefaultFormType, any, undefined>;
 }) {
-  const { register } = useFormContext();
+  const { register,formState:{errors} } = useFormContext();
 
   const {
     fields: score_fields,
@@ -141,6 +127,33 @@ export default function ExpertView({
       append({ list: "" });
     }
   };
+  const handlePaste = (event:any) => {
+    const pasteData = event.clipboardData.getData("text");
+    const pasteArray = pasteData.split("\n").filter((item:any) => item.trim());
+
+    // If there's only one field, we replace it with the first pasted value
+    if (prosFields.length === 1 && !prosFields[0].list) {
+      prosRemove(0);
+    }
+
+    pasteArray.forEach((item:any) => prosAppend({ list: item.trim() }));
+
+    event.preventDefault();
+  };
+  const handlePasteCons = (event:any) => {
+    const pasteData = event.clipboardData.getData("text");
+    const pasteArray = pasteData.split("\n").filter((item:any) => item.trim());
+
+    // If there's only one field, we replace it with the first pasted value
+    if (consFields.length === 1 && !consFields[0].list) {
+      consRemove(0);
+    }
+
+    pasteArray.forEach((item:any) => consAppend({ list: item.trim() }));
+
+    event.preventDefault();
+  };
+
 
   return (
     <Fragment>
@@ -239,38 +252,43 @@ export default function ExpertView({
             );
           })}
         </Grid> */}
-         {OtherDetailsForms?.map((otherDetails, index) => {
+        {OtherDetailsForms?.map((otherDetails, index) => {
           return (
             <Fragment key={index}>
-              <Grid xs={1.8}>
-                <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
-                  <InputLabel sx={{ mb: 1 }} htmlFor="filled-adornment-amount">
-                    {otherDetails?.title}
-                    <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                  </InputLabel>
-                  <FilledInput
-                    size="small"
+              <Grid xs={2}>
+                <FormControl sx={{ my: 2, width: "100%" }} variant="outlined">
+                  <InputLabel id="number-select-label">{otherDetails?.title}</InputLabel>
+                  <Select
                     {...register(
                       `expert_view.specific_score.${otherDetails?.key}`,
                       {
-                        required: true,
+                        required: "Required Field",
                       }
                     )}
-                    inputProps={{ step: 0.1 }}
-                    //   name="title"
-                    id="filled-adornment-amount"
-                    placeholder={otherDetails?.title}
-                    required
-                    type="number"
-                    startAdornment={
-                      <InputAdornment position="start"></InputAdornment>
-                    }
-                  />
+                    fullWidth
+                    labelId="number-select-label"
+                    label={otherDetails?.title}
+                    sx={{ height: "40px" }}
+                    error={!!(errors.expert_view as any)?.specific_score?.[otherDetails?.key]}
+                  >
+                    {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                      (number) => (
+                        <MenuItem key={number} value={number}>
+                          {number}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
+                  {(errors.expert_view as any)?.specific_score?.[otherDetails?.key] && (
+                            <FormHelperText sx={{color:"red"}}>
+                              {(errors.expert_view as any)?.specific_score?.[otherDetails?.key].message}
+                            </FormHelperText>
+                          )}
                 </FormControl>
               </Grid>
             </Fragment>
           );
-        })}  
+        })}
 
         <Grid xs={12}>
           {" "}
@@ -297,6 +315,7 @@ export default function ExpertView({
                 size="small"
                 fullWidth
                 onKeyPress={(e) => handleKeyPress(e, prosAppend)}
+                onPaste={index === 0 ? handlePaste : undefined}
               />
               {index > 0 && (
                 <IconButton color="error" onClick={() => prosRemove(index)}>
@@ -331,6 +350,7 @@ export default function ExpertView({
                 size="small"
                 fullWidth
                 onKeyPress={(e) => handleKeyPress(e, consAppend)}
+                onPaste={index === 0 ? handlePasteCons : undefined}
               />
               {index > 0 && (
                 <IconButton color="error" onClick={() => consRemove(index)}>

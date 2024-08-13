@@ -127,7 +127,7 @@ const ExpertViewComponent = ({
                 const fillPercentage = (+value / 10) * 100;
                 const colorIndex = Math.floor(+value) - 1;
                 return (
-                 value > 0 ? <Grid
+                 +value > 0 ? <Grid
                     alignItems={"center"}
                     textAlign={"center"}
                     item

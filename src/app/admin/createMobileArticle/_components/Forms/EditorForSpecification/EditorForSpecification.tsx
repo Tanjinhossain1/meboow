@@ -153,7 +153,7 @@ const EditorForCreateArticle = ({
     //     editorRef.current = null;
     //   }
     // };
-  }, [editorRef, defaultData, holderId]);
+  }, [editorRef, defaultData, holderId,name,setValue]);
  
   return (
     <Container

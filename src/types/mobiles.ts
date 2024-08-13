@@ -1,20 +1,20 @@
 
 
 export interface MobileOpinionType {
-    id:number;
+    id: number;
     createdAt: string;
     updatedAt: string;
-    name:string;
+    name: string;
     email: string;
     comments: string;
-    mobileId:string;
-    articleId:string;
+    mobileId: string;
+    articleId: string;
 }
 export interface MobileTagsType {
-    id:number;
+    id: number;
     createdAt: string;
     updatedAt: string;
-    name:string; 
+    name: string;
 }
 
 
@@ -44,24 +44,33 @@ export interface MobileArticleType {
         pixel: string;
         camera: string;
         ram_chipset: string;
-        review:string
+        review: string
 
     };
     expert_view: {
         specific_final_score: { name: string, value: string | number }[],
         total_score: number;
         specific_score: {
-            battery: number;
-            display: number;
-            physicalSpecification: number;
-            memory: number;
-            mainCamera: number;
-            processor: number;
-            network: number;
-            selfieCamera: number;
-            connectivity: number;
-            features: number;
-            os: number;
+            design:number | string;
+            display:number | string;
+            performance:number | string;
+            camera:number | string;
+            connectivity:number | string;
+            features:number | string;
+            battery:number | string;
+            usability:number | string;
+
+            // battery: number;
+            // display: number;
+            // physicalSpecification: number;
+            // memory: number;
+            // mainCamera: number;
+            // processor: number;
+            // network: number;
+            // selfieCamera: number;
+            // connectivity: number;
+            // features: number;
+            // os: number;
         },
         pros: [
             {
@@ -118,23 +127,32 @@ export interface MobileArticleDefaultFormType {
         pixel: string;
         camera: string;
         ram_chipset: string;
-        review:string
+        review: string
     };
     expert_view: {
         total_score: number | string;
         specific_final_score: { name: string, value: string | number }[],
         specific_score: {
-            battery: number | string;
-            display: number | string;
-            physicalSpecification: number | string;
-            memory: number | string;
-            mainCamera: number | string;
-            processor: number | string;
-            network: number | string;
-            selfieCamera: number | string;
-            connectivity: number | string;
-            features: number | string;
-            os: number | string;
+            design:number | string;
+            display:number | string;
+            performance:number | string;
+            camera:number | string;
+            connectivity:number | string;
+            features:number | string;
+            battery:number | string;
+            usability:number | string;
+
+            // battery: number | string;
+            // display: number | string;
+            // physicalSpecification: number | string;
+            // memory: number | string;
+            // mainCamera: number | string;
+            // processor: number | string;
+            // network: number | string;
+            // selfieCamera: number | string;
+            // connectivity: number | string;
+            // features: number | string;
+            // os: number | string;
         },
         pros:
         {

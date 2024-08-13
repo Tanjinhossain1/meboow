@@ -179,7 +179,7 @@ export default function Opinion({
         <Paper sx={{ width: "100%" }} elevation={1}>
           <Typography sx={{ fontSize: 20, fontWeight: 600, p: 1 }}>
             {mobileDetail?.title || articleDetail?.title} -{" "}
-            <i>"USER OPINIONS AND REVIEWS"</i>
+            <i>USER OPINIONS AND REVIEWS</i>
           </Typography>
         </Paper>
         <Grid sx={{ bgcolor: "lightgray" }} container>
@@ -189,6 +189,7 @@ export default function Opinion({
           {allMobilesOpinion?.map(
             (comment: MobileOpinionType, index: number) => (
               <Paper
+              key={comment?.id}
                 sx={{ width: "100%", mt: index >= 1 ? 3 : 1 }}
                 elevation={1}
               >

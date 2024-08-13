@@ -19,7 +19,7 @@ export default function MobileListComponent({
 
       {mobileArticles?.map((value: MobileArticleType) => {
         return (
-          <Link href={`/mobile/detail/${value.id}`}>
+          <Link key={value?.id} href={`/mobile/detail/${value.id}`}>
           <Typography
             sx={{
               p: 1,

@@ -20,7 +20,7 @@ export default function DevicesDetails({
     mobileArticles: MobileArticleType[];
   };
 }) {
-  const { register } = useFormContext();
+  const { register,formState:{errors} } = useFormContext();
 
   const [is_daily_interest, setIs_daily_interest] = React.useState(
     isEdit?.isEdit && isEdit?.mobileArticles[0] ? isEdit?.mobileArticles[0]?.is_daily_interest : ""
@@ -65,7 +65,8 @@ export default function DevicesDetails({
                 name="is_daily_interest"
                 onChange={handleInterestChange}
                 size="small"
-                required
+                error={!!errors.is_daily_interest}
+                // required
               >
                 <MenuItem value={"YES"}>YES</MenuItem>
                 <MenuItem value={"NO"}>NO</MenuItem>
@@ -90,7 +91,9 @@ export default function DevicesDetails({
                 name="is_by_fans"
                 onChange={handleIs_by_fansChange}
                 size="small"
-                required
+                // required
+                
+                error={!!errors.is_by_fans}
               >
                 <MenuItem value={"YES"}>YES</MenuItem>
                 <MenuItem value={"NO"}>NO</MenuItem>
@@ -115,7 +118,9 @@ export default function DevicesDetails({
                 name="is_latest_device"
                 onChange={handleIs_latest_deviceChange}
                 size="small"
-                required
+                // required
+                
+                error={!!errors.is_latest_device}
               >
                 <MenuItem value={"YES"}>YES</MenuItem>
                 <MenuItem value={"NO"}>NO</MenuItem>
