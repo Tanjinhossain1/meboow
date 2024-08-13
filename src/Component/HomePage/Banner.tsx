@@ -333,7 +333,7 @@ export default function Banner({
             <Grid item xs={12} sm={6} md={4}>
               <MobileReviews  isTrending mobilesArticles={latestArticles} />
             </Grid>
-            <Grid item sx={{ pl: 2, height: "350px" }} xs={12} sm={6} md={8}>
+            <Grid item sx={{ pl: 2,   }} xs={12} sm={6} md={8}>
               <PopularMobiles user={user} articles={mobileArticles} />
               <Tags tags={tags} />
               <Categories category={category} />

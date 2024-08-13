@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -80,6 +80,13 @@ export default function MainSubmitForm({
         : undefined
     ),
   });
+
+// If `mobileArticle` changes after the form is rendered, you may need to call `reset` to update the form values.
+useEffect(() => {
+  if (isEdit?.isEdit && isEdit?.mobileArticles[0]) {
+    methods.reset(RhfDefaultInitialValues(isEdit?.mobileArticles[0]));
+  }
+}, [isEdit?.isEdit,isEdit?.mobileArticles,methods]);
 
   const { fields, append, remove } = useFieldArray({
     control: methods.control,

@@ -36,14 +36,26 @@ export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): Mobi
             display_name: "",
             value: "",
         }],
-        expert_view: mobileArticle?.expert_view ? mobileArticle?.expert_view : {
+        expert_view: mobileArticle?.expert_view ? {
+            total_score: mobileArticle.expert_view.total_score || "",
+            specific_final_score: mobileArticle.expert_view.specific_final_score || [{ name: "", value: "" }],
+            specific_score: {
+                design: mobileArticle.expert_view.specific_score?.design || "",
+                display: mobileArticle.expert_view.specific_score?.display || "",
+                performance: mobileArticle.expert_view.specific_score?.performance || "",
+                camera: mobileArticle.expert_view.specific_score?.camera || "",
+                connectivity: mobileArticle.expert_view.specific_score?.connectivity || "",
+                features: mobileArticle.expert_view.specific_score?.features || "",
+                battery: mobileArticle.expert_view.specific_score?.battery || "",
+                usability: mobileArticle.expert_view.specific_score?.usability || "",
+            },
+            article_urls: mobileArticle.expert_view.article_urls || "",
+            cons: mobileArticle.expert_view.cons || [{ list: "" }],
+            pros: mobileArticle.expert_view.pros || [{ list: "" }],
+            verdict: mobileArticle.expert_view.verdict || "",
+        } : {
             total_score: "",
-            specific_final_score: [
-                {
-                    name: "",
-                    value: "",
-                },
-            ],
+            specific_final_score: [{ name: "", value: "" }],
             specific_score: {
                 design: "",
                 display: "",
@@ -53,29 +65,53 @@ export const RhfDefaultInitialValues = (mobileArticle?: MobileArticleType): Mobi
                 features: "",
                 battery: "",
                 usability: "",
-
-                // battery: "",
-                // display: "",
-                // physicalSpecification: "",
-                // memory: "",
-                // mainCamera: "",
-                // processor: "",
-                // network: "",
-                // selfieCamera: "",
-                // connectivity: "",
-                // features: "",
-                // os: "",
             },
             article_urls: "",
-            cons: [{
-                list: "",
-            }],
-            pros: [{
-                list: "",
-            }],
+            cons: [{ list: "" }],
+            pros: [{ list: "" }],
             verdict: "",
-
         },
+
+        // expert_view: mobileArticle?.expert_view ? mobileArticle?.expert_view : {
+        //     total_score: "",
+        //     specific_final_score: [
+        //         {
+        //             name: "",
+        //             value: "",
+        //         },
+        //     ],
+        //     specific_score: {
+        //         design: "",
+        //         display: "",
+        //         performance: "",
+        //         camera: "",
+        //         connectivity: "",
+        //         features: "",
+        //         battery: "",
+        //         usability: "",
+
+        //         // battery: "",
+        //         // display: "",
+        //         // physicalSpecification: "",
+        //         // memory: "",
+        //         // mainCamera: "",
+        //         // processor: "",
+        //         // network: "",
+        //         // selfieCamera: "",
+        //         // connectivity: "",
+        //         // features: "",
+        //         // os: "",
+        //     },
+        //     article_urls: "",
+        //     cons: [{
+        //         list: "",
+        //     }],
+        //     pros: [{
+        //         list: "",
+        //     }],
+        //     verdict: "",
+
+        // },
         prices: mobileArticle?.prices ? mobileArticle.prices : [{ gbs: "", start_from: "" }],
     }
 }

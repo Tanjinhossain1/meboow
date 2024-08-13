@@ -668,14 +668,12 @@ export default function TopForm({
                         </InputLabel> */}
                         <TextField
                           size="small"
-                          {...register("key_specifications.review", {
-                            required: "review is Required",
-                          })}
+                          {...register("key_specifications.review")}
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="review"
-                          error={!!(errors?.key_specifications as any)?.review}
-                          helperText={(errors?.key_specifications as any)?.review?.message as string}
+                          // error={!!(errors?.key_specifications as any)?.review}
+                          // helperText={(errors?.key_specifications as any)?.review?.message as string}
                         />
                         {/* <FilledInput
                           size="small"
@@ -701,14 +699,14 @@ export default function TopForm({
                         </InputLabel>
 
                         <Select
-                          {...register("brands")}
+                          {...register("brands",{required:"Brand Required"})}
                           labelId="demo-simple-select-filled-label"
                           // id="demo-simple-select-filled"
-                          // value={brands}
+                          value={brands}
                           defaultValue="dk"
                           error={!!errors?.brands}
                           name="brands"
-                          // onChange={handleBrandChange}
+                          onChange={handleBrandChange}
                           placeholder=" Select Brands"
                           sx={{ height: "40px" }}
                           size="small"
