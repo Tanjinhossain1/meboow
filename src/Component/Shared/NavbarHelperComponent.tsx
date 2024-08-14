@@ -167,7 +167,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/aboutus"}>
+              <Link style={{ color: "black" }} href={"/aboutUs"}>
                 About Us
               </Link>
             </Typography>
@@ -266,7 +266,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/aboutus"}>
+                  <Link style={{ color: "black" }} href={"/aboutUs"}>
                     About Us
                   </Link>
                 </Typography>
