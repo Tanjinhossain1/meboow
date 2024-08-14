@@ -134,12 +134,25 @@ const IphoneCard = ({
           />
         </Grid>
         {/* mobile slider  */}
-        <Grid item xs={6} sx={{ width: "100%",mb:2, margin: "auto",display:{
-            xs:"block",
-            sm:"none",
-        } }}>
-          <Swiper    pagination={{ clickable: true }}  // Enable clickable pagination dots
-        modules={[Pagination]} spaceBetween={10} slidesPerView={1}>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            width: "100%",
+            mb: 2,
+            margin: "auto",
+            display: {
+              xs: "block",
+              sm: "none",
+            },
+          }}
+        >
+          <Swiper
+            pagination={{ clickable: true }} // Enable clickable pagination dots
+            modules={[Pagination]}
+            spaceBetween={10}
+            slidesPerView={1}
+          >
             <SwiperSlide>
               <Grid spacing={1} container>
                 <Grid
@@ -234,7 +247,7 @@ const IphoneCard = ({
                     display={"flex"}
                     gap={1}
                     alignItems={"center"}
-                    textAlign={'left'}
+                    textAlign={"left"}
                     variant="body2"
                   >
                     {" "}
@@ -247,7 +260,7 @@ const IphoneCard = ({
                     display={"flex"}
                     gap={1}
                     alignItems={"center"}
-                    textAlign={'left'}
+                    textAlign={"left"}
                     variant="body2"
                   >
                     {" "}
@@ -260,7 +273,7 @@ const IphoneCard = ({
                     display={"flex"}
                     gap={1}
                     alignItems={"center"}
-                    textAlign={'left'}
+                    textAlign={"left"}
                     variant="body2"
                   >
                     <CodeIcon sx={{ fontSize: 20 }} />{" "}
@@ -272,7 +285,7 @@ const IphoneCard = ({
                     display={"flex"}
                     gap={1}
                     alignItems={"center"}
-                    textAlign={'left'}
+                    textAlign={"left"}
                     variant="body2"
                   >
                     <StorageIcon sx={{ fontSize: 20 }} />{" "}
@@ -283,12 +296,17 @@ const IphoneCard = ({
             </SwiperSlide>
           </Swiper>
         </Grid>
-        <Grid sx={{
-            display:{
-                xs:"none",
-                sm:"block",
-            }
-        }} item xs={12} sm={8}>
+        <Grid
+          sx={{
+            display: {
+              xs: "none",
+              sm: "block",
+            },
+          }}
+          item
+          xs={12}
+          sm={9}
+        >
           <CardContent>
             <Box className="mb-4">
               <Typography

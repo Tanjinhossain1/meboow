@@ -213,7 +213,7 @@ export default function Banner({
   dailyInterestMobiles,
   byFansMobiles,
   latestDeviceMobiles,
-  tags
+  // tags
 }: {
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
@@ -227,7 +227,7 @@ export default function Banner({
   byFansMobiles: MobileArticleType[];
   latestDeviceMobiles: MobileArticleType[];
   user: any;
-  tags:MobileTagsType[]
+  // tags:MobileTagsType[]
 }) {
   console.log("articles articles ", articles);
   const history = useRouter();
@@ -320,23 +320,28 @@ export default function Banner({
           {/* </Grid>
           </Grid> */}
 
-          <Grid sx={{ my: 4 }} container>
-            <Grid xs={12} sm={6} md={4}>
+          <Grid sx={{ py: 4 }} container>
+            <Grid sx={{borderRight:"1px solid lightgray",pr:1}} xs={12} sm={6} md={4}>
               <PhoneFinder brands={SampleBrands} />
             </Grid>
-            <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
+            <Grid sx={{ pl: 1 }} xs={12} sm={6} md={8}>
               <MobileReviews mobilesArticles={mobilesArticles} /> 
             </Grid>
           </Grid>
 
-          <Grid sx={{ my: 4 }} container>
-            <Grid item xs={12} sm={6} md={4}>
+          <Grid sx={{ py: 4 }} container>
+            <Grid sx={{borderRight:"1px solid lightgray",pr:1}} item xs={12} sm={6} md={4}>
               <MobileReviews  isTrending mobilesArticles={latestArticles} />
+              <TopDevicesTable
+                byFans={byFansMobiles}
+                dailyInterest={dailyInterestMobiles}
+              />
+              <LatestDevices mobiles={latestDeviceMobiles} />
             </Grid>
-            <Grid item sx={{ pl: 2,   }} xs={12} sm={6} md={8}>
+            <Grid  item sx={{ pl: 1,   }} xs={12} sm={6} md={8}>
               <PopularMobiles user={user} articles={mobileArticles} />
-              <Tags tags={tags} />
-              <Categories category={category} />
+              {/* <Tags tags={tags} /> */}
+              {/* <Categories category={category} /> */}
               <Grid gap={1} container>
                 <Typography
                   sx={{
@@ -362,21 +367,22 @@ export default function Banner({
                   </Typography></Link>
                 </Grid>
               </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid sx={{ my: 4 }} container>
-            <Grid xs={12} sm={6} md={4}>
-              <TopDevicesTable
-                byFans={byFansMobiles}
-                dailyInterest={dailyInterestMobiles}
-              />
-              <LatestDevices mobiles={latestDeviceMobiles} />
-            </Grid>
-            <Grid sx={{ pl: 2, mt: 2 }} xs={12} sm={6} md={8}>
               <NewsAndReviews mobilesArticles={newsAndReviews} />
             </Grid>
           </Grid>
+
+          {/* <Grid sx={{ my: 4 }} container>
+            <Grid sx={{borderRight:"1px solid lightgray",pr:1}} xs={12} sm={6} md={4}>
+              {/* <TopDevicesTable
+                byFans={byFansMobiles}
+                dailyInterest={dailyInterestMobiles}
+              />
+              <LatestDevices mobiles={latestDeviceMobiles} />  
+            </Grid>
+            {/* <Grid sx={{ pl: 1, pt: 2 }} xs={12} sm={6} md={8}>
+              <NewsAndReviews mobilesArticles={newsAndReviews} />
+            </Grid>  
+          </Grid> */}
         </Paper>
       </Grid>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>

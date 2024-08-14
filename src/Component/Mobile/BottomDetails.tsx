@@ -102,7 +102,7 @@ const BottomMobileDetails = ({
 
   return (
     <Grid sx={{ my: 1 }} container>
-      <Typography sx={{ fontSize: 30, mb: 1, fontWeight: 600 }} variant="h6">
+      <Typography sx={{ fontSize: 23, mb: 1, fontWeight: 600 }} variant="h6">
         Specification
       </Typography>
       <Grid container className="w-full   border  mb-2 rounded-b-xl ">
@@ -113,25 +113,25 @@ const BottomMobileDetails = ({
         >
           <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
-              sx={{ fontSize: 20, fontWeight: 550, ml: 2, mb: 1, mt: 2 }}
+              sx={{ fontSize: 17, fontWeight: 550, ml: 2, mb: 1, mt: 2 }}
             >
               {mobileArticles?.title}
             </Typography>
             <div className="flex justify-evenly">
               <IconButton
-                className="bg-gray-300 mt-2 mr-2"
+                 
                 onClick={handlePrev}
                 disabled={index === 0}
               >
-                <ArrowBackIosIcon className="h-6 w-7" />
+                <ArrowBackIosIcon className="h-5 w-5" />
               </IconButton>
 
               <IconButton
                 onClick={handleNext}
                 disabled={index >= extractedData?.length - 5}
-                className="bg-gray-300 mt-2 mr-2"
+                 
               >
-                <ArrowForwardIosIcon className="h-6 w-6" />
+                <ArrowForwardIosIcon className="h-5 w-5" />
               </IconButton>
             </div>
           </Grid>
@@ -140,8 +140,6 @@ const BottomMobileDetails = ({
           xs={12}
             sx={{
               pl: 1,
-              mt: 2,
-              pb: 1,
               position: "relative",
               // width: "100%", // Set the Grid width to 100%
             }}
@@ -171,8 +169,9 @@ const BottomMobileDetails = ({
                             sx={{
                               width: "100%",
                               border: "1px solid lightgray",
-                              px: 1,
+                              px: 0.5,
                               borderRadius: 15,
+                              fontSize:12,
                               bgcolor:
                                 selectedIndex === index ? "#023359" : "white",
                               color:

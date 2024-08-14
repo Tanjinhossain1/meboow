@@ -26,10 +26,11 @@ export default function DialogComponent({
 }) {
   const fileUploadRef = useRef();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.stopPropagation();
+    event.preventDefault();  // Stop the event from propagating to the outer form
     handleBackDropOpen();
     const title = (event.target as any)?.title.value;
     // const value = (event.target as any)?.value.value;
-    event.preventDefault();
     console.log(
       "submit data  ",
 

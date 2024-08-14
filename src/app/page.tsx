@@ -49,7 +49,7 @@ async function Home({ searchParams }: HomePropsType) {
   });
   const Category = await fetchCategories();
   const brands = await fetchBrands();
-  const AllMobilesTags = await fetchMobileTags({});
+  // const AllMobilesTags = await fetchMobileTags({});
 
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
@@ -62,7 +62,7 @@ async function Home({ searchParams }: HomePropsType) {
       {articles.data && articles.data[0] ? (
         <Suspense>
           <Banner
-          tags={AllMobilesTags.data}
+          // tags={AllMobilesTags.data}
           dailyInterestMobiles={DailyInterestMobiles.data}
           byFansMobiles={ByFansMobiles.data}
           latestDeviceMobiles={LatestDeviceMobiles.data}

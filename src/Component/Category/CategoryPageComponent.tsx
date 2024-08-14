@@ -129,22 +129,6 @@ export default function CategoryPageComponent({
               </Grid>
               <Grid xs={12} md={4}></Grid>
             </Grid>
-            {isSearch ? (
-              mobileSearch && mobileSearch.length !==0? (
-              <Box> <Typography sx={{fontSize:20,fontWeight:600,mt:2}}> Mobiles </Typography>
-                <Grid container>
-                  <MobileCommonDetails articles={mobileSearch} />
-                </Grid></Box> 
-              ) : null
-            ) : null}
-
-            {categoryWiseArticles && categoryWiseArticles.length === 0 && (
-              <Alert severity="warning">
-                No Article Found For {params?.brand} {search ? search : ""}{" "}
-                {params?.category}.
-              </Alert>
-            )}
-
             <Grid container>
               <Grid xs={12} md={8}>
                   {
@@ -167,6 +151,23 @@ export default function CategoryPageComponent({
                 <CategoryListComponent category={category} />
               </Grid>
             </Grid>
+            {isSearch ? (
+              mobileSearch && mobileSearch.length !==0? (
+              <Box> <Typography sx={{fontSize:20,fontWeight:600,mt:2}}> Mobiles </Typography>
+                <Grid container>
+                  <MobileCommonDetails articles={mobileSearch} />
+                </Grid></Box> 
+              ) : null
+            ) : null}
+
+            {categoryWiseArticles && categoryWiseArticles.length === 0 && (
+              <Alert severity="warning">
+                No Article Found For {params?.brand} {search ? search : ""}{" "}
+                {params?.category}.
+              </Alert>
+            )}
+
+            
             <Grid sx={{ mt: 3 }} container>
               <Grid xs={1}></Grid>
               <Grid xs={10} sm={4}>
