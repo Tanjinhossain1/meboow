@@ -543,18 +543,18 @@ function NavbarHelper({
                     </Typography>
                   </Link>
                   <Link href={"/news"}>
-                    <Typography>News And Reviews</Typography>
+                    <Typography sx={{color:"white"}}>News And Reviews</Typography>
                   </Link>
                   <Link href={"/brands"}>
                     {" "}
-                    <Typography>Brands</Typography>
+                    <Typography sx={{color:"white"}}>Brands</Typography>
                   </Link>
                   <Link href={"/mobile"}>
-                    <Typography>Mobiles</Typography>
+                    <Typography sx={{color:"white"}}>Mobiles</Typography>
                   </Link>
                   <Link href={"/contactUs"}>
                     {" "}
-                    <Typography>Contact</Typography>
+                    <Typography sx={{color:"white"}}>Contact</Typography>
                   </Link>
                 </Box>
 
