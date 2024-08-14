@@ -7,8 +7,8 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 const columns = [
      
   { field: "id", headerName: "ID", width: 90 },
-  { field: "title", headerName: "Title", width: 150 },
-  { field: "createdAt", headerName: "Create Date", width: 110 },
+  { field: "title", headerName: "Title", width: 500 },
+  { field: "createdAt", headerName: "Create Date", width: 180 },
   {
     field: "actions",
     headerName: "Actions",
@@ -25,7 +25,7 @@ export default function MainArticlesDetailList({articles}:{articles:RecentArticl
   const [filteredRows, setFilteredRows] = useState<RecentArticleDataType[]>(articles);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
-    pageSize: 5,
+    pageSize: 20,
   });
 
   // Handle search
@@ -42,7 +42,7 @@ export default function MainArticlesDetailList({articles}:{articles:RecentArticl
   };
 
   return (
-    <div style={{ height: 500, width: "100%" }}>
+    <div className="max-w-[1000px] mx-auto" style={{   width: "100%" }}>
       {/* Search input */}
       <TextField
         label="Search"
@@ -57,7 +57,7 @@ export default function MainArticlesDetailList({articles}:{articles:RecentArticl
         columns={columns}
         paginationModel={paginationModel}
         onPaginationModelChange={(newModel) => setPaginationModel(newModel)}
-        pageSizeOptions={[20, 10, 30, 40, 50]} // options for page sizes
+        pageSizeOptions={[20, 30, 40, 50]} // options for page sizes
       />
     </div>
   );
