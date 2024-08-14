@@ -3,6 +3,7 @@
 import React from "react";
 import { Container, Box, Paper, Typography, Button, Grid } from "@mui/material";
 import { redirect, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Dashboard = ({user}:any) => {
     const router = useRouter()
@@ -53,6 +54,25 @@ const Dashboard = ({user}:any) => {
               </Typography>
             </Paper>
           </Grid>
+        </Grid>
+        <Grid gap={2} container>
+          <Grid xs={5.5}>
+            <Link href={`/admin/manage_all_sections/articles`}>
+            <Paper 
+              sx={{
+                width: "100%",
+                p: 2,
+                mb: 4, 
+                ":hover": { bgcolor: "lightgray" },
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                Manage Articles
+              </Typography>
+            </Paper>
+            </Link>
+          </Grid>
+          
         </Grid>
       </Box>
     </Container>
