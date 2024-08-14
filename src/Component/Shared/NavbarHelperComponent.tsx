@@ -36,8 +36,10 @@ import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "next-auth/react";
 import BackdropProviderContext from "../BackdropProvider";
-import TagIcon from '@mui/icons-material/Tag';
+import TagIcon from "@mui/icons-material/Tag";
 import CreateTag from "./CreateTag";
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import ContactsIcon from '@mui/icons-material/Contacts';
 
 function NavbarHelper({
   isLoginUser,
@@ -49,7 +51,7 @@ function NavbarHelper({
   const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
-  
+
   const [tagsDialogOpen, setTagsDialogOpen] = React.useState(false);
   console.log("user  ", isLoginUser);
   const handleToggle = () => {
@@ -59,7 +61,7 @@ function NavbarHelper({
   const handleTagsDialogClose = () => {
     setTagsDialogOpen(false);
   };
-  
+
   const handleTagsDialogClickOpen = () => {
     setTagsDialogOpen(true);
   };
@@ -120,11 +122,56 @@ function NavbarHelper({
               <ListItemIcon>
                 <HomeIcon></HomeIcon>
               </ListItemIcon>
-              <ListItemText sx={{color:"white"}} primary={text} />
+              <ListItemText sx={{ color: "white" }} primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
-        {category?.map((data: CategoryTypes, index) => (
+        {/* <Link href={"/news"}>
+          <Typography>News And Reviews</Typography>
+        </Link> */}
+
+        <Link href={"/news"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <FeedIcon />
+              </ListItemIcon>
+              <ListItemText primary={"News"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link href={"/brands"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <BrandingWatermarkIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Brands"} />
+            </ListItemButton>
+          </ListItem>
+        </Link> 
+        <Link href={"/mobile"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <PhoneAndroidIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Mobiles"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>  
+        <Link href={"/contactUs"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ContactsIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Contact"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>  
+        
+        {/* {category?.map((data: CategoryTypes, index) => (
           <ListItem key={data?.id} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -143,7 +190,7 @@ function NavbarHelper({
               />
             </ListItemButton>
           </ListItem>
-        ))}
+        ))} */}
       </List>
       <Grid sx={{ bottom: 0, position: "absolute", ml: 2 }} container>
         <Grid xs={0} sm={4} md={5} lg={7}></Grid>
@@ -167,7 +214,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/aboutUs"}>
+              <Link style={{ color: "black" }} href={"/aboutus"}>
                 About Us
               </Link>
             </Typography>
@@ -228,7 +275,6 @@ function NavbarHelper({
               </Link>
             </Typography>
           </Grid>
-           
         </Grid>
       </Grid>
     </Box>
@@ -236,7 +282,7 @@ function NavbarHelper({
   return (
     <Grid container>
       <Grid sx={{ m: 0, p: 0 }} xs={12}>
-        <AppBar  sx={{ bgcolor: "#ffffff", m: 0, p: 0 }} position="static">
+        <AppBar sx={{ bgcolor: "#ffffff", m: 0, p: 0 }} position="static">
           <Grid
             sx={{
               bgcolor: "white",
@@ -245,7 +291,7 @@ function NavbarHelper({
             container
             xs={0}
             sm={12}
-            className="lg:max-w-[1000px] mx-auto" 
+            className="md:max-w-[1000px] mx-auto"
           >
             <Grid container>
               <Grid xs={0} sm={4} md={5} lg={7}></Grid>
@@ -266,7 +312,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/aboutUs"}>
+                  <Link style={{ color: "black" }} href={"/aboutus"}>
                     About Us
                   </Link>
                 </Typography>
@@ -322,7 +368,6 @@ function NavbarHelper({
                     FAQ
                   </Link>
                 </Typography>
-                 
               </Grid>
             </Grid>
           </Grid>
@@ -405,7 +450,7 @@ function NavbarHelper({
             }}
             container
             xs={12}
-            className="lg:max-w-[1000px] mx-auto" 
+            className="md:max-w-[1000px] mx-auto"
           >
             <Grid
               sx={{
@@ -466,19 +511,29 @@ function NavbarHelper({
           }}
           position="static"
         >
-          <Grid className="lg:max-w-[1000px] mx-auto"  container sx={{ m: 0, p: 0 }} xs={12}>
+          <Grid
+            className="md:max-w-[1000px] mx-auto"
+            container
+            sx={{ m: 0, p: 0 }}
+            xs={12}
+          >
             {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
             <Grid xs={12} md={10} lg={9.8} xl={12}>
               {/* <Container sx={{ m: 0, p: 0 }} maxWidth="xl"> */}
-              <Grid container>
-                <Grid alignItems={"left"} container xs={0.8}>
-                  <Grid sx={{ p: 1 }} xs={1}>
-                    <Link href={'/'}>
+              <Grid
+                gap={3}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                container
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <Link href={"/"}>
                     <Typography
                       sx={{
                         // cursor: "pointer",
                         mr: 2,
-                        color:"white"
+                        color: "white",
                       }}
                       // onClick={() => {
                       //   history.push(`/`);
@@ -486,46 +541,42 @@ function NavbarHelper({
                     >
                       Home
                     </Typography>
-                    </Link>
-                  </Grid>
-                </Grid>
-                <Grid alignItems={"left"} container xs={10.2}>
-                  {category?.map((value: CategoryTypes) => {
-                    return (
-                      <Grid sx={{ p: 1 }} xs={1} key={value.id}>
-                        <Typography
-                          sx={{
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            history.push(`/category/${value.title}`);
-                          }}
-                        >
-                          {value.title}
-                        </Typography>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-                <Grid alignItems={"center"} textAlign={"end"} xs={1}>
+                  </Link>
+                  <Link href={"/news"}>
+                    <Typography>News And Reviews</Typography>
+                  </Link>
+                  <Link href={"/brands"}>
+                    {" "}
+                    <Typography>Brands</Typography>
+                  </Link>
+                  <Link href={"/mobile"}>
+                    <Typography>Mobiles</Typography>
+                  </Link>
+                  <Link href={"/contactUs"}>
+                    {" "}
+                    <Typography>Contact</Typography>
+                  </Link>
+                </Box>
+
+                <Box>
                   {isLoginUser ? (
                     <>
-                    <LogoutIcon
-                      sx={{ cursor: "pointer", mt: 1 }}
-                      onClick={() => {
-                         
-                          handleOpen(); 
-                        signOut();
-                       setTimeout(() => {
-                        handleClose();
-                       }, 1000);
-                      }}
-                    />
-                    {
-                      isLoginUser.role === "admin" ?
-                    <TagIcon onClick={handleTagsDialogClickOpen}  sx={{cursor: "pointer",ml:2,mt:1}} />:null
-                    }
-                    
+                      <LogoutIcon
+                        sx={{ cursor: "pointer", mt: 1 }}
+                        onClick={() => {
+                          handleOpen();
+                          signOut();
+                          setTimeout(() => {
+                            handleClose();
+                          }, 1000);
+                        }}
+                      />
+                      {isLoginUser.role === "admin" ? (
+                        <TagIcon
+                          onClick={handleTagsDialogClickOpen}
+                          sx={{ cursor: "pointer", ml: 2, mt: 1 }}
+                        />
+                      ) : null}
                     </>
                   ) : (
                     <>
@@ -544,7 +595,7 @@ function NavbarHelper({
                       />
                     </>
                   )}
-                </Grid>
+                </Box>
                 {/* <Grid xs={4}>
                 <ListItem
                   sx={{
@@ -612,7 +663,7 @@ function NavbarHelper({
                     color: "#e691c4",
                     fontWeight: 600,
                   }}
-                  onClick={() => history.push("/aboutUs")}
+                  onClick={() => history.push("/aboutus")}
                 >
                   <Typography sx={{ fontWeight: 600 }} textAlign="center">
                     About Us

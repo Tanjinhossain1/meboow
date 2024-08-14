@@ -10,6 +10,7 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import Link from "next/link";
 
 export default function PopularMobiles({
   articles,
@@ -83,10 +84,11 @@ export default function PopularMobiles({
                         }}
                         xs={3}
                         onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
+                          // history.push(`/mobile/detail/${data.id}`);
                         }}
                         // item
                       >
+                        <Link href={`/mobile/detail/${data.id}`}>
                         <Image
                           style={{
                             width: "195px", // Ensure the image takes the full width of the card
@@ -100,11 +102,12 @@ export default function PopularMobiles({
                           width={50}
                           height={50}
                         />
+                        </Link>
                       </Grid>
-                      <Grid
-                        onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
-                        }}
+                      <Link href={`/mobile/detail/${data.id}`}><Grid
+                        // onClick={() => {
+                        //   // history.push(`/mobile/detail/${data.id}`);
+                        // }}
                         item
                         sx={{ width: "100%", mt: 2, height: "45px" }}
                       >
@@ -119,11 +122,12 @@ export default function PopularMobiles({
                           {data?.title}
                         </Typography>
                       </Grid>
-
+                      </Link> 
+                      <Link href={`/mobile/detail/${data.id}`}>
                       <Grid
-                        onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
-                        }}
+                        // onClick={() => {
+                        //   history.push(`/mobile/detail/${data.id}`);
+                        // }}
                         textAlign={"left"}
                         item
                         sx={{ width: "100%" }}
@@ -146,10 +150,13 @@ export default function PopularMobiles({
                           {data?.key_specifications.ram_chipset}
                         </Typography>
                       </Grid>
+                      </Link>
+                      
+                      <Link href={`/mobile/detail/${data.id}`}>
                       <Grid
-                        onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
-                        }}
+                        // onClick={() => {
+                        //   history.push(`/mobile/detail/${data.id}`);
+                        // }}
                         item
                         textAlign={"left"}
                         sx={{ width: "100%" }}
@@ -172,10 +179,12 @@ export default function PopularMobiles({
                           {data?.key_specifications.camera}
                         </Typography>
                       </Grid>
+                      </Link>
+                      <Link href={`/mobile/detail/${data.id}`}>
                       <Grid
-                        onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
-                        }}
+                        // onClick={() => {
+                        //   history.push(`/mobile/detail/${data.id}`);
+                        // }}
                         item
                         textAlign={"left"}
                         sx={{ width: "100%" }}
@@ -199,7 +208,8 @@ export default function PopularMobiles({
                           {data?.key_specifications.battery}
                         </Typography>
                       </Grid>
-
+                          </Link>
+                           
                       <Grid
                         item
                         sx={
@@ -217,22 +227,23 @@ export default function PopularMobiles({
                         }
                       >
                         {
-                            data?.prices[0].start_from ? <Typography
+                            data?.prices[0].start_from ? 
+                            <Link href={`/mobile/detail/${data.id}`}><Typography
                             sx={{
                               color: "#055491",
                               fontWeight: 800,
                               fontSize: "16px",
                               textAlign: "center",
                             }}
-                            onClick={() => {
-                              history.push(`/mobile/detail/${data.id}`);
-                            }}
+                            // onClick={() => {
+                            //   history.push(`/mobile/detail/${data.id}`);
+                            // }}
                           >
                             ${data?.prices[0].start_from}
-                          </Typography> : null
+                          </Typography></Link> : null
                         }
                         
-                        {user?.role === "admin" ? <Typography
+                        {user?.role === "admin" ? <Link href={`/admin/mobile/edit/${data.id}`}><Typography
                           sx={{
                             color: "#055491",
                             fontWeight: 800,
@@ -240,12 +251,12 @@ export default function PopularMobiles({
                             textAlign: "center",
                             cursor: "pointer",
                           }}
-                          onClick={() => {
-                            history.push(`/admin/mobile/edit/${data.id}`);
-                          }}
+                          // onClick={() => {
+                          //   history.push(`/admin/mobile/edit/${data.id}`);
+                          // }}
                         >
                          <EditNoteIcon /> 
-                        </Typography>: null}
+                        </Typography></Link>: null}
                       </Grid>
                     </Grid>
                   </Card>

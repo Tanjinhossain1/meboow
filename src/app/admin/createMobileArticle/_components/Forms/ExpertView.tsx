@@ -90,10 +90,18 @@ const OtherDetailsForms = [
 ];
 export default function ExpertView({
   rhfMethods,
+  isEdit
 }: {
   rhfMethods: UseFormReturn<MobileArticleDefaultFormType, any, undefined>;
+  isEdit?: {
+    isEdit: boolean;
+    mobileArticles: MobileArticleType[];
+  };
 }) {
-  const { register,formState:{errors} } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   const {
     fields: score_fields,
@@ -127,33 +135,32 @@ export default function ExpertView({
       append({ list: "" });
     }
   };
-  const handlePaste = (event:any) => {
+  const handlePaste = (event: any) => {
     const pasteData = event.clipboardData.getData("text");
-    const pasteArray = pasteData.split("\n").filter((item:any) => item.trim());
+    const pasteArray = pasteData.split("\n").filter((item: any) => item.trim());
 
     // If there's only one field, we replace it with the first pasted value
     if (prosFields.length === 1 && !prosFields[0].list) {
       prosRemove(0);
     }
 
-    pasteArray.forEach((item:any) => prosAppend({ list: item.trim() }));
+    pasteArray.forEach((item: any) => prosAppend({ list: item.trim() }));
 
     event.preventDefault();
   };
-  const handlePasteCons = (event:any) => {
+  const handlePasteCons = (event: any) => {
     const pasteData = event.clipboardData.getData("text");
-    const pasteArray = pasteData.split("\n").filter((item:any) => item.trim());
+    const pasteArray = pasteData.split("\n").filter((item: any) => item.trim());
 
     // If there's only one field, we replace it with the first pasted value
     if (consFields.length === 1 && !consFields[0].list) {
       consRemove(0);
     }
 
-    pasteArray.forEach((item:any) => consAppend({ list: item.trim() }));
+    pasteArray.forEach((item: any) => consAppend({ list: item.trim() }));
 
     event.preventDefault();
   };
-
 
   return (
     <Fragment>
@@ -257,7 +264,9 @@ export default function ExpertView({
             <Fragment key={index}>
               <Grid xs={2}>
                 <FormControl sx={{ my: 2, width: "100%" }} variant="outlined">
-                  <InputLabel id="number-select-label">{otherDetails?.title}</InputLabel>
+                  <InputLabel id="number-select-label">
+                    {otherDetails?.title}
+                  </InputLabel>
                   <Select
                     {...register(
                       `expert_view.specific_score.${otherDetails?.key}`,
@@ -265,11 +274,16 @@ export default function ExpertView({
                         required: "Required Field",
                       }
                     )}
+                    value={isEdit?.isEdit ? (isEdit?.mobileArticles[0]?.expert_view?.specific_score as any)[otherDetails?.key] : undefined }
                     fullWidth
                     labelId="number-select-label"
                     label={otherDetails?.title}
                     sx={{ height: "40px" }}
-                    error={!!(errors.expert_view as any)?.specific_score?.[otherDetails?.key]}
+                    error={
+                      !!(errors.expert_view as any)?.specific_score?.[
+                        otherDetails?.key
+                      ]
+                    }
                   >
                     {Array.from({ length: 10 }, (_, i) => i + 1).map(
                       (number) => (
@@ -279,11 +293,17 @@ export default function ExpertView({
                       )
                     )}
                   </Select>
-                  {(errors.expert_view as any)?.specific_score?.[otherDetails?.key] && (
-                            <FormHelperText sx={{color:"red"}}>
-                              {(errors.expert_view as any)?.specific_score?.[otherDetails?.key].message}
-                            </FormHelperText>
-                          )}
+                  {(errors.expert_view as any)?.specific_score?.[
+                    otherDetails?.key
+                  ] && (
+                    <FormHelperText sx={{ color: "red" }}>
+                      {
+                        (errors.expert_view as any)?.specific_score?.[
+                          otherDetails?.key
+                        ].message
+                      }
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
             </Fragment>

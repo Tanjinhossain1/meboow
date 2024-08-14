@@ -156,7 +156,11 @@ export default function TopForm({
               Back To Dashboard
             </Button>
             <Button
-              onClick={() => history.push("/")}
+              onClick={() => {
+                if (window.confirm("Are you sure you want to back to Home?")) {
+                  history.push("/");
+                }
+              }}
               variant="contained"
               color="info"
               sx={{ mt: 1 }}
@@ -326,6 +330,12 @@ export default function TopForm({
                             })}
                             labelId="number-select-label"
                             label="Total Score"
+                            value={
+                              isEdit?.isEdit
+                                ? isEdit?.mobileArticles[0]?.expert_view
+                                    ?.total_score
+                                : undefined
+                            }
                             // required
                             sx={{ height: "40px" }}
                             error={!!(errors.expert_view as any)?.total_score}
@@ -340,7 +350,7 @@ export default function TopForm({
                             )}
                           </Select>
                           {(errors.expert_view as any)?.total_score && (
-                            <FormHelperText sx={{color:"red"}}>
+                            <FormHelperText sx={{ color: "red" }}>
                               {(errors.expert_view as any)?.total_score.message}
                             </FormHelperText>
                           )}
@@ -429,8 +439,13 @@ export default function TopForm({
                           // name="key_specifications.thickness"
                           id="filled-adornment-amount"
                           placeholder="Thickness"
-                          error={!!(errors?.key_specifications as any)?.thickness}
-                          helperText={(errors?.key_specifications as any)?.thickness?.message as string}
+                          error={
+                            !!(errors?.key_specifications as any)?.thickness
+                          }
+                          helperText={
+                            (errors?.key_specifications as any)?.thickness
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -464,7 +479,10 @@ export default function TopForm({
                           id="filled-adornment-amount"
                           placeholder="Os"
                           error={!!(errors?.key_specifications as any)?.os}
-                          helperText={(errors?.key_specifications as any)?.os?.message as string}
+                          helperText={
+                            (errors?.key_specifications as any)?.os
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -498,8 +516,13 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder=" Storage"
-                          error={!!(errors?.key_specifications as any)?.ram_storage}
-                          helperText={(errors?.key_specifications as any)?.ram_storage?.message as string}
+                          error={
+                            !!(errors?.key_specifications as any)?.ram_storage
+                          }
+                          helperText={
+                            (errors?.key_specifications as any)?.ram_storage
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -534,7 +557,10 @@ export default function TopForm({
                           id="filled-adornment-amount"
                           placeholder="Pixel"
                           error={!!(errors?.key_specifications as any)?.pixel}
-                          helperText={(errors?.key_specifications as any)?.pixel?.message as string}
+                          helperText={
+                            (errors?.key_specifications as any)?.pixel
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -568,8 +594,11 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Camera"
-                          error={!!(errors?.key_specifications as any )?.camera}
-                          helperText={(errors?.key_specifications as any )?.camera?.message as string}
+                          error={!!(errors?.key_specifications as any)?.camera}
+                          helperText={
+                            (errors?.key_specifications as any)?.camera
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -603,8 +632,13 @@ export default function TopForm({
                           // name="key_specifications.os"
                           id="filled-adornment-amount"
                           placeholder="Ram Chipset"
-                          error={!!(errors?.key_specifications as any)?.ram_chipset}
-                          helperText={(errors?.key_specifications as any)?.ram_chipset?.message as string}
+                          error={
+                            !!(errors?.key_specifications as any)?.ram_chipset
+                          }
+                          helperText={
+                            (errors?.key_specifications as any)?.ram_chipset
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -640,7 +674,10 @@ export default function TopForm({
                           id="filled-adornment-amount"
                           placeholder="Battery"
                           error={!!(errors?.key_specifications as any)?.battery}
-                          helperText={(errors?.key_specifications as any)?.battery?.message as string}
+                          helperText={
+                            (errors?.key_specifications as any)?.battery
+                              ?.message as string
+                          }
                         />
                         {/* <FilledInput
                           size="small"
@@ -699,7 +736,9 @@ export default function TopForm({
                         </InputLabel>
 
                         <Select
-                          {...register("brands",{required:"Brand Required"})}
+                          {...register("brands", {
+                            required: "Brand Required",
+                          })}
                           labelId="demo-simple-select-filled-label"
                           // id="demo-simple-select-filled"
                           value={brands}
@@ -711,7 +750,7 @@ export default function TopForm({
                           sx={{ height: "40px" }}
                           size="small"
                           label="Brands"
-                        
+
                           // required
                         >
                           {brandsData?.map((brand) => {
@@ -724,10 +763,10 @@ export default function TopForm({
                           {/* <MenuItem value={"mobile"}>Mobile</MenuItem> */}
                         </Select>
                         {(errors?.brands as any) && (
-                            <FormHelperText sx={{color:"red"}}>
-                              {(errors?.brands as any).message}
-                            </FormHelperText>
-                          )}
+                          <FormHelperText sx={{ color: "red" }}>
+                            {(errors?.brands as any).message}
+                          </FormHelperText>
+                        )}
                         <IconButton onClick={handleBrandDialogClickOpen}>
                           <AddCircleIcon
                             color="success"
@@ -736,25 +775,24 @@ export default function TopForm({
                         </IconButton>
                       </FormControl>
                     </Grid>
-                    <Grid xs={4}>
-                      <Grid xs={2}>
-                        <FileUpload
-                          isMultiple={{
-                            isMultiple: true,
-                            urls: "/api/v1/image/upload/mobile",
-                            defaultImageUrls: isEdit?.mobileArticles[0].image
-                              ? isEdit?.mobileArticles[0].image
-                              : [],
-                            getImageDatas: (images) => {
-                              console.log("Images uploaded ", images);
-                              fileUploadRef.current = images;
-                            },
-                          }}
-                          required
-                          title="Pictures"
-                          name="titleImage"
-                        />
-                      </Grid>
+                    <Grid xs={8}>
+                      <FileUpload
+                        isAdminImages
+                        isMultiple={{
+                          isMultiple: true,
+                          urls: "/api/v1/image/upload/mobile",
+                          defaultImageUrls: isEdit?.mobileArticles[0].image
+                            ? isEdit?.mobileArticles[0].image
+                            : [],
+                          getImageDatas: (images) => {
+                            console.log("Images uploaded ", images);
+                            fileUploadRef.current = images;
+                          },
+                        }}
+                        required
+                        title="Pictures"
+                        name="titleImage"
+                      />
                     </Grid>
                     {/* <Grid xs={12}>
                       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>

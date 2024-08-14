@@ -384,7 +384,7 @@ useEffect(() => {
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <ExpertView rhfMethods={methods} />
+                    <ExpertView isEdit={isEdit} rhfMethods={methods} />
                   </AccordionDetails>
                 </Accordion>
               </Grid> 

@@ -28,6 +28,7 @@ const beforeUpload = (file: RcFile) => {
 
 interface ImageUploadPropsType {
   name: string;
+  isAdminImages?: boolean;
   runAfterChange?: (file: any) => void;
   getImageDatas?: (images: any) => void;
   required?: boolean;
@@ -53,6 +54,7 @@ const UploadImageField = ({
   title,
   isMultiple,
   isSingleImage,
+  isAdminImages
 }: ImageUploadPropsType) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>(
@@ -189,7 +191,7 @@ const UploadImageField = ({
     });
   };
   return (
-    <>
+    <Grid container display={"flex"}>
       <Upload
         name={name}
         listType="picture-card"
@@ -239,7 +241,7 @@ const UploadImageField = ({
         {isMultiple
           ? imageUrls &&
             imageUrls?.map((img, index) => (
-              <Grid sx={{ mt: index >= 3 ? 2 : 0 }} item xs={2.8} key={index}>
+              <Grid sx={{ mt: index >= 3 ? 2 : 0 }} item xs={isAdminImages ? 2 :2.8} key={index}>
                 <Image
                   width={50}
                   height={50}
@@ -263,7 +265,7 @@ const UploadImageField = ({
             ))
           : null}
       </Grid>
-    </>
+    </Grid>
   );
 };
 
