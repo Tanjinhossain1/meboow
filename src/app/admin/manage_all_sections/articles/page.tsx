@@ -7,7 +7,7 @@ export default async function Page() {
   const articles = await fetchArticles({allArticles:true})
   return (
     <>
-    <Navbar />
+    {/* <Navbar /> */}
      <MainArticlesDetailList articles={articles.data} />
     </>
   );
