@@ -131,7 +131,7 @@ export const ContentBox = ({
         })}`}
       >
         <Image
-          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/6221123340-1723712100855-download-(7).jpeg`}
           alt={title}
           layout="fill"
         />

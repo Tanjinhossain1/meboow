@@ -8,10 +8,11 @@ import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
-export default function MainArticlesDetailList({
-  articles,
+import { MobileArticleType } from "@/types/mobiles";
+export default function MainMobilesDetailList({
+  mobile,
 }: {
-  articles: RecentArticleDataType[];
+  mobile: MobileArticleType[];
 }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
@@ -20,7 +21,7 @@ export default function MainArticlesDetailList({
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Title", width: 500 },
+    { field: "title", headerName: "Title", width: 400 },
     {
       field: "createdAt",
       headerName: "Create Date",
@@ -29,13 +30,13 @@ export default function MainArticlesDetailList({
           {formatDate(params?.row?.createdAt)}
         </Typography>
       ),
-      width: 150,
+      width: 200,
     },
     {
       field: "actions",
       headerName: "Edit",
       renderCell: (params: any) => (
-        <Link href={`/admin/article/edit/${params?.row?.id}`}>
+        <Link href={`/admin/mobile/edit/${params?.row?.id}`}>
           {" "}
           <Button variant="contained" color="success">
             Edit
@@ -54,17 +55,17 @@ export default function MainArticlesDetailList({
               console.log("delete");
               handleOpen();
               axios
-                .delete(`/api/article/delete/${params?.row?.id}`)
+                .delete(`/api/article/mobile/delete/${params?.row?.id}`)
                 .then((response) => {
                   if (response?.data?.success) {
                     handleClose();
-                    SnackbarOpen("Success Fully Delete Article", "success");
+                    SnackbarOpen("Success Fully Delete Mobile", "success");
                     window.location.reload();
                   }
                 })
                 .catch((err) => {
                   handleClose();
-                  console.error("Error creating article:", err);
+                  console.error("Error creating Mobile:", err);
                 });
             }
           }}
@@ -77,5 +78,5 @@ export default function MainArticlesDetailList({
       width: 100,
     },
   ];
-  return <CommonTableComponent columnData={articles} columns={columns} />;
+  return <CommonTableComponent columnData={mobile} columns={columns} />;
 }

@@ -94,7 +94,7 @@ export async function fetchMobileArticles({
   is_daily_interest,
   is_by_fans,
   is_latest_device,
-
+  is_all_mobile
 }: {
   page?: string;
   limit?: string;
@@ -104,6 +104,7 @@ export async function fetchMobileArticles({
   is_daily_interest?: string
   is_by_fans?: string
   is_latest_device?: string
+  is_all_mobile?: boolean
 
 }): Promise<{
   data: MobileArticleType[];
@@ -111,7 +112,7 @@ export async function fetchMobileArticles({
   limit: number;
   total: number;
 }> {
-  let url = `${process.env.NEXT_APP_URL}/api/article/mobile`;
+  let url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}`;
   if (search) {
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&searchTerm=${search}`;
   } else if (brands) {
@@ -122,6 +123,8 @@ export async function fetchMobileArticles({
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_by_fans=${is_by_fans}`;
   } else if (is_latest_device) {
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_latest_device=${is_latest_device}`;
+  }else if(is_all_mobile) {
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile`;
   }
 
   console.log("test 1 ", url, category);

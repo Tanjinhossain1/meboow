@@ -1,5 +1,6 @@
 import { getDb } from '@/drizzle/db';
 import { Category } from '@/drizzle/schema';
+import { eq } from 'drizzle-orm';
 import { NextResponse } from "next/server"; 
 
 export async function POST(req: Request) {
@@ -26,3 +27,29 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Internal Server Error' });
     }
 } 
+
+export async function PUT(req: Request) {
+    try {
+        // Parse the JSON body
+        const body = await req.json()
+        
+        const { title ,image,id} = body;
+        
+        console.log('body detail Updated', body, title, );
+        
+        if (!title || !image) {
+            return NextResponse.json({ error: 'Missing required fields' });
+        }
+        
+        // Perform the database insertion using Drizzle ORM
+        const db = await getDb();
+        const result = await db.update(Category).set({
+            title
+        }).where(eq(Category.id, id));
+      
+        return NextResponse.json({success:true,message:"successfully Updated Category",data:result})
+    } catch (error) {
+        console.error('Error Updated Category:', error);
+        return NextResponse.json({ error: 'Internal Server Error' });
+    }
+}

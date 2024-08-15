@@ -72,7 +72,54 @@ const Dashboard = ({user}:any) => {
             </Paper>
             </Link>
           </Grid>
-          
+          <Grid xs={5.5}>
+            <Link href={`/admin/manage_all_sections/mobile`}>
+            <Paper 
+              sx={{
+                width: "100%",
+                p: 2,
+                mb: 4, 
+                ":hover": { bgcolor: "lightgray" },
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                Manage Mobiles
+              </Typography>
+            </Paper>
+            </Link>
+          </Grid> 
+          <Grid xs={5.5}>
+            <Link href={`/admin/manage_all_sections/brands`}>
+            <Paper 
+              sx={{
+                width: "100%",
+                p: 2,
+                mb: 4, 
+                ":hover": { bgcolor: "lightgray" },
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                Brands
+              </Typography>
+            </Paper>
+            </Link>
+          </Grid> 
+          <Grid xs={5.5}>
+            <Link href={`/admin/manage_all_sections/category`}>
+            <Paper 
+              sx={{
+                width: "100%",
+                p: 2,
+                mb: 4, 
+                ":hover": { bgcolor: "lightgray" },
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                Categories
+              </Typography>
+            </Paper>
+            </Link>
+          </Grid> 
         </Grid>
       </Box>
     </Container>
