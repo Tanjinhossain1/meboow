@@ -24,13 +24,28 @@ export default function MainArticlesDetailList({
     {
       field: "createdAt",
       headerName: "Create Date",
-      renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 }}>
-          {formatDate(params?.row?.createdAt)}
-        </Typography>
-      ),
+      renderCell: (params: any) => {
+        const createdAt = params?.row?.createdAt;
+        const formattedDate = createdAt ? formatDate(new Date(createdAt)) : "Invalid Date";
+        
+        return (
+          <Typography alignItems={"center"} sx={{ mt: 2 }}>
+            {formattedDate}
+          </Typography>
+        );
+      },
       width: 150,
     },
+    // {
+    //   field: "createdAt",
+    //   headerName: "Create Date",
+    //   renderCell: (params: any) => (
+    //     <Typography alignItems={"center"} sx={{ mt: 2 }}>
+    //       {formatDate(params?.row?.createdAt)}
+    //     </Typography>
+    //   ),
+    //   width: 150,
+    // },
     {
       field: "actions",
       headerName: "Edit",
