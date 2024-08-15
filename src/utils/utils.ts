@@ -22,7 +22,10 @@ export const likeInsensitive = (column:any, value:any) => {
 export function formatDate(isoDateString:string) {
   // Parse the ISO date string into a Date object
   const date = new Date(isoDateString);
-  
+  if (isNaN(date.getTime())) {
+    console.error("Invalid Date value:", isoDateString); // Log invalid date
+    return "Invalid Date";
+  }
   // Format the date as "25 JUNE 2024"
   return format(date, 'dd MMMM yyyy').toUpperCase();
 }
