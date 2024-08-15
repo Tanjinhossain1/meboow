@@ -1,7 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      domains: ['res.cloudinary.com','assets.mspimages.in',"localhost","images.safarilist.com"],
+      // domains: ['res.cloudinary.com','assets.mspimages.in',"localhost","images.safarilist.com"],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'res.cloudinary.com',
+        },
+        {
+          protocol: 'https',
+          hostname: 'assets.mspimages.in',
+        },
+        {
+          protocol: 'http',
+          hostname: 'localhost',
+        },
+        {
+          protocol: 'https',
+          hostname: 'images.safarilist.com',
+        },
+      ],
+  
     }, 
     async rewrites() {
       return [
