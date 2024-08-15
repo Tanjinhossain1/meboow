@@ -183,6 +183,7 @@ const IphoneCard = ({
         <Grid
           item
           xs={6}
+           className="bg-transparent"
           sx={{
             width: "100%",
             mb: 2,
@@ -194,13 +195,14 @@ const IphoneCard = ({
           }}
         >
           <Swiper
+           className="bg-transparent"
             pagination={{ clickable: true }} // Enable clickable pagination dots
             modules={[Pagination]}
             spaceBetween={10}
             slidesPerView={1}
           >
-            <SwiperSlide>
-              <Grid spacing={1} container>
+            <SwiperSlide className="bg-transparent">
+              <Grid className="bg-transparent" spacing={1} container>
                 <Grid
                   sx={{
                     display: "flex",
@@ -388,14 +390,14 @@ const IphoneCard = ({
               }
             }}
           >
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center",color:"white" }}>
               <FavoriteIcon
                 className={`${alreadyFan || mouseEnter ? "text-red-600" : ""}`}
                 sx={{ fontSize: 30 }}
               />
-              <Typography sx={{ fontSize: 16 }}>{totalFanCount}</Typography>
+              <Typography sx={{ fontSize: 16,color:"white" }}>{totalFanCount}</Typography>
             </Box>
-            <Typography sx={{ fontSize: 16 }}>BECOME A FAN</Typography>
+            <Typography sx={{ fontSize: 16,color:"white" }}>BECOME A FAN</Typography>
           </Box>
         </Grid>
 
