@@ -21,21 +21,21 @@ export default function MainArticlesDetailList({
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "title", headerName: "Title", width: 500 },
-    {
-      field: "createdAt",
-      headerName: "Create Date",
-      renderCell: (params: any) => {
-        const createdAt = params?.row?.createdAt;
-        const formattedDate = createdAt ? formatDate(new Date(createdAt)) : "Invalid Date";
+    // {
+    //   field: "createdAt",
+    //   headerName: "Create Date",
+    //   renderCell: (params: any) => {
+    //     const createdAt = params?.row?.createdAt;
+    //     const formattedDate = createdAt ? formatDate(createdAt) : "Invalid Date";
         
-        return (
-          <Typography alignItems={"center"} sx={{ mt: 2 }}>
-            {formattedDate}
-          </Typography>
-        );
-      },
-      width: 150,
-    },
+    //     return (
+    //       <Typography alignItems={"center"} sx={{ mt: 2 }}>
+    //         {formattedDate}
+    //       </Typography>
+    //     );
+    //   },
+    //   width: 150,
+    // },
     // {
     //   field: "createdAt",
     //   headerName: "Create Date",

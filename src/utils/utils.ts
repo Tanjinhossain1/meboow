@@ -19,7 +19,7 @@ export const likeInsensitive = (column:any, value:any) => {
   return sql`${sql.raw('LOWER(')}${column}${sql.raw(')')} LIKE LOWER(${value})`;
 };
 
-export function formatDate(isoDateString:Date) {
+export function formatDate(isoDateString:string) {
   // Parse the ISO date string into a Date object
   const date = new Date(isoDateString);
   
