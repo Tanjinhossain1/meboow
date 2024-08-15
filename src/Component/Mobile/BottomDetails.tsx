@@ -141,6 +141,7 @@ const BottomMobileDetails = ({
             sx={{
               pl: 1,
               position: "relative",
+              mb:1
               // width: "100%", // Set the Grid width to 100%
             }}
             container
@@ -158,7 +159,7 @@ const BottomMobileDetails = ({
                   {extractedData.map((item: string, index: number) => {
                     return (
                       <Grid
-                        className="min-w-[100px]   mr-2 flex-shrink-0"
+                        className="min-w-[100px]  mr-2 flex-shrink-0"
                         key={index}
                         xs={2}
                       >
@@ -169,9 +170,12 @@ const BottomMobileDetails = ({
                             sx={{
                               width: "100%",
                               border: "1px solid lightgray",
-                              px: 0.5,
+                              // px: 0.5,
+                              // pt:0.5,
+                              p:0,
+                              pt:0.3,
                               borderRadius: 15,
-                              fontSize:12,
+                              fontSize:11,
                               bgcolor:
                                 selectedIndex === index ? "#023359" : "white",
                               color:
@@ -193,12 +197,15 @@ const BottomMobileDetails = ({
           <NewCommonFieldDisplay details={mobileArticles?.content} />
         ) : null}
       </Grid>
-      <Paper sx={{ p: 2, mt: 2 }} elevation={0}>
+      {
+        mobileArticles?.details?.blocks &&  mobileArticles?.details?.blocks[0] ?
+        <Paper sx={{ p: 2, mt: 2 }} elevation={0}>
         <Typography sx={{ fontSize: 30, mb: 1, fontWeight: 600 }} variant="h6">
           Description
         </Typography>
         <CommonFieldDisplay details={mobileArticles.details} />
       </Paper>
+      : null}
     </Grid>
   );
 };

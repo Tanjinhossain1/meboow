@@ -1,12 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Box,
-  Typography,
-  Grid,
-  Paper,
-  Divider,
-} from "@mui/material";
+import { Box, Typography, Grid, Paper, Divider } from "@mui/material";
 import { MobileArticleType } from "@/types/mobiles";
 import { Progress } from "antd";
 import Image from "next/image";
@@ -33,19 +27,20 @@ const ExpertViewComponent = ({
   mobileArticles: MobileArticleType;
 }) => {
   const router = useRouter();
-  console.log('mobileArticles  ',mobileArticles)
-  const transformKey = (key:string) => {
+  console.log("mobileArticles  ", mobileArticles);
+  const transformKey = (key: string) => {
     return key
       .split(/(?=[A-Z])/)
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
   return (
     <Grid xs={12} sx={{ my: 1 }} container>
       {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}> */}
+      {mobileArticles?.expert_view?.total_score ? (
         <Paper elevation={0}>
-          <Box  sx={{ padding: 2 }}>
+          <Box sx={{ padding: 2 }}>
             <Box
               sx={{
                 display: "flex",
@@ -53,13 +48,14 @@ const ExpertViewComponent = ({
                 alignItems: "center",
               }}
             >
-             <Box>
-             <Typography sx={{ fontSize: 25, fontWeight: 600 }} variant="h4">
-                Expert View
-              </Typography>
-              <Typography sx={{ fontSize: 12,color:"gray" }}  >
-                on {formatDate_into_month_date_string(mobileArticles.updatedAt)}
-              </Typography>
+              <Box>
+                <Typography sx={{ fontSize: 25, fontWeight: 600 }} variant="h4">
+                  Expert View
+                </Typography>
+                <Typography sx={{ fontSize: 12, color: "gray" }}>
+                  on{" "}
+                  {formatDate_into_month_date_string(mobileArticles.updatedAt)}
+                </Typography>
               </Box>
               <Box
                 sx={{
@@ -92,7 +88,8 @@ const ExpertViewComponent = ({
                       color="textSecondary"
                       sx={{ fontSize: 18, ml: 1 }}
                     >
-                      <b>{mobileArticles?.expert_view?.total_score}</b>/<span>10</span>
+                      <b>{mobileArticles?.expert_view?.total_score}</b>/
+                      <span>10</span>
                     </Typography>
                   </Grid>
                   <Grid xs={4}>
@@ -123,32 +120,36 @@ const ExpertViewComponent = ({
                 Feb 11, 2024
             </Typography> */}
             <Grid sx={{ mb: 4 }} container spacing={2} alignItems="center">
-              {Object.entries(mobileArticles?.expert_view?.specific_score)?.map(([key, value]) => {
-                const fillPercentage = (+value / 10) * 100;
-                const colorIndex = Math.floor(+value) - 1;
-                return (
-                 +value > 0 ? <Grid
-                    alignItems={"center"}
-                    textAlign={"center"}
-                    item
-                    xs={4}
-                    sm={2}
-                    key={key}
-                  >
-                    <Progress
-                      style={{ fontSize: "30px" }}
-                      strokeColor={colors[colorIndex]}
-                      type="circle"
-                      percent={(+value / 10) * 100}
-                      format={(percent) => +value}
-                      size={40}
-                    />
-                    <Typography sx={{ textAlign: "center" }} variant="body1">
-                      {key === "physicalSpecification" ? "Physical" : transformKey(key)}
-                    </Typography>
-                  </Grid>:null
-                );
-              })}
+              {Object.entries(mobileArticles?.expert_view?.specific_score)?.map(
+                ([key, value]) => {
+                  const fillPercentage = (+value / 10) * 100;
+                  const colorIndex = Math.floor(+value) - 1;
+                  return +value > 0 ? (
+                    <Grid
+                      alignItems={"center"}
+                      textAlign={"center"}
+                      item
+                      xs={4}
+                      sm={2}
+                      key={key}
+                    >
+                      <Progress
+                        style={{ fontSize: "30px" }}
+                        strokeColor={colors[colorIndex]}
+                        type="circle"
+                        percent={(+value / 10) * 100}
+                        format={(percent) => +value}
+                        size={40}
+                      />
+                      <Typography sx={{ textAlign: "center" }} variant="body1">
+                        {key === "physicalSpecification"
+                          ? "Physical"
+                          : transformKey(key)}
+                      </Typography>
+                    </Grid>
+                  ) : null;
+                }
+              )}
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} style={{ display: "flex" }}>
@@ -173,11 +174,13 @@ const ExpertViewComponent = ({
                     sx={{ pl: 2, listStyleType: "disc" }}
                     component="ul"
                   >
-                    {mobileArticles?.expert_view?.pros.map((pro:{list:string}, index) => (
-                      <Typography component="li" key={index}>
-                        {pro.list}
-                      </Typography>
-                    ))}
+                    {mobileArticles?.expert_view?.pros.map(
+                      (pro: { list: string }, index) => (
+                        <Typography component="li" key={index}>
+                          {pro.list}
+                        </Typography>
+                      )
+                    )}
                   </Box>
                 </Paper>
               </Grid>
@@ -203,11 +206,13 @@ const ExpertViewComponent = ({
                     sx={{ pl: 2, listStyleType: "disc" }}
                     component="ul"
                   >
-                    {mobileArticles?.expert_view?.cons.map((con:{list:string}, index) => (
-                      <Typography component="li" key={index}>
-                        {con.list}
-                      </Typography>
-                    ))}
+                    {mobileArticles?.expert_view?.cons.map(
+                      (con: { list: string }, index) => (
+                        <Typography component="li" key={index}>
+                          {con.list}
+                        </Typography>
+                      )
+                    )}
                   </Box>
                 </Paper>
               </Grid>
@@ -227,32 +232,31 @@ const ExpertViewComponent = ({
               <Typography sx={{ fontSize: 15 }}>
                 {mobileArticles?.expert_view?.verdict}
               </Typography>
-              {
-                mobileArticles?.expert_view?.article_urls ? 
-              <Link href={mobileArticles?.expert_view?.article_urls}>
-              <Typography
-                
-                sx={{
-                  textAlign: "end",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  color: "#007fdb",
-                  ":hover": {
-                    textDecoration: "underline",
-                    textDecorationColor: "#007fdb",
-                  },
-                }}
-              >
-                Read {mobileArticles?.title} Review
-                <KeyboardArrowRightOutlinedIcon sx={{ fontSize: 20 }} />
-              </Typography>
-              </Link>: null
-              }
+              {mobileArticles?.expert_view?.article_urls ? (
+                <Link href={mobileArticles?.expert_view?.article_urls}>
+                  <Typography
+                    sx={{
+                      textAlign: "end",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      color: "#007fdb",
+                      ":hover": {
+                        textDecoration: "underline",
+                        textDecorationColor: "#007fdb",
+                      },
+                    }}
+                  >
+                    Read {mobileArticles?.title} Review
+                    <KeyboardArrowRightOutlinedIcon sx={{ fontSize: 20 }} />
+                  </Typography>
+                </Link>
+              ) : null}
             </Box>
           </Box>
         </Paper>
+      ) : null}
       {/* </Grid> */}
-    {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
+      {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
     </Grid>
   );
 };

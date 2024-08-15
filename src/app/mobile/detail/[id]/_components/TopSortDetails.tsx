@@ -26,6 +26,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useContext, useEffect, useState } from "react";
+import SnackbarProviderContext from "@/Component/SnackbarProvider";
+import BackdropProviderContext from "@/Component/BackdropProvider";
+import axios from "axios";
+import Email from "next-auth/providers/email";
 
 const transformStringToTypography = (inputString: string) => {
   // Split the string into value and description based on the first space
@@ -66,14 +73,51 @@ const IphoneCard = ({
   mobileDetail,
   isPicture,
   isOpinion,
+  user,
 }: {
   mobileDetail: MobileArticleType;
   isPicture?: boolean;
   isOpinion?: boolean;
+  user?: any;
 }) => {
+  const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
+    SnackbarProviderContext
+  );
+  const { handleOpen, handleClose } = useContext(BackdropProviderContext);
+
+  const [mouseEnter, setMouseEnter] = useState<boolean>(false);
+  const [alreadyFan, setALreadyFan] = useState<boolean>(false);
+  const [totalFanCount, setTotalFanCount] = useState<number>(
+    mobileDetail?.total_fans ? mobileDetail?.total_fans : 0
+  );
+  const [is_done, setIs_done] = useState<boolean>(false);
+
   const colorIndex = Math.floor(+mobileDetail.expert_view.total_score) - 1;
+  useEffect(() => {
+    if (user && user.email && mobileDetail?.id) {
+      axios
+        .get(
+          `/api/article/mobile/fans?mobileId=${mobileDetail?.id}&email=${user?.email}`
+        )
+        .then(async (response: any) => {
+          console.log("response in register ", response);
+          if (response?.data?.data && response?.data?.data[0]) {
+            if (is_done) {
+              setTotalFanCount(mobileDetail.total_fans + 1);
+            }
+            // SnackbarOpen("Wow You Become a Fan ❤️", "success");
+            setALreadyFan(true);
+          }
+        })
+        .catch((error) => {
+          console.log("error in register ", error);
+        });
+    }
+  }, [user, mobileDetail, is_done]);
   return (
-    <Card className="w-full  mx-auto mt-2  ">
+    <Card style={{
+      background: mobileDetail.top_background_color
+    }} className="w-full  mx-auto mt-2 ">
       <Box className=" justify-between items-center p-1 mb-4  ">
         <Typography className="font-bold text-xl ">
           {mobileDetail.title}
@@ -106,20 +150,22 @@ const IphoneCard = ({
               opacity: 0.5,
             }}
           />
-          <Typography
-            sx={{ bgcolor: "#f4faf7", px: 2, py: 0.3, borderRadius: 15 }}
-            variant="body2"
-          >
-            <Progress
-              //   style={{ fontSize: "30px" }}
-              strokeColor={colors[colorIndex]}
-              type="circle"
-              percent={(+mobileDetail.expert_view.total_score / 10) * 100}
-              format={(percent) => +mobileDetail.expert_view.total_score}
-              size={15}
-            />{" "}
-            {mobileDetail.expert_view.total_score} By Expert
-          </Typography>
+          {mobileDetail.expert_view.total_score ? (
+            <Typography
+              sx={{ bgcolor: "#f4faf7", px: 2, py: 0.3, borderRadius: 15 }}
+              variant="body2"
+            >
+              <Progress
+                //   style={{ fontSize: "30px" }}
+                strokeColor={colors[colorIndex]}
+                type="circle"
+                percent={(+mobileDetail.expert_view.total_score / 10) * 100}
+                format={(percent) => +mobileDetail.expert_view.total_score}
+                size={15}
+              />{" "}
+              {mobileDetail.expert_view.total_score} By Expert
+            </Typography>
+          ) : null}
         </Box>
       </Box>
 
@@ -295,7 +341,64 @@ const IphoneCard = ({
               </Grid>
             </SwiperSlide>
           </Swiper>
+          <Box
+            onMouseEnter={() => setMouseEnter(true)}
+            onMouseLeave={() => setMouseEnter(false)}
+            onClick={() => {
+              if (user) {
+                if (!alreadyFan) {
+                  axios
+                    .put(`/api/article/mobile/details/${mobileDetail?.id}`, {
+                      total_fans: mobileDetail?.total_fans
+                        ? mobileDetail?.total_fans + 1
+                        : 1,
+                      id: mobileDetail?.id,
+                    })
+                    .then(async (response: any) => {
+                      console.log("response in register ", response);
+                      if (response?.data?.success) {
+                        SnackbarOpen("Wow You Become a Fan ❤️", "success");
+                        setMouseEnter(true);
+                      }
+                    })
+                    .catch((error) => {
+                      console.log("error in register ", error);
+                    });
+                  axios
+                    .post(`/api/article/mobile/fans`, {
+                      email: user?.email,
+                      mobileId: mobileDetail?.id,
+                    })
+                    .then(async (response: any) => {
+                      console.log("response in register ", response);
+                      if (response?.data?.success) {
+                        // SnackbarOpen("Wow You Become a Fan ❤️", "success");
+                        setMouseEnter(true);
+                        setIs_done(true);
+                      }
+                    })
+                    .catch((error) => {
+                      console.log("error in register ", error);
+                    });
+                } else {
+                  SnackbarOpen("You ALready Become fan.😍", "warning");
+                }
+              } else {
+                SnackbarOpen("Sorry!😓 Login First to become fan.", "error");
+              }
+            }}
+          >
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+              <FavoriteIcon
+                className={`${alreadyFan || mouseEnter ? "text-red-600" : ""}`}
+                sx={{ fontSize: 30 }}
+              />
+              <Typography sx={{ fontSize: 16 }}>{totalFanCount}</Typography>
+            </Box>
+            <Typography sx={{ fontSize: 16 }}>BECOME A FAN</Typography>
+          </Box>
         </Grid>
+
         <Grid
           sx={{
             display: {
@@ -308,48 +411,122 @@ const IphoneCard = ({
           sm={9}
         >
           <CardContent>
-            <Box className="mb-4">
-              <Typography
-                display={"flex"}
-                gap={1}
-                alignItems={"center"}
-                variant="body2"
-              >
-                {" "}
-                <DateRangeIcon sx={{ fontSize: 16 }} />{" "}
-                {mobileDetail.release_date}
-              </Typography>
+            <Grid container className="mb-4 ">
+              <Grid xs={8}>
+                <Typography
+                  display={"flex"}
+                  gap={1}
+                  alignItems={"center"}
+                  variant="body2"
+                >
+                  {" "}
+                  <DateRangeIcon sx={{ fontSize: 16 }} />{" "}
+                  {mobileDetail.release_date}
+                </Typography>
 
-              <Typography
-                display={"flex"}
-                gap={1}
-                alignItems={"center"}
-                variant="body2"
-              >
-                {" "}
-                <PhoneAndroidIcon sx={{ fontSize: 16 }} />{" "}
-                {mobileDetail?.key_specifications?.thickness}
-              </Typography>
+                <Typography
+                  display={"flex"}
+                  gap={1}
+                  alignItems={"center"}
+                  variant="body2"
+                >
+                  {" "}
+                  <PhoneAndroidIcon sx={{ fontSize: 16 }} />{" "}
+                  {mobileDetail?.key_specifications?.thickness}
+                </Typography>
 
-              <Typography
-                display={"flex"}
-                gap={1}
-                alignItems={"center"}
-                variant="body2"
-              >
-                <CodeIcon sx={{ fontSize: 16 }} />{" "}
-                {mobileDetail.key_specifications.os}
-              </Typography>
-              <Typography
-                display={"flex"}
-                gap={1}
-                alignItems={"center"}
-                variant="body2"
-              >
-                <StorageIcon sx={{ fontSize: 16 }} />{" "}
-                {mobileDetail.key_specifications.ram_storage}
-              </Typography>
-            </Box>
+                <Typography
+                  display={"flex"}
+                  gap={1}
+                  alignItems={"center"}
+                  variant="body2"
+                >
+                  <CodeIcon sx={{ fontSize: 16 }} />{" "}
+                  {mobileDetail.key_specifications.os}
+                </Typography>
+                <Typography
+                  display={"flex"}
+                  gap={1}
+                  alignItems={"center"}
+                  variant="body2"
+                >
+                  <StorageIcon sx={{ fontSize: 16 }} />{" "}
+                  {mobileDetail.key_specifications.ram_storage}
+                </Typography>
+              </Grid>
+              <Grid sx={{ borderLeft: "1px solid gray" }} xs={0.5}></Grid>
+              <Grid xs={3.5}>
+                <Box
+                  onMouseEnter={() => setMouseEnter(true)}
+                  onMouseLeave={() => setMouseEnter(false)}
+                  onClick={() => {
+                    if (user) {
+                      if (!alreadyFan) {
+                        axios
+                          .put(
+                            `/api/article/mobile/details/${mobileDetail?.id}`,
+                            {
+                              total_fans: mobileDetail?.total_fans
+                                ? mobileDetail?.total_fans + 1
+                                : 1,
+                              id: mobileDetail?.id,
+                            }
+                          )
+                          .then(async (response: any) => {
+                            console.log("response in register ", response);
+                            if (response?.data?.success) {
+                              SnackbarOpen(
+                                "Wow You Become a Fan ❤️",
+                                "success"
+                              );
+                              setMouseEnter(true);
+                            }
+                          })
+                          .catch((error) => {
+                            console.log("error in register ", error);
+                          });
+                        axios
+                          .post(`/api/article/mobile/fans`, {
+                            email: user?.email,
+                            mobileId: mobileDetail?.id,
+                          })
+                          .then(async (response: any) => {
+                            console.log("response in register ", response);
+                            if (response?.data?.success) {
+                              // SnackbarOpen("Wow You Become a Fan ❤️", "success");
+                              setMouseEnter(true);
+                              setIs_done(true);
+                            }
+                          })
+                          .catch((error) => {
+                            console.log("error in register ", error);
+                          });
+                      } else {
+                        SnackbarOpen("You ALready Become fan.😍", "warning");
+                      }
+                    } else {
+                      SnackbarOpen(
+                        "Sorry!😓 Login First to become fan.",
+                        "error"
+                      );
+                    }
+                  }}
+                >
+                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                    <FavoriteIcon
+                      className={`${
+                        alreadyFan || mouseEnter ? "text-red-600" : ""
+                      } text-white `}
+                      sx={{ fontSize: 40 }}
+                    />
+                    <Typography sx={{ fontSize: 16,color:"white" }}>
+                      {totalFanCount}
+                    </Typography>
+                  </Box>
+                  <Typography sx={{ fontSize: 16,color:"white" }}>BECOME A FAN</Typography>
+                </Box>
+              </Grid>
+            </Grid>
 
             <Grid container>
               <Grid sx={{ mt: 2.5 }} item xs={3.4}>
@@ -395,7 +572,10 @@ const IphoneCard = ({
       <Grid container>
         <Paper
           elevation={1}
-          className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
+          style={{
+            background: mobileDetail.top_background_color
+          }}
+          className="w-full   flex justify-end gap-2 "
         >
           {mobileDetail?.key_specifications?.review ? (
             <Link href={mobileDetail?.key_specifications?.review}>

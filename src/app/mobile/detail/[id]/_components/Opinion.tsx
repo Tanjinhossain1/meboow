@@ -97,10 +97,64 @@ export default function Opinion({
   };
   return (
     <Grid container>
-      <Grid sx={{mt:isArticle? 3:0}} xs={12}>
-      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>{isArticle ? "Post Your Opinion" :"Opinion"}</Typography>
+       
+     
+      <Grid
+        sx={{
+          mt: 2,
+          border: "1px solid gray",
+          mx: "auto",
+          width:isArticle ? "100%": "90%",
+          mb: 4,
+        }}
+        container
+      >
+        <Paper sx={{ width: "100%" }} elevation={1}>
+          <Typography sx={{ fontSize: 20, fontWeight: 600, p: 1 }}>
+            {mobileDetail?.title} -{" "}
+            <i>USER OPINIONS AND REVIEWS</i>
+          </Typography>
+        </Paper>
+        <Grid sx={{ bgcolor: "lightgray" }} container>
+          {allMobilesOpinion && allMobilesOpinion[0] ? null : (
+            <Typography sx={{ textAlign: "center" }}>No Opinion Yet</Typography>
+          )}
+          {allMobilesOpinion?.map(
+            (comment: MobileOpinionType, index: number) => (
+              <Paper
+              key={comment?.id}
+                sx={{ width: "100%", mt: index >= 1 ? 3 : 1 }}
+                elevation={1}
+              >
+                <Grid sx={{ p: 1 }} key={comment.id} container>
+                  <Grid xs={12}>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between",alignItems: "center"}}
+                    >
+                      <Box sx={{ display: "flex" ,alignItems:"center"}}>
+                        <Avatar sx={{ bgcolor: "#E91E63" }}>
+                          {comment.name.slice(0, 1)}
+                        </Avatar>
+                        <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                          {comment.name}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" color="textSecondary">
+                        {formatDate(comment.updatedAt)}
+                      </Typography>
+                    </Box>
+                  </Grid>
+
+                  <Typography sx={{ mt: 1 }}>{comment.comments}</Typography>
+                </Grid>
+              </Paper>
+            )
+          )}
+        </Grid>
       </Grid>
-      <br />
+      <Grid sx={{mt:isArticle? 3:0}} xs={12}>
+      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>{isArticle ? "Post Your Opinion" :"Give your Opinion"}</Typography>
+      </Grid>
       <FormProvider {...methods}>
         <Box
           component="form"
@@ -166,59 +220,6 @@ export default function Opinion({
           </Button>
         </Box>
       </FormProvider>
-      <Grid
-        sx={{
-          mt: 2,
-          border: "1px solid gray",
-          mx: "auto",
-          width:isArticle ? "100%": "90%",
-          mb: 4,
-        }}
-        container
-      >
-        <Paper sx={{ width: "100%" }} elevation={1}>
-          <Typography sx={{ fontSize: 20, fontWeight: 600, p: 1 }}>
-            {mobileDetail?.title || articleDetail?.title} -{" "}
-            <i>USER OPINIONS AND REVIEWS</i>
-          </Typography>
-        </Paper>
-        <Grid sx={{ bgcolor: "lightgray" }} container>
-          {allMobilesOpinion && allMobilesOpinion[0] ? null : (
-            <Typography sx={{ textAlign: "center" }}>No Opinion Yet</Typography>
-          )}
-          {allMobilesOpinion?.map(
-            (comment: MobileOpinionType, index: number) => (
-              <Paper
-              key={comment?.id}
-                sx={{ width: "100%", mt: index >= 1 ? 3 : 1 }}
-                elevation={1}
-              >
-                <Grid sx={{ p: 1 }} key={comment.id} container>
-                  <Grid xs={12}>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-between",alignItems: "center"}}
-                    >
-                      <Box sx={{ display: "flex" ,alignItems:"center"}}>
-                        <Avatar sx={{ bgcolor: "#E91E63" }}>
-                          {comment.name.slice(0, 1)}
-                        </Avatar>
-                        <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                          {comment.name}
-                        </Typography>
-                      </Box>
-                      <Typography variant="body2" color="textSecondary">
-                        {formatDate(comment.updatedAt)}
-                      </Typography>
-                    </Box>
-                  </Grid>
-
-                  <Typography sx={{ mt: 1 }}>{comment.comments}</Typography>
-                </Grid>
-              </Paper>
-            )
-          )}
-        </Grid>
-      </Grid>
     </Grid>
   );
 }

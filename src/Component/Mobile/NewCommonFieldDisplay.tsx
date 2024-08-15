@@ -42,10 +42,10 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
   console.log("first contentcontentcontent ", content);
   return (
     <div className="bg-white border  rounded-lg mb-4">
-      <div className="flex justify-between align-middle bg-[#d5e4f7]  p-1">
+      <div className="flex justify-between align-middle bg-[#d5e4f7]  py-[3px] pl-1">
         <h2
           id={`item-${title}`}
-          className="     hover:no-underline pr-2 text-lg font-semibold "
+          className="     hover:no-underline pr-2 text-[16px] font-semibold "
         >
           {title}
         </h2>

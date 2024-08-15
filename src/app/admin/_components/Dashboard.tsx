@@ -11,9 +11,11 @@ const Dashboard = ({user}:any) => {
   
   return (
     <Container>
-      <Button variant="contained" onClick={() => router.push("/")} sx={{ mt: 2 }}>
+      <Link href="/">
+      <Button variant="contained" sx={{ mt: 2 }}>
         Back
       </Button>
+      </Link>
       <Box
         sx={{
           display: "flex",

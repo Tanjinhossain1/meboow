@@ -78,7 +78,7 @@ export default function MobileReviews({
                   d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
                 />
               </svg>
-              {formatDate(mobilesArticles[0]?.updateAt)}
+              {formatDate(mobilesArticles[0]?.createdAt)}
             </Typography>
           )}
           <Link
@@ -124,7 +124,7 @@ export default function MobileReviews({
                   d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
                 />
               </svg>
-              {formatDate(mobilesArticles[0]?.updateAt)}
+              {formatDate(mobilesArticles[0]?.createdAt)}
             </Typography>
           ) : null}
         </Grid>
@@ -189,7 +189,7 @@ export default function MobileReviews({
                       d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
                     />
                   </svg>
-                  {formatDate(article.updateAt)}
+                  {formatDate(article.createdAt)}
                 </Typography>
               </Grid>
             </Grid>
@@ -258,7 +258,7 @@ export default function MobileReviews({
                             d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
                           />
                         </svg>
-                        {formatDate(article.updateAt)}
+                        {formatDate(article.createdAt)}
                       </Typography>
                       <Link
                         href={`/details/${article.id}/${

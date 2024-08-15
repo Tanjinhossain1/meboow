@@ -45,6 +45,11 @@ export default function MainSubmitForm({
 }) {
   const [value, setValue] = useState("");
 
+  const [gradient, setGradient] = useState(
+    isEdit?.isEdit && isEdit?.mobileArticles[0]
+      ? isEdit?.mobileArticles[0]?.top_background_color
+      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGB(247, 247, 247) 100%)"
+  );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -142,7 +147,7 @@ useEffect(() => {
     const batteryData = await BatteryEditorRef.current?.save();
     const detailsData = await DetailsEditorRef.current?.save();
     const contentData = await ContentEditorRef.current?.save();
-
+    
     const formData = {
       ...data,
       image: fileUploadRef.current,
@@ -161,6 +166,7 @@ useEffect(() => {
       battery: batteryData,
       details: detailsData,
       content: contentData,
+      top_background_color:gradient
     };
     console.log("Form Data:", formData);
     if (isEdit?.isEdit) {
@@ -315,6 +321,8 @@ useEffect(() => {
             fileUploadRef={fileUploadRef}
             displayFileUploadRef={displayFileUploadRef}
             brandsData={brands}
+            gradient={gradient}
+            setGradient={setGradient}
           />
           <DevicesDetails isEdit={isEdit} />
           {imageError ? (

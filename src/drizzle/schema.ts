@@ -94,12 +94,22 @@ export const MobileArticles = mysqlTable(
     is_by_fans:text('is_by_fans'),
     is_latest_device:text('is_latest_device'),
 
+    total_fans:int('total_fans'),
+    top_background_color:text('top_background_color'),
+
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updatedAt: timestamp('updatedAt').defaultNow().notNull(),
   }
 );
-
 // opinion about mobile 
+export const MobileFanDetail = mysqlTable("mobile_fans_detail", {
+  id: int("id").autoincrement().primaryKey(),
+  email: text("email").notNull(),
+  mobileId:int("mobileId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
+
 export const Opinion = mysqlTable("opinion", {
   id: int("id").autoincrement().primaryKey(),
   // name: text("name"),

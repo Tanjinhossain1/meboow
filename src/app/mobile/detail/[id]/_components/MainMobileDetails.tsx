@@ -88,6 +88,7 @@ export default function MainMobileDetails({
             </Grid>
             <Grid container item xs={12} sm={8}>
               <IphoneCard
+              user={user}
                 isPicture={isPicture}
                 isOpinion={isOpinion}
                 mobileDetail={mobileArticles}
@@ -131,6 +132,9 @@ export default function MainMobileDetails({
                   <Grid container>
                     <Paper
                       elevation={1}
+                      style={{
+                        background: mobileArticles.top_background_color
+                      }}
                       className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
                     >
                       {mobileArticles?.key_specifications?.review ? (

@@ -22,16 +22,16 @@ export default function MainMobilesDetailList({
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "title", headerName: "Title", width: 400 },
-    // {
-    //   field: "createdAt",
-    //   headerName: "Create Date",
-    //   renderCell: (params: any) => (
-    //     <Typography alignItems={"center"} sx={{ mt: 2 }}>
-    //       {formatDate(params?.row?.createdAt)}
-    //     </Typography>
-    //   ),
-    //   width: 200,
-    // },
+    {
+      field: "createdAt",
+      headerName: "Create Date",
+      renderCell: (params: any) => (
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>
+          {formatDate(params?.row?.createdAt)}
+        </Typography>
+      ),
+      width: 200,
+    },
     {
       field: "actions",
       headerName: "Edit",

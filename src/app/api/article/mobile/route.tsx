@@ -35,7 +35,8 @@ export async function POST(req: Request) {
       is_by_fans,
       is_daily_interest,
       is_latest_device,
-      content
+      content,
+      top_background_color
     } = body;
 
     console.log("body detail created", body, title, image);
@@ -70,7 +71,8 @@ export async function POST(req: Request) {
       is_by_fans,
       is_daily_interest,
       is_latest_device,
-      content
+      content,
+      top_background_color
     });
 
     return NextResponse.json({
@@ -114,7 +116,8 @@ export async function PUT(req: Request) {
       is_by_fans,
       is_daily_interest,
       is_latest_device,
-      content
+      content,
+      top_background_color
     } = body;
 
     console.log("Updating article with ID:", id);
@@ -153,7 +156,8 @@ export async function PUT(req: Request) {
         is_by_fans,
         is_daily_interest,
         is_latest_device,
-        content
+        content,
+        top_background_color
       })
       .where(eq(MobileArticles.id, Number(id)));
 

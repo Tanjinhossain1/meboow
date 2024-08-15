@@ -30,6 +30,8 @@ export interface MobileArticleType {
     is_daily_interest: string;
     is_by_fans: string;
     is_latest_device: string;
+    top_background_color:string;
+    total_fans: number;
 
     key_specifications: {
         processor: string;
@@ -51,14 +53,14 @@ export interface MobileArticleType {
         specific_final_score: { name: string, value: string | number }[],
         total_score: number;
         specific_score: {
-            design:number | string;
-            display:number | string;
-            performance:number | string;
-            camera:number | string;
-            connectivity:number | string;
-            features:number | string;
-            battery:number | string;
-            usability:number | string;
+            design: number | string;
+            display: number | string;
+            performance: number | string;
+            camera: number | string;
+            connectivity: number | string;
+            features: number | string;
+            battery: number | string;
+            usability: number | string;
 
             // battery: number;
             // display: number;
@@ -133,14 +135,14 @@ export interface MobileArticleDefaultFormType {
         total_score: number | string;
         specific_final_score: { name: string, value: string | number }[],
         specific_score: {
-            design:number | string;
-            display:number | string;
-            performance:number | string;
-            camera:number | string;
-            connectivity:number | string;
-            features:number | string;
-            battery:number | string;
-            usability:number | string;
+            design: number | string;
+            display: number | string;
+            performance: number | string;
+            camera: number | string;
+            connectivity: number | string;
+            features: number | string;
+            battery: number | string;
+            usability: number | string;
 
             // battery: number | string;
             // display: number | string;

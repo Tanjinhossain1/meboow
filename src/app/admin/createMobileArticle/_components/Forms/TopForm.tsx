@@ -39,16 +39,21 @@ import DialogComponent from "@/Component/Admin/Dialog";
 import { DatePicker } from "antd";
 import { useFormContext } from "react-hook-form";
 import { MobileArticleType } from "@/types/mobiles";
+import ColorPickerComponent from "./ColorPickForTop";
 
 export default function TopForm({
   brandsData,
   fileUploadRef,
   displayFileUploadRef,
   isEdit,
+  gradient,
+  setGradient,
 }: {
   brandsData: BrandTypes[];
   fileUploadRef: any;
   displayFileUploadRef: any;
+  gradient:any;
+  setGradient:any;
   isEdit?: {
     isEdit: boolean;
     mobileArticles: MobileArticleType[];
@@ -57,6 +62,7 @@ export default function TopForm({
   const history = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
+
   const {
     register,
     formState: { errors },
@@ -201,7 +207,6 @@ export default function TopForm({
               </Typography>
             </AccordionSummary>
             <Grid container>
-              <Grid xs={1.2}></Grid>
               <Grid xs={9.8}>
                 <AccordionDetails>
                   <Grid gap={1} container>
@@ -210,13 +215,6 @@ export default function TopForm({
                         sx={{ width: "100%" }}
                         // variant="filled"
                       >
-                        {/* <InputLabel
-                          // sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Title{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("title", {
@@ -228,31 +226,10 @@ export default function TopForm({
                           error={!!errors.title}
                           helperText={errors.title?.message as string}
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("title", { required: true })}
-                          name="title"
-                          id="filled-adornment-amount"
-                          placeholder="Title"
-                          required
-                          sx={{ height: "40px", p: 0 }}
-                          // error={!!errors.comments}
-                          // helperText={errors.comments?.message as string}
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Market Status{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("market_status", {
@@ -264,29 +241,10 @@ export default function TopForm({
                           error={!!errors.market_status}
                           helperText={errors.market_status?.message as string}
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("market_status", { required: true })}
-                          name="market_status"
-                          id="filled-adornment-amount"
-                          placeholder="Status"
-                          sx={{ height: "40px", p: 0 }}
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Release Date{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("release_date", {
@@ -298,36 +256,19 @@ export default function TopForm({
                           error={!!errors.release_date}
                           helperText={errors.release_date?.message as string}
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("release_date", { required: true })}
-                          name="release_date"
-                          id="filled-adornment-amount"
-                          placeholder="Release Date"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={2}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Release Date{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <FormControl variant="outlined">
                           <InputLabel id="number-select-label">
                             Total Score
                           </InputLabel>
                           <Select
-                            {...register("expert_view.total_score", {
-                              required: "Score is Required",
-                            })}
+                            {...register("expert_view.total_score")}
+                            // {...register("expert_view.total_score", {
+                            //   required: "Score is Required",
+                            // })}
                             labelId="number-select-label"
                             label="Total Score"
                             value={
@@ -338,7 +279,7 @@ export default function TopForm({
                             }
                             // required
                             sx={{ height: "40px" }}
-                            error={!!(errors.expert_view as any)?.total_score}
+                            // error={!!(errors.expert_view as any)?.total_score}
                             // helperText={errors.total_score?.message as string}
                           >
                             {Array.from({ length: 10 }, (_, i) => i + 1).map(
@@ -355,34 +296,6 @@ export default function TopForm({
                             </FormHelperText>
                           )}
                         </FormControl>
-                        {/* <TextField
-                          size="small"
-                          {...register("expert_view.total_score", {
-                            required: "Total Score is Required",
-                          })}
-                          inputProps={{ step: 0.1 }}
-                          type="number"
-                          // name="release_date"
-                          id="filled-adornment-amount"
-                          placeholder="Total Score"
-                          error={!!errors.total_score}
-                          helperText={errors.total_score?.message as string}
-                        /> */}
-                        {/* <FilledInput
-                          size="small"
-                          {...register("expert_view.total_score", {
-                            required: true,
-                          })}
-                          //   name="title"
-                          id="filled-adornment-amount"
-                          placeholder="Total Score"
-                          required
-                          inputProps={{ step: 0.1 }}
-                          type="number"
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     {/* <Grid xs={1}></Grid> */}
@@ -405,32 +318,8 @@ export default function TopForm({
                       />
                     </Grid>
 
-                    {/* <Grid xs={2}>
-                      <FileUpload
-                        isMultiple={{
-                          isMultiple: true,
-                          urls: "/api/v1/image/upload/mobile",
-                          defaultImageUrls: isEdit?.mobileArticles[0].image
-                            ? isEdit?.mobileArticles[0].image
-                            : [],
-                          getImageDatas: (images) => {
-                            console.log("Images uploaded ", images);
-                            fileUploadRef.current = images;
-                          },
-                        }}
-                        required
-                        name="titleImage"
-                      />
-                    </Grid> */}
                     <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Thickness{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.thickness", {
@@ -447,29 +336,10 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.thickness", {
-                            required: true,
-                          })}
-                          name="key_specifications.thickness"
-                          id="filled-adornment-amount"
-                          placeholder="Thickness Name"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          OS <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.os", {
@@ -484,30 +354,10 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.os", {
-                            required: true,
-                          })}
-                          name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="OS"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Storage{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.ram_storage", {
@@ -524,30 +374,10 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.ram_storage", {
-                            required: true,
-                          })}
-                          name="key_specifications.ram_storage"
-                          id="filled-adornment-amount"
-                          placeholder="RAM | Storage"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Pixel{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.pixel", {
@@ -562,30 +392,10 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.pixel", {
-                            required: true,
-                          })}
-                          name="key_specifications.pixel"
-                          id="filled-adornment-amount"
-                          placeholder="Pixel"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Camera{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.camera", {
@@ -600,30 +410,10 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.camera", {
-                            required: true,
-                          })}
-                          name="key_specifications.camera"
-                          id="filled-adornment-amount"
-                          placeholder="Camera"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={4}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Ram Chipset{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.ram_chipset", {
@@ -640,31 +430,11 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.ram_chipset", {
-                            required: true,
-                          })}
-                          name="key_specifications.ram_chipset"
-                          id="filled-adornment-amount"
-                          placeholder="RAM | Chipset"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
 
                     <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Battery{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.battery", {
@@ -679,30 +449,10 @@ export default function TopForm({
                               ?.message as string
                           }
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.battery", {
-                            required: true,
-                          })}
-                          name="key_specifications.battery"
-                          id="filled-adornment-amount"
-                          placeholder="Battery"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={4}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
-                        {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Review Url{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
                         <TextField
                           size="small"
                           {...register("key_specifications.review")}
@@ -712,16 +462,6 @@ export default function TopForm({
                           // error={!!(errors?.key_specifications as any)?.review}
                           // helperText={(errors?.key_specifications as any)?.review?.message as string}
                         />
-                        {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.review")}
-                          name="key_specifications.review"
-                          id="filled-adornment-amount"
-                          placeholder="Review"
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
                       </FormControl>
                     </Grid>
                     <Grid xs={4}>
@@ -794,433 +534,13 @@ export default function TopForm({
                         name="titleImage"
                       />
                     </Grid>
-                    {/* <Grid xs={12}>
-                      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-                        Key Specifications
-                      </Typography>
-                    </Grid> */}
+                    <Grid xs={12}>
+                      <ColorPickerComponent
+                        gradient={gradient}
+                        setGradient={setGradient}
+                      />
+                    </Grid>
                   </Grid>
-                  {/* kye keySpecifications */}
-                  <Grid gap={1} container>
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Thickness{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.thickness", {
-                            required: "Thickness is Required",
-                          })}
-                          // name="key_specifications.thickness"
-                          id="filled-adornment-amount"
-                          placeholder="Thickness"
-                          error={!!errors?.thickness}
-                          helperText={errors?.thickness?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.thickness", {
-                            required: true,
-                          })}
-                          name="key_specifications.thickness"
-                          id="filled-adornment-amount"
-                          placeholder="Thickness Name"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          OS <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.os", {
-                            required: "Os is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="Os"
-                          error={!!errors?.os}
-                          helperText={errors?.os?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.os", {
-                            required: true,
-                          })}
-                          name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="OS"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl
-                        sx={{ width: "100%" }}
-                        variant="filled"
-                      >
-                        <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Display{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel>
-                        <FilledInput
-                          size="small"
-                          {...register("key_specifications.display", {
-                            required: true,
-                          })}
-                          name="key_specifications.display"
-                          id="filled-adornment-amount"
-                          placeholder="Display"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl
-                        sx={{ my: 2, width: "100%" }}
-                        variant="filled"
-                      >
-                        <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Rear Camera{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel>
-                        <FilledInput
-                          size="small"
-                          {...register("key_specifications.rearCamera", {
-                            required: true,
-                          })}
-                          name="key_specifications.rearCamera"
-                          id="filled-adornment-amount"
-                          placeholder="Rear Camera"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl
-                        sx={{ my: 2, width: "100%" }}
-                        variant="filled"
-                      >
-                        <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Front Camera{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel>
-                        <FilledInput
-                          size="small"
-                          {...register("key_specifications.frontCamera", {
-                            required: true,
-                          })}
-                          name="key_specifications.frontCamera"
-                          id="filled-adornment-amount"
-                          placeholder="Front Camera"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Storage{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.ram_storage", {
-                            required: "Ram Storage is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="Ram Storage"
-                          error={!!errors?.ram_storage}
-                          helperText={errors?.ram_storage?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.ram_storage", {
-                            required: true,
-                          })}
-                          name="key_specifications.ram_storage"
-                          id="filled-adornment-amount"
-                          placeholder="RAM | Storage"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Pixel{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.pixel", {
-                            required: "Pixel is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="Pixel"
-                          error={!!errors?.pixel}
-                          helperText={errors?.pixel?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.pixel", {
-                            required: true,
-                          })}
-                          name="key_specifications.pixel"
-                          id="filled-adornment-amount"
-                          placeholder="Pixel"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Camera{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.camera", {
-                            required: "Camera is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="Camera"
-                          error={!!errors?.camera}
-                          helperText={errors?.camera?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.camera", {
-                            required: true,
-                          })}
-                          name="key_specifications.camera"
-                          id="filled-adornment-amount"
-                          placeholder="Camera"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Ram Chipset{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.ram_chipset", {
-                            required: "Ram Chipset is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="Ram Chipset"
-                          error={!!errors?.ram_chipset}
-                          helperText={errors?.ram_chipset?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.ram_chipset", {
-                            required: true,
-                          })}
-                          name="key_specifications.ram_chipset"
-                          id="filled-adornment-amount"
-                          placeholder="RAM | Chipset"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Battery{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.battery", {
-                            required: "Battery is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="Battery"
-                          error={!!errors?.battery}
-                          helperText={errors?.battery?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.battery", {
-                            required: true,
-                          })}
-                          name="key_specifications.battery"
-                          id="filled-adornment-amount"
-                          placeholder="Battery"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl sx={{ width: "100%" }} variant="filled"> */}
-                    {/* <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Review Url{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel> */}
-                    {/* <TextField
-                          size="small"
-                          {...register("key_specifications.review", {
-                            required: "review is Required",
-                          })}
-                          // name="key_specifications.os"
-                          id="filled-adornment-amount"
-                          placeholder="review"
-                          error={!!errors?.review}
-                          helperText={errors?.review?.message as string}
-                        /> */}
-                    {/* <FilledInput
-                          size="small"
-                          {...register("key_specifications.review")}
-                          name="key_specifications.review"
-                          id="filled-adornment-amount"
-                          placeholder="Review"
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        /> */}
-                    {/* </FormControl>
-                    </Grid> */}
-                    {/* <Grid xs={2.9}>
-                      <FormControl
-                        sx={{ my: 2, width: "100%" }}
-                        variant="filled"
-                      >
-                        <InputLabel
-                          sx={{ mb: 1 }}
-                          htmlFor="filled-adornment-amount"
-                        >
-                          Network{" "}
-                          <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                        </InputLabel>
-                        <FilledInput
-                          size="small"
-                          {...register("key_specifications.network", {
-                            required: true,
-                          })}
-                          name="key_specifications.network"
-                          id="filled-adornment-amount"
-                          placeholder="Network"
-                          required
-                          startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                    </Grid> */}
-                  </Grid>
-
-                  {/* <FormControl
-                    variant="filled"
-                    sx={{ my: 1, minWidth: "100%", display: "flex" }}
-                  >
-                    <InputLabel id="demo-simple-select-filled-label">
-                      Brands <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                    </InputLabel>
-
-                    <Select
-                      {...register("brands", { required: true })}
-                      labelId="demo-simple-select-filled-label"
-                      id="demo-simple-select-filled"
-                      value={brands}
-                      name="brands"
-                      onChange={handleBrandChange}
-                      size="small"
-                      required
-                    >
-                      {brandsData?.map((brand) => {
-                        return (
-                          <MenuItem key={brand.id} value={brand.title}>
-                            {brand.title}
-                          </MenuItem>
-                        );
-                      })}
-                      {/* <MenuItem value={"mobile"}>Mobile</MenuItem>  
-                    </Select>
-
-                    <IconButton onClick={handleBrandDialogClickOpen}>
-                      <AddCircleIcon color="success" titleAccess="Add Brand" />
-                    </IconButton>
-                  </FormControl> */}
                 </AccordionDetails>
               </Grid>
               <Grid xs={2}></Grid>

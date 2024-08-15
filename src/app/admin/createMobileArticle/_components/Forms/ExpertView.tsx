@@ -90,7 +90,7 @@ const OtherDetailsForms = [
 ];
 export default function ExpertView({
   rhfMethods,
-  isEdit
+  isEdit,
 }: {
   rhfMethods: UseFormReturn<MobileArticleDefaultFormType, any, undefined>;
   isEdit?: {
@@ -269,21 +269,31 @@ export default function ExpertView({
                   </InputLabel>
                   <Select
                     {...register(
-                      `expert_view.specific_score.${otherDetails?.key}`,
-                      {
-                        required: "Required Field",
-                      }
+                      `expert_view.specific_score.${otherDetails?.key}`
                     )}
-                    value={isEdit?.isEdit ? (isEdit?.mobileArticles[0]?.expert_view?.specific_score as any)[otherDetails?.key] : undefined }
+                    // {...register(
+                    //   `expert_view.specific_score.${otherDetails?.key}`,
+                    //   {
+                    //     required: "Required Field",
+                    //   }
+                    // )}
+                    value={
+                      isEdit?.isEdit
+                        ? (
+                            isEdit?.mobileArticles[0]?.expert_view
+                              ?.specific_score as any
+                          )[otherDetails?.key]
+                        : undefined
+                    }
                     fullWidth
                     labelId="number-select-label"
                     label={otherDetails?.title}
                     sx={{ height: "40px" }}
-                    error={
-                      !!(errors.expert_view as any)?.specific_score?.[
-                        otherDetails?.key
-                      ]
-                    }
+                    // error={
+                    //   !!(errors.expert_view as any)?.specific_score?.[
+                    //     otherDetails?.key
+                    //   ]
+                    // }
                   >
                     {Array.from({ length: 10 }, (_, i) => i + 1).map(
                       (number) => (
@@ -293,7 +303,7 @@ export default function ExpertView({
                       )
                     )}
                   </Select>
-                  {(errors.expert_view as any)?.specific_score?.[
+                  {/* {(errors.expert_view as any)?.specific_score?.[
                     otherDetails?.key
                   ] && (
                     <FormHelperText sx={{ color: "red" }}>
@@ -303,7 +313,7 @@ export default function ExpertView({
                         ].message
                       }
                     </FormHelperText>
-                  )}
+                  )} */}
                 </FormControl>
               </Grid>
             </Fragment>
@@ -390,7 +400,7 @@ export default function ExpertView({
           <TextField
             label={
               <span>
-                Verdict <sup style={{ color: "red", fontSize: 12 }}>*</sup>
+                Verdict 
               </span>
             }
             multiline
