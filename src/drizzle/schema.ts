@@ -94,8 +94,8 @@ export const MobileArticles = mysqlTable(
     is_by_fans:text('is_by_fans'),
     is_latest_device:text('is_latest_device'),
 
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('createdAt').defaultNow().notNull(),
+    updatedAt: timestamp('updatedAt').defaultNow().notNull(),
   }
 );
 
