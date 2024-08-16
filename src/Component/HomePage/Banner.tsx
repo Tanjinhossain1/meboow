@@ -145,7 +145,11 @@ export const ContentBox = ({
     >
       <Title
         sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
-        className={isBig ? "bigTitle" : "title overflow-hidden text-ellipsis line-clamp-3 text-sm"}
+        className={
+          isBig
+            ? "bigTitle"
+            : "title overflow-hidden text-ellipsis line-clamp-3 text-sm"
+        }
       >
         {title}
       </Title>
@@ -156,7 +160,7 @@ export const ContentBox = ({
         limit: limit,
       })}`}
     >
-      <Description  sx={{ fontSize: isBig ? 12 : 11 }} className="description">
+      <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
         {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
       </Description>
     </Link>
@@ -213,8 +217,8 @@ export default function Banner({
   dailyInterestMobiles,
   byFansMobiles,
   latestDeviceMobiles,
-  // tags
-}: {
+}: // tags
+{
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
   total: number;
@@ -241,7 +245,7 @@ export default function Banner({
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
-  
+
   return articles ? (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -320,25 +324,45 @@ export default function Banner({
           {/* </Grid>
           </Grid> */}
 
-          <Grid sx={{ py: 4 }} container>
-            <Grid sx={{borderRight:"1px solid lightgray",pr:1}} xs={12} sm={6} md={4}>
+          {/* <Grid sx={{ py: 4 }} container>
+            <Grid
+              sx={{ borderRight: "1px solid lightgray", pr: 1 }}
+              xs={12}
+              sm={6}
+              md={4}
+            >
               <PhoneFinder brands={SampleBrands} />
             </Grid>
             <Grid sx={{ pl: 1 }} xs={12} sm={6} md={8}>
-              <MobileReviews mobilesArticles={mobilesArticles} /> 
+              <MobileReviews mobilesArticles={mobilesArticles} />
             </Grid>
-          </Grid>
+          </Grid> */}
 
           <Grid sx={{ py: 4 }} container>
-            <Grid sx={{borderRight:"1px solid lightgray",pr:1}} item xs={12} sm={6} md={4}>
-              <MobileReviews  isTrending mobilesArticles={latestArticles} />
+            <Grid
+              sx={{ borderRight: "1px solid lightgray", pr: 1 }}
+              item
+              xs={12}
+              sm={6}
+              md={4}
+            >
+              <PhoneFinder brands={SampleBrands} />
+              <MobileReviews
+                isGap
+                isTrending
+                mobilesArticles={latestArticles}
+              />
               <TopDevicesTable
                 byFans={byFansMobiles}
                 dailyInterest={dailyInterestMobiles}
               />
               <LatestDevices mobiles={latestDeviceMobiles} />
             </Grid>
-            <Grid  item sx={{ pl: 1,   }} xs={12} sm={6} md={8}>
+            <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
+              {
+                mobilesArticles ? mobilesArticles[0] ?  <MobileReviews mobilesArticles={mobilesArticles} /> :null :null
+              }
+             
               <PopularMobiles user={user} articles={mobileArticles} />
               {/* <Tags tags={tags} /> */}
               {/* <Categories category={category} /> */}
@@ -359,12 +383,20 @@ export default function Banner({
                 </Typography>
 
                 <BrandDisplayComponent brands={brands} />
-                <Grid display={'flex'} justifyContent={'end'} xs={12}>
-                  
-                <Link href={'/brands'}>
-                <Typography sx={{fontSize:16,fontWeight:600,color:"#0a76d9",":hover":{textDecoration:"underline"}}}>
-                  List Of Brands <KeyboardArrowRightIcon sx={{fontSize:14}} />
-                  </Typography></Link>
+                <Grid display={"flex"} justifyContent={"end"} xs={12}>
+                  <Link href={"/brands"}>
+                    <Typography
+                      sx={{
+                        fontSize: 16,
+                        fontWeight: 600,
+                        color: "#0a76d9",
+                        ":hover": { textDecoration: "underline" },
+                      }}
+                    >
+                      List Of Brands{" "}
+                      <KeyboardArrowRightIcon sx={{ fontSize: 14 }} />
+                    </Typography>
+                  </Link>
                 </Grid>
               </Grid>
               <NewsAndReviews mobilesArticles={newsAndReviews} />

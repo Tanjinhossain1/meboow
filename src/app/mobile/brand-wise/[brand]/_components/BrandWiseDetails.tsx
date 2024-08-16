@@ -72,7 +72,7 @@ export default function BrandWiseDetails({
     } else {
       setHasMore(false);
     }
-  }, [loaderRef, hasMore, totalRef.current, articlesRef.current]);
+  }, [loaderRef, hasMore === true, totalRef.current, articlesRef.current]);
 
   const loadMoreArticles = async () => {
     try {
@@ -91,7 +91,7 @@ export default function BrandWiseDetails({
         newArticles?.meta?.total,
         articlesRef.current?.length
       );
-      if (newArticles?.meta?.total > articlesRef.current) {
+      if (newArticles?.meta?.total > articlesRef.current?.length) {
         setHasMore(false);
       }
       totalRef.current = newArticles?.meta?.total;
