@@ -559,10 +559,7 @@ export default function DetailsComponent({
                           history.push(
                             `/details/${article.id}/${
                               article.category
-                            }?${new URLSearchParams({
-                              page: `${Number(page) + 1}`,
-                              limit: limit,
-                            })}`,
+                            }`,
                             {
                               scroll: false,
                             }

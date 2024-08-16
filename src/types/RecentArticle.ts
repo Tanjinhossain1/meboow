@@ -17,4 +17,15 @@ export interface RecentArticleDataType {
     showInNews?:string;
     selected_mobile:MobileArticleType;
 }
- 
+
+export interface RecentArticleDataCreateType {
+    title: string;
+    description: string;
+    category: string;
+    latestDevice: string,
+    best_reviews: string,
+    brands: string,
+    deviceName?:string;
+    showInNews?:string;
+    selected_mobile:MobileArticleType | null;
+}

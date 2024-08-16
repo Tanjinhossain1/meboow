@@ -45,10 +45,7 @@ export default function MobileReviews({
             <Link
               href={`/details/${mobilesArticles[0]?.id}/${
                 mobilesArticles[0]?.category
-              }?${new URLSearchParams({
-                page: `2`,
-                limit: "3",
-              })}`}
+              }`}
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
@@ -84,10 +81,7 @@ export default function MobileReviews({
           <Link
             href={`/details/${mobilesArticles[0]?.id}/${
               mobilesArticles[0]?.category
-            }?${new URLSearchParams({
-              page: `2`,
-              limit: "3",
-            })}`}
+            }`}
           >
             <p className="text-sm hover:text-red-600 font-bold text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
               {mobilesArticles[0]?.title}
@@ -97,10 +91,7 @@ export default function MobileReviews({
             <Link
               href={`/details/${mobilesArticles[0]?.id}/${
                 mobilesArticles[0]?.category
-              }?${new URLSearchParams({
-                page: `2`,
-                limit: "3",
-              })}`}
+              }`}
             >
               {" "}
               <p className="text-[12px] mt-2 hover:text-red-600 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -145,10 +136,7 @@ export default function MobileReviews({
                   <Link
                     href={`/details/${article?.id}/${
                       article.category
-                    }?${new URLSearchParams({
-                      page: `2`,
-                      limit: "3",
-                    })}`}
+                    }`}
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -165,10 +153,7 @@ export default function MobileReviews({
               <Link
                     href={`/details/${article?.id}/${
                       article.category
-                    }?${new URLSearchParams({
-                      page: `2`,
-                      limit: "3",
-                    })}`}
+                    }`}
                   >
                 <p className="text-xs hover:text-red-600 font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                   {article.title}
@@ -226,10 +211,7 @@ export default function MobileReviews({
                         <Link
                           href={`/details/${article?.id}/${
                             article?.category
-                          }?${new URLSearchParams({
-                            page: `2`,
-                            limit: "3",
-                          })}`}
+                          }`}
                         >
                           <Image
                             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -263,10 +245,7 @@ export default function MobileReviews({
                       <Link
                         href={`/details/${article.id}/${
                           article.category
-                        }?${new URLSearchParams({
-                          page: `2`,
-                          limit: "3",
-                        })}`}
+                        }`}
                       >
                         {" "}
                         <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">

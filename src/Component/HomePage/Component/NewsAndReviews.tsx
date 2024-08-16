@@ -94,10 +94,7 @@ export default function NewsAndReviews({
                       <Link
                         href={`/details/${article?.id}/${
                           article.category
-                        }?${new URLSearchParams({
-                          page: `2`,
-                          limit: "3",
-                        })}`}
+                        }`}
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -131,10 +128,7 @@ export default function NewsAndReviews({
                     <Link
                       href={`/details/${article?.id}/${
                         article.category
-                      }?${new URLSearchParams({
-                        page: `2`,
-                        limit: "3",
-                      })}`}
+                      }`}
                     >
                       <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                         {article.title}
@@ -143,10 +137,7 @@ export default function NewsAndReviews({
                     <Link
                       href={`/details/${article?.id}/${
                         article.category
-                      }?${new URLSearchParams({
-                        page: `2`,
-                        limit: "3",
-                      })}`}
+                      }`}
                     >
                       <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
                         {article?.description}

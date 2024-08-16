@@ -100,10 +100,7 @@ export default async function Footer() {
                         component="a"
                         href={`/details/${item?.id}/${
                           item.category
-                        }?${new URLSearchParams({
-                          page: `2`,
-                          limit: "3",
-                        })}`}
+                        }`}
                         sx={{
                           color: "#fff",
                           m: 0,
@@ -354,14 +351,15 @@ export default async function Footer() {
                   &copy; MHT Digital Media Private Limited
                 </Typography>
               </Grid>
-              <Grid xs={2}>
+              <Grid sx={{display:"flex",gap:1}} xs={2}>
                 <Typography variant="body2">
                   Made with{" "}
                   <span role="img" aria-label="love">
                     ❤️
                   </span>{" "}
-                  in
+                  in 
                 </Typography>
+                  <Image alt="bangladesh-flag" width={20} height={20} src={'/bangladesh-flag.png'} />
               </Grid>
             </Grid>
             {/* <img

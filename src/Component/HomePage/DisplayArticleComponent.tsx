@@ -53,10 +53,7 @@ export default function DisplayArticleComponent({
             history.push(
               `/details/${data.id}/${
                 data.category
-              }?${new URLSearchParams({
-                page: `${Number(page) + 1}`,
-                limit: limit,
-              })}`,
+              }`,
               {
                 scroll: false,
               }
@@ -80,10 +77,7 @@ export default function DisplayArticleComponent({
             history.push(
               `/details/${data.id}/${
                 data.category
-              }?${new URLSearchParams({
-                page: `${Number(page) + 1}`,
-                limit: limit,
-              })}`,
+              }`,
               {
                 scroll: false,
               }

@@ -90,10 +90,7 @@ export default function LatestNews({
                         history.push(
                           `/details/${data.id}/${
                             data.category
-                          }?${new URLSearchParams({
-                            page: `${1}`,
-                            limit: `3`,
-                          })}`,
+                          }`,
                           {
                             scroll: false,
                           }

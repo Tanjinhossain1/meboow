@@ -125,10 +125,7 @@ export const ContentBox = ({
       // }}
     >
       <Link
-        href={`/details/${id}/${category}?${new URLSearchParams({
-          page: `${Number(page) + 1}`,
-          limit: limit,
-        })}`}
+        href={`/details/${id}/${category}`}
       >
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
@@ -138,10 +135,7 @@ export const ContentBox = ({
       </Link>
     </Box>
     <Link
-      href={`/details/${id}/${category}?${new URLSearchParams({
-        page: `${Number(page) + 1}`,
-        limit: limit,
-      })}`}
+      href={`/details/${id}/${category}`}
     >
       <Title
         sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
@@ -155,10 +149,7 @@ export const ContentBox = ({
       </Title>
     </Link>
     <Link
-      href={`/details/${id}/${category}?${new URLSearchParams({
-        page: `${Number(page) + 1}`,
-        limit: limit,
-      })}`}
+      href={`/details/${id}/${category}`}
     >
       <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
         {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
