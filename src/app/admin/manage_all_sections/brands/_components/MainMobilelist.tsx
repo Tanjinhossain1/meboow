@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate } from "@/utils/utils";
@@ -19,18 +19,40 @@ import {
 } from "@mui/material";
 import DialogComponent from "@/Component/Admin/Dialog";
 
-export default function MainBrandsList({ brands ,user}: { brands: BrandTypes[],user:any }) {
+export default function MainBrandsList({
+  brands,
+  user,
+}: {
+  brands: BrandTypes[];
+  user: any;
+}) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
   );
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (params: BrandTypes) => {
+    try {
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/mobile/brand-wise/${params?.title}`;
+
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+    } catch (error) {
+      console.error("Failed to copy: ", error);
+    }
+  };
+
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
   const [brandDialogOpen, setBrandDialogOpen] = React.useState(false);
 
-  const [brandSelectedForEdit,setBrandSelectedForEdit] = React.useState<BrandTypes | undefined>(undefined)
+  const [brandSelectedForEdit, setBrandSelectedForEdit] = React.useState<
+    BrandTypes | undefined
+  >(undefined);
 
-  const handleBrandDialogClickOpen = (row:BrandTypes) => {
-    setBrandSelectedForEdit(row)
+  const handleBrandDialogClickOpen = (row: BrandTypes) => {
+    setBrandSelectedForEdit(row);
     setBrandDialogOpen(true);
   };
 
@@ -40,7 +62,7 @@ export default function MainBrandsList({ brands ,user}: { brands: BrandTypes[],u
   const successFunc = (text: string) => {
     SnackbarOpen("Success Fully Edit Brand", "success");
     window.location.reload();
-  }
+  };
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "title", headerName: "Title", width: 400 },
@@ -58,13 +80,35 @@ export default function MainBrandsList({ brands ,user}: { brands: BrandTypes[],u
       field: "actions",
       headerName: "Edit",
       renderCell: (params: any) => (
-          <Button onClick={()=>handleBrandDialogClickOpen(params?.row)} variant="contained" color="success">
-            Edit
-          </Button> 
+        <Button
+          onClick={() => handleBrandDialogClickOpen(params?.row)}
+          variant="contained"
+          color="success"
+        >
+          Edit
+        </Button>
       ),
       width: 100,
     },
-    user?.role === "admin"&&{
+    {
+      field: "copy",
+      headerName: "Copy",
+      renderCell: (params: any) => (
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color={copied ? "success" : "info"}
+            onClick={() => handleCopy(params?.row)}
+            className="copy-button"
+          >
+            {copied ? "Copied!" : "Copy Url"}
+          </Button>
+        </div>
+      ),
+      width: 100,
+    },
+    user?.role === "admin" && {
       field: "delete",
       headerName: "Delete",
       renderCell: (params: any) => (
@@ -108,7 +152,7 @@ export default function MainBrandsList({ brands ,user}: { brands: BrandTypes[],u
         aria-describedby="alert-dialog-description"
       >
         <DialogComponent
-        user={user}
+          user={user}
           isBrand
           brandSelectedForEdit={brandSelectedForEdit}
           handleClick={successFunc}

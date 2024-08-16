@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate } from "@/utils/utils";
@@ -29,6 +29,20 @@ export default function MainBrandsList({
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
   );
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (params: CategoryTypes) => {
+    try {
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/category/${params?.title}`;
+
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+    } catch (error) {
+      console.error("Failed to copy: ", error);
+    }
+  };
+
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
   const [categoryDialogOpen, setCategoryDialogOpen] = React.useState(false);
@@ -73,6 +87,24 @@ export default function MainBrandsList({
         >
           Edit
         </Button>
+      ),
+      width: 100,
+    },
+    {
+      field: "copy",
+      headerName: "Copy",
+      renderCell: (params: any) => (
+        <div>
+          <Button
+            size="small"
+            variant="contained"
+            color={copied ? "success" : "info"}
+            onClick={() => handleCopy(params?.row)}
+            className="copy-button"
+          >
+            {copied ? "Copied!" : "Copy Url"}
+          </Button>
+        </div>
       ),
       width: 100,
     },

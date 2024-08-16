@@ -108,7 +108,7 @@ export default function CreateArticleComponent({
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/article/mobile?searchTerm=${query}`
+        `/api/article/mobile?searchTerm=${query}`
       );
       setOptions(response.data?.data);
     } catch (error) {

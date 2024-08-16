@@ -53,7 +53,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const data = await fetchArticlesDetails({ id: params?.id });
   const Category = await fetchCategories();
   const Brands = await fetchBrands();
-  const mobileArticles = await fetchMobileArticles({page:'1',limit:'20'});
+  const mobileArticles = await fetchMobileArticles({page:'1',limit:'10'});
   const articlesOpinion = await fetchArticleOpinions({page:'1',limit:'20',articleId: params?.id});
   const articles = await fetchArticles({
     category: params?.category,
