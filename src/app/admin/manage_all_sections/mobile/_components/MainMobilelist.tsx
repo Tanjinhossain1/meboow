@@ -11,8 +11,10 @@ import BackdropProviderContext from "@/Component/BackdropProvider";
 import { MobileArticleType } from "@/types/mobiles";
 export default function MainMobilesDetailList({
   mobile,
+  user
 }: {
   mobile: MobileArticleType[];
+  user:any
 }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
@@ -45,7 +47,7 @@ export default function MainMobilesDetailList({
       ),
       width: 100,
     },
-    {
+   user?.role === "admin" && {
       field: "delete",
       headerName: "Delete",
       renderCell: (params: any) => (

@@ -25,6 +25,12 @@ export const Articles = mysqlTable(
     best_reviews: text('best_reviews'),
     image: text('image').notNull(),
     content: json('content'),
+    
+    admin_detail:json('admin_detail'),
+    admin_detail_edit:json('admin_detail_edit'),
+
+    selected_mobile:json('selected_mobile'),
+
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   },
@@ -35,6 +41,10 @@ export const Category = mysqlTable(
   {
     id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
+    
+    admin_detail:json('admin_detail'),
+    admin_detail_edit:json('admin_detail_edit'),
+
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
@@ -46,6 +56,10 @@ export const TechBrands = mysqlTable(
     id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
     image: text('image').notNull(),
+    
+    admin_detail:json('admin_detail'),
+    admin_detail_edit:json('admin_detail_edit'),
+
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
@@ -97,6 +111,11 @@ export const MobileArticles = mysqlTable(
     total_fans:int('total_fans'),
     top_background_color:text('top_background_color'),
 
+    admin_detail:json('admin_detail'),
+    admin_detail_edit:json('admin_detail_edit'),
+
+    selected_articles:json('selected_articles'),
+
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updatedAt: timestamp('updatedAt').defaultNow().notNull(),
   }
@@ -135,6 +154,9 @@ export const ArticleOpinion = mysqlTable("articles_opinion", {
 // opinion about mobile 
 export const Tags = mysqlTable("tags", {
   id: int("id").autoincrement().primaryKey(),
+  
+  admin_detail:json('admin_detail'),
+  admin_detail_edit:json('admin_detail_edit'),
   // name: text("name"),
   name: text("name").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

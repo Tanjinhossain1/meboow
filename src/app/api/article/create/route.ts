@@ -3,23 +3,24 @@ import { Articles } from '@/drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { MySqlRawQueryResult } from 'drizzle-orm/mysql2';
 import { revalidatePath, unstable_noStore } from 'next/cache';
-import { NextResponse } from "next/server"; 
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     unstable_noStore()
     try {
         // Parse the JSON body
         const body = await req.json()
-        
-        const { title, category, description, image, content,latestDevice,brands,deviceName,showInNews ,best_reviews} = body;
 
-        console.log('body detail created', body, title, category, description, image, deviceName, content,showInNews);
+        const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews, best_reviews,
+            admin_detail, selected_mobile } = body;
+
+        console.log('body detail created', body, title, category, description, image, deviceName, content, showInNews, selected_mobile);
 
         if (!title || !category || !description || !image || !content) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
-        const db = await getDb(); 
-         console.log(
+        const db = await getDb();
+        console.log(
             'connected to the db: create articles ---> api/article/create'
         )
         // Perform the database insertion using Drizzle ORM
@@ -33,23 +34,26 @@ export async function POST(req: Request) {
             brands,
             deviceName,
             showInNews,
-            best_reviews
+            best_reviews,
+            admin_detail,
+            selected_mobile
         });
-        
+
         revalidatePath('/')
-        return NextResponse.json({success:true,message:"successfully created article",data:result})
+        return NextResponse.json({ success: true, message: "successfully created article", data: result })
     } catch (error) {
         console.error('Error creating article: api/article/create', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     }
-} 
+}
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
     unstable_noStore()
     try {
         // Parse the JSON body
         const body = await req.json();
-        
-        const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews,id ,best_reviews} = body;
+
+        const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews, id, best_reviews,
+            admin_detail_edit, selected_mobile } = body;
 
         console.log('Body details for update:', body);
 
@@ -57,7 +61,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         if (!title || !category || !description || !image || !content) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
-        
+
         // Perform the database update using Drizzle ORM
         // const id = Number(params?.id);
         if (isNaN(id)) {
@@ -67,7 +71,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         console.log(
             'connected to the db: update  articles ---> api/v1/article/all'
         )
-        const result:MySqlRawQueryResult = await db.update(Articles)
+        const result: MySqlRawQueryResult = await db.update(Articles)
             .set({
                 title,
                 category,
@@ -78,7 +82,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
                 brands,
                 deviceName,
                 showInNews,
-                best_reviews
+                best_reviews,
+                admin_detail_edit,
+                selected_mobile
             })
             .where(eq(Articles.id, id));
 

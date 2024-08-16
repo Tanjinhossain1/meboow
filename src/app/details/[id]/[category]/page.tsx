@@ -57,8 +57,9 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const articlesOpinion = await fetchArticleOpinions({page:'1',limit:'20',articleId: params?.id});
   const articles = await fetchArticles({
     category: params?.category,
-    page: searchParams?.page,
-    limit: searchParams?.limit,
+    page: "1",
+    limit: "5",
+    isRelated: params?.id,
   });
   
   const session = await getServerSession(authConfig);
@@ -68,7 +69,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     <>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_URL}/details/${params.id}/${params.category}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/details/${params.id}/${params.category}`}
         key="canonical"
       />
       <Navbar />

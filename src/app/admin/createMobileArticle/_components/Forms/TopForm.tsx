@@ -26,6 +26,7 @@ import {
   DialogActions,
   DialogContentText,
   FormHelperText,
+  Autocomplete,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
@@ -40,6 +41,7 @@ import { DatePicker } from "antd";
 import { useFormContext } from "react-hook-form";
 import { MobileArticleType } from "@/types/mobiles";
 import ColorPickerComponent from "./ColorPickForTop";
+import { RecentArticleDataType } from "@/types/RecentArticle";
 
 export default function TopForm({
   brandsData,
@@ -48,23 +50,67 @@ export default function TopForm({
   isEdit,
   gradient,
   setGradient,
+  user,
 }: {
   brandsData: BrandTypes[];
   fileUploadRef: any;
   displayFileUploadRef: any;
-  gradient:any;
-  setGradient:any;
+  gradient: any;
+  setGradient: any;
   isEdit?: {
     isEdit: boolean;
     mobileArticles: MobileArticleType[];
   };
+  user?: any;
 }) {
   const history = useRouter();
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
 
+  const [loading, setLoading] = useState(false);
+  let debounceTimeout: NodeJS.Timeout;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [options, setOptions] = useState<RecentArticleDataType[]>([]);
+  const [finalValueSelectedArticle, setFinalValueSelectedArticle] =
+    useState<RecentArticleDataType | null>(
+      isEdit?.isEdit && isEdit?.mobileArticles[0]
+        ? isEdit?.mobileArticles[0]?.selected_articles
+        : null
+    );
+
+  const handleSearchChange = (
+    event: React.ChangeEvent<{}> | null,
+    newInputValue: string
+  ) => {
+    setSearchTerm(newInputValue); // Use the second argument instead of event.target.value
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    // Debounce the API call to avoid too many requests
+    debounceTimeout = setTimeout(() => {
+      if (newInputValue) {
+        fetchData(newInputValue);
+      }
+    }, 500); // Adjust debounce timing if necessary
+  };
+
+  const fetchData = async (query: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/article/all?searchTerm=${query}`
+      );
+      setOptions(response.data?.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
@@ -74,6 +120,10 @@ export default function TopForm({
   //   formState: { errors },
   // } = methods;
   const [deleteMobileArticle, setDeleteMobileArticle] = React.useState(false);
+
+  // const handleSelect = (event: any, value: any) => {
+  //   setFinalValueSelectedArticle(value);
+  // };
 
   const handleClickDeleteMobileArticle = () => {
     setDeleteMobileArticle(true);
@@ -183,7 +233,7 @@ export default function TopForm({
                 Go Bottom
               </Button>
             </a>
-            {isEdit?.isEdit ? (
+            {user?.role === "admin" && isEdit?.isEdit ? (
               <Button
                 color="error"
                 variant="contained"
@@ -452,7 +502,54 @@ export default function TopForm({
                       </FormControl>
                     </Grid>
                     <Grid xs={4}>
-                      <FormControl sx={{ width: "100%" }} variant="filled">
+                      <Autocomplete
+                        {...register("selected_articles")}
+                        options={Array.isArray(options) ? options : []}
+                        getOptionLabel={(option) => option.title || ""}
+                        value={finalValueSelectedArticle || null}
+                        sx={{
+                          ".MuiInputBase-root": {
+                            height: "40px", // Set the height for the entire input base
+                            fontSize: "14px", // Optional: decrease font size
+                            padding: "0 10px", // Adjust padding inside input
+                          },
+                          ".MuiOutlinedInput-input": {
+                            padding: "8px 14px", // Adjust padding for the text input
+                          },
+                        }}
+                        onChange={(event, newValue) => {
+                          setFinalValueSelectedArticle(newValue);
+                          setValue("selected_articles", newValue); // Use setValue from React Hook Form to update form state
+                        }}
+                        inputValue={searchTerm}
+                        onInputChange={handleSearchChange} // Modified
+                        loading={loading}
+                        renderInput={(params) => (
+                          <TextField
+                            sx={{
+                              ".MuiInputLabel-root": {
+                                top: "-5px", // Adjust the label positioning
+                              },
+                              ".MuiInputBase-input": {
+                                padding: "8px", // Padding inside the input
+                                height: "40px", // Force input height
+                                fontSize: "14px", // Optional: decrease font size
+                              },
+                            }}
+                            {...params}
+                            label="Search Articles"
+                            variant="outlined"
+                            fullWidth
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: loading ? (
+                                <CircularProgress size={20} />
+                              ) : null,
+                            }}
+                          />
+                        )}
+                      />
+                      {/* <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
                           {...register("key_specifications.review")}
@@ -462,7 +559,7 @@ export default function TopForm({
                           // error={!!(errors?.key_specifications as any)?.review}
                           // helperText={(errors?.key_specifications as any)?.review?.message as string}
                         />
-                      </FormControl>
+                      </FormControl> */}
                     </Grid>
                     <Grid xs={4}>
                       <FormControl
@@ -577,6 +674,7 @@ export default function TopForm({
         aria-describedby="alert-dialog-description"
       >
         <DialogComponent
+          user={user}
           isBrand
           handleClick={handleBrandDialogClickOpen}
           handleBackdropClose={handleBackdropClose}

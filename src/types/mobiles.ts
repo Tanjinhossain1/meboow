@@ -1,3 +1,4 @@
+import { RecentArticleDataType } from "./RecentArticle";
 
 
 export interface MobileOpinionType {
@@ -32,7 +33,7 @@ export interface MobileArticleType {
     is_latest_device: string;
     top_background_color:string;
     total_fans: number;
-
+    selected_articles:RecentArticleDataType;
     key_specifications: {
         processor: string;
         display: string;
@@ -116,6 +117,7 @@ export interface MobileArticleDefaultFormType {
     is_latest_device?: string;
     // image: string[];
     // display_image:string;
+    selected_articles:RecentArticleDataType | null;
     key_specifications: {
         processor: string;
         display: string;

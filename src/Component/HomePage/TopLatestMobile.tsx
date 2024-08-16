@@ -203,7 +203,7 @@ export default function TopLatestMobile({
                       <Grid
                         item
                         sx={
-                          user?.role === "admin"
+                          user?.role === "admin" || user?.role === "sub_admin"
                             ? {
                                 display: "flex",
                                 justifyContent: "space-around",
@@ -229,7 +229,7 @@ export default function TopLatestMobile({
                         >
                           ${data?.prices[0].start_from}
                         </Typography>
-                        {user?.role === "admin" ? <Typography
+                        {user?.role === "admin" || user?.role === "sub_admin" ? <Typography
                           sx={{
                             color: "#055491",
                             fontWeight: 800,

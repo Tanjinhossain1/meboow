@@ -36,7 +36,9 @@ export async function POST(req: Request) {
       is_daily_interest,
       is_latest_device,
       content,
-      top_background_color
+      top_background_color,
+      admin_detail,
+      selected_articles
     } = body;
 
     console.log("body detail created", body, title, image);
@@ -72,7 +74,9 @@ export async function POST(req: Request) {
       is_daily_interest,
       is_latest_device,
       content,
-      top_background_color
+      top_background_color,
+      admin_detail,
+      selected_articles
     });
 
     return NextResponse.json({
@@ -117,7 +121,9 @@ export async function PUT(req: Request) {
       is_daily_interest,
       is_latest_device,
       content,
-      top_background_color
+      top_background_color,
+      admin_detail_edit,
+      selected_articles
     } = body;
 
     console.log("Updating article with ID:", id);
@@ -157,7 +163,9 @@ export async function PUT(req: Request) {
         is_daily_interest,
         is_latest_device,
         content,
-        top_background_color
+        top_background_color,
+        admin_detail_edit,
+        selected_articles
       })
       .where(eq(MobileArticles.id, Number(id)));
 

@@ -1,6 +1,7 @@
 "use client";
 import {
   Alert,
+  Autocomplete,
   Backdrop,
   Button,
   CircularProgress,
@@ -34,6 +35,7 @@ import DialogComponent from "./Dialog";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { unstable_noStore } from "next/cache";
+import { MobileArticleType } from "@/types/mobiles";
 // import {} from 'next'
 
 const Editor = dynamic(
@@ -45,9 +47,11 @@ export default function CreateArticleComponent({
   categories,
   brandsData,
   isEdit,
+  user,
 }: {
   categories: CategoryTypes[];
   brandsData: BrandTypes[];
+  user: any;
   isEdit?: {
     articleDetail: RecentArticleDataType;
     isEdit: boolean;
@@ -70,6 +74,50 @@ export default function CreateArticleComponent({
   const [best_reviews, setBest_reviews] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.best_reviews : ""
   );
+
+  
+  const [loading, setLoading] = useState(false);
+  let debounceTimeout: NodeJS.Timeout;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [options, setOptions] = useState<MobileArticleType[]>([]);
+  const [finalValueSelectedArticle, setFinalValueSelectedArticle] =
+    useState<MobileArticleType | null>(
+      isEdit?.isEdit && isEdit?.articleDetail
+        ? isEdit?.articleDetail?.selected_mobile
+        : null
+    );
+
+  const handleSearchChange = (
+    event: React.ChangeEvent<{}> | null,
+    newInputValue: string
+  ) => {
+    setSearchTerm(newInputValue); // Use the second argument instead of event.target.value
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    // Debounce the API call to avoid too many requests
+    debounceTimeout = setTimeout(() => {
+      if (newInputValue) {
+        fetchData(newInputValue);
+      }
+    }, 500); // Adjust debounce timing if necessary
+  };
+
+  const fetchData = async (query: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/article/mobile?searchTerm=${query}`
+      );
+      setOptions(response.data?.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const DeleteArticleFunc = () => {
     handleBackDropOpen();
@@ -203,15 +251,26 @@ export default function CreateArticleComponent({
       image: imageRef.current,
       content: fieldData,
       latestDevice: latestDeviceValue,
-      best_reviews:bestReviews,
+      best_reviews: bestReviews,
       brands: brands,
       deviceName: deviceName,
       showInNews: newsValue,
+      selected_mobile:finalValueSelectedArticle,
+      admin_detail: {
+        email: user?.email,
+        name: user?.fullName,
+        role: user?.role,
+      },
     };
     if (imageRef.current) {
       const updateData = {
         ...data,
         id: isEdit?.articleDetail?.id,
+        admin_detail_edit: {
+          email: user?.email,
+          name: user?.fullName,
+          role: user?.role,
+        },
       };
       setImageRequiredError(false);
       if (isEdit?.isEdit) {
@@ -338,6 +397,51 @@ export default function CreateArticleComponent({
               }
             />
           </FormControl>
+          <Autocomplete
+            options={Array.isArray(options) ? options : []}
+            getOptionLabel={(option) => option.title || ""}
+            value={finalValueSelectedArticle || null}
+            sx={{
+              ".MuiInputBase-root": {
+                height: "40px", // Set the height for the entire input base
+                fontSize: "14px", // Optional: decrease font size
+                padding: "0 10px", // Adjust padding inside input
+              },
+              ".MuiOutlinedInput-input": {
+                padding: "8px 14px", // Adjust padding for the text input
+              },
+            }}
+            onChange={(event, newValue) => {
+              setFinalValueSelectedArticle(newValue);
+              // setValue("selected_articles", newValue); // Use setValue from React Hook Form to update form state
+            }}
+            inputValue={searchTerm}
+            onInputChange={handleSearchChange} // Modified
+            loading={loading}
+            renderInput={(params) => (
+              <TextField
+                sx={{
+                  ".MuiInputLabel-root": {
+                    top: "-5px", // Adjust the label positioning
+                  },
+                  ".MuiInputBase-input": {
+                    padding: "8px", // Padding inside the input
+                    height: "40px", // Force input height
+                    fontSize: "14px", // Optional: decrease font size
+                  },
+                }}
+                {...params}
+                label="Search Articles"
+                variant="outlined"
+                fullWidth
+                name="selected_mobile"
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: loading ? <CircularProgress size={20} /> : null,
+                }}
+              />
+            )}
+          />
 
           <FormControl
             variant="filled"
@@ -573,6 +677,7 @@ export default function CreateArticleComponent({
         aria-describedby="alert-dialog-description"
       >
         <DialogComponent
+          user={user}
           handleClick={handleClick}
           handleBackdropClose={handleBackdropClose}
           handleBackDropOpen={handleBackDropOpen}
@@ -587,6 +692,7 @@ export default function CreateArticleComponent({
         aria-describedby="alert-dialog-description"
       >
         <DialogComponent
+          user={user}
           isBrand
           handleClick={handleBrandDialogClickOpen}
           handleBackdropClose={handleBackdropClose}

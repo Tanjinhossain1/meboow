@@ -1,3 +1,4 @@
+import { MobileArticleType } from "./mobiles";
 
 export interface RecentArticleDataType {
     id:string;
@@ -14,5 +15,6 @@ export interface RecentArticleDataType {
     view?:string;
     deviceName?:string;
     showInNews?:string;
+    selected_mobile:MobileArticleType;
 }
  

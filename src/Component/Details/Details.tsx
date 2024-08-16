@@ -51,7 +51,7 @@ export default function DetailsComponent({
 }) {
   const params = useParams();
   const history = useRouter();
-
+  console.log(' details  ',articleDetail)
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";

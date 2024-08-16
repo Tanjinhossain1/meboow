@@ -119,7 +119,7 @@ const IphoneCard = ({
       background: mobileDetail.top_background_color
     }} className="w-full  mx-auto mt-2 ">
       <Box className=" justify-between items-center p-1 mb-4  ">
-        <Typography className="font-bold text-xl ">
+        <Typography component="h1" className="font-bold text-xl ">
           {mobileDetail.title}
         </Typography>
         <Box className="flex items-center  ">

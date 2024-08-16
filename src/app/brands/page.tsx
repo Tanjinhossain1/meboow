@@ -18,7 +18,11 @@ import { useRouter } from "next/navigation";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { BrandTypes } from "@/types/category";
-import { fetchBrands, fetchCategories, fetchMobileArticles } from "@/services/articleServices";
+import {
+  fetchBrands,
+  fetchCategories,
+  fetchMobileArticles,
+} from "@/services/articleServices";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
@@ -28,7 +32,7 @@ import CategoryListComponent from "@/Component/Category/CategoryListComponent";
 
 export default async function BrandPage() {
   const brands = await fetchBrands();
-  const mobileArticles = await fetchMobileArticles({page:'1',limit:'20'});
+  const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });
   const Category = await fetchCategories();
   return (
     <Fragment>
@@ -55,12 +59,14 @@ export default async function BrandPage() {
                   {" "}
                   List Of Brands
                 </Typography>
-                <BrandDisplayComponent brands={brands.data} />
+                <Grid gap={1} container>
+                  <BrandDisplayComponent brands={brands.data} />
+                </Grid>
               </Grid>
-              
+
               <Grid xs={12} sx={{ mt: 10 }} lg={4}>
-                  <MobileListComponent mobileArticles={mobileArticles.data} />
-                  <CategoryListComponent category={Category.data} /> 
+                <MobileListComponent mobileArticles={mobileArticles.data} />
+                <CategoryListComponent category={Category.data} />
               </Grid>
             </Grid>
           </Paper>

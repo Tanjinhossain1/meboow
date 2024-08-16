@@ -19,6 +19,8 @@ import {
   InputLabel,
   FilledInput,
   InputAdornment,
+  MenuItem,
+  Autocomplete,
 } from "@mui/material";
 import { BrandTypes } from "@/types/category";
 import TopForm from "./TopForm";
@@ -32,24 +34,29 @@ import { RhfDefaultInitialValues } from "./DefaultRhfData";
 import ExpertView from "./ExpertView";
 import EditorForCreateArticle from "./EditorForSpecification/EditorForSpecification";
 import DevicesDetails from "./DevicesDetails";
+import { RecentArticleDataType } from "@/types/RecentArticle";
 
 export default function MainSubmitForm({
   brands,
   isEdit,
+  user,
 }: {
   brands: BrandTypes[];
   isEdit?: {
     isEdit: boolean;
     mobileArticles: MobileArticleType[];
   };
+  user?: any;
 }) {
   const [value, setValue] = useState("");
 
   const [gradient, setGradient] = useState(
     isEdit?.isEdit && isEdit?.mobileArticles[0]
       ? isEdit?.mobileArticles[0]?.top_background_color
-      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGB(247, 247, 247) 100%)"
+      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGB(168, 10, 10) 100%)"
   );
+
+
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -86,17 +93,18 @@ export default function MainSubmitForm({
     ),
   });
 
-// If `mobileArticle` changes after the form is rendered, you may need to call `reset` to update the form values.
-useEffect(() => {
-  if (isEdit?.isEdit && isEdit?.mobileArticles[0]) {
-    methods.reset(RhfDefaultInitialValues(isEdit?.mobileArticles[0]));
-  }
-}, [isEdit?.isEdit,isEdit?.mobileArticles,methods]);
+  // If `mobileArticle` changes after the form is rendered, you may need to call `reset` to update the form values.
+  useEffect(() => {
+    if (isEdit?.isEdit && isEdit?.mobileArticles[0]) {
+      methods.reset(RhfDefaultInitialValues(isEdit?.mobileArticles[0]));
+    }
+  }, [isEdit?.isEdit, isEdit?.mobileArticles, methods]);
 
   const { fields, append, remove } = useFieldArray({
     control: methods.control,
     name: "prices",
   });
+
   const {
     fields: custom_fields,
     append: custom_field_append,
@@ -119,18 +127,18 @@ useEffect(() => {
   };
 
   const onSubmit = async (data: any) => {
-    if (!fileUploadRef.current[0]) {
-      // setImageError(true);
-      setErrorOpen(true);
-      setShowErrorText("Please Select Image");
-      return;
-    }
-    if (!displayFileUploadRef.current) {
-      // setImageError(true);
-      setErrorOpen(true);
-      setShowErrorText("Please Select Display Image");
-      return;
-    }
+    // if (!fileUploadRef.current[0]) {
+    //   // setImageError(true);
+    //   setErrorOpen(true);
+    //   setShowErrorText("Please Select Image");
+    //   return;
+    // }
+    // if (!displayFileUploadRef.current) {
+    //   // setImageError(true);
+    //   setErrorOpen(true);
+    //   setShowErrorText("Please Select Display Image");
+    //   return;
+    // }
 
     handleBackDropOpen();
     const physicalSpecificationData =
@@ -147,13 +155,17 @@ useEffect(() => {
     const batteryData = await BatteryEditorRef.current?.save();
     const detailsData = await DetailsEditorRef.current?.save();
     const contentData = await ContentEditorRef.current?.save();
-    
+
     const formData = {
       ...data,
       image: fileUploadRef.current,
       display_image: displayFileUploadRef.current,
       physicalSpecification: physicalSpecificationData,
-
+      admin_detail: {
+        email: user?.email,
+        name: user?.fullName,
+        role: user?.role,
+      },
       network: networkData,
       display: displayData,
       processor: processorData,
@@ -166,13 +178,19 @@ useEffect(() => {
       battery: batteryData,
       details: detailsData,
       content: contentData,
-      top_background_color:gradient
+      top_background_color: gradient,
+      // selected_articles: finalValueSelectedArticle,
     };
     console.log("Form Data:", formData);
     if (isEdit?.isEdit) {
       const editFieldData = {
         ...formData,
         id: isEdit?.mobileArticles[0].id,
+        admin_detail_edit: {
+          email: user?.email,
+          name: user?.fullName,
+          role: user?.role,
+        },
       };
       console.log("Form Data:", editFieldData);
       axios
@@ -304,12 +322,12 @@ useEffect(() => {
       componentRef: ContentEditorRef,
       key: "content",
     },
-    {
-      holderId: "12",
-      title: "Details",
-      componentRef: DetailsEditorRef,
-      key: "details",
-    },
+    // {
+    //   holderId: "12",
+    //   title: "Details",
+    //   componentRef: DetailsEditorRef,
+    //   key: "details",
+    // },
   ];
 
   return (
@@ -317,6 +335,7 @@ useEffect(() => {
       <FormProvider {...methods}>
         <form className="w-3/4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
           <TopForm
+            user={user}
             isEdit={isEdit}
             fileUploadRef={fileUploadRef}
             displayFileUploadRef={displayFileUploadRef}
@@ -334,7 +353,11 @@ useEffect(() => {
           {OtherDetailsForms?.map((otherDetails, index) => {
             return (
               <Fragment key={index}>
-                <Grid className="md:max-w-[1000px] mx-auto" sx={{ mt: 1 }} container>
+                <Grid
+                  className="md:max-w-[1000px] mx-auto"
+                  sx={{ mt: 1 }}
+                  container
+                >
                   {/* <Grid xs={1.2}></Grid> */}
                   <Grid xs={12}>
                     <Accordion
@@ -370,13 +393,13 @@ useEffect(() => {
               </Fragment>
             );
           })}
-
+          
           <Fragment>
             <Grid
               className="md:max-w-[1000px] mx-auto"
               sx={{ mt: 1 }}
               container
-            > 
+            >
               <Grid xs={12}>
                 <Accordion
                   defaultExpanded
@@ -395,21 +418,20 @@ useEffect(() => {
                     <ExpertView isEdit={isEdit} rhfMethods={methods} />
                   </AccordionDetails>
                 </Accordion>
-              </Grid> 
+              </Grid>
             </Grid>
           </Fragment>
 
-          <Grid  className="md:max-w-[1000px] mx-auto"  sx={{ mt: 1 }} container>
+          <Grid className="md:max-w-[1000px] mx-auto" sx={{ mt: 1 }} container>
             <Accordion
               defaultExpanded
-              
+
               // expanded={expanded === "panel0"}
               // onChange={handleChange("panel0")}
             >
               <AccordionSummary
                 aria-controls="panel0d-content"
                 id="panel0d-header"
-               
               >
                 <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
                   Prices
@@ -470,7 +492,7 @@ useEffect(() => {
               </AccordionDetails>
             </Accordion>
           </Grid>
-        
+
           <Container component="main" sx={{ textAlign: "end" }} maxWidth="sm">
             <Button
               type="submit"

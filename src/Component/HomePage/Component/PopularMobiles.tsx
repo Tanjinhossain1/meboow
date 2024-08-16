@@ -213,7 +213,7 @@ export default function PopularMobiles({
                       <Grid
                         item
                         sx={
-                          user?.role === "admin"
+                          user?.role === "admin" || user?.role === "sub_admin"
                             ? {
                                 display: "flex",
                                 justifyContent: "space-around",
@@ -243,7 +243,7 @@ export default function PopularMobiles({
                           </Typography></Link> : null
                         }
                         
-                        {user?.role === "admin" ? <Link href={`/admin/mobile/edit/${data.id}`}><Typography
+                        {user?.role === "admin" || user?.role === "sub_admin" ? <Link href={`/admin/mobile/edit/${data.id}`}><Typography
                           sx={{
                             color: "#055491",
                             fontWeight: 800,

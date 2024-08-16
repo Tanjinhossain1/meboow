@@ -1,21 +1,26 @@
 // app/sitemap-article/route.ts
 import { getDb } from '@/drizzle/db';
-import { MobileArticles } from '@/drizzle/schema';
+import { TechBrands } from '@/drizzle/schema';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
 
 export async function GET() {
     try {
+        const db = await getDb();
+        console.log(
+            'connected to the db: get all brands ---> api/v1/brand/site-map'
+        )
+        const brands = await db
+            .select()
+            .from(TechBrands)
+            .orderBy(desc(TechBrands.id))
+
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
-
-        sitemapStream.write({ url: `/aboutus`, lastmod: new Date() });
-        sitemapStream.write({ url: `/contactUs`, lastmod: new Date() });
-        sitemapStream.write({ url: `/privacyPolicy`, lastmod: new Date() });
-        sitemapStream.write({ url: `/termCondition`, lastmod: new Date() });
-        sitemapStream.write({ url: `/faq`, lastmod: new Date() });
-
-
+        brands.forEach((brand) => {
+            sitemapStream.write({ url: `/mobile/brand-wise/${brand?.title}`, lastmod: new Date() });
+        })
+        
         sitemapStream.end();
 
         const sitemapXml = await streamToPromise(sitemapStream).then((data) => data.toString());

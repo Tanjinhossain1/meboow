@@ -19,12 +19,14 @@ export default function DialogComponent({
   handleClick,
   isBrand,
   brandSelectedForEdit,
-  categorySelectedForEdit
+  categorySelectedForEdit,
+  user
 }: {
   handleDialogClose: () => void;
   handleBackdropClose: () => void;
   handleBackDropOpen: () => void;
   handleClick: (text: string) => void;
+  user:any;
   isBrand?: boolean;
   brandSelectedForEdit?: BrandTypes;
   categorySelectedForEdit?: CategoryTypes;
@@ -51,17 +53,37 @@ export default function DialogComponent({
             title,
             image: fileUploadRef.current,
             id: brandSelectedForEdit?.id,
+            admin_detail_edit: {
+              email: user?.email,
+              name: user?.fullName,
+              role: user?.role,
+            },
             //   value
           }
         : {
             title,
             image: fileUploadRef.current,
+            admin_detail: {
+              email: user?.email,
+              name: user?.fullName,
+              role: user?.role,
+            },
           }
       : categorySelectedForEdit ? {
         title,
-        id: categorySelectedForEdit?.id
+        id: categorySelectedForEdit?.id,
+        admin_detail_edit: {
+          email: user?.email,
+          name: user?.fullName,
+          role: user?.role,
+        },
       } :{
           title,
+          admin_detail: {
+            email: user?.email,
+            name: user?.fullName,
+            role: user?.role,
+          },
         };
     if ( categorySelectedForEdit || brandSelectedForEdit) {
       await axios

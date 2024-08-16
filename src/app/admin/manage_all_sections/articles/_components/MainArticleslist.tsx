@@ -10,8 +10,10 @@ import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
 export default function MainArticlesDetailList({
   articles,
+  user
 }: {
   articles: RecentArticleDataType[];
+  user: any;
 }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
@@ -44,7 +46,7 @@ export default function MainArticlesDetailList({
       ),
       width: 100,
     },
-    {
+   user?.role === "admin" && {
       field: "delete",
       headerName: "Delete",
       renderCell: (params: any) => (

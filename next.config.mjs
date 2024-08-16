@@ -40,6 +40,18 @@ const nextConfig = {
           source: '/sitemap-core.xml',
           destination: '/api/sitemap-core', // Exact path to your route
         },
+        {
+          source: '/sitemap-feature.xml',
+          destination: '/api/sitemap-feature', // Exact path to your route
+        },
+        {
+          source: '/sitemap-brands.xml',
+          destination: '/api/sitemap-brands', // Exact path to your route
+        },
+        {
+          source: '/sitemap-category.xml',
+          destination: '/api/sitemap-category', // Exact path to your route
+        },
       ];
     },
   

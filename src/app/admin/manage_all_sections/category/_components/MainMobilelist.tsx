@@ -19,7 +19,13 @@ import {
 } from "@mui/material";
 import DialogComponent from "@/Component/Admin/Dialog";
 
-export default function MainBrandsList({ category }: { category: CategoryTypes[] }) {
+export default function MainBrandsList({
+  category,
+  user,
+}: {
+  category: CategoryTypes[];
+  user: any;
+}) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
   );
@@ -27,10 +33,12 @@ export default function MainBrandsList({ category }: { category: CategoryTypes[]
 
   const [categoryDialogOpen, setCategoryDialogOpen] = React.useState(false);
 
-  const [categorySelectedForEdit,setCategorySelectedForEdit] = React.useState<CategoryTypes | undefined>(undefined)
+  const [categorySelectedForEdit, setCategorySelectedForEdit] = React.useState<
+    CategoryTypes | undefined
+  >(undefined);
 
-  const handleCategoryDialogClickOpen = (row:CategoryTypes) => {
-    setCategorySelectedForEdit(row)
+  const handleCategoryDialogClickOpen = (row: CategoryTypes) => {
+    setCategorySelectedForEdit(row);
     setCategoryDialogOpen(true);
   };
 
@@ -40,7 +48,7 @@ export default function MainBrandsList({ category }: { category: CategoryTypes[]
   const successFunc = (text: string) => {
     SnackbarOpen("Success Fully Edit Category", "success");
     window.location.reload();
-  }
+  };
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "title", headerName: "Title", width: 400 },
@@ -58,13 +66,17 @@ export default function MainBrandsList({ category }: { category: CategoryTypes[]
       field: "actions",
       headerName: "Edit",
       renderCell: (params: any) => (
-          <Button onClick={()=>handleCategoryDialogClickOpen(params?.row)} variant="contained" color="success">
-            Edit
-          </Button> 
+        <Button
+          onClick={() => handleCategoryDialogClickOpen(params?.row)}
+          variant="contained"
+          color="success"
+        >
+          Edit
+        </Button>
       ),
       width: 100,
     },
-    {
+    user?.role === "admin" && {
       field: "delete",
       headerName: "Delete",
       renderCell: (params: any) => (
@@ -108,6 +120,7 @@ export default function MainBrandsList({ category }: { category: CategoryTypes[]
         aria-describedby="alert-dialog-description"
       >
         <DialogComponent
+          user={user}
           categorySelectedForEdit={categorySelectedForEdit}
           handleClick={successFunc}
           handleBackdropClose={handleClose}

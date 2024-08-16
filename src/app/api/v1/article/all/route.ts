@@ -4,79 +4,80 @@ import { IGenericResponse, likeInsensitive, sendResponse } from '@/utils/utils';
 import { IPaginationOptions, paginationHelpers } from '@/app/api/shared/helpers';
 import { getDb } from "@/drizzle/db";
 import { Articles } from "@/drizzle/schema";
-import { and, count, desc, ilike, or, sql } from "drizzle-orm";
+import { and, count, desc, eq, ilike, ne, or, sql } from "drizzle-orm";
 
 export async function POST(req: Request) {
-    
-        // Parse the JSON body
-        const body = await req.json()
 
-        const { title, category, description, image, content } = body;
+    // Parse the JSON body
+    const body = await req.json()
 
-        console.log('body detail created', body, title, category, description, image, content);
+    const { title, category, description, image, content } = body;
 
-        if (!title || !category || !description || !image || !content) {
-            return NextResponse.json({ error: 'Missing required fields' });
-        }
+    console.log('body detail created', body, title, category, description, image, content);
 
-        const db = await getDb();
-        console.log(
-            'connected to the db: get all articles ---> api/v1/article/all'
-        )
-        // Perform the database insertion using Drizzle ORM
-        const result = await db.insert(Articles).values({
-            title,
-            category,
-            description,
-            image,
-            content,
-        });
+    if (!title || !category || !description || !image || !content) {
+        return NextResponse.json({ error: 'Missing required fields' });
+    }
 
-        return NextResponse.json({ success: true, message: "successfully created article", data: result })
-  
+    const db = await getDb();
+    console.log(
+        'connected to the db: get all articles ---> api/v1/article/all'
+    )
+    // Perform the database insertion using Drizzle ORM
+    const result = await db.insert(Articles).values({
+        title,
+        category,
+        description,
+        image,
+        content,
+    });
+
+    return NextResponse.json({ success: true, message: "successfully created article", data: result })
+
 }
- 
-  
+
+
 export async function GET(req: NextRequest) {
-    
-        const { searchParams } = new URL(req.url);
 
-        const filters = {
-            searchTerm: searchParams.get('searchTerm'),
-            id: searchParams.get('id'),
-            category: searchParams.get('category'),
-            latestDevice: searchParams.get('latestDevice'),
-            all: searchParams.get('all'),
-            brands: searchParams.get('brands'),
-            best_reviews: searchParams.get('best_reviews'),
-            showInNews: searchParams.get('showInNews'),
-        };
+    const { searchParams } = new URL(req.url);
 
-        const options = {
-            limit: parseInt(searchParams.get('limit') || '10', 10),
-            page: parseInt(searchParams.get('page') || '1', 10),
-            // sortBy: searchParams.get('sortBy') || 'createdAt',
-            // sortOrder: searchParams.get('sortOrder') || 'asc',
-        }; 
-        // Perform the database query using Drizzle ORM
-        const { data, meta } = await getAll(filters, options);
-        console.log('this is the server data of results   ',data,meta)
-        return NextResponse.json({
-            statusCode: 200,
-            success: true,
-            message: 'Get All  Article successfully',
-            meta,
-            data,
-            // total
-        });
-    
+    const filters = {
+        searchTerm: searchParams.get('searchTerm'),
+        id: searchParams.get('id'),
+        category: searchParams.get('category'),
+        latestDevice: searchParams.get('latestDevice'),
+        all: searchParams.get('all'),
+        brands: searchParams.get('brands'),
+        best_reviews: searchParams.get('best_reviews'),
+        showInNews: searchParams.get('showInNews'),
+        is_related: searchParams.get('is_related'),
+    };
+
+    const options = {
+        limit: parseInt(searchParams.get('limit') || '10', 10),
+        page: parseInt(searchParams.get('page') || '1', 10),
+        // sortBy: searchParams.get('sortBy') || 'createdAt',
+        // sortOrder: searchParams.get('sortOrder') || 'asc',
+    };
+    // Perform the database query using Drizzle ORM
+    const { data, meta } = await getAll(filters, options);
+    console.log('this is the server data of results   ', data, meta)
+    return NextResponse.json({
+        statusCode: 200,
+        success: true,
+        message: 'Get All  Article successfully',
+        meta,
+        data,
+        // total
+    });
+
 }
 const getAll = async (
     filters: any,
     options: IPaginationOptions
 ): Promise<IGenericResponse<any[]>> => {
     const { limit, page, skip } = paginationHelpers.calculatePagination(options);
-    const { searchTerm, category, latestDevice, all,brands,showInNews,best_reviews } = filters;
+    const { searchTerm, category, latestDevice, all, brands, showInNews, best_reviews, is_related } = filters;
     const whereConditions = [];
 
     if (category) {
@@ -118,18 +119,29 @@ const getAll = async (
     console.log(
         'connected to the db: get all articles ---> api/v1/article/all'
     )
+
     const articles = all === "all" ? await db
         .select()
         .from(Articles)
         .where(and(...whereConditions))
         .orderBy(desc(Articles.id))
-        : await db
+        : is_related ? await db
             .select()
             .from(Articles)
-            .where(and(...whereConditions))
+            .where(and(
+                eq(Articles.category, category), // Find posts in the same category
+                ne(Articles.id, Number(is_related)) // Exclude the current article
+            )
+            )
             .orderBy(desc(Articles.id))
             .offset(skip)
-            .limit(limit);
+            .limit(limit) : await db
+                .select()
+                .from(Articles)
+                .where(and(...whereConditions))
+                .orderBy(desc(Articles.id))
+                .offset(skip)
+                .limit(limit);
     // .orderBy(asc(CreateArticle.createdAt))
     // .orderBy(orderBy);
     //   .orderBy(orderBy)

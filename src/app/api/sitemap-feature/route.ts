@@ -1,7 +1,4 @@
 // app/sitemap-article/route.ts
-import { getDb } from '@/drizzle/db';
-import { MobileArticles } from '@/drizzle/schema';
-import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
 
@@ -9,11 +6,12 @@ export async function GET() {
     try {
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
 
-        sitemapStream.write({ url: `/aboutus`, lastmod: new Date() });
-        sitemapStream.write({ url: `/contactUs`, lastmod: new Date() });
-        sitemapStream.write({ url: `/privacyPolicy`, lastmod: new Date() });
-        sitemapStream.write({ url: `/termCondition`, lastmod: new Date() });
-        sitemapStream.write({ url: `/faq`, lastmod: new Date() });
+        sitemapStream.write({ url: `/news`, lastmod: new Date() });
+        sitemapStream.write({ url: `/brands`, lastmod: new Date() });
+        sitemapStream.write({ url: `/mobile`, lastmod: new Date() });
+        sitemapStream.write({ url: `/search`, lastmod: new Date() });
+        sitemapStream.write({ url: `/register`, lastmod: new Date() });
+        sitemapStream.write({ url: `/login`, lastmod: new Date() });
 
 
         sitemapStream.end();

@@ -103,7 +103,7 @@ export default function DisplayArticleComponent({
           {formatDate(data.createdAt)}
           {/* {asSmall ? formatDate(data.createdAt) : null} */}
         </Typography>
-        {user?.role === "admin" ? 
+        {user?.role === "admin" || user?.role === "sub_admin" ? 
         <Typography
           sx={{
             color: "#055491",

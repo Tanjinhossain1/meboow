@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import DialogComponent from "@/Component/Admin/Dialog";
 
-export default function MainBrandsList({ brands }: { brands: BrandTypes[] }) {
+export default function MainBrandsList({ brands ,user}: { brands: BrandTypes[],user:any }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
   );
@@ -64,7 +64,7 @@ export default function MainBrandsList({ brands }: { brands: BrandTypes[] }) {
       ),
       width: 100,
     },
-    {
+    user?.role === "admin"&&{
       field: "delete",
       headerName: "Delete",
       renderCell: (params: any) => (
@@ -108,6 +108,7 @@ export default function MainBrandsList({ brands }: { brands: BrandTypes[] }) {
         aria-describedby="alert-dialog-description"
       >
         <DialogComponent
+        user={user}
           isBrand
           brandSelectedForEdit={brandSelectedForEdit}
           handleClick={successFunc}
