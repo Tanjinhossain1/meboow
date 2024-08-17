@@ -16,13 +16,15 @@ export default function MainArticlesDetailList({
   user: any;
 }) {
   const [copied, setCopied] = useState(false);
-   
-  const handleCopy = async (params:RecentArticleDataType) => {
+  const [copiedId, setCopiedId] = useState<string | null>(null); // State to track copied row ID
+
+  const handleCopy = async (params: RecentArticleDataType) => {
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/details/${params?.id}/${params?.category}`
-       
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/details/${params?.id}/${params?.category}`;
+
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
+      setCopiedId(params?.id);
       setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
     } catch (error) {
       console.error("Failed to copy: ", error);
@@ -64,8 +66,14 @@ export default function MainArticlesDetailList({
       headerName: "Copy",
       renderCell: (params: any) => (
         <div>
-          <Button size="small" variant="contained" color={copied ?"success" :"info"} onClick={()=>handleCopy(params?.row)} className="copy-button">
-            {copied ? "Copied!" : "Copy Url"}
+          <Button
+            color={copiedId === params.row.id ? "success" : "info"}
+            size="small"
+            variant="contained"
+            onClick={() => handleCopy(params?.row)}
+            className="copy-button"
+          >
+            {copiedId === params.row.id ? "Copied!" : "Copy URL"}
           </Button>
         </div>
       ),
@@ -76,7 +84,7 @@ export default function MainArticlesDetailList({
       headerName: "Delete",
       renderCell: (params: any) => (
         <Button
-        size="small"
+          size="small"
           onClick={() => {
             if (window.confirm("Are you sure you want to Delete Article?")) {
               console.log("delete");

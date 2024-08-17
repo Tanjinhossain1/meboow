@@ -30,13 +30,14 @@ export default function MainBrandsList({
     SnackbarProviderContext
   );
   const [copied, setCopied] = useState(false);
-
+  const [copiedId, setCopiedId] = useState<number | null>(null);
   const handleCopy = async (params: BrandTypes) => {
     try {
       const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/mobile/brand-wise/${params?.title}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
+      setCopiedId(params?.id);
       setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
     } catch (error) {
       console.error("Failed to copy: ", error);
@@ -96,13 +97,13 @@ export default function MainBrandsList({
       renderCell: (params: any) => (
         <div>
           <Button
+            color={copiedId === params.row.id ? "success" : "info"}
             size="small"
             variant="contained"
-            color={copied ? "success" : "info"}
             onClick={() => handleCopy(params?.row)}
             className="copy-button"
           >
-            {copied ? "Copied!" : "Copy Url"}
+            {copiedId === params.row.id ? "Copied!" : "Copy URL"}
           </Button>
         </div>
       ),

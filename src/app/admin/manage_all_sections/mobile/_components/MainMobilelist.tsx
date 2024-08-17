@@ -11,15 +11,16 @@ import BackdropProviderContext from "@/Component/BackdropProvider";
 import { MobileArticleType } from "@/types/mobiles";
 export default function MainMobilesDetailList({
   mobile,
-  user
+  user,
 }: {
   mobile: MobileArticleType[];
-  user:any
+  user: any;
 }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
   );
   const [copied, setCopied] = useState(false);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const handleCopy = async (params: MobileArticleType) => {
     try {
@@ -27,6 +28,7 @@ export default function MainMobilesDetailList({
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
+      setCopiedId(params?.id);
       setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
     } catch (error) {
       console.error("Failed to copy: ", error);
@@ -59,30 +61,31 @@ export default function MainMobilesDetailList({
         </Link>
       ),
       width: 100,
-    }, {
+    },
+    {
       field: "copy",
       headerName: "Copy",
       renderCell: (params: any) => (
         <div>
           <Button
+            color={copiedId === params.row.id ? "success" : "info"}
             size="small"
             variant="contained"
-            color={copied ? "success" : "info"}
             onClick={() => handleCopy(params?.row)}
             className="copy-button"
           >
-            {copied ? "Copied!" : "Copy Url"}
+            {copiedId === params.row.id ? "Copied!" : "Copy URL"}
           </Button>
         </div>
       ),
       width: 100,
     },
-   user?.role === "admin" && {
+    user?.role === "admin" && {
       field: "delete",
       headerName: "Delete",
       renderCell: (params: any) => (
         <Button
-        size="small"
+          size="small"
           onClick={() => {
             if (window.confirm("Are you sure you want to Delete Article?")) {
               console.log("delete");
