@@ -97,9 +97,13 @@ export const stripLinks = (htmlString: string) => {
 
 
 export const formatForUrl = (text: string) => {
-  const formattedTitle = text
+  if(text){
+    const formattedTitle = text
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("-");
-  return formattedTitle;
+    return formattedTitle;
+  }else{
+    return '';
+  }
 }
