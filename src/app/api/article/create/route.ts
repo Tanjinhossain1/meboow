@@ -12,11 +12,11 @@ export async function POST(req: Request) {
         const body = await req.json()
 
         const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews, best_reviews,
-            admin_detail, selected_mobile } = body;
+            admin_detail, selected_mobile,pages } = body;
 
         console.log('body detail created', body, title, category, description, image, deviceName, content, showInNews, selected_mobile);
 
-        if (!title || !category || !description || !image || !content) {
+        if (!title || !category || !description || !image) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
         const db = await getDb();
@@ -36,7 +36,8 @@ export async function POST(req: Request) {
             showInNews,
             best_reviews,
             admin_detail,
-            selected_mobile
+            selected_mobile,
+            pages
         });
 
         revalidatePath('/')
@@ -53,12 +54,12 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         const body = await req.json();
 
         const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews, id, best_reviews,
-            admin_detail_edit, selected_mobile } = body;
+            admin_detail_edit, selected_mobile,pages } = body;
 
         console.log('Body details for update:', body);
 
         // Check if all required fields are present
-        if (!title || !category || !description || !image || !content) {
+        if (!title || !category || !description || !image) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
 
@@ -84,7 +85,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
                 showInNews,
                 best_reviews,
                 admin_detail_edit,
-                selected_mobile
+                selected_mobile,
+                pages
             })
             .where(eq(Articles.id, id));
 

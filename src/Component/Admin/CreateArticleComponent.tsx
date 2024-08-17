@@ -36,12 +36,17 @@ import { BrandTypes, CategoryTypes } from "@/types/category";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { unstable_noStore } from "next/cache";
 import { MobileArticleType } from "@/types/mobiles";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import {
+  Controller,
+  FormProvider,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
 // import {} from 'next'
 
-const Editor = dynamic(
-  () => import("../../../src/Component/Editor/EditorForCreateArticle"),
+const EditorForArticle = dynamic(
+  () => import("../Editor/EditorForArticle"),
   { ssr: false }
 );
 
@@ -94,6 +99,10 @@ export default function CreateArticleComponent({
     setValue,
     handleSubmit,
   } = methods;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "pages",
+  });
 
   const [loading, setLoading] = useState(false);
   let debounceTimeout: NodeJS.Timeout;
@@ -330,7 +339,7 @@ export default function CreateArticleComponent({
     <div>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-          <Container sx={{ width: "90%", mx: "auto" }}>
+          <Container className="max-w-[1000px] mx-auto">
             <div id="top">
               <Button
                 onClick={() => history.push("/admin")}
@@ -459,7 +468,7 @@ export default function CreateArticleComponent({
                     },
                   }}
                   {...params}
-                  label="Search Articles"
+                  label="Search Mobiles"
                   variant="outlined"
                   fullWidth
                   // name="selected_mobile"
@@ -644,17 +653,76 @@ export default function CreateArticleComponent({
             ) : (
               ""
             )}
+          {fields.map((item, index) => (
+            <div key={item.id} className="max-w-[1000px] mx-auto ">
+              <h3>Page {index + 1}</h3>
+
+              {/* Title Field */}
+              <Controller
+                name={`pages.${index}.title`}
+                control={control}
+                render={({ field }: any) => (
+                  <TextField
+                    {...field}
+                    label="Title"
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                  />
+                )}
+              />
+
+              {/* Content Field (EditorJS) */}
+              <Controller
+                name={`pages.${index}.content`}
+                control={control}
+                render={({ field }: any) => (
+                  <EditorForArticle
+                    {...field}
+                    
+                    holderId={item.id}
+                    onChange={(editorData: any) => field.onChange(editorData)} // Pass EditorJS data to React Hook Form
+                  />
+                )}
+              />
+
+              {/* Remove Page Button */}
+              {fields.length > 1 && (
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => remove(index)}
+                  className="mt-3"
+                >
+                  Remove Page {index + 1}
+                </Button>
+              )}
+            </div>
+          ))}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              append({ page: fields.length + 1, title: "", content: null })
+            }
+            className="mt-4"
+          >
+            Add New Page
+          </Button>
           </Container>
           {/* <button>submit</button> */}
 
-          <Container component="div" sx={{ width: "100%", mt: 2 }}>
+
+          {/* Add New Page Button */}
+
+          {/* <Container component="div" sx={{ width: "100%", mt: 2 }}>
             <Editor
               defaultData={
                 isEdit?.isEdit ? isEdit?.articleDetail?.content : undefined
               }
               editorRef={editorRef}
             />
-          </Container>
+          </Container> */}
           <Container component="main" sx={{ textAlign: "end" }} maxWidth="sm">
             <Button
               type="submit"

@@ -30,7 +30,7 @@ export const Articles = mysqlTable(
     admin_detail_edit:json('admin_detail_edit'),
 
     selected_mobile:json('selected_mobile'),
-
+    pages:json('pages'),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   },

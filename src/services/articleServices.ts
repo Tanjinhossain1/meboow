@@ -55,7 +55,7 @@ export async function fetchArticles({
   } else if (brands) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&brands=${brands}`;
   } else if (allArticles) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all`;
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?all=all`;
   } else if (showInNewsWithAll) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?showInNews=${showInNewsWithAll}`;
   }else if (best_reviews) {
@@ -128,7 +128,7 @@ export async function fetchMobileArticles({
   } else if (is_latest_device) {
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_latest_device=${is_latest_device}`;
   }else if(is_all_mobile) {
-    url = `${process.env.NEXT_APP_URL}/api/article/mobile`;
+    url = `${process.env.NEXT_APP_URL}/api/article/mobile?all=all`;
   }
 
   console.log("test 1 ", url, category);

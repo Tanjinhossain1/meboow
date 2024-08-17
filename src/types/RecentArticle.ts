@@ -16,6 +16,11 @@ export interface RecentArticleDataType {
     deviceName?:string;
     showInNews?:string;
     selected_mobile:MobileArticleType;
+    pages:{
+        page:number;
+        title:string;
+        content:any;
+    }[]
 }
 
 export interface RecentArticleDataCreateType {
@@ -28,4 +33,9 @@ export interface RecentArticleDataCreateType {
     deviceName?:string;
     showInNews?:string;
     selected_mobile:MobileArticleType | null;
+    pages:{
+        page:number;
+        title:string;
+        content:any;
+    }[]
 }

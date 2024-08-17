@@ -34,8 +34,8 @@ export default function MainArticlesDetailList({
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Title", width: 500 },
+    { field: "id", headerName: "ID", width: 50 },
+    { field: "title", headerName: "Title", width: 480 },
     {
       field: "createdAt",
       headerName: "Create Date",
@@ -52,7 +52,7 @@ export default function MainArticlesDetailList({
       renderCell: (params: any) => (
         <Link href={`/admin/article/edit/${params?.row?.id}`}>
           {" "}
-          <Button variant="contained" color="success">
+          <Button size="small" variant="contained" color="success">
             Edit
           </Button>
         </Link>
@@ -76,6 +76,7 @@ export default function MainArticlesDetailList({
       headerName: "Delete",
       renderCell: (params: any) => (
         <Button
+        size="small"
           onClick={() => {
             if (window.confirm("Are you sure you want to Delete Article?")) {
               console.log("delete");
