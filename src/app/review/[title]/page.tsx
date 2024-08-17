@@ -18,8 +18,7 @@ export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -54,11 +53,11 @@ interface DetailsParams {
 }
 
 export default async function Details({ params, searchParams }: DetailsParams) {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+    console.log('this is the formattedTitle inthe the review title', formattedTitle);
   const data = await fetchArticlesDetails({ title: formattedTitle });
   const Category = await fetchCategories();
   const Brands = await fetchBrands();
@@ -82,7 +81,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     <>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${decodedTitle}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`}
         key="canonical"
       />
       <Navbar />

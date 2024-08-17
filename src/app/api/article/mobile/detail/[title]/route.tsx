@@ -9,7 +9,8 @@ export async function GET(
 ) {
   try {
     const db = await getDb();
-  
+     
+    console.log('this is the formattedTitle inthe the review title in api file ', params);
     const data = await db
       .select()
       .from(MobileArticles)

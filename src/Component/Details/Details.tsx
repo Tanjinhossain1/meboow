@@ -58,9 +58,6 @@ export default function DetailsComponent({
 
   const [tableOfContents, setTableOfContents] = useState<string[]>([]);
 
-  // const rawTitle = params?.title as string;
-  // const decodedTitle = decodeURIComponent(rawTitle);
-
   useEffect(() => {
     articleDetail.content?.blocks?.forEach((block: any) => {
       if (block.type === "header") {

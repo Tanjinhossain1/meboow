@@ -18,8 +18,7 @@ export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -42,8 +41,7 @@ export async function generateMetadata(
 }
 
 const ProductDetails = async ({ params }: { params: { title: string } }) => {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -80,7 +78,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     <Fragment>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${decodedTitle}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`}
         key="canonical"
       />
       <Navbar />

@@ -18,8 +18,7 @@ export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -54,8 +53,7 @@ interface DetailsParams {
 }
 
 export default async function Details({ params, searchParams }: DetailsParams) {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -74,7 +72,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     limit: "5",
     isRelated: data?.data[0]?.id,
   });
-  console.log('datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata',data)
+
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
   const user = session?.user;
@@ -82,7 +80,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     <>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/article/${decodedTitle}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}`}
         key="canonical"
       />
       <Navbar />

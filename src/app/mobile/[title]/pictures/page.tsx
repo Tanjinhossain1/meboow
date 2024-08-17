@@ -11,10 +11,14 @@ import { Metadata, ResolvingMetadata } from "next";
 import MainMobileDetails from "../_components/MainMobileDetails";
 
 export async function generateMetadata(
-  { params }: { params: { id: string } },
+  { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
-  const mobileArticles = await fetchMobileArticleDetails({ id: params?.id });
+  const formattedTitle = params?.title
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+  const mobileArticles = await fetchMobileArticleDetails({ title:formattedTitle });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
     const title = mobileArticles?.data[0]?.title;
     const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile Images and specifications this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of Images of ${mobileArticles?.data[0]?.title}.`;
@@ -32,8 +36,7 @@ export async function generateMetadata(
 }
 
 const ProductDetails = async ({ params }: { params: { title: string } }) => {
-  const decodedTitle = decodeURIComponent(params?.title);
-  const formattedTitle = decodedTitle
+  const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -62,7 +65,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     <Fragment>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${decodedTitle}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`}
         key="canonical"
       />
       <Navbar />
