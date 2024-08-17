@@ -59,7 +59,6 @@ export default function DetailsComponent({
   const history = useRouter();
   console.log(" details  ", articleDetail);
   const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
@@ -358,7 +357,7 @@ export default function DetailsComponent({
               sx={{
                 position: "relative",
                 // display: "inline-block",
-                width: "78%",
+                width: "100%",
               }}
             >
               {/* Dropdown trigger */}
@@ -380,7 +379,7 @@ export default function DetailsComponent({
                   },
                 }}
               >
-                {page ? (
+                {articlePage ? (
                   articleDetail?.pages.map((mapPage, index) => {
                     return (
                       <Typography
@@ -418,9 +417,9 @@ export default function DetailsComponent({
                     1<b>.</b> {articleDetail?.pages[0]?.title}
                   </Typography>
                 )}
-                <Typography>
+                {/* <Typography>
                   <ArrowDownIcon />
-                </Typography>
+                </Typography> */}
               </Button>
 
               {/* Dropdown content (Popover) */}
@@ -446,8 +445,9 @@ export default function DetailsComponent({
                     // width: "40%",
                     minWidth: {
                       xs: "100%",
-                      sm: "400px",
-                      md: "475px",
+                      sm: "90%",
+                      md: "85%",
+                      lg:"600px"
                     },
                     maxWidth: "500px",
                   },
@@ -475,7 +475,7 @@ export default function DetailsComponent({
                           fontWeight:
                             articlePage === rowPage?.page
                               ? 600
-                              : page
+                              : articlePage
                               ? 500
                               : rowPage?.page === 1
                               ? 600

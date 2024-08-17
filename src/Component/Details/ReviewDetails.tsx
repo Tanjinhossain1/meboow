@@ -364,7 +364,8 @@ export default function DetailsReviewComponent({
               sx={{
                 position: "relative",
                 // display: "inline-block",
-                width: "78%",
+                width: "100%",
+                // width: "78%",
               }}
             >
               {/* Dropdown trigger */}
@@ -452,8 +453,9 @@ export default function DetailsReviewComponent({
                     // width: "40%",
                     minWidth: {
                       xs: "100%",
-                      sm: "400px",
-                      md: "475px",
+                      sm: "90%",
+                      md: "85%",
+                      lg:"600px"
                     },
                     maxWidth: "500px",
                   },

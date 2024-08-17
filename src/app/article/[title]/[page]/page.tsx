@@ -1,5 +1,5 @@
 
-import DetailsReviewComponent from "@/Component/Details/ReviewDetails";
+import DetailsComponent from "@/Component/Details/Details";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import { authConfig } from "@/lib/auth";
@@ -90,8 +90,8 @@ export default async function Details({ params, searchParams }: DetailsParams) {
       />
       <Navbar />
       {data?.data && mobileArticles.data && data?.data[0] ? (
-        <DetailsReviewComponent
-          page={+params?.page}
+        <DetailsComponent
+          articlePage={+params?.page}
           user={user}
           articlesOpinion={articlesOpinion.data}
           mobileArticles={mobileArticles.data}
