@@ -519,7 +519,7 @@ export default function DetailsComponent({
                 blocks={articleDetail?.pages[0].content?.blocks}
               />
             ) : null}
-            {articleDetail?.pages && articleDetail?.pages[0]
+            {articleDetail?.pages && articleDetail?.pages[0]?.content
               ? null
               : articleDetail.content?.blocks?.map((block: any) => {
                   console.log("block   ", block);
