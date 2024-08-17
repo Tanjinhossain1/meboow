@@ -19,11 +19,18 @@ export async function GET() {
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
         articles.forEach((article) => {
-            if(article?.category === "Mobiles"){
+            if (article?.category === "Mobiles") {
                 sitemapStream.write({ url: `/review/${formatForUrl(article?.title)}`, lastmod: new Date() });
+                if (article?.pages) {
+                    (article?.pages as any)?.map((page: any) => {
+                        if (page?.page !== 1) {
+                            sitemapStream.write({ url: `/review/${formatForUrl(article?.title)}/${page?.page}`, lastmod: new Date() });
+                        }
+                    })
+                }
             }
         })
-        
+
         sitemapStream.end();
 
         const sitemapXml = await streamToPromise(sitemapStream).then((data) => data.toString());

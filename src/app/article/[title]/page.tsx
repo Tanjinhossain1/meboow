@@ -26,7 +26,7 @@ export async function generateMetadata(
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   if (articleDetail?.data && articleDetail?.data[0]) {
     const title = articleDetail?.data[0]?.title;
-    const desc = articleDetail?.data[0]?.description.slice(0, 130);
+    const desc = `in this ${title} article have this ${articleDetail?.data[0]?.description.slice(0, 130)}`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = articleDetail?.data[0].image;
 

@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   Button,
   Grid,
+  Menu,
   MenuItem,
   Link as MuiLink,
   Paper,
@@ -15,7 +16,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
@@ -30,13 +31,13 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import XIcon from "@mui/icons-material/X";
 import AlignVerticalTopIcon from "@mui/icons-material/AlignVerticalTop";
 import Opinion from "@/app/mobile/[title]/_components/Opinion";
-import { ArrowDownIcon } from "lucide-react";
 import CommonEditorDisplayer from "./CommonEditorDisplayer";
+import { ArrowDownIcon } from "lucide-react";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
 }
-export default function DetailsComponent({
+export default function DetailsReviewComponent({
   articleDetail,
   category,
   articles,
@@ -44,7 +45,7 @@ export default function DetailsComponent({
   mobileArticles,
   user,
   articlesOpinion,
-  articlePage,
+  page,
 }: {
   articleDetail: RecentArticleDataType;
   category: CategoryTypes[];
@@ -53,16 +54,10 @@ export default function DetailsComponent({
   mobileArticles: MobileArticleType[];
   user: any;
   articlesOpinion: MobileOpinionType[];
-  articlePage?: number;
+  page?: number;
 }) {
-  const params = useParams();
   const history = useRouter();
-  console.log(" details  ", articleDetail);
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isOpen = Boolean(anchorEl);
 
   const handleHoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -71,13 +66,15 @@ export default function DetailsComponent({
   const handleHoverClose = () => {
     setAnchorEl(null);
   };
+
+  const isOpen = Boolean(anchorEl);
   const [tableOfContents, setTableOfContents] = useState<string[]>([]);
 
   useEffect(() => {
     if (articleDetail?.pages && articleDetail?.pages[0]) {
-      if (articlePage) {
+      if (page) {
         articleDetail?.pages?.map((rowPage) => {
-          if (rowPage.page === articlePage) {
+          if (rowPage.page === page) {
             rowPage.content?.blocks?.forEach((block: any) => {
               if (block.type === "header") {
                 console.log("header of content ", block);
@@ -108,6 +105,19 @@ export default function DetailsComponent({
           }
         });
       }
+      //   articleDetail?.pages[0].content?.blocks?.forEach((block: any) => {
+      //     if (block.type === "header") {
+      //       console.log("header of content ", block);
+      //       const headerText = block?.data?.text;
+      //       setTableOfContents((prev) => {
+      //         // Check if header already exists
+      //         if (!prev.includes(headerText)) {
+      //           return [...prev, headerText];
+      //         }
+      //         return prev;
+      //       });
+      //     }
+      //   });
     } else {
       articleDetail.content?.blocks?.forEach((block: any) => {
         if (block.type === "header") {
@@ -123,7 +133,8 @@ export default function DetailsComponent({
         }
       });
     }
-  }, [articleDetail, articlePage]);
+  }, [articleDetail,page]);
+
   // const formattedTitle = decodedTitle
   //   .split("-")
   //   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -175,7 +186,6 @@ export default function DetailsComponent({
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     }
   };
-
   return (
     <Grid container>
       <Paper
@@ -219,11 +229,7 @@ export default function DetailsComponent({
         </Button>
         <Grid container>
           <Grid xs={12} lg={7.5}>
-            <h1 className="mt-1 font-2xl text-[#333333] font-semibold">
-              {articleDetail?.title}
-
-            </h1>
-            {/* <Typography
+            <Typography
               sx={{
                 mt: 1,
                 fontSize: 35,
@@ -233,8 +239,8 @@ export default function DetailsComponent({
               variant="h1"
             >
               {" "}
-            </Typography> */}
-
+              {articleDetail?.title}
+            </Typography>
             <Grid container>
               <Grid
                 sx={{
@@ -395,7 +401,7 @@ export default function DetailsComponent({
                         }}
                       >
                         {" "}
-                        {mapPage?.page === articlePage ? (
+                        {mapPage?.page === page ? (
                           <Typography
                             sx={{ fontSize: 16, fontWeight: 600 }}
                             dangerouslySetInnerHTML={{
@@ -403,7 +409,7 @@ export default function DetailsComponent({
                             }}
                           />
                         ) : null}{" "}
-                        {mapPage?.page === articlePage ? mapPage?.title : null}
+                        {mapPage?.page === page ? mapPage?.title : null}
                       </Typography>
                     );
                   })
@@ -460,8 +466,8 @@ export default function DetailsComponent({
                       key={rowPage?.page}
                       href={
                         rowPage?.page === 1
-                          ? `/article/${formatForUrl(articleDetail?.title)}`
-                          : `/article/${formatForUrl(articleDetail?.title)}/${
+                          ? `/review/${formatForUrl(articleDetail?.title)}`
+                          : `/review/${formatForUrl(articleDetail?.title)}/${
                               rowPage?.page
                             }`
                       }
@@ -472,14 +478,7 @@ export default function DetailsComponent({
                             color: "red",
                             textDecoration: "underline",
                           },
-                          fontWeight:
-                            articlePage === rowPage?.page
-                              ? 600
-                              : page
-                              ? 500
-                              : rowPage?.page === 1
-                              ? 600
-                              : 500,
+                          fontWeight: page === rowPage?.page ? 600 : page ? 500 : rowPage?.page === 1 ? 600 : 500,
                         }}
                       >
                         <span style={{ paddingRight: "4px" }}>
@@ -493,6 +492,7 @@ export default function DetailsComponent({
                 })}
               </Popover>
             </Box>
+
             <Image
               style={{ marginTop: "20px" }}
               src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${articleDetail.image}`}
@@ -501,9 +501,12 @@ export default function DetailsComponent({
               width={0}
               height={0}
             />
-            {articlePage ? (
+
+            {/* {articleDetail?.pages?.map((page: any) => { */}
+            {/* return ( */}
+            {page ? (
               articleDetail?.pages?.map((rowPage) => {
-                return rowPage?.page === articlePage ? (
+                return rowPage?.page === page ? (
                   <CommonEditorDisplayer
                     key={rowPage?.page}
                     tableOfContents={tableOfContents}
@@ -518,6 +521,8 @@ export default function DetailsComponent({
                 blocks={articleDetail?.pages[0].content?.blocks}
               />
             ) : null}
+            {/* ); */}
+            {/* })} */}
             {articleDetail?.pages && articleDetail?.pages[0]
               ? null
               : articleDetail.content?.blocks?.map((block: any) => {
@@ -745,10 +750,7 @@ export default function DetailsComponent({
         </Grid>
         <Grid sx={{ mt: 3 }} container>
           <Grid xs={12} lg={7.5}>
-            <h2 className="text-xl text-white p-1 mt-1 bg-[#c40069]">
-            Related Posts
-            </h2>
-            {/* <Typography
+            <Typography
               sx={{
                 mt: 1,
                 fontSize: 22,
@@ -761,7 +763,7 @@ export default function DetailsComponent({
             >
               {" "}
               Related Posts
-            </Typography> */}
+            </Typography>
             <Grid container>
               {articles?.map((article: RecentArticleDataType) => {
                 return (
@@ -770,7 +772,7 @@ export default function DetailsComponent({
                       <Link
                         href={
                           article?.category === "Mobiles"
-                            ? `/article/${formatForUrl(article?.title)}`
+                            ? `/review/${formatForUrl(article?.title)}`
                             : `/article/${formatForUrl(article?.title)}`
                         }
                       >
@@ -786,7 +788,7 @@ export default function DetailsComponent({
                       <Link
                         href={
                           article?.category === "Mobiles"
-                            ? `/article/${formatForUrl(article?.title)}`
+                            ? `/review/${formatForUrl(article?.title)}`
                             : `/article/${formatForUrl(article?.title)}`
                         }
                       >

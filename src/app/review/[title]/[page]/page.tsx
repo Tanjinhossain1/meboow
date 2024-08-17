@@ -1,4 +1,4 @@
-import DetailsComponent from "@/Component/Details/Details";
+
 import DetailsReviewComponent from "@/Component/Details/ReviewDetails";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
@@ -16,7 +16,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 
 export async function generateMetadata(
-  { params }: { params: { title: string } },
+  { params }: { params: { title: string; page: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
   const formattedTitle = params?.title
@@ -27,7 +27,9 @@ export async function generateMetadata(
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   if (articleDetail?.data && articleDetail?.data[0]) {
     const title = articleDetail?.data[0]?.title;
-    const desc = articleDetail?.data[0]?.description.slice(0, 130);
+    const desc = `This is the Page for review articles. page number is ${
+      params?.page
+    } ${articleDetail?.data[0]?.description.slice(0, 130)}`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = articleDetail?.data[0].image;
 
@@ -50,6 +52,7 @@ interface DetailsParams {
   };
   params: {
     title: string;
+    page: string;
   };
 }
 
@@ -58,7 +61,10 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-    console.log('this is the formattedTitle inthe the review title', formattedTitle);
+  console.log(
+    "this is the formattedTitle inthe the review title",
+    formattedTitle
+  );
   const data = await fetchArticlesDetails({ title: formattedTitle });
   const Category = await fetchCategories();
   const Brands = await fetchBrands();
@@ -82,12 +88,13 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     <>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}/${params?.page}`}
         key="canonical"
       />
       <Navbar />
       {data?.data && mobileArticles.data && data?.data[0] ? (
         <DetailsReviewComponent
+          page={+params?.page}
           user={user}
           articlesOpinion={articlesOpinion.data}
           mobileArticles={mobileArticles.data}
