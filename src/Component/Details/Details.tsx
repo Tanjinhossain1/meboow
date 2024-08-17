@@ -353,6 +353,7 @@ export default function DetailsComponent({
                 </Typography>
               </Grid>
             </Grid>
+           { articleDetail?.pages && articleDetail?.pages[0]?.title ? 
             <Box
               sx={{
                 position: "relative",
@@ -414,7 +415,7 @@ export default function DetailsComponent({
                       fontSize: 14,
                     }}
                   >
-                    1<b>.</b> {articleDetail?.pages[0]?.title}
+                    1<b>.</b> {articleDetail?.pages && articleDetail?.pages[0]?.title}
                   </Typography>
                 )}
                 {/* <Typography>
@@ -492,7 +493,7 @@ export default function DetailsComponent({
                   );
                 })}
               </Popover>
-            </Box>
+            </Box>:null}
             <Image
               style={{ marginTop: "20px" }}
               src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${articleDetail.image}`}

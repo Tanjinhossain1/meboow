@@ -360,7 +360,8 @@ export default function DetailsReviewComponent({
                 </Typography>
               </Grid>
             </Grid>
-            <Box
+            {
+              articleDetail?.pages && articleDetail?.pages[0]?.title ?   <Box
               sx={{
                 position: "relative",
                 // display: "inline-block",
@@ -422,7 +423,7 @@ export default function DetailsReviewComponent({
                       fontSize: 14,
                     }}
                   >
-                    1<b>.</b> {articleDetail?.pages[0]?.title}
+                    1<b>.</b> {articleDetail?.pages && articleDetail?.pages[0]?.title}
                   </Typography>
                 )}
                 <Typography>
@@ -493,7 +494,9 @@ export default function DetailsReviewComponent({
                   );
                 })}
               </Popover>
-            </Box>
+            </Box> :null
+            }
+          
 
             <Image
               style={{ marginTop: "20px" }}
