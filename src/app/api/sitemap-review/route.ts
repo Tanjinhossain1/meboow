@@ -1,6 +1,6 @@
 // app/sitemap-article/route.ts
 import { getDb } from '@/drizzle/db';
-import { MobileArticles } from '@/drizzle/schema';
+import { Articles } from '@/drizzle/schema';
 import { formatForUrl } from '@/utils/utils';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
@@ -10,20 +10,20 @@ export async function GET() {
     try {
         const db = await getDb();
         console.log(
-            'connected to the db: get all Mobile xml ---> api/v1/article/all'
+            'connected to the db: get all articles ---> api/v1/article/all'
         )
-        const mobiles = await db
+        const articles = await db
             .select()
-            .from(MobileArticles)
-            .orderBy(desc(MobileArticles.id))
+            .from(Articles)
+            .orderBy(desc(Articles.id))
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
-        mobiles.forEach((mobile) => {
-            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}`, lastmod: new Date() });
-            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}/opinion`, lastmod: new Date() });
-            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}/picture`, lastmod: new Date() });
+        articles.forEach((article) => {
+            if(article?.category === "Mobiles"){
+                sitemapStream.write({ url: `/review/${formatForUrl(article?.title)}`, lastmod: new Date() });
+            }
         })
-
+        
         sitemapStream.end();
 
         const sitemapXml = await streamToPromise(sitemapStream).then((data) => data.toString());

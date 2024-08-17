@@ -1,4 +1,5 @@
 import { MobileArticleType } from "@/types/mobiles";
+import { formatForUrl } from "@/utils/utils";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +35,7 @@ export default function LatestDevices({
                 mt: 1,
               }}
             >
-              <Link href={`/mobile/detail/${mobile.id}`}>
+              <Link href={`/mobile/${formatForUrl(mobile?.title)}`}>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobile.display_image}`}
                   alt={mobile.title}
@@ -42,7 +43,7 @@ export default function LatestDevices({
                   height={45}
                 />
               </Link>
-              <Link href={`/mobile/detail/${mobile.id}`}>
+              <Link href={`/mobile/${formatForUrl(mobile?.title)}`}>
                 <Typography
                   sx={{ fontSize: 11, mt: 1, ":hover": { color: "red" } }}
                 >

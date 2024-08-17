@@ -18,8 +18,7 @@ import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import MobileListComponent from "./MobileListComponent";
-import { cleanText, formatDate } from "@/utils/utils";
-import Opinion from "@/app/mobile/detail/[id]/_components/Opinion";
+import { cleanText, formatDate, formatForUrl } from "@/utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -28,6 +27,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import XIcon from "@mui/icons-material/X";
 import AlignVerticalTopIcon from "@mui/icons-material/AlignVerticalTop";
+import Opinion from "@/app/mobile/[title]/_components/Opinion";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -51,7 +51,7 @@ export default function DetailsComponent({
 }) {
   const params = useParams();
   const history = useRouter();
-  console.log(' details  ',articleDetail)
+  console.log(" details  ", articleDetail);
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
@@ -83,8 +83,10 @@ export default function DetailsComponent({
   //   .join(" ");
   const handleShare = (platform: string) => {
     let shareUrl = "";
-    const url = `https://safarilist.com/details/${articleDetail?.id}/${articleDetail?.category}`;
-    // const url = `${process.env.NEXT_APP_CANONICAL_URL}/details/${articleDetail?.id}/${articleDetail?.category}`;
+    const url = `https://safarilist.com/${
+      articleDetail?.category === "Mobiles" ? "review" : "article"
+    }/${formatForUrl(articleDetail.title)}`;
+
     switch (platform) {
       case "facebook":
         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -141,9 +143,9 @@ export default function DetailsComponent({
           <MuiLink
             underline="hover"
             color="inherit"
-            href={`/category/${params?.category}`}
+            href={`/category/${articleDetail?.category}`}
           >
-            {params?.category}
+            {articleDetail?.category}
           </MuiLink>
           <Typography sx={{ fontSize: 12 }}>{articleDetail?.title}</Typography>
         </Breadcrumbs>
@@ -163,10 +165,10 @@ export default function DetailsComponent({
           size="small"
           variant="contained"
           onClick={() => {
-            history.push(`/category/${params?.category}`);
+            history.push(`/category/${articleDetail?.category}`);
           }}
         >
-          {params?.category}
+          {articleDetail?.category}
         </Button>
         <Grid container>
           <Grid xs={12} lg={7.5}>
@@ -220,9 +222,9 @@ export default function DetailsComponent({
                     fontSize: 16,
                     fontWeight: 400,
                     mt: 0.5,
-                    display:{
-                      xs:"none",
-                      md:"block",
+                    display: {
+                      xs: "none",
+                      md: "block",
                     },
                     textAlign: "center",
                     // mb: 0.5,
@@ -283,23 +285,23 @@ export default function DetailsComponent({
                 }}
                 xs={12}
               >
-              <Typography
+                <Typography
                   sx={{
                     fontSize: 16,
                     fontWeight: 400,
                     mt: 0.5,
                     textAlign: "center",
                     // mb: 0.5,
-                    display:{
-                      xs:"block",
-                      md:"none",
+                    display: {
+                      xs: "block",
+                      md: "none",
                     },
                   }}
                   variant="body1"
                 >
                   Published: {formatDate(articleDetail?.createdAt)}
                 </Typography>
-            </Grid>
+              </Grid>
             </Grid>
 
             <Image
@@ -553,35 +555,36 @@ export default function DetailsComponent({
               {articles?.map((article: RecentArticleDataType) => {
                 return (
                   <Fragment key={article.id}>
-                    <Grid
-                      onClick={
-                        () =>
-                          history.push(
-                            `/details/${article.id}/${
-                              article.category
-                            }`,
-                            {
-                              scroll: false,
-                            }
-                          )
-                        // history.push(
-                        //   `/details/${article.id}/${article.category}/${joinTitle}`
-                        // )
-                      }
-                      sx={{ m: 1, cursor: "pointer" }}
-                      xs={3.5}
-                    >
-                      <Image
-                        style={{ marginTop: "20px" }}
-                        src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                        alt={article.title}
-                        layout="responsive"
-                        width={0}
-                        height={0}
-                      />
-                      <Typography sx={{ mt: 1, fontSize: 14, fontWeight: 600 }}>
-                        {article.title}
-                      </Typography>
+                    <Grid sx={{ m: 1, cursor: "pointer" }} xs={3.5}>
+                      <Link
+                        href={
+                          article?.category === "Mobiles"
+                            ? `/review/${formatForUrl(article?.title)}`
+                            : `/article/${formatForUrl(article?.title)}`
+                        }
+                      >
+                        <Image
+                          style={{ marginTop: "20px" }}
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
+                          alt={article.title}
+                          layout="responsive"
+                          width={0}
+                          height={0}
+                        />
+                      </Link>
+                      <Link
+                        href={
+                          article?.category === "Mobiles"
+                            ? `/review/${formatForUrl(article?.title)}`
+                            : `/article/${formatForUrl(article?.title)}`
+                        }
+                      >
+                        <Typography
+                          sx={{ mt: 1, fontSize: 14, fontWeight: 600 }}
+                        >
+                          {article.title}
+                        </Typography>
+                      </Link>
                     </Grid>
                   </Fragment>
                 );

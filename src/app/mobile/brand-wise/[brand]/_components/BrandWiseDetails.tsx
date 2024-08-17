@@ -30,6 +30,7 @@ import Image from "next/image";
 import Lottie from "lottie-react";
 import searchLoading from "@/animationIcon/search-loader.json";
 import { Input } from "@/components/ui/input"
+import { formatForUrl } from "@/utils/utils";
 
 export default function BrandWiseDetails({
   mobileArticles,
@@ -220,7 +221,7 @@ export default function BrandWiseDetails({
                           xs={3}
                           // item
                         >
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Image
                               style={{
                                 width: "195px", // Ensure the image takes the full width of the card
@@ -242,7 +243,7 @@ export default function BrandWiseDetails({
                         >
                           <Link
                             style={{ textDecoration: "none" }}
-                            href={`/mobile/detail/${data.id}`}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
                           >
                             <Typography
                               sx={{
@@ -259,7 +260,7 @@ export default function BrandWiseDetails({
                         </Grid>
 
                         <Grid textAlign={"left"} item sx={{ width: "100%" }}>
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Typography
                               sx={{
                                 color: "#45517a",
@@ -282,7 +283,7 @@ export default function BrandWiseDetails({
                           </Link>
                         </Grid>
                         <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Typography
                               sx={{
                                 color: "#45517a",
@@ -305,7 +306,7 @@ export default function BrandWiseDetails({
                           </Link>
                         </Grid>
                         <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             {" "}
                             <Typography
                               sx={{
@@ -340,7 +341,7 @@ export default function BrandWiseDetails({
                         >
                           <Link
                             style={{ textDecoration: "none" }}
-                            href={`/mobile/detail/${data.id}`}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
                           >
                             <Typography sx={{ fontSize: 14 }}>
                               See Full Specification{" "}

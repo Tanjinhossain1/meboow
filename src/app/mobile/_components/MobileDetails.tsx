@@ -35,6 +35,7 @@ import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
 import MobileListComponent from "@/Component/Details/MobileListComponent";
 import CategoryListComponent from "@/Component/Category/CategoryListComponent";
 import MobileCommonDetails from "@/Component/HomePage/Component/MobileCommonDetails";
+import { formatForUrl } from "@/utils/utils";
 
 export default function MobileDetails({
   mobileArticles,
@@ -172,7 +173,7 @@ export default function MobileDetails({
                           xs={3}
                           // item
                         >
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Image
                               style={{
                                 width: "195px", // Ensure the image takes the full width of the card
@@ -194,7 +195,7 @@ export default function MobileDetails({
                         >
                           <Link
                             style={{ textDecoration: "none" }}
-                            href={`/mobile/detail/${data.id}`}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
                           >
                             <Typography
                               sx={{
@@ -211,7 +212,7 @@ export default function MobileDetails({
                         </Grid>
 
                         <Grid textAlign={"left"} item sx={{ width: "100%" }}>
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Typography
                               sx={{
                                 color: "#45517a",
@@ -234,7 +235,7 @@ export default function MobileDetails({
                           </Link>
                         </Grid>
                         <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Typography
                               sx={{
                                 color: "#45517a",
@@ -257,7 +258,7 @@ export default function MobileDetails({
                           </Link>
                         </Grid>
                         <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                          <Link href={`/mobile/detail/${data.id}`}>
+                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                             {" "}
                             <Typography
                               sx={{
@@ -292,7 +293,7 @@ export default function MobileDetails({
                         >
                           <Link
                             style={{ textDecoration: "none" }}
-                            href={`/mobile/detail/${data.id}`}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
                           >
                             <Typography sx={{ fontSize: 14 }}>
                               See Full Specification{" "}

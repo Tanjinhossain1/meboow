@@ -12,7 +12,7 @@ import "swiper/css/scrollbar";
 
 import "./MobileReviews.css";
 import Image from "next/image";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
 
 // import required modules
@@ -92,9 +92,8 @@ export default function NewsAndReviews({
                   >
                     <div style={{ width: "100%" }}>
                       <Link
-                        href={`/details/${article?.id}/${
-                          article.category
-                        }`}
+                       
+                        href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -126,18 +125,14 @@ export default function NewsAndReviews({
                       {formatDate(article.updateAt)}
                     </Typography>
                     <Link
-                      href={`/details/${article?.id}/${
-                        article.category
-                      }`}
+                   href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                     >
                       <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                         {article.title}
                       </p>
                     </Link>
                     <Link
-                      href={`/details/${article?.id}/${
-                        article.category
-                      }`}
+                    href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                     >
                       <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
                         {article?.description}

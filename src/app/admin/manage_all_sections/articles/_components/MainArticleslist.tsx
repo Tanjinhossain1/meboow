@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
@@ -20,7 +20,10 @@ export default function MainArticlesDetailList({
 
   const handleCopy = async (params: RecentArticleDataType) => {
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/details/${params?.id}/${params?.category}`;
+      const textToCopy =
+        params.category === "Mobiles"
+          ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(params.title)}`
+          : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(params.title)}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);

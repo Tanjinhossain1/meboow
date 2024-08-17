@@ -12,7 +12,8 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import DisplayArticleComponent from "../HomePage/DisplayArticleComponent";
-import { formatDate_into_month_date_string } from "@/utils/utils";
+import { formatDate_into_month_date_string, formatForUrl } from "@/utils/utils";
+import Link from "next/link";
 
 export default function LatestNews({
   articles,
@@ -79,24 +80,10 @@ export default function LatestNews({
                       position: "relative",
                       cursor: "pointer",
                     }}
-                    onClick={() => {
-                        const joinTitle = data.title
-                          .split(" ")
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          )
-                          .join("-");
-                        history.push(
-                          `/details/${data.id}/${
-                            data.category
-                          }`,
-                          {
-                            scroll: false,
-                          }
-                        );
-                      }}
+                    
                   >
+                    <Link href={data?.category === "Mobiles" ? `/review/${formatForUrl(data?.title) }` : `/article/${formatForUrl(data?.title)}`}>
+                    
                     <Grid container direction="column" alignItems="center"> 
                         <Image
                           style={{
@@ -128,6 +115,7 @@ export default function LatestNews({
                         </Typography>
                       </Grid>
                     </Grid>
+                    </Link>
                   </Card>
                 );
               })}

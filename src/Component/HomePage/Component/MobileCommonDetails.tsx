@@ -12,6 +12,7 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { formatForUrl } from "@/utils/utils";
 
 export default function MobileCommonDetails({
   articles,
@@ -69,7 +70,7 @@ export default function MobileCommonDetails({
                         xs={3}
                         // item
                       >
-                        <Link href={`/mobile/detail/${data.id}`}>
+                        <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                           <Image
                             style={{
                               width: "195px", // Ensure the image takes the full width of the card
@@ -91,7 +92,7 @@ export default function MobileCommonDetails({
                       >
                         <Link
                           style={{ textDecoration: "none" }}
-                          href={`/mobile/detail/${data.id}`}
+                          href={`/mobile/${formatForUrl(data?.title)}`}
                         >
                           <Typography
                             sx={{
@@ -108,7 +109,7 @@ export default function MobileCommonDetails({
                       </Grid>
 
                       <Grid textAlign={"left"} item sx={{ width: "100%" }}>
-                        <Link href={`/mobile/detail/${data.id}`}>
+                        <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                           <Typography
                             sx={{
                               color: "#45517a",
@@ -131,7 +132,7 @@ export default function MobileCommonDetails({
                         </Link>
                       </Grid>
                       <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                        <Link href={`/mobile/detail/${data.id}`}>
+                        <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                           <Typography
                             sx={{
                               color: "#45517a",
@@ -154,7 +155,7 @@ export default function MobileCommonDetails({
                         </Link>
                       </Grid>
                       <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                        <Link href={`/mobile/detail/${data.id}`}>
+                        <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                           {" "}
                           <Typography
                             sx={{
@@ -189,7 +190,7 @@ export default function MobileCommonDetails({
                       >
                         <Link
                           style={{ textDecoration: "none" }}
-                          href={`/mobile/detail/${data.id}`}
+                          href={`/mobile/${formatForUrl(data?.title)}`}
                         >
                           <Typography sx={{ fontSize: 14,color:"#1866c0" }}>
                             See Full Specification{" "}

@@ -17,7 +17,7 @@ import axios from "axios";
 import BackdropProviderContext from "@/Component/BackdropProvider";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import { useRouter } from "next/navigation";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 
 export default function Opinion({
@@ -38,6 +38,10 @@ export default function Opinion({
     SnackbarProviderContext
   );
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
+  const formattedTitle = mobileDetail?.title
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("-");
 
   const methods = useForm({
     defaultValues: user
@@ -82,8 +86,12 @@ export default function Opinion({
           SnackbarOpen("Successfully Post Your Opinion", "success");
           router.push(
             isArticle
-              ? `/details/${articleDetail?.id}/News?page=2&limit=3`
-              : `/mobile/detail/${mobileDetail?.id}/opinion`
+              ? articleDetail?.category === "Mobiles"
+                ? `/review/${formatForUrl(articleDetail?.title)}`
+                : `/article/${formatForUrl(
+                    articleDetail?.title ? articleDetail?.title : ""
+                  )}`
+              : `/mobile/${formattedTitle}/opinion`
           );
         }
       })
@@ -97,22 +105,19 @@ export default function Opinion({
   };
   return (
     <Grid container>
-       
-     
       <Grid
         sx={{
           mt: 2,
           border: "1px solid gray",
           mx: "auto",
-          width:isArticle ? "100%": "90%",
+          width: isArticle ? "100%" : "90%",
           mb: 4,
         }}
         container
       >
         <Paper sx={{ width: "100%" }} elevation={1}>
           <Typography sx={{ fontSize: 20, fontWeight: 600, p: 1 }}>
-            {mobileDetail?.title} -{" "}
-            <i>USER OPINIONS AND REVIEWS</i>
+            {mobileDetail?.title} - <i>USER OPINIONS AND REVIEWS</i>
           </Typography>
         </Paper>
         <Grid sx={{ bgcolor: "lightgray" }} container>
@@ -122,16 +127,20 @@ export default function Opinion({
           {allMobilesOpinion?.map(
             (comment: MobileOpinionType, index: number) => (
               <Paper
-              key={comment?.id}
+                key={comment?.id}
                 sx={{ width: "100%", mt: index >= 1 ? 3 : 1 }}
                 elevation={1}
               >
                 <Grid sx={{ p: 1 }} key={comment.id} container>
                   <Grid xs={12}>
                     <Box
-                      sx={{ display: "flex", justifyContent: "space-between",alignItems: "center"}}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
                     >
-                      <Box sx={{ display: "flex" ,alignItems:"center"}}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
                         <Avatar sx={{ bgcolor: "#E91E63" }}>
                           {comment.name.slice(0, 1)}
                         </Avatar>
@@ -152,8 +161,10 @@ export default function Opinion({
           )}
         </Grid>
       </Grid>
-      <Grid sx={{mt:isArticle? 3:0}} xs={12}>
-      <Typography sx={{ fontSize: 25, fontWeight: 600 }}>{isArticle ? "Post Your Opinion" :"Give your Opinion"}</Typography>
+      <Grid sx={{ mt: isArticle ? 3 : 0 }} xs={12}>
+        <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+          {isArticle ? "Post Your Opinion" : "Give your Opinion"}
+        </Typography>
       </Grid>
       <FormProvider {...methods}>
         <Box
@@ -165,7 +176,7 @@ export default function Opinion({
             gap: 2,
             mt: 2,
           }}
-          className={isArticle ? `w-full`:`md:w-3/4 mx-auto`}
+          className={isArticle ? `w-full` : `md:w-3/4 mx-auto`}
         >
           <Grid gap={2} container>
             <Grid xs={12} md={5.8}>

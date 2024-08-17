@@ -1,5 +1,5 @@
 import { BrandTypes, CategoryTypes } from "@/types/category";
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -11,11 +11,22 @@ export default function BrandListComponent({
     const history = useRouter();
   return (
     <>
-      <Container sx={{ bgcolor: "#023359", p: 1,mt:3 }}>
-        <Typography sx={{ fontSize: 18, fontWeight: 600, color: "#f5f5f5" }}>
+        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+        <Typography
+          className="text-red-600"
+          sx={{ fontSize: 18, fontWeight: 600 }}
+        >
           Brands
         </Typography>
-      </Container>
+        <Divider
+          sx={{
+            flexGrow: 1, // Allows the divider to fill the remaining space
+            marginLeft: 2, // Add space between the text and divider
+            backgroundColor: "red", // Set the divider color
+            height: "2px", // Adjust the divider's thickness
+          }}
+        />
+      </Box>
 
       {brands?.map((value: BrandTypes) => {
         return (

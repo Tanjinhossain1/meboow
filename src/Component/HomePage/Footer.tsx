@@ -28,6 +28,7 @@ import {
   // TikTok as TikTokIcon
 } from "@mui/icons-material";
 import Image from "next/image";
+import { formatForUrl } from "@/utils/utils";
 
 export default async function Footer() {
   const newsAndReviews = await fetchArticles({ limit: "10" });
@@ -53,7 +54,7 @@ export default async function Footer() {
                     <Grid xs={5.5} key={index}>
                       <Typography
                         component="a"
-                        href={`/mobile/detail/${item.id}`}
+                        href={`/mobile/${formatForUrl(item?.title)}`}
                         className="overflow-hidden text-ellipsis line-clamp-1 hover:text-red-500"
                         sx={{
                           color: "#fff",
@@ -98,9 +99,7 @@ export default async function Footer() {
                       <Typography
                         className="overflow-hidden text-ellipsis line-clamp-1"
                         component="a"
-                        href={`/details/${item?.id}/${
-                          item.category
-                        }`}
+                        href={item?.category === "Mobiles" ? `/review/${formatForUrl(item?.title) }` : `/article/${formatForUrl(item?.title)}`}
                         sx={{
                           color: "#fff",
                           m: 0,

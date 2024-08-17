@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@mui/material';
 import Link from 'next/link';
 import { MobileArticleType } from '@/types/mobiles';
+import { formatForUrl } from '@/utils/utils';
 
 const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dailyInterest:MobileArticleType[]}) => {
 
@@ -23,7 +24,7 @@ const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dail
               <TableRow className={index % 2 !== 0 ? 'bg-[#e8f6e9]' : ''} key={row.id}>
                 <TableCell className='p-1' sx={{m:0,p:0}}>{index + 1}.</TableCell>
                 <TableCell  className='p-1' sx={{m:0,p:0,":hover":{color:"red"}}}>
-                    <Link   href={`/mobile/detail/${row.id}`}>{row.title}</Link>
+                    <Link   href={`/mobile/${formatForUrl(row?.title)}`}>{row.title}</Link>
                 </TableCell>
               </TableRow>
             ))}
@@ -47,7 +48,7 @@ const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dail
               <TableRow className={index % 2 !== 0 ? 'bg-[#e8eff6]' : ''} key={row.id}>
                 <TableCell className='p-1' sx={{p:0,m:0}}>{index + 1}.</TableCell>
                 <TableCell className='p-1' sx={{m:0,p:0,":hover":{color:"red"}}}>
-                <Link  href={`/mobile/detail/${row.id}`}>{row.title}</Link>
+                <Link  href={`/mobile/${formatForUrl(row?.title)}`}>{row.title}</Link>
                 </TableCell>
               </TableRow>
             ))}

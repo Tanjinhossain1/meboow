@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
-import { truncateText } from "@/utils/utils";
+import { formatForUrl, truncateText } from "@/utils/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import RecentArticleComponent from "./RecentArticleComponent";
@@ -34,7 +34,6 @@ import TopDevicesTable from "./Component/TopDevicesTable";
 import LatestDevices from "./Component/LatestDevices";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import Tags from "@/app/mobile/detail/[id]/_components/Tags";
 
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -111,21 +110,11 @@ export const ContentBox = ({
         position: "relative",
         width: "100%",
         height: isBig ? "348px" : "170px",
-      }}
-      // onClick={() => {
-      //   history.push(
-      //     `/details/${id}/${category}?${new URLSearchParams({
-      //       page: `${Number(page) + 1}`,
-      //       limit: limit,
-      //     })}`,
-      //     {
-      //       scroll: false,
-      //     }
-      //   );
-      // }}
+      }} 
     >
       <Link
-        href={`/details/${id}/${category}`}
+        href={category === "Mobiles" ? `/review/${formatForUrl(title) }` : `/article/${formatForUrl(title)}`}
+       
       >
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
@@ -135,7 +124,7 @@ export const ContentBox = ({
       </Link>
     </Box>
     <Link
-      href={`/details/${id}/${category}`}
+      href={category === "Mobiles" ? `/review/${formatForUrl(title) }` : `/article/${formatForUrl(title)}`}
     >
       <Title
         sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
@@ -149,7 +138,7 @@ export const ContentBox = ({
       </Title>
     </Link>
     <Link
-      href={`/details/${id}/${category}`}
+      href={category === "Mobiles" ? `/review/${formatForUrl(title) }` : `/article/${formatForUrl(title)}`}
     >
       <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
         {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}

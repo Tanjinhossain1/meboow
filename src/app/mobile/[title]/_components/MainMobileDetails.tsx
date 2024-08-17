@@ -8,7 +8,11 @@ import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
 import ExpertViewComponent from "@/Component/Mobile/ExpertView";
 import LatestNews from "@/Component/Mobile/LatestNews";
 import { BrandTypes } from "@/types/category";
-import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
+import {
+  MobileArticleType,
+  MobileOpinionType,
+  MobileTagsType,
+} from "@/types/mobiles";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Button, Grid, Paper } from "@mui/material";
 import React, { Fragment } from "react";
@@ -41,8 +45,12 @@ export default function MainMobileDetails({
   isOpinion?: boolean;
   allMobilesOpinion?: MobileOpinionType[];
   user?: any;
-  tags?: MobileTagsType[]
+  tags?: MobileTagsType[];
 }) {
+  const formattedTitle = mobileArticles.title
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("-");
   return (
     <Fragment>
       {" "}
@@ -54,7 +62,7 @@ export default function MainMobileDetails({
         >
           <Grid container>
             <Grid
-              item
+              
               sx={{
                 mt: 1,
                 mr: {
@@ -86,103 +94,93 @@ export default function MainMobileDetails({
                 mobiles={relatedMobileDevices}
               />
             </Grid>
-            <Grid container item xs={12} sm={8}>
+            <Grid   xs={12} sm={8}>
               <IphoneCard
-              user={user}
+                user={user}
                 isPicture={isPicture}
                 isOpinion={isOpinion}
                 mobileDetail={mobileArticles}
               />
 
               {isPicture ? (
-                <Grid sx={{ mt: 2 }} container>
-                  {mobileArticles?.image?.map((image) => {
-                    return (
-                      <Grid
-                        sx={{ mt: 5 }}
-                        display={"flex"}
-                        justifyContent={"center"}
-                        xs={12}
-                        key={image}
-                      >
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
-                          alt={mobileArticles.title}
-                          width={300}
-                          height={300}
-                          //   layout="responsive"
-                        />
-                      </Grid>
-                    );
-                  })}
-                </Grid>
+                mobileArticles?.image?.map((image) => {
+                  return (
+                    <Grid
+                      sx={{ mt: 5 }}
+                      display={"flex"}
+                      justifyContent={"center"}
+                      xs={12}
+                      key={image}
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
+                        alt={mobileArticles.title}
+                        width={300}
+                        height={300}
+                        //   layout="responsive"
+                      />
+                    </Grid>
+                  );
+                })
               ) : isOpinion ? (
-                <Grid container>
-                  <Opinion
-                    allMobilesOpinion={allMobilesOpinion}
-                    user={user}
-                    mobileDetail={mobileArticles}
-                  />
-                </Grid>
+                <Opinion
+                  allMobilesOpinion={allMobilesOpinion}
+                  user={user}
+                  mobileDetail={mobileArticles}
+                />
               ) : (
                 <>
                   {" "}
                   <BottomMobileDetails mobileArticles={mobileArticles} />
                   <ExpertViewComponent mobileArticles={mobileArticles} />
-                  <Grid container>
-                    <Paper
-                      elevation={1}
-                      style={{
-                        background: mobileArticles.top_background_color
-                      }}
-                      className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
-                    >
-                      {mobileArticles?.key_specifications?.review ? (
-                        <Link href={mobileArticles?.key_specifications?.review}>
-                          <Button
-                            sx={{ color: "white" }}
-                            className="hover:bg-red-600 px-3"
-                          >
-                            Review
-                          </Button>
-                        </Link>
-                      ) : null}
-                      {isOpinion ? null : (
-                        <Link
-                          href={`/mobile/detail/${mobileArticles?.id}/opinion`}
+                  <Paper
+                    elevation={1}
+                    style={{
+                      background: mobileArticles.top_background_color,
+                    }}
+                    className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
+                  >
+                    {mobileArticles?.key_specifications?.review ? (
+                      <Link href={mobileArticles?.key_specifications?.review}>
+                        <Button
+                          sx={{ color: "white" }}
+                          className="hover:bg-red-600 px-3"
                         >
-                          <Button
-                            sx={{ color: "white" }}
-                            className="hover:bg-red-600 px-3"
-                          >
-                            Opinions
-                          </Button>
-                        </Link>
-                      )}
-                      {isPicture || isOpinion ? (
-                        <Link href={`/mobile/detail/${mobileArticles?.id}`}>
-                          <Button
-                            sx={{ color: "white" }}
-                            className="hover:bg-red-600 px-3"
-                          >
-                            Specification
-                          </Button>
-                        </Link>
-                      ) : null}
-                      {isPicture ? null : (
-                        <Link
-                          href={`/mobile/detail/${mobileArticles?.id}/pictures`}
+                          Review
+                        </Button>
+                      </Link>
+                    ) : null}
+                    {isOpinion ? null : (
+                      <Link href={`/mobile/${formattedTitle}/opinion`}>
+                        <Button
+                          sx={{ color: "white" }}
+                          className="hover:bg-red-600 px-3"
                         >
-                          <Button
-                            sx={{ color: "white" }}
-                            className="hover:bg-red-600 px-3"
-                          >
-                            Picture
-                          </Button>
-                        </Link>
-                      )}
-                    </Paper>
-                  </Grid>
+                          Opinions
+                        </Button>
+                      </Link>
+                    )}
+                    {isPicture || isOpinion ? (
+                      <Link href={`/mobile/${formattedTitle}`}>
+                        <Button
+                          sx={{ color: "white" }}
+                          className="hover:bg-red-600 px-3"
+                        >
+                          Specification
+                        </Button>
+                      </Link>
+                    ) : null}
+                    {isPicture ? null : (
+                      <Link href={`/mobile/${formattedTitle}/pictures`}>
+                        <Button
+                          sx={{ color: "white" }}
+                          className="hover:bg-red-600 px-3"
+                        >
+                          Picture
+                        </Button>
+                      </Link>
+                    )}
+                  </Paper>
                   <Tags tags={tags} />
                   <Opinion
                     allMobilesOpinion={allMobilesOpinion}

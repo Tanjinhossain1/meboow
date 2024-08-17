@@ -11,6 +11,7 @@ import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
+import { formatForUrl } from "@/utils/utils";
 
 export default function PopularMobiles({
   articles,
@@ -83,12 +84,8 @@ export default function PopularMobiles({
                           height: "98px", // Adjust the height for uniformity
                         }}
                         xs={3}
-                        onClick={() => {
-                          // history.push(`/mobile/detail/${data.id}`);
-                        }}
-                        // item
                       >
-                        <Link href={`/mobile/detail/${data.id}`}>
+                        <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                         <Image
                           style={{
                             width: "195px", // Ensure the image takes the full width of the card
@@ -104,9 +101,9 @@ export default function PopularMobiles({
                         />
                         </Link>
                       </Grid>
-                      <Link href={`/mobile/detail/${data.id}`}><Grid
+                      <Link href={`/mobile/${formatForUrl(data?.title)}`}><Grid
                         // onClick={() => {
-                        //   // history.push(`/mobile/detail/${data.id}`);
+                        //   // history.push(`/mobile/${formatForUrl(data?.title)}`);
                         // }}
                         item
                         sx={{ width: "100%", mt: 2, height: "45px" }}
@@ -123,10 +120,10 @@ export default function PopularMobiles({
                         </Typography>
                       </Grid>
                       </Link> 
-                      <Link href={`/mobile/detail/${data.id}`}>
+                      <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
                         // onClick={() => {
-                        //   history.push(`/mobile/detail/${data.id}`);
+                        //   history.push(`/mobile/${formatForUrl(data?.title)}`);
                         // }}
                         textAlign={"left"}
                         item
@@ -152,10 +149,10 @@ export default function PopularMobiles({
                       </Grid>
                       </Link>
                       
-                      <Link href={`/mobile/detail/${data.id}`}>
+                      <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
                         // onClick={() => {
-                        //   history.push(`/mobile/detail/${data.id}`);
+                        //   history.push(`/mobile/${formatForUrl(data?.title)}`);
                         // }}
                         item
                         textAlign={"left"}
@@ -180,10 +177,10 @@ export default function PopularMobiles({
                         </Typography>
                       </Grid>
                       </Link>
-                      <Link href={`/mobile/detail/${data.id}`}>
+                      <Link href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
                         // onClick={() => {
-                        //   history.push(`/mobile/detail/${data.id}`);
+                        //   history.push(`/mobile/${formatForUrl(data?.title)}`);
                         // }}
                         item
                         textAlign={"left"}
@@ -228,7 +225,7 @@ export default function PopularMobiles({
                       >
                         {
                             data?.prices[0].start_from ? 
-                            <Link href={`/mobile/detail/${data.id}`}><Typography
+                            <Link href={`/mobile/${formatForUrl(data?.title)}`}><Typography
                             sx={{
                               color: "#055491",
                               fontWeight: 800,
@@ -236,7 +233,7 @@ export default function PopularMobiles({
                               textAlign: "center",
                             }}
                             // onClick={() => {
-                            //   history.push(`/mobile/detail/${data.id}`);
+                            //   history.push(`/mobile/${formatForUrl(data?.title)}`);
                             // }}
                           >
                             ${data?.prices[0].start_from}

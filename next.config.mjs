@@ -52,6 +52,10 @@ const nextConfig = {
           source: '/sitemap-category.xml',
           destination: '/api/sitemap-category', // Exact path to your route
         },
+        {
+          source: '/sitemap-review.xml',
+          destination: '/api/sitemap-review', // Exact path to your route
+        },
       ];
     },
   

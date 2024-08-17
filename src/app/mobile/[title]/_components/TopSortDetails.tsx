@@ -114,6 +114,10 @@ const IphoneCard = ({
         });
     }
   }, [user, mobileDetail, is_done]);
+  const formattedTitle = mobileDetail.title
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("-");
   return (
     <Card style={{
       background: mobileDetail.top_background_color
@@ -587,21 +591,21 @@ const IphoneCard = ({
             </Link>
           ) : null}
           {isOpinion ? null : (
-            <Link href={`/mobile/detail/${mobileDetail?.id}/opinion`}>
+            <Link href={`/mobile/${formattedTitle}/opinion`}>
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Opinions
               </Button>
             </Link>
           )}
           {isPicture || isOpinion ? (
-            <Link href={`/mobile/detail/${mobileDetail?.id}`}>
+            <Link href={`/mobile/${formattedTitle}`}>
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Specification
               </Button>
             </Link>
           ) : null}
           {isPicture ? null : (
-            <Link href={`/mobile/detail/${mobileDetail?.id}/pictures`}>
+            <Link href={`/mobile/${formattedTitle}/pictures`}>
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Picture
               </Button>

@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Grid as SwiperGrid } from "swiper/modules";
 import Image from "next/image";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 
 // Import Swiper styles
 import "swiper/css";
@@ -43,9 +43,7 @@ export default function MobileReviews({
         >
           <div style={{ width: "100%" }}>
             <Link
-              href={`/details/${mobilesArticles[0]?.id}/${
-                mobilesArticles[0]?.category
-              }`}
+              href={mobilesArticles[0]?.category === "Mobiles" ? `/review/${formatForUrl(mobilesArticles[0]?.title) }` : `/article/${formatForUrl(mobilesArticles[0]?.title)}`}
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
@@ -79,9 +77,7 @@ export default function MobileReviews({
             </Typography>
           )}
           <Link
-            href={`/details/${mobilesArticles[0]?.id}/${
-              mobilesArticles[0]?.category
-            }`}
+            href={mobilesArticles[0]?.category === "Mobiles" ? `/review/${formatForUrl(mobilesArticles[0]?.title) }` : `/article/${formatForUrl(mobilesArticles[0]?.title)}`}
           >
             <p className="text-sm hover:text-red-600 font-bold text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
               {mobilesArticles[0]?.title}
@@ -89,9 +85,7 @@ export default function MobileReviews({
           </Link>
           {isTrending ? null : (
             <Link
-              href={`/details/${mobilesArticles[0]?.id}/${
-                mobilesArticles[0]?.category
-              }`}
+            href={mobilesArticles[0]?.category === "Mobiles" ? `/review/${formatForUrl(mobilesArticles[0]?.title) }` : `/article/${formatForUrl(mobilesArticles[0]?.title)}`}
             >
               {" "}
               <p className="text-[12px] mt-2 hover:text-red-600 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -134,9 +128,7 @@ export default function MobileReviews({
               >
                 <div style={{ width: "100%" }}>
                   <Link
-                    href={`/details/${article?.id}/${
-                      article.category
-                    }`}
+                   href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -151,9 +143,7 @@ export default function MobileReviews({
               </Grid>
               <Grid item xs={8}>
               <Link
-                    href={`/details/${article?.id}/${
-                      article.category
-                    }`}
+                   href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                   >
                 <p className="text-xs hover:text-red-600 font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                   {article.title}
@@ -208,10 +198,8 @@ export default function MobileReviews({
                       alignItems="center"
                     >
                       <div style={{ width: "100%" }}>
-                        <Link
-                          href={`/details/${article?.id}/${
-                            article?.category
-                          }`}
+                        <Link 
+                          href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                         >
                           <Image
                             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -243,9 +231,8 @@ export default function MobileReviews({
                         {formatDate(article.createdAt)}
                       </Typography>
                       <Link
-                        href={`/details/${article.id}/${
-                          article.category
-                        }`}
+                         
+                        href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
                       >
                         {" "}
                         <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">

@@ -10,6 +10,7 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { formatForUrl } from "@/utils/utils";
 
 export default function TopLatestMobile({
   articles,
@@ -83,7 +84,7 @@ export default function TopLatestMobile({
                         }}
                         xs={3}
                         onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
+                          history.push(`/mobile/${formatForUrl(data?.title)}`);
                         }}
                         // item
                       >
@@ -103,7 +104,7 @@ export default function TopLatestMobile({
                       </Grid>
                       <Grid
                         onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
+                          history.push(`/mobile/${formatForUrl(data?.title)}`);
                         }}
                         item
                         sx={{ width: "100%", mt: 2, height: "45px" }}
@@ -122,7 +123,7 @@ export default function TopLatestMobile({
 
                       <Grid
                         onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
+                          history.push(`/mobile/${formatForUrl(data?.title)}`);
                         }}
                         textAlign={"left"}
                         item
@@ -148,7 +149,7 @@ export default function TopLatestMobile({
                       </Grid>
                       <Grid
                         onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
+                          history.push(`/mobile/${formatForUrl(data?.title)}`);
                         }}
                         item
                         textAlign={"left"}
@@ -174,7 +175,7 @@ export default function TopLatestMobile({
                       </Grid>
                       <Grid
                         onClick={() => {
-                          history.push(`/mobile/detail/${data.id}`);
+                          history.push(`/mobile/${formatForUrl(data?.title)}`);
                         }}
                         item
                         textAlign={"left"}
@@ -224,7 +225,7 @@ export default function TopLatestMobile({
                             textAlign: "center",
                           }}
                           onClick={() => {
-                            history.push(`/mobile/detail/${data.id}`);
+                            history.push(`/mobile/${formatForUrl(data?.title)}`);
                           }}
                         >
                           ${data?.prices[0].start_from}

@@ -1,16 +1,17 @@
 "use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { formatDate, truncateText } from "@/utils/utils";
+import { formatDate, formatForUrl, truncateText } from "@/utils/utils";
 import { Button, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import Link from "next/link";
 
 export default function DisplayArticleComponent({
   data,
   asSmall,
-  user
+  user,
 }: {
   data: RecentArticleDataType;
   asSmall?: boolean;
@@ -38,54 +39,46 @@ export default function DisplayArticleComponent({
       sm={5.6}
     >
       <Grid xs={asSmall ? 5 : 12} sm={5.5} sx={{ height: "100%" }}>
-        <Image
-          style={{ width: "100%", cursor: "pointer", height: "100%" }}
-          alt=""
-          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.image}`}
-          // layout="responsive"
-          width={300}
-          height={300}
-          onClick={() => {
-            const joinTitle = data.title
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join("-");
-            history.push(
-              `/details/${data.id}/${
-                data.category
-              }`,
-              {
-                scroll: false,
-              }
-            );
-          }}
-        />
+        <Link
+          href={
+            data?.category === "Mobiles"
+              ? `/review/${formatForUrl(data?.title)}`
+              : `/article/${formatForUrl(data?.title)}`
+          }
+        >
+          <Image
+            style={{ width: "100%", cursor: "pointer", height: "100%" }}
+            alt=""
+            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.image}`}
+            // layout="responsive"
+            width={300}
+            height={300}
+          />
+        </Link>
       </Grid>
       <Grid xs={0} sm={0.5}></Grid>
       <Grid xs={asSmall ? 7 : 12} sm={6}>
-        <Typography
-          sx={{
-            fontSize: asSmall ? 14 : 18,
-            fontWeight: 600,
-            // fontFamily: "revert",
-            ml: 1,
-            cursor: "pointer",
-            ":hover": { color: "#c4007c" },
-          }}
-          onClick={() => {
-          
-            history.push(
-              `/details/${data.id}/${
-                data.category
-              }`,
-              {
-                scroll: false,
-              }
-            );
-          }}
+        <Link
+          href={
+            data?.category === "Mobiles"
+              ? `/review/${formatForUrl(data?.title)}`
+              : `/article/${formatForUrl(data?.title)}`
+          }
         >
-          {data.title}
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: asSmall ? 14 : 18,
+              fontWeight: 600,
+              // fontFamily: "revert",
+              ml: 1,
+              cursor: "pointer",
+              ":hover": { color: "#c4007c" },
+            }}
+          >
+            {data.title}
+          </Typography>
+        </Link>
+        <Link href={data?.category === "Mobiles" ? `/review/${formatForUrl(data?.title) }` : `/article/${formatForUrl(data?.title)}`}>
         <Typography
           sx={{
             fontSize: 13,
@@ -93,26 +86,27 @@ export default function DisplayArticleComponent({
             mt: asSmall ? 0.5 : 2,
             ml: 1,
           }}
-        >
+          >
           {formatDate(data.createdAt)}
           {/* {asSmall ? formatDate(data.createdAt) : null} */}
         </Typography>
-        {user?.role === "admin" || user?.role === "sub_admin" ? 
-        <Typography
-          sx={{
-            color: "#055491",
-            fontWeight: 800,
-            fontSize: "16px",
-            textAlign: "center",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            history.push(`/admin/article/edit/${data.id}`);
-          }}
-        >
-          <EditNoteIcon />
-        </Typography>
-        : null}
+          </Link>
+        {user?.role === "admin" || user?.role === "sub_admin" ? (
+          <Typography
+            sx={{
+              color: "#055491",
+              fontWeight: 800,
+              fontSize: "16px",
+              textAlign: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              history.push(`/admin/article/edit/${data.id}`);
+            }}
+          >
+            <EditNoteIcon />
+          </Typography>
+        ) : null}
       </Grid>
     </Grid>
   );

@@ -1,6 +1,7 @@
 // app/sitemap-article/route.ts
 import { getDb } from '@/drizzle/db';
 import { Articles } from '@/drizzle/schema';
+import { formatForUrl } from '@/utils/utils';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
@@ -18,10 +19,11 @@ export async function GET() {
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
         articles.forEach((article) => {
-          
-            sitemapStream.write({ url: `/details/${article.id}/${article.category}`, lastmod: new Date() });
+            if (article?.category !== "Mobiles") {
+                sitemapStream.write({ url: `/article/${formatForUrl(article?.title)}`, lastmod: new Date() });
+            }
         })
-        
+
         sitemapStream.end();
 
         const sitemapXml = await streamToPromise(sitemapStream).then((data) => data.toString());

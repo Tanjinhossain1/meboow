@@ -35,7 +35,7 @@ export async function fetchArticles({
   allArticles?: boolean;
   showInNewsWithAll?: string;
   best_reviews?: string;
-  isRelated?:string;
+  isRelated?: string;
 }): Promise<{
   data: RecentArticleDataType[];
   page: number;
@@ -58,9 +58,9 @@ export async function fetchArticles({
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?all=all`;
   } else if (showInNewsWithAll) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?showInNews=${showInNewsWithAll}`;
-  }else if (best_reviews) {
+  } else if (best_reviews) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?best_reviews=${best_reviews}`;
-  }else if (isRelated){
+  } else if (isRelated) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}&is_related=${isRelated}`;
   }
 
@@ -127,7 +127,7 @@ export async function fetchMobileArticles({
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_by_fans=${is_by_fans}`;
   } else if (is_latest_device) {
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?page=${page}&limit=${limit}&is_latest_device=${is_latest_device}`;
-  }else if(is_all_mobile) {
+  } else if (is_all_mobile) {
     url = `${process.env.NEXT_APP_URL}/api/article/mobile?all=all`;
   }
 
@@ -162,8 +162,8 @@ export async function fetchMobileOpinions({
 }: {
   page?: string;
   limit?: string;
-  mobileId?:string
-  search?:string
+  mobileId?: string
+  search?: string
 }): Promise<{
   data: MobileOpinionType[];
   page: number;
@@ -175,7 +175,7 @@ export async function fetchMobileOpinions({
     url = `${process.env.NEXT_APP_URL}/api/article/mobile/opinion?page=${page}&limit=${limit}&searchTerm=${search}`;
   } else if (mobileId) {
     url = `${process.env.NEXT_APP_URL}/api/article/mobile/opinion?page=${page}&limit=${limit}&mobileId=${mobileId}`;
-  }  
+  }
 
   console.log("test 1 ", url, mobileId);
 
@@ -208,8 +208,8 @@ export async function fetchArticleOpinions({
 }: {
   page?: string;
   limit?: string;
-  articleId?:string
-  search?:string
+  articleId?: string
+  search?: string
 }): Promise<{
   data: MobileOpinionType[];
   page: number;
@@ -221,7 +221,7 @@ export async function fetchArticleOpinions({
     url = `${process.env.NEXT_APP_URL}/api/article/opinion?page=${page}&limit=${limit}&searchTerm=${search}`;
   } else if (articleId) {
     url = `${process.env.NEXT_APP_URL}/api/article/opinion?page=${page}&limit=${limit}&articleId=${articleId}`;
-  }  
+  }
 
   console.log("test 1 ", url, articleId);
 
@@ -253,8 +253,8 @@ export async function fetchMobileTags({
 }: {
   page?: string;
   limit?: string;
-  mobileId?:string
-  search?:string
+  mobileId?: string
+  search?: string
 }): Promise<{
   data: MobileTagsType[];
   page: number;
@@ -290,11 +290,13 @@ export async function fetchMobileTags({
 
 }
 
-export async function fetchMobileArticleDetails({ id }: { id: string }): Promise<{
+export async function fetchMobileArticleDetails({ id, title }: { id?: string, title?: string }): Promise<{
   data: MobileArticleType[];
 }> {
+
   const response = await fetch(
-    `${process.env.NEXT_APP_URL}/api/article/mobile/details/${id}`,
+    title ? `${process.env.NEXT_APP_URL}/api/article/mobile/detail/${title}`
+      : `${process.env.NEXT_APP_URL}/api/article/mobile/details/${id}`,
     {
       cache: "no-store",
     }
@@ -315,11 +317,11 @@ export async function fetchMobileArticleDetails({ id }: { id: string }): Promise
 
 
 }
-export async function fetchArticlesDetails({ id }: { id: string }): Promise<{
+export async function fetchArticlesDetails({ id, title }: { id?: string, title?: string }): Promise<{
   data: RecentArticleDataType[];
 }> {
   const response = await fetch(
-    `${process.env.NEXT_APP_URL}/api/article/detail/${id}`,
+    title ? `${process.env.NEXT_APP_URL}/api/article/detail/title/${title}` : `${process.env.NEXT_APP_URL}/api/article/detail/${id}`,
     {
       cache: "no-store",
     }

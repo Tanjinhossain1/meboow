@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 import Image from "next/image";
 
 export default function MobileListComponent({
@@ -48,7 +48,7 @@ export default function MobileListComponent({
           >
             {/* Left Image */}
             <Box sx={{ height: "80px", width: "80px" }}>
-              <Link href={`/mobile/detail/${article?.id}`}>
+              <Link href={`/mobile/${formatForUrl(article?.title)}`}>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.display_image}`}
                   // variant="square"
@@ -67,21 +67,21 @@ export default function MobileListComponent({
             <Stack>
               {/* Category and Read Time */}
               <Box display="flex" alignItems="center" gap={1}>
-              <Link href={`/mobile/detail/${article?.id}`}><Typography
+              <Link href={`/mobile/${formatForUrl(article?.title)}`}><Typography
                   variant="caption"
                   sx={{ color: "red", fontWeight: 600, fontSize: 12 }}
                 >
                   {article?.brands}
                 </Typography>
                 </Link>
-                <Link href={`/mobile/detail/${article?.id}`}>
+                <Link href={`/mobile/${formatForUrl(article?.title)}`}>
                 <Typography variant="caption" color="gray">
                   {formatDate(article.createdAt)}
                 </Typography>
                 <AccessTimeIcon sx={{ fontSize: 10, color: "gray" }} />
                 </Link>
               </Box>
-              <Link href={`/mobile/detail/${article?.id}`}>
+              <Link href={`/mobile/${formatForUrl(article?.title)}`}>
               {/* Title */}
               <Typography
                 variant="subtitle2"
@@ -92,7 +92,7 @@ export default function MobileListComponent({
               </Link>
             </Stack>
           </Box>
-          // <Link key={value?.id} href={`/mobile/detail/${value.id}`}>
+          // <Link key={value?.id} href={`/mobile/${formatForUrl(article?.title)
           //   <Typography
           //     sx={{
           //       p: 1,

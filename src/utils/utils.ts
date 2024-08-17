@@ -5,21 +5,21 @@ import { format } from 'date-fns';
 import { sql } from 'drizzle-orm';
 
 
-export function cleanText(text:string) {
+export function cleanText(text: string) {
   // Remove index numbers and dots
   let cleanedText = text
-  
+
   // Remove &nbsp; and replace with a normal space
   cleanedText = cleanedText.replace(/&nbsp;/g, ' ');
-  
+
   return cleanedText;
 }
 
-export const likeInsensitive = (column:any, value:any) => {
+export const likeInsensitive = (column: any, value: any) => {
   return sql`${sql.raw('LOWER(')}${column}${sql.raw(')')} LIKE LOWER(${value})`;
 };
 
-export function formatDate(isoDateString:string) {
+export function formatDate(isoDateString: string) {
   // Parse the ISO date string into a Date object
   const date = new Date(isoDateString);
   if (isNaN(date.getTime())) {
@@ -38,8 +38,8 @@ export const truncateText = (text: string, maxLength: number) => {
 };
 
 
-export const formatDate_into_month_date_string = (dateString:string) => {
-  const options:any = { year: 'numeric', month: 'short', day: 'numeric' };
+export const formatDate_into_month_date_string = (dateString: string) => {
+  const options: any = { year: 'numeric', month: 'short', day: 'numeric' };
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', options);
 };
@@ -93,3 +93,13 @@ export const stripLinks = (htmlString: string) => {
   // If on the server, return a placeholder or a simplified version
   return htmlString.replace(/<[^>]*>/g, '');
 };
+
+
+
+export const formatForUrl = (text: string) => {
+  const formattedTitle = text
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("-");
+  return formattedTitle;
+}

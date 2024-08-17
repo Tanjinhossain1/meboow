@@ -411,9 +411,7 @@ export default function CreateArticleComponent({
             </InputLabel> */}
               <TextField
                 size="small"
-                {...register("deviceName", {
-                  required: "deviceName is Required",
-                })}
+                {...register("deviceName")}
                 // name="release_date"
                 id="filled-adornment-amount"
                 placeholder="Device Name"

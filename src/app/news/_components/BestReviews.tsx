@@ -5,7 +5,7 @@ import { Grid, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import Link from "next/link";
 import Image from "next/image";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 
 const articles = [
   { id: 1, title: "Article 1", image: "/path/to/image1.jpg" },
@@ -32,7 +32,7 @@ export default function ArticleSlider({
 }: {
   bestArticles: RecentArticleDataType[];
 }) {
-  const [progress, setProgress] = useState(bestArticles.length >=3 ? 0:100);
+  const [progress, setProgress] = useState(bestArticles.length >= 3 ? 0 : 100);
   const swiperRef = useRef<any>(null);
 
   const updateProgress = () => {
@@ -98,9 +98,11 @@ export default function ArticleSlider({
                 >
                   <div style={{ width: "100%" }}>
                     <Link
-                      href={`/details/${article?.id}/${
-                        article.category
-                      }`}
+                      href={
+                        article?.category === "Mobiles"
+                          ? `/review/${formatForUrl(article?.title)}`
+                          : `/article/${formatForUrl(article?.title)}`
+                      }
                     >
                       <Image
                         src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -132,18 +134,22 @@ export default function ArticleSlider({
                     {formatDate(article.updateAt)}
                   </Typography>
                   <Link
-                    href={`/details/${article?.id}/${
-                      article.category
-                    }`}
+                    href={
+                      article?.category === "Mobiles"
+                        ? `/review/${formatForUrl(article?.title)}`
+                        : `/article/${formatForUrl(article?.title)}`
+                    }
                   >
                     <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                       {article.title}
                     </p>
                   </Link>
                   <Link
-                    href={`/details/${article?.id}/${
-                      article.category
-                    }`}
+                    href={
+                      article?.category === "Mobiles"
+                        ? `/review/${formatForUrl(article?.title)}`
+                        : `/article/${formatForUrl(article?.title)}`
+                    }
                   >
                     <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
                       {article?.description}
