@@ -50,6 +50,9 @@ export async function generateMetadata(
         type: "website",
         images: [image, ...previousImages],
       }, 
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`,
+      },
     };
   }
 }

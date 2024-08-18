@@ -35,22 +35,21 @@ export async function generateMetadata(
     return {
       title: title,
       description: desc,
-      keywords: [
-        "Article",
-        "Safari List",
-        "article",
-        "page",
-        "mobile",
-        "category",
-        title,
-      ],
+      // keywords: [
+      //   "Article",
+      //   "Safari List",
+      //   "article",
+      //   "page",
+      //   "mobile",
+      //   "category",
+      //   title,
+      // ],
       openGraph: {
-        title: title,
-        description: desc,
-        url: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}`,
-        siteName: "Safari List",
-        type: "website",
         images: [image, ...previousImages],
+      },
+         
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}/${params?.page}`,
       },
     };
   }

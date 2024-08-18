@@ -31,7 +31,9 @@ export async function generateMetadata(
         siteName: 'Safari List',
         type: 'website',
         images: [...previousImages],
-      },  
+      },   alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/brand-wise/${params?.brand}`,
+      },
     };
   }
 }
