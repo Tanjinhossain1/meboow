@@ -27,34 +27,23 @@ export async function generateMetadata(
 
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   const previousImages = (await parent).openGraph?.images || [];
-  // if (articleDetail?.data && articleDetail?.data[0]) {
+  if (articleDetail?.data && articleDetail?.data[0]) {
     const title = `${articleDetail?.data[0]?.title} - Articles Details`;
-    const desc = `${articleDetail?.data[0]?.title} - Articles Details ${articleDetail?.data[0]?.description.slice(0, 130)}`;
+    const desc = `${
+      articleDetail?.data[0]?.title
+    } - Articles Details ${articleDetail?.data[0]?.description.slice(0, 130)}`;
     const image = articleDetail?.data[0].image;
 
     return {
       title: title,
       description: desc,
-      // keywords: [
-      //   "Article", 
-      //   "article",
-      //   "brand",
-      //   "mobile",
-      //   "details", 
-      //   title,
-      // ],
+
       openGraph: {
-        // title: title,
-        // description: desc,
-        // url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
-        // siteName: "Safari List",
-        // type: "website",
         images: [image, ...previousImages],
-      },  
+      },
     };
-  
+  }
 }
- 
 
 interface DetailsParams {
   searchParams: {
@@ -72,7 +61,10 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-    console.log('this is the formattedTitle inthe the review title', formattedTitle);
+  console.log(
+    "this is the formattedTitle inthe the review title",
+    formattedTitle
+  );
   const data = await fetchArticlesDetails({ title: formattedTitle });
   const Category = await fetchCategories();
   const Brands = await fetchBrands();
