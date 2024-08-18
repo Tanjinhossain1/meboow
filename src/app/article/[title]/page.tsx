@@ -26,7 +26,10 @@ export async function generateMetadata(
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   if (articleDetail?.data && articleDetail?.data[0]) {
     const title = articleDetail?.data[0]?.title;
-    const desc = `in this ${title} article have this ${articleDetail?.data[0]?.description.slice(0, 110)}`;
+    const desc = `in this ${title} article have this ${articleDetail?.data[0]?.description.slice(
+      0,
+      110
+    )}`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = articleDetail?.data[0].image;
 
@@ -37,7 +40,6 @@ export async function generateMetadata(
       openGraph: {
         images: [image, ...previousImages],
       },
-      
       alternates: {
         canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}`,
       },

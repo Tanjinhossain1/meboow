@@ -49,7 +49,7 @@ export default function AboutUs() {
         <Container sx={{ mt: 4 }}>
           <Paper sx={{ textAlign: "center", p: 5 }} elevation={2}>
             <Image src="/negotiation.png" alt="negotiation" width={350} height={350} />
-            <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+            <Typography component={'h1'} sx={{ fontSize: 25, fontWeight: 600 }}>
               Terms & Conditions
             </Typography>
             <Typography
@@ -60,7 +60,9 @@ export default function AboutUs() {
                 width: "80%",
                 mx: "auto",
               }}
+              component={'h2'}
             >
+
               Sell Safari is a article provided by Saltside Technologies AB
               (subject to your compliance with the Terms and Conditions set
               forth below). Please read these Terms and Conditions before using
