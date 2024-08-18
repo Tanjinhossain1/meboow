@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Safari List - Latest Tech News, Reviews, and Prices",
   description:
-    "Safari List is one of the biggest platforms for tech news, reviews, prices, and advice. We cover all categories in tech including mobiles, TVs, laptops, cameras, and audio.",
+    "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio.",
   keywords: [
     "tech news",
     "tech reviews",
@@ -28,18 +28,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Safari List - Latest Tech News, Reviews, and Prices",
     description:
-      "Stay updated with the latest tech news, in-depth reviews, and price comparisons on Safari List. Covering everything from smartphones to laptops and more.",
+      "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio.",
     url: "https://safarilist.com",
     siteName: "Safari List",
     locale: "en_US",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@SafariList", // Your Twitter handle
-    title: "Safari List - Latest Tech News, Reviews, and Prices",
-    description:
-      "Get the latest tech news and in-depth reviews on Safari List. From smartphones to laptops, we cover all major technology categories.",
   },
   alternates: {
     canonical: "https://safarilist.com",
