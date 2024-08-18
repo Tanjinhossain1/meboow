@@ -11,6 +11,7 @@ import {
   fetchCategories,
   fetchMobileArticles,
 } from "@/services/articleServices";
+import { formatForUrl } from "@/utils/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
@@ -45,13 +46,13 @@ export async function generateMetadata(
       openGraph: {
         title: title,
         description: desc,
-        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
         siteName: "Safari List",
         type: "website",
         images: [image, ...previousImages],
       }, 
       alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`,
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
       },
     };
   }
@@ -95,11 +96,11 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const user = session?.user;
   return (
     <>
-      <link
+      {/* <link
         rel="canonical"
         href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`}
         key="canonical"
-      />
+      /> */}
       <Navbar />
       {data?.data && mobileArticles.data && data?.data[0] ? (
         <DetailsReviewComponent
