@@ -28,32 +28,29 @@ export async function generateMetadata(
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   if (articleDetail?.data && articleDetail?.data[0]) {
     const title = `${articleDetail?.data[0]?.title} - Articles Details`;
-    const desc = articleDetail?.data[0]?.description.slice(0, 130);
+    const desc = `${articleDetail?.data[0]?.title} - Articles Details ${articleDetail?.data[0]?.description.slice(0, 130)}`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = articleDetail?.data[0].image;
 
     return {
       title: title,
       description: desc,
-      keywords: [
-        "Article", 
-        "article",
-        "brand",
-        "mobile",
-        "details", 
-        title,
-      ],
+      // keywords: [
+      //   "Article", 
+      //   "article",
+      //   "brand",
+      //   "mobile",
+      //   "details", 
+      //   title,
+      // ],
       openGraph: {
-        title: title,
-        description: desc,
-        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
-        siteName: "Safari List",
-        type: "website",
+        // title: title,
+        // description: desc,
+        // url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
+        // siteName: "Safari List",
+        // type: "website",
         images: [image, ...previousImages],
-      }, 
-      alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
-      },
+      },  
     };
   }
 }
@@ -96,11 +93,11 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const user = session?.user;
   return (
     <>
-      {/* <link
+      <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(formattedTitle)}`}
         key="canonical"
-      /> */}
+      />
       <Navbar />
       {data?.data && mobileArticles.data && data?.data[0] ? (
         <DetailsReviewComponent
