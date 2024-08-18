@@ -12,9 +12,10 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Safari List",
+  title: "Safari List - Latest Tech News, Reviews, and Prices",
   description: "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio",
 };
+
 
 export default async function RootLayout({
   children,
