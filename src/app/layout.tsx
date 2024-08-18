@@ -11,26 +11,10 @@ import Script from 'next/script';
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export async function generateMetadata(
-//   { searchParams }: { searchParams: { search: string } },
-//   parent: ResolvingMetadata
-// ): Promise<Metadata | undefined> {
-//   const title = `Safari List - Latest Tech News, Reviews, and Prices`;
-//   const desc = `Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio.`;
-//   // const previousImages = (await parent).openGraph?.images || [];
-
-//   return {
-//     title: title,
-//     description: desc,
-//   };
-// }
- 
-
 export const metadata: Metadata = {
   title: "Safari List",
   description: "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio",
 };
-
 
 export default async function RootLayout({
   children,

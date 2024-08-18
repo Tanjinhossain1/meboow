@@ -26,10 +26,10 @@ export async function generateMetadata(
     .join(" ");
 
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
+  const previousImages = (await parent).openGraph?.images || [];
   if (articleDetail?.data && articleDetail?.data[0]) {
     const title = `${articleDetail?.data[0]?.title} - Articles Details`;
     const desc = `${articleDetail?.data[0]?.title} - Articles Details ${articleDetail?.data[0]?.description.slice(0, 130)}`;
-    const previousImages = (await parent).openGraph?.images || [];
     const image = articleDetail?.data[0].image;
 
     return {
@@ -52,8 +52,31 @@ export async function generateMetadata(
         images: [image, ...previousImages],
       },  
     };
+  }else{
+    const desc = `in this ${params?.title} have reviews `;
+    return {
+      title: params?.title,
+      description: desc,
+      // keywords: [
+      //   "Article", 
+      //   "article",
+      //   "brand",
+      //   "mobile",
+      //   "details", 
+      //   title,
+      // ],
+      openGraph: {
+        // title: title,
+        // description: desc,
+        // url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(articleDetail?.data[0]?.title)}`,
+        // siteName: "Safari List",
+        // type: "website",
+        images: [ ...previousImages],
+      },  
+    };
   }
 }
+ 
 
 interface DetailsParams {
   searchParams: {
@@ -95,7 +118,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     <>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${formatForUrl(formattedTitle)}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`}
         key="canonical"
       />
       <Navbar />
