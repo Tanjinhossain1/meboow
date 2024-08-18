@@ -16,18 +16,12 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
   const title = `Safari List - Latest Tech News, Reviews, and Prices`;
-  const desc = `Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio `;
-  const previousImages = (await parent).openGraph?.images || [];
+  const desc = `Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio.`;
+  // const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: title,
     description: desc,
-    openGraph: {
-      images: [...previousImages],
-    },
-    alternates: {
-      canonical: "https://safarilist.com",
-    }
   };
 }
  
