@@ -13,17 +13,22 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
  
-    const title = `mobiles `
-    const desc = `Here will show All mobiles and specifications this mobile is this you can see all of details of this phone.`;
+    const title = `Mobiles - Safari List`
+    const desc = `In Safari List You will show All Mobiles and specifications this mobile is this you can see all of details of this mobile. ${title}`;
     const previousImages = (await parent).openGraph?.images || [];
     // const image = mobileArticles?.data[0]?.display_image;
     return {
       title: title,
       description: desc,
-
+      keywords: ['Article', 'Safari List', 'article', 'have', 'mobile', title],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile`,
+        siteName: 'Safari List',
+        type: 'website',
         images: [...previousImages],
-      },
+      }, 
     };
   
 }

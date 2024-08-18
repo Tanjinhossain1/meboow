@@ -5,7 +5,39 @@ import {
   fetchCategories,
   fetchMobileArticles,
 } from "@/services/articleServices";
+import { Metadata, ResolvingMetadata } from "next";
 import React, { Suspense } from "react";
+
+export async function generateMetadata(
+  { searchParams }: { searchParams: { search: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata | undefined> {
+  const title = `${searchParams?.search} - Articles Reviews Mobiles Lists`;
+  const desc = `IN Safari List ${searchParams?.search} Search page you can see all of articles and mobiles you search `;
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: title,
+    description: desc,
+    keywords: [
+      "Article",
+      "search",
+      "brand",
+      "mobiles",
+      "details",
+      "Safari List",
+      title,
+    ],
+    openGraph: {
+      title: title,
+      description: desc,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${searchParams?.search}`,
+      siteName: "Safari List",
+      type: "website",
+      images: [...previousImages],
+    },
+  };
+}
 
 interface CategoryPropsType {
   searchParams: {
@@ -30,7 +62,7 @@ export default async function SearchFieldSearchPage({
     <Suspense>
       <Navbar />
       <CategoryPageComponent
-      mobileSearch={mobileSearch.data}
+        mobileSearch={mobileSearch.data}
         isSearch
         category={Category.data}
         categoryWiseArticles={articles.data}

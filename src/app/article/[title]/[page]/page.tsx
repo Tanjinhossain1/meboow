@@ -1,4 +1,3 @@
-
 import DetailsComponent from "@/Component/Details/Details";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
@@ -36,8 +35,21 @@ export async function generateMetadata(
     return {
       title: title,
       description: desc,
-
+      keywords: [
+        "Article",
+        "Safari List",
+        "article",
+        "page",
+        "mobile",
+        "category",
+        title,
+      ],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}`,
+        siteName: "Safari List",
+        type: "website",
         images: [image, ...previousImages],
       },
     };
@@ -61,7 +73,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-  
+
   const data = await fetchArticlesDetails({ title: formattedTitle });
   const Category = await fetchCategories();
   const Brands = await fetchBrands();

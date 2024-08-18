@@ -26,7 +26,7 @@ export async function generateMetadata(
 
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   if (articleDetail?.data && articleDetail?.data[0]) {
-    const title = articleDetail?.data[0]?.title;
+    const title = `${articleDetail?.data[0]?.title} - Articles Details`;
     const desc = articleDetail?.data[0]?.description.slice(0, 130);
     const previousImages = (await parent).openGraph?.images || [];
     const image = articleDetail?.data[0].image;
@@ -34,10 +34,22 @@ export async function generateMetadata(
     return {
       title: title,
       description: desc,
-
+      keywords: [
+        "Article", 
+        "article",
+        "brand",
+        "mobile",
+        "details", 
+        title,
+      ],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`,
+        siteName: "Safari List",
+        type: "website",
         images: [image, ...previousImages],
-      },
+      }, 
     };
   }
 }

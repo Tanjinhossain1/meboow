@@ -25,17 +25,34 @@ export async function generateMetadata(
 
   const mobileArticles = await fetchMobileArticleDetails({ title: formattedTitle });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
-    const title = mobileArticles?.data[0]?.title;
-    const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile details and specifications this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of details of this phone.`;
+    const title = `${params?.title} - Full phone Specification`;
+    const desc = `Here will show this ${params?.title} mobile details and specification this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of details of this phone.`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = mobileArticles?.data[0]?.display_image;
     return {
       title: title,
       description: desc,
-
+      keywords: [
+        "Article",
+        "Safari List",
+        "article",
+        "brand",
+        "mobile",
+        "details",
+        "Specification",
+        title,
+      ],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`,
+        siteName: "Safari List",
+        type: "website",
         images: [image, ...previousImages],
       },
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`,
+      }, 
     };
   }
 }

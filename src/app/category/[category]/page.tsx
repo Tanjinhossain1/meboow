@@ -1,7 +1,44 @@
 import CategoryPageComponent from "@/Component/Category/CategoryPageComponent";
 import Navbar from "@/Component/Shared/Navbar";
 import { fetchArticles, fetchCategories } from "@/services/articleServices";
+import { Metadata, ResolvingMetadata } from "next";
 import React, { Suspense } from "react";
+
+
+export async function generateMetadata(
+  { params }: { params: { category: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata | undefined> {
+    
+    const title = `${params?.category}`
+    const desc = `in our Safari List  Category you will ${title} have the category wise articles published and here you will fiend all of articles, mobiles with this category`;
+    const previousImages = (await parent).openGraph?.images || [];
+  
+    return {
+      title: title,
+      description: desc,
+      keywords: [
+        "Article",
+        "Safari List",
+        "article",
+        "published",
+        "mobile",
+        "category",
+        title,
+      ],
+      openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/category/${params?.category}`,
+        siteName: "Safari List",
+        type: "website",
+        images: [ ...previousImages],
+      },
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/category/${params?.category}`,
+      },
+    };
+}
 
 interface CategoryPropsType {
     searchParams: {

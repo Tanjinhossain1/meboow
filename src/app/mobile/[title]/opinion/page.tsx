@@ -30,10 +30,23 @@ export async function generateMetadata(
     return {
       title: title,
       description: desc,
-
+      keywords: [
+        "Article",
+        "Safari List",
+        "article",
+        "brand",
+        "mobile", 
+        "Opinion",
+        title,
+      ],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/opinion`,
+        siteName: "Safari List",
+        type: "website",
         images: [image, ...previousImages],
-      },
+      }, 
     };
   }
 }
@@ -76,7 +89,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     <Fragment>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/opinion`}
         key="canonical"
       />
       <Navbar />

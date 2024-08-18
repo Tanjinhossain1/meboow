@@ -48,7 +48,7 @@ export default function DisplayArticleComponent({
         >
           <Image
             style={{ width: "100%", cursor: "pointer", height: "100%" }}
-            alt=""
+            alt={data?.title}
             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.image}`}
             // layout="responsive"
             width={300}

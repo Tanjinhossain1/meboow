@@ -17,17 +17,21 @@ export async function generateMetadata(
     brands: params?.brand,
   });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
-    const title = params?.brand;
-    const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile details and specifications this mobile is this ${params?.brand} brand. you can see all of details of this phone.`;
+    const title = `${params?.brand} - List Of Mobiles`;
+    const desc = `Here will show this   ${params?.brand} brand wise List Of Mobiles you can see all of mobiles with this brand.`;
     const previousImages = (await parent).openGraph?.images || [];
-    const image = mobileArticles?.data[0]?.display_image;
     return {
       title: title,
       description: desc,
-
+      keywords: ['Article', 'Safari List', 'article', 'have', 'mobile', title],
       openGraph: {
-        images: [image, ...previousImages],
-      },
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/brand-wise/${params?.brand}`,
+        siteName: 'Safari List',
+        type: 'website',
+        images: [...previousImages],
+      },  
     };
   }
 }

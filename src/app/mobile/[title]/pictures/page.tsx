@@ -20,17 +20,32 @@ export async function generateMetadata(
     .join(" ");
   const mobileArticles = await fetchMobileArticleDetails({ title:formattedTitle });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
-    const title = mobileArticles?.data[0]?.title;
-    const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile Images and specifications this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of Images of ${mobileArticles?.data[0]?.title}.`;
+    const title = `${mobileArticles?.data[0]?.title} - Pictures`;
+    const desc = `Here will show this ${mobileArticles?.data[0]?.title} mobile Images or Pictures and specifications this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of Images of ${mobileArticles?.data[0]?.title}.`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = mobileArticles?.data[0]?.display_image;
     return {
       title: title,
       description: desc,
-
+      keywords: [
+        "Article",
+        "Safari List",
+        "article",
+        "brand",
+        "mobile",
+        "details",
+        "Specification",
+        "Pictures",
+        title,
+      ],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/pictures`,
+        siteName: "Safari List",
+        type: "website",
         images: [image, ...previousImages],
-      },
+      }, 
     };
   }
 }
@@ -65,7 +80,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     <Fragment>
       <link
         rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`}
+        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/pictures`}
         key="canonical"
       />
       <Navbar />

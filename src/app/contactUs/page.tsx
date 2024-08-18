@@ -8,6 +8,43 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 
+export const metadata = {
+  title: "Contact Us - Safari List",
+  description:
+    "Contact with us and here have all information to Contact Us. you can email, call, whatsapp, facebook or linkedin etc we have .",
+  keywords: [
+    "Contact Us",
+    "Safari List",
+    "email",
+    "whatsapp",
+    "facebook",
+    "linkedin",
+    "Contact Us",
+    "services",
+    "products",
+    "phones",
+    "articles",
+  ],
+  openGraph: {
+    title: "Contact Us - Safari List",
+    description:
+      "Contact with us and here have all information to Contact Us. you can email, call, whatsapp, facebook or linkedin etc we have.",
+    url: "https://safarilist.com/contactUs",
+    siteName: "Safari List",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us - Safari List",
+    description:
+      "Contact with us and here have all information to Contact Us. you can email, call, whatsapp, facebook or linkedin etc we have.",
+    // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
+  },
+  alternates: {
+    canonical: "https://safarilist.com/contactUs",
+  },
+};
+
 export default function ContactUs() {
   return (
     <Grid container>
@@ -26,15 +63,19 @@ export default function ContactUs() {
         }}
       >
         <Container sx={{ mt: 4 }}>
-          <Paper className="md:max-w-[1000px] mx-auto" sx={{ textAlign: "center", p: 5 }} elevation={2}>
-           <Box sx={{display:"flex", justifyContent:"center"}}>
-           <Image
-              src="/customer-service.png"
-              alt=""
-              width={350}
-              height={350}
-            />
-           </Box>
+          <Paper
+            className="md:max-w-[1000px] mx-auto"
+            sx={{ textAlign: "center", p: 5 }}
+            elevation={2}
+          >
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Image
+                src="/customer-service.png"
+                alt="customer service"
+                width={350}
+                height={350}
+              />
+            </Box>
             <Typography sx={{ mt: 3, fontSize: 25, fontWeight: 600 }}>
               Contact us
             </Typography>

@@ -30,6 +30,28 @@ import MobileListComponent from "@/Component/Details/MobileListComponent";
 import BrandListComponent from "@/Component/Details/BrandListComponent";
 import CategoryListComponent from "@/Component/Category/CategoryListComponent";
 
+
+export const metadata = {
+  title: 'Brands - Safari List',
+  description: 'Learn more about our company, mission, and brands at Safari List, products, phones, articles.',
+  keywords: ['Brands', 'Safari List', 'company', 'mission', 'brands', 'services',"products","phones","articles"],
+  openGraph: {
+    title: 'Brands - Safari List',
+    description: 'Learn more about our company, mission, and brands at Safari List, products, phones, articles.',
+    url: 'https://safarilist.com/brands',
+    siteName: 'Safari List',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Brands - Safari List',
+    description: 'Learn more about our company, mission, and brands at Safari List, products, phones, articles.',
+    // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
+  },
+  alternates: {
+    canonical: 'https://safarilist.com/brands',
+  },
+};
 export default async function BrandPage() {
   const brands = await fetchBrands();
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });

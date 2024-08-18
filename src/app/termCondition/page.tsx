@@ -5,6 +5,30 @@ import OtherPageFooter from "@/Component/Shared/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 
+
+export const metadata = {
+  title: 'Term Condition - Safari List',
+  description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
+  keywords: ['Term Condition', 'Safari List', 'company', 'mission', 'values', 'services'],
+  openGraph: {
+    title: 'Term Condition - Safari List',
+    description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
+    url: 'https://safarilist.com/termCondition',
+    siteName: 'Safari List',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Term Condition - Safari List',
+    description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
+    // images: ['https://yourwebsite.com/static/images/termCondition.jpg'],
+  },
+  alternates: {
+    canonical: 'https://safarilist.com/termCondition',
+  },
+};
+
+
 export default function AboutUs() {
   return (
     <Grid container>
@@ -24,7 +48,7 @@ export default function AboutUs() {
       >
         <Container sx={{ mt: 4 }}>
           <Paper sx={{ textAlign: "center", p: 5 }} elevation={2}>
-            <Image src="/negotiation.png" alt="" width={350} height={350} />
+            <Image src="/negotiation.png" alt="negotiation" width={350} height={350} />
             <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
               Terms & Conditions
             </Typography>

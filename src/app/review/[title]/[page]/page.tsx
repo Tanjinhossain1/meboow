@@ -27,7 +27,7 @@ export async function generateMetadata(
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   if (articleDetail?.data && articleDetail?.data[0]) {
     const title = articleDetail?.data[0]?.title;
-    const desc = `This is the Page for review articles. page number is ${
+    const desc = `This is the Page for reviews mobile. page number is ${
       params?.page
     } ${articleDetail?.data[0]?.description.slice(0, 130)}`;
     const previousImages = (await parent).openGraph?.images || [];
@@ -37,9 +37,23 @@ export async function generateMetadata(
       title: title,
       description: desc,
 
+      keywords: [
+        "reviews",
+        "Page",
+        "mobile",
+        "details", 
+        "articles",
+        "number",
+        title,
+      ],
       openGraph: {
+        title: title,
+        description: desc,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}/${params?.page}`,
+        siteName: "Safari List",
+        type: "website",
         images: [image, ...previousImages],
-      },
+      }, 
     };
   }
 }

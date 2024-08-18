@@ -6,6 +6,36 @@ import OtherPageFooter from "@/Component/Shared/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 
+
+export const metadata = {
+  title: "Privacy Policy - Safari List",
+  description:
+    "IN Safari List Privacy Policy page you can see all of our site rules and policies in the privacy policy section of the privacy policy.",
+  keywords: [
+    "Privacy Policy",
+    "Safari List", 
+    "page"
+  ],
+  openGraph: {
+    title: "Privacy Policy - Safari List",
+    description:
+      "IN Safari List Privacy Policy page you can see all of our site rules and policies in the privacy policy section of the privacy policy.",
+    url: "https://safarilist.com/privacyPolicy",
+    siteName: "Safari List",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy - Safari List",
+    description:
+      "IN Safari List Privacy Policy page you can see all of our site rules and policies in the privacy policy section of the privacy policy.",
+    // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
+  },
+  alternates: {
+    canonical: "https://safarilist.com/privacyPolicy",
+  },
+};
+
 export default function AboutUs() { 
   return (
     <Grid container>
@@ -28,7 +58,7 @@ export default function AboutUs() {
           <Paper  className="md:max-w-[1000px] mx-auto" sx={{ textAlign: "center", p: 5 }} elevation={2}>
             <Image
               src="/compliant.png"
-              alt=""
+              alt="complaint"
               width={350}
               height={350}
             />
