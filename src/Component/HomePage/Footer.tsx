@@ -41,7 +41,7 @@ export default async function Footer() {
           <Grid container spacing={4}>
             {/* Recently Added Mobiles */}
             <Grid item xs={12} sm={5.8}>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h2" sx={{fontSize:20}} gutterBottom>
                 Recently Added Mobiles:
               </Typography>
               <Grid

@@ -155,7 +155,7 @@ export default function BrandWiseDetails({
               <Typography sx={{ fontSize: 12 }}>{params?.brand}</Typography>
             </Breadcrumbs>
 
-            <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 2 }}>
+            <Typography component={'h1'} sx={{ fontSize: 25, fontWeight: 600, mt: 2 }}>
               {params.brand} Mobile Phones
             </Typography>
             <div className="flex mt-3 mb-5 items-center w-full max-w-md bg-card border border-input rounded-md shadow-sm">
