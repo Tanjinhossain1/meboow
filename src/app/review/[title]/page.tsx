@@ -28,10 +28,10 @@ export async function generateMetadata(
   const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
   const previousImages = (await parent).openGraph?.images || [];
   if (articleDetail?.data && articleDetail?.data[0]) {
-    const title = `${articleDetail?.data[0]?.title} - Articles Details`;
+    const title = `${articleDetail?.data[0]?.title}`;
     const desc = `${
       articleDetail?.data[0]?.title
-    } - Articles Details ${articleDetail?.data[0]?.description.slice(0, 130)}`;
+    } ${articleDetail?.data[0]?.description.slice(0, 100)}`;
     const image = articleDetail?.data[0].image;
 
     return {
