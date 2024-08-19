@@ -33,6 +33,7 @@ import AlignVerticalTopIcon from "@mui/icons-material/AlignVerticalTop";
 import Opinion from "@/app/mobile/[title]/_components/Opinion";
 import CommonEditorDisplayer from "./CommonEditorDisplayer";
 import { ArrowDownIcon } from "lucide-react";
+import Tags from "@/app/mobile/[title]/_components/Tags";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -744,6 +745,12 @@ export default function DetailsReviewComponent({
             <BrandListComponent brands={brands} />
             <CategoryListComponent category={category} />
           </Grid>
+        </Grid>
+        
+        <Grid xs={12} md={7.5} container>
+          {articleDetail?.tags && articleDetail?.tags[0]?.name !== "" ? (
+            <Tags pageTag={articleDetail?.tags} />
+          ) : null}
         </Grid>
         <Grid xs={12} md={7.5} container>
           <Opinion

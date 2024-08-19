@@ -32,6 +32,7 @@ import AlignVerticalTopIcon from "@mui/icons-material/AlignVerticalTop";
 import Opinion from "@/app/mobile/[title]/_components/Opinion";
 import { ArrowDownIcon } from "lucide-react";
 import CommonEditorDisplayer from "./CommonEditorDisplayer";
+import Tags from "@/app/mobile/[title]/_components/Tags";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -220,7 +221,6 @@ export default function DetailsComponent({
           <Grid xs={12} lg={7.5}>
             <h1 className="mt-1 font-2xl text-[#333333] font-semibold">
               {articleDetail?.title}
-
             </h1>
             {/* <Typography
               sx={{
@@ -353,147 +353,151 @@ export default function DetailsComponent({
                 </Typography>
               </Grid>
             </Grid>
-           { articleDetail?.pages && articleDetail?.pages[0]?.title ? 
-            <Box
-              sx={{
-                position: "relative",
-                // display: "inline-block",
-                width: "100%",
-              }}
-            >
-              {/* Dropdown trigger */}
-              <Button
-                aria-controls={isOpen ? "dropdown-popover" : undefined}
-                aria-haspopup="true"
-                aria-expanded={isOpen ? "true" : undefined}
-                onMouseEnter={handleHoverOpen}
+            {articleDetail?.pages && articleDetail?.pages[0]?.title ? (
+              <Box
                 sx={{
-                  mt: 4,
-                  fontWeight: "bold",
-                  textAlign: "start",
-                  border: "1px solid gray",
+                  position: "relative",
+                  // display: "inline-block",
                   width: "100%",
-                  color: "black", // Default button color
-                  fontSize: 14,
-                  ":hover": {
-                    color: "red", // Change to red on hover
-                  },
                 }}
               >
-                {articlePage ? (
-                  articleDetail?.pages.map((mapPage, index) => {
-                    return (
-                      <Typography
-                        key={mapPage?.page}
-                        sx={{
-                          ":hover": { color: "red" },
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                          fontSize: 14,
-                          fontWeight: 600,
-                        }}
-                      >
-                        {" "}
-                        {mapPage?.page === articlePage ? (
-                          <Typography
-                            sx={{ fontSize: 16, fontWeight: 600 }}
-                            dangerouslySetInnerHTML={{
-                              __html: `${mapPage?.page} <b>.</b>`,
-                            }}
-                          />
-                        ) : null}{" "}
-                        {mapPage?.page === articlePage ? mapPage?.title : null}
-                      </Typography>
-                    );
-                  })
-                ) : (
-                  <Typography
-                    sx={{
-                      ":hover": { color: "red" },
-                      fontWeight: 600,
-                      fontSize: 14,
-                    }}
-                  >
-                    1<b>.</b> {articleDetail?.pages && articleDetail?.pages[0]?.title}
-                  </Typography>
-                )}
-                {/* <Typography>
+                {/* Dropdown trigger */}
+                <Button
+                  aria-controls={isOpen ? "dropdown-popover" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={isOpen ? "true" : undefined}
+                  onMouseEnter={handleHoverOpen}
+                  sx={{
+                    mt: 4,
+                    fontWeight: "bold",
+                    textAlign: "start",
+                    border: "1px solid gray",
+                    width: "100%",
+                    color: "black", // Default button color
+                    fontSize: 14,
+                    ":hover": {
+                      color: "red", // Change to red on hover
+                    },
+                  }}
+                >
+                  {articlePage ? (
+                    articleDetail?.pages.map((mapPage, index) => {
+                      return (
+                        <Typography
+                          key={mapPage?.page}
+                          sx={{
+                            ":hover": { color: "red" },
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            fontSize: 14,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {" "}
+                          {mapPage?.page === articlePage ? (
+                            <Typography
+                              sx={{ fontSize: 16, fontWeight: 600 }}
+                              dangerouslySetInnerHTML={{
+                                __html: `${mapPage?.page} <b>.</b>`,
+                              }}
+                            />
+                          ) : null}{" "}
+                          {mapPage?.page === articlePage
+                            ? mapPage?.title
+                            : null}
+                        </Typography>
+                      );
+                    })
+                  ) : (
+                    <Typography
+                      sx={{
+                        ":hover": { color: "red" },
+                        fontWeight: 600,
+                        fontSize: 14,
+                      }}
+                    >
+                      1<b>.</b>{" "}
+                      {articleDetail?.pages && articleDetail?.pages[0]?.title}
+                    </Typography>
+                  )}
+                  {/* <Typography>
                   <ArrowDownIcon />
                 </Typography> */}
-              </Button>
+                </Button>
 
-              {/* Dropdown content (Popover) */}
-              <Popover
-                id="dropdown-popover"
-                open={isOpen}
-                anchorEl={anchorEl}
-                onClose={handleHoverClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                PaperProps={{
-                  //   onMouseEnter: handleHoverOpen,
-                  onMouseLeave: handleHoverClose,
-                  sx: {
-                    boxShadow: "none",
-                    border: "1px solid #ddd",
-                    // width: "40%",
-                    minWidth: {
-                      xs: "100%",
-                      sm: "90%",
-                      md: "85%",
-                      lg:"600px"
+                {/* Dropdown content (Popover) */}
+                <Popover
+                  id="dropdown-popover"
+                  open={isOpen}
+                  anchorEl={anchorEl}
+                  onClose={handleHoverClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  PaperProps={{
+                    //   onMouseEnter: handleHoverOpen,
+                    onMouseLeave: handleHoverClose,
+                    sx: {
+                      boxShadow: "none",
+                      border: "1px solid #ddd",
+                      // width: "40%",
+                      minWidth: {
+                        xs: "100%",
+                        sm: "90%",
+                        md: "85%",
+                        lg: "600px",
+                      },
+                      maxWidth: "500px",
                     },
-                    maxWidth: "500px",
-                  },
-                }}
-              >
-                {/* Dropdown Items */}
-                {articleDetail?.pages?.map((rowPage) => {
-                  return (
-                    <Link
-                      key={rowPage?.page}
-                      href={
-                        rowPage?.page === 1
-                          ? `/article/${formatForUrl(articleDetail?.title)}`
-                          : `/article/${formatForUrl(articleDetail?.title)}/${
-                              rowPage?.page
-                            }`
-                      }
-                    >
-                      <MenuItem
-                        sx={{
-                          "&:hover": {
-                            color: "red",
-                            textDecoration: "underline",
-                          },
-                          fontWeight:
-                            articlePage === rowPage?.page
-                              ? 600
-                              : articlePage
-                              ? 500
-                              : rowPage?.page === 1
-                              ? 600
-                              : 500,
-                        }}
+                  }}
+                >
+                  {/* Dropdown Items */}
+                  {articleDetail?.pages?.map((rowPage) => {
+                    return (
+                      <Link
+                        key={rowPage?.page}
+                        href={
+                          rowPage?.page === 1
+                            ? `/article/${formatForUrl(articleDetail?.title)}`
+                            : `/article/${formatForUrl(articleDetail?.title)}/${
+                                rowPage?.page
+                              }`
+                        }
                       >
-                        <span style={{ paddingRight: "4px" }}>
-                          {rowPage?.page}
-                          <b>.</b>{" "}
-                        </span>
-                        {rowPage?.title}
-                      </MenuItem>
-                    </Link>
-                  );
-                })}
-              </Popover>
-            </Box>:null}
+                        <MenuItem
+                          sx={{
+                            "&:hover": {
+                              color: "red",
+                              textDecoration: "underline",
+                            },
+                            fontWeight:
+                              articlePage === rowPage?.page
+                                ? 600
+                                : articlePage
+                                ? 500
+                                : rowPage?.page === 1
+                                ? 600
+                                : 500,
+                          }}
+                        >
+                          <span style={{ paddingRight: "4px" }}>
+                            {rowPage?.page}
+                            <b>.</b>{" "}
+                          </span>
+                          {rowPage?.title}
+                        </MenuItem>
+                      </Link>
+                    );
+                  })}
+                </Popover>
+              </Box>
+            ) : null}
             <Image
               style={{ marginTop: "20px" }}
               src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${articleDetail.image}`}
@@ -736,6 +740,13 @@ export default function DetailsComponent({
             <CategoryListComponent category={category} />
           </Grid>
         </Grid>
+
+        <Grid xs={12} md={7.5} container>
+          {articleDetail?.tags && articleDetail?.tags[0]?.name !== "" ? (
+            <Tags pageTag={articleDetail?.tags} />
+          ) : null}
+        </Grid>
+
         <Grid xs={12} md={7.5} container>
           <Opinion
             user={user}
@@ -747,7 +758,7 @@ export default function DetailsComponent({
         <Grid sx={{ mt: 3 }} container>
           <Grid xs={12} lg={7.5}>
             <h2 className="text-xl text-white p-1 mt-1 bg-[#c40069]">
-            Related Posts
+              Related Posts
             </h2>
             {/* <Typography
               sx={{

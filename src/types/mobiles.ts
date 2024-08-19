@@ -31,9 +31,12 @@ export interface MobileArticleType {
     is_daily_interest: string;
     is_by_fans: string;
     is_latest_device: string;
-    top_background_color:string;
+    top_background_color: string;
     total_fans: number;
-    selected_articles:RecentArticleDataType;
+    tags:{
+        name: string;
+    }[];
+    selected_articles: RecentArticleDataType;
     key_specifications: {
         processor: string;
         display: string;
@@ -117,7 +120,10 @@ export interface MobileArticleDefaultFormType {
     is_latest_device?: string;
     // image: string[];
     // display_image:string;
-    selected_articles:RecentArticleDataType | null;
+    tags: {
+        name: string;
+    }[];
+    selected_articles: RecentArticleDataType | null;
     key_specifications: {
         processor: string;
         display: string;

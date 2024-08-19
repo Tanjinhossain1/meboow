@@ -31,6 +31,9 @@ export const Articles = mysqlTable(
 
     selected_mobile:json('selected_mobile'),
     pages:json('pages'),
+
+    tags:json('tags'),
+
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   },
@@ -115,6 +118,8 @@ export const MobileArticles = mysqlTable(
     admin_detail_edit:json('admin_detail_edit'),
 
     selected_articles:json('selected_articles'),
+    
+    tags:json('tags'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updatedAt: timestamp('updatedAt').defaultNow().notNull(),

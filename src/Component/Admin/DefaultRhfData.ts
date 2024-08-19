@@ -21,6 +21,9 @@ export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType): 
         selected_mobile: mobileArticle?.selected_mobile ? mobileArticle?.selected_mobile : null,
         pages: mobileArticle?.pages ? mobileArticle?.pages : [
             { page: 1, title: "", content: null } // Initial object
+        ],
+        tags: mobileArticle?.tags ? mobileArticle?.tags : [
+            { name: "" }
         ]
     }
 }

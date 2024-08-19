@@ -28,16 +28,13 @@ import {
   FormHelperText,
   Autocomplete,
 } from "@mui/material";
-import dynamic from "next/dynamic";
-import React, { useEffect, useRef, useState } from "react";
-import EditorJS from "@editorjs/editorjs";
+import React, {  useState } from "react";
 import FileUpload from "@/Component/Forms/UploadImage";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { BrandTypes, CategoryTypes } from "@/types/category";
+import { BrandTypes } from "@/types/category";
 import DialogComponent from "@/Component/Admin/Dialog";
-import { DatePicker } from "antd";
 import { useFormContext } from "react-hook-form";
 import { MobileArticleType } from "@/types/mobiles";
 import ColorPickerComponent from "./ColorPickForTop";

@@ -20,6 +20,9 @@ export interface RecentArticleDataType {
         page:number;
         title:string;
         content:any;
+    }[];
+    tags:{
+        name:string;
     }[]
 }
 
@@ -37,5 +40,8 @@ export interface RecentArticleDataCreateType {
         page:number;
         title:string;
         content:any;
+    }[];
+    tags:{
+        name:string;
     }[]
 }

@@ -38,7 +38,8 @@ export async function POST(req: Request) {
       content,
       top_background_color,
       admin_detail,
-      selected_articles
+      selected_articles,
+      tags,
     } = body;
 
     console.log("body detail created", body, title, image);
@@ -76,7 +77,8 @@ export async function POST(req: Request) {
       content,
       top_background_color,
       admin_detail,
-      selected_articles
+      selected_articles,
+      tags,
     });
 
     return NextResponse.json({
@@ -123,7 +125,8 @@ export async function PUT(req: Request) {
       content,
       top_background_color,
       admin_detail_edit,
-      selected_articles
+      selected_articles,
+      tags,
     } = body;
 
     console.log("Updating article with ID:", id);
@@ -165,7 +168,8 @@ export async function PUT(req: Request) {
         content,
         top_background_color,
         admin_detail_edit,
-        selected_articles
+        selected_articles,
+        tags,
       })
       .where(eq(MobileArticles.id, Number(id)));
 
@@ -209,7 +213,10 @@ export async function GET(req: NextRequest) {
     };
     // const total = await db.select().from(MobileArticles);
     // Perform the database query using Drizzle ORM
-    console.log('checking the data is coing searchTermsearchTermsearchTerm filtersfiltersfiltersfilters',filters)
+    console.log(
+      "checking the data is coing searchTermsearchTermsearchTerm filtersfiltersfiltersfilters",
+      filters
+    );
     const { data, meta } = await getAll(filters, options);
 
     return NextResponse.json({
@@ -239,11 +246,17 @@ const getAll = async (
     is_latest_device,
   } = filters;
   const whereConditions = [];
-console.log('checking the data is coing searchTermsearchTermsearchTerm ',searchTerm,
-  is_daily_interest,
-  is_latest_device)
+  console.log(
+    "checking the data is coing searchTermsearchTermsearchTerm ",
+    searchTerm,
+    is_daily_interest,
+    is_latest_device
+  );
   if (brands) {
-    const searchConditions = likeInsensitive(MobileArticles["brands"], `%${brands}%`);
+    const searchConditions = likeInsensitive(
+      MobileArticles["brands"],
+      `%${brands}%`
+    );
 
     whereConditions.push(searchConditions);
   }

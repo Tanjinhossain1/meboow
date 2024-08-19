@@ -21,6 +21,7 @@ import {
   InputAdornment,
   MenuItem,
   Autocomplete,
+  Paper,
 } from "@mui/material";
 import { BrandTypes } from "@/types/category";
 import TopForm from "./TopForm";
@@ -55,7 +56,6 @@ export default function MainSubmitForm({
       ? isEdit?.mobileArticles[0]?.top_background_color
       : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGB(168, 10, 10) 100%)"
   );
-
 
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
@@ -103,6 +103,14 @@ export default function MainSubmitForm({
   const { fields, append, remove } = useFieldArray({
     control: methods.control,
     name: "prices",
+  });
+  const {
+    fields: tagFields,
+    append: tagAppend,
+    remove: tagRemove,
+  } = useFieldArray({
+    control: methods.control,
+    name: "tags",
   });
 
   const {
@@ -330,6 +338,12 @@ export default function MainSubmitForm({
     // },
   ];
 
+  const handleKeyPress = (e: any, tagA: any) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      tagA({ name: "" });
+    }
+  };
   return (
     <Fragment>
       <FormProvider {...methods}>
@@ -344,6 +358,46 @@ export default function MainSubmitForm({
             setGradient={setGradient}
           />
           <DevicesDetails isEdit={isEdit} />
+          <Paper className="max-w-[1000px] mx-auto p-1 mt-1">
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="h5" sx={{mb:1,fontWeight:600,fontSize:20}} component="h2">
+                Tags
+              </Typography>
+              <Grid container spacing={2}>
+                {tagFields?.map((field, index) => (
+                  <Grid item xs={3} key={field.id}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 2,
+                        // border: "1px solid gray",
+                        // p: 2,
+                        borderRadius: 1,
+                      }}
+                    >
+                      <TextField
+                        {...methods.register(`tags.${index}.name`)}
+                        label="Name"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        onKeyPress={(e) => handleKeyPress(e, tagAppend)}
+                      />
+                      {index > 0 && (
+                        <IconButton
+                          color="error"
+                          onClick={() => tagRemove(index)}
+                        >
+                          <RemoveCircle />
+                        </IconButton>
+                      )}
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Paper>
           {imageError ? (
             <Typography sx={{ color: "red", fontSize: 20 }}>
               Select Image
@@ -393,7 +447,7 @@ export default function MainSubmitForm({
               </Fragment>
             );
           })}
-          
+
           <Fragment>
             <Grid
               className="md:max-w-[1000px] mx-auto"

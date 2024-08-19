@@ -62,7 +62,6 @@ export default function MainMobileDetails({
         >
           <Grid container>
             <Grid
-              
               sx={{
                 mt: 1,
                 mr: {
@@ -94,7 +93,7 @@ export default function MainMobileDetails({
                 mobiles={relatedMobileDevices}
               />
             </Grid>
-            <Grid   xs={12} sm={8}>
+            <Grid xs={12} sm={8}>
               <IphoneCard
                 user={user}
                 isPicture={isPicture}
@@ -181,7 +180,10 @@ export default function MainMobileDetails({
                       </Link>
                     )}
                   </Paper>
-                  <Tags tags={tags} />
+                  {
+                    mobileArticles?.tags  && mobileArticles?.tags[0]?.name !== "" ? 
+                    <Tags pageTag={mobileArticles?.tags} />
+                  :null}
                   <Opinion
                     allMobilesOpinion={allMobilesOpinion}
                     user={user}

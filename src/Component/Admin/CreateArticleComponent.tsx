@@ -3,6 +3,7 @@ import {
   Alert,
   Autocomplete,
   Backdrop,
+  Box,
   Button,
   CircularProgress,
   Container,
@@ -18,6 +19,7 @@ import {
   InputAdornment,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   SelectChangeEvent,
   Snackbar,
@@ -43,12 +45,12 @@ import {
   useForm,
 } from "react-hook-form";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
+import { RemoveCircle } from "@mui/icons-material";
 // import {} from 'next'
 
-const EditorForArticle = dynamic(
-  () => import("../Editor/EditorForArticle"),
-  { ssr: false }
-);
+const EditorForArticle = dynamic(() => import("../Editor/EditorForArticle"), {
+  ssr: false,
+});
 
 export default function CreateArticleComponent({
   categories,
@@ -102,6 +104,14 @@ export default function CreateArticleComponent({
   const { fields, append, remove } = useFieldArray({
     control,
     name: "pages",
+  });
+  const {
+    fields: tagFields,
+    append: tagAppend,
+    remove: tagRemove,
+  } = useFieldArray({
+    control,
+    name: "tags",
   });
 
   const [loading, setLoading] = useState(false);
@@ -335,6 +345,12 @@ export default function CreateArticleComponent({
     // http://localhost:3002/api/v1/article/create
   };
 
+  const handleKeyPress = (e: any, tagA: any) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      tagA({ name: "" });
+    }
+  };
   return (
     <div>
       <FormProvider {...methods}>
@@ -651,65 +667,107 @@ export default function CreateArticleComponent({
             ) : (
               ""
             )}
-          {fields.map((item, index) => (
-            <div key={item.id} className="max-w-[1000px] mx-auto ">
-              <h3>Page {index + 1}</h3>
-
-              {/* Title Field */}
-              <Controller
-                name={`pages.${index}.title`}
-                control={control}
-                render={({ field }: any) => (
-                  <TextField
-                    {...field}
-                    label="Title"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                  />
-                )}
-              />
-
-              {/* Content Field (EditorJS) */}
-              <Controller
-                name={`pages.${index}.content`}
-                control={control}
-                render={({ field }: any) => (
-                  <EditorForArticle
-                    {...field}
-                    
-                    holderId={item.id}
-                    onChange={(editorData: any) => field.onChange(editorData)} // Pass EditorJS data to React Hook Form
-                  />
-                )}
-              />
-
-              {/* Remove Page Button */}
-              {fields.length > 1 && (
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => remove(index)}
-                  className="mt-3"
+            <Paper className="max-w-[1000px] mx-auto p-1 mt-1">
+              <Box sx={{ mb: 2 }}>
+                <Typography
+                  variant="h5"
+                  sx={{ mb: 1, fontWeight: 600, fontSize: 20 }}
+                  component="h2"
                 >
-                  Remove Page {index + 1}
-                </Button>
-              )}
-            </div>
-          ))}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() =>
-              append({ page: fields.length + 1, title: "", content: null })
-            }
-            className="mt-4"
-          >
-            Add New Page
-          </Button>
+                  Tags
+                </Typography>
+                <Grid container spacing={2}>
+                  {tagFields?.map((field, index) => (
+                    <Grid item xs={3} key={field.id}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 2,
+                          // border: "1px solid gray",
+                          // p: 2,
+                          borderRadius: 1,
+                        }}
+                      >
+                        <TextField
+                          {...methods.register(`tags.${index}.name`)}
+                          label="Name"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          onKeyPress={(e) => handleKeyPress(e, tagAppend)}
+                        />
+                        {index > 0 && (
+                          <IconButton
+                            color="error"
+                            onClick={() => tagRemove(index)}
+                          >
+                            <RemoveCircle />
+                          </IconButton>
+                        )}
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            </Paper>
+            {fields.map((item, index) => (
+              <div key={item.id} className="max-w-[1000px] mx-auto ">
+                <h3>Page {index + 1}</h3>
+
+                {/* Title Field */}
+                <Controller
+                  name={`pages.${index}.title`}
+                  control={control}
+                  render={({ field }: any) => (
+                    <TextField
+                      {...field}
+                      label="Title"
+                      fullWidth
+                      variant="outlined"
+                      margin="normal"
+                    />
+                  )}
+                />
+
+                {/* Content Field (EditorJS) */}
+                <Controller
+                  name={`pages.${index}.content`}
+                  control={control}
+                  render={({ field }: any) => (
+                    <EditorForArticle
+                      {...field}
+                      holderId={item.id}
+                      onChange={(editorData: any) => field.onChange(editorData)} // Pass EditorJS data to React Hook Form
+                    />
+                  )}
+                />
+
+                {/* Remove Page Button */}
+                {fields.length > 1 && (
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => remove(index)}
+                    className="mt-3"
+                  >
+                    Remove Page {index + 1}
+                  </Button>
+                )}
+              </div>
+            ))}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                append({ page: fields.length + 1, title: "", content: null })
+              }
+              className="mt-4"
+            >
+              Add New Page
+            </Button>
           </Container>
           {/* <button>submit</button> */}
-
 
           {/* Add New Page Button */}
 
