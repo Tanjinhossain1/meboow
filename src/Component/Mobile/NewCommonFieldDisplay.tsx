@@ -26,7 +26,7 @@ export default function NewCommonFieldDisplay({
   details: { blocks: any[] };
 }) {
   return (
-    <div className="container mx-auto p-2">
+    <div className="container mx-auto pr-2 pl-2 pb-2">
       {details?.blocks.map((section) =>
         section?.type === "table" ? (
           <DeviceTable
@@ -35,19 +35,21 @@ export default function NewCommonFieldDisplay({
             content={section?.data?.content}
             withHeadings={section?.data?.withHeadings}
           />
-        ) : section?.type === "paragraph" ? (
-          // <div
-          //   style={{ marginTop: "30px" }}
-          //   key={section.id}
-          //   dangerouslySetInnerHTML={{
-          //     __html: formatText(section.data.text),
-          //   }}
-          // />
-          <p>
-            <b>Disclaimer.</b> We can not guarantee that the information on this
-            page is 100% correct.{" "}
-            <Link href={"https://safarilist.com/"}>Read more</Link>
-          </p>
+        ) : section?.type === "paragraph" && section?.data?.text.includes("Versions: ") ? (
+          
+            <div
+              style={{ marginBottom: "10px",fontSize:12 }}
+              key={section.id}
+              dangerouslySetInnerHTML={{
+                __html: section.data.text,
+              }}
+            />
+        ) : section?.type === "paragraph" && section?.data?.text.includes("Disclaimer") ? (
+            <p>
+              <b>Disclaimer.</b> We can not guarantee that the information on
+              this page is 100% correct.{" "}
+              <Link className="underline" href={"https://safarilist.com/"}>Read more</Link>
+            </p>
         ) : null
       )}
     </div>
