@@ -35,21 +35,34 @@ export default function NewCommonFieldDisplay({
             content={section?.data?.content}
             withHeadings={section?.data?.withHeadings}
           />
-        ) : section?.type === "paragraph" && section?.data?.text.includes("Versions: ") ? (
-          
+        ) : //  section?.type === "paragraph" && section?.data?.text.includes("Versions: ") ? (
+
+        //     <div
+        //       style={{ marginBottom: "10px",fontSize:12 }}
+        //       key={section.id}
+        //       dangerouslySetInnerHTML={{
+        //         __html: section.data.text,
+        //       }}
+        //     />
+        // ) :
+        section?.type === "paragraph" ? (
+          section?.data?.text.includes("Disclaimer") ? (
+            <p>
+              <b>Disclaimer.</b> We can not guarantee that the information on
+              this page is 100% correct.{" "}
+              <Link className="underline" href={"https://safarilist.com/"}>
+                Read more
+              </Link>
+            </p>
+          ) : (
             <div
-              style={{ marginBottom: "10px",fontSize:12 }}
+              style={{ marginBottom: "10px", fontSize: 12 }}
               key={section.id}
               dangerouslySetInnerHTML={{
                 __html: section.data.text,
               }}
             />
-        ) : section?.type === "paragraph" && section?.data?.text.includes("Disclaimer") ? (
-            <p>
-              <b>Disclaimer.</b> We can not guarantee that the information on
-              this page is 100% correct.{" "}
-              <Link className="underline" href={"https://safarilist.com/"}>Read more</Link>
-            </p>
+          )
         ) : null
       )}
     </div>
