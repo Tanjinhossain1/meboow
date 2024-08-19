@@ -8,7 +8,9 @@ import Link from "next/link";
 const Dashboard = ({user}:any) => {
     const router = useRouter()
     if (!user) redirect("/");
-  
+    if (user?.role !== "admin" && user?.role !== "sub_admin") {
+      redirect("/");
+    }
   return (
     <Container>
       <Link href="/">
