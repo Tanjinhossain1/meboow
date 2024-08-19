@@ -15,6 +15,7 @@ import NatIcon from "@mui/icons-material/Nat";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import BatteryCharging50Icon from "@mui/icons-material/BatteryCharging50";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
+import Link from "next/link";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -35,13 +36,18 @@ export default function NewCommonFieldDisplay({
             withHeadings={section?.data?.withHeadings}
           />
         ) : section?.type === "paragraph" ? (
-          <div
-            style={{ marginTop: "30px" }}
-            key={section.id}
-            dangerouslySetInnerHTML={{
-              __html: formatText(section.data.text),
-            }}
-          />
+          // <div
+          //   style={{ marginTop: "30px" }}
+          //   key={section.id}
+          //   dangerouslySetInnerHTML={{
+          //     __html: formatText(section.data.text),
+          //   }}
+          // />
+          <p>
+            <b>Disclaimer.</b> We can not guarantee that the information on this
+            page is 100% correct.{" "}
+            <Link href={"https://safarilist.com/"}>Read more</Link>
+          </p>
         ) : null
       )}
     </div>
