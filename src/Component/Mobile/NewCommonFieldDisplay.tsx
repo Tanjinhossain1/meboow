@@ -26,15 +26,24 @@ export default function NewCommonFieldDisplay({
 }) {
   return (
     <div className="container mx-auto p-2">
-      {details?.blocks.map((section) => (
-        section?.type === "table"?
-        <DeviceTable
-          key={section?.id}
-          title={section?.data?.content[0][0]} // You may adjust this based on the actual title of each section
-          content={section?.data?.content}
-          withHeadings={section?.data?.withHeadings}
-        />:null
-      ))}
+      {details?.blocks.map((section) =>
+        section?.type === "table" ? (
+          <DeviceTable
+            key={section?.id}
+            title={section?.data?.content[0][0]} // You may adjust this based on the actual title of each section
+            content={section?.data?.content}
+            withHeadings={section?.data?.withHeadings}
+          />
+        ) : section?.type === "paragraph" ? (
+          <div
+            style={{ marginTop: "30px" }}
+            key={section.id}
+            dangerouslySetInnerHTML={{
+              __html: formatText(section.data.text),
+            }}
+          />
+        ) : null
+      )}
     </div>
   );
 }
