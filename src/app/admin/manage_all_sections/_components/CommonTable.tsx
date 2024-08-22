@@ -10,17 +10,18 @@ import { Input } from "@/components/ui/input";
 import { Button as CompoButton } from "@/components/ui/button";
 import { MobileArticleType } from "@/types/mobiles";
 import { BrandTypes, CategoryTypes } from "@/types/category";
+import { UsersTypes } from "@/types/users";
 
 export default function CommonTableComponent({
   columnData,
   columns,
 }: {
-  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[];
+  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[] | UsersTypes[];
   columns: any;
 }) {
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] =
-    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes)[]>(
+    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes | UsersTypes)[]>(
       columnData
     );
   const [paginationModel, setPaginationModel] = useState({
@@ -32,12 +33,23 @@ export default function CommonTableComponent({
   const handleSearch = (event: any) => {
     const value = event.target.value.toLowerCase();
     setSearchText(value);
-    const filteredData = columnData.filter(
-      (row) => row.title.toLowerCase().includes(value)
-      //   ||
-      // row.age.toString().includes(value)
-    );
-    setFilteredRows(filteredData);
+    if((columnData[0] as UsersTypes)?.email){
+      const filteredData = (columnData as UsersTypes[]).filter(
+        (row) => row.fullName.toLowerCase().includes(value)
+          ||
+        row.email.toString().includes(value)
+          ||
+        row.role.toString().includes(value)
+      );
+      setFilteredRows(filteredData);
+    }else{
+      const filteredData = (columnData as (RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes)[]).filter(
+        (row) => row.title.toLowerCase().includes(value)
+        //   ||
+        // row.age.toString().includes(value)
+      );
+      setFilteredRows(filteredData);
+    }
   };
 
   return (

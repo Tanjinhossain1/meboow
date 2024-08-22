@@ -5,6 +5,7 @@ import { Category } from "@/drizzle/schema";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
+import { UsersTypes } from "@/types/users";
 import axios from "axios";
 import { desc } from "drizzle-orm";
 import { revalidatePath, unstable_noStore } from "next/cache";
@@ -383,6 +384,25 @@ export async function fetchBrands(): Promise<{
       `Failed to fetch brands: ${response.status} ${response.statusText}`
     );
     throw new Error("Failed to fetch Brands");
+  }
+
+  const data = await response.json();
+  revalidatePath('/')
+  return {
+    data: data?.data,
+  };
+}
+export async function fetchUsers(): Promise<{
+  data: UsersTypes[];
+}> {
+  const response = await fetch(`${process.env.NEXT_APP_URL}/api/auth/login`, {
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch Users: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch Users");
   }
 
   const data = await response.json();

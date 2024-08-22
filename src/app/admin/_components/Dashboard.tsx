@@ -1,22 +1,21 @@
-
-'use client'
+"use client";
 import React from "react";
 import { Container, Box, Paper, Typography, Button, Grid } from "@mui/material";
 import { redirect, useRouter } from "next/navigation";
 import Link from "next/link";
 
-const Dashboard = ({user}:any) => {
-    const router = useRouter()
-    if (!user) redirect("/");
-    if (user?.role !== "admin" && user?.role !== "sub_admin") {
-      redirect("/");
-    }
+const Dashboard = ({ user }: any) => {
+  const router = useRouter();
+  if (!user) redirect("/");
+  if (user?.role !== "admin" && user?.role !== "sub_admin") {
+    redirect("/");
+  }
   return (
     <Container>
       <Link href="/">
-      <Button variant="contained" sx={{ mt: 2 }}>
-        Back
-      </Button>
+        <Button variant="contained" sx={{ mt: 2 }}>
+          Back
+        </Button>
       </Link>
       <Box
         sx={{
@@ -62,68 +61,86 @@ const Dashboard = ({user}:any) => {
         <Grid gap={2} container>
           <Grid xs={5.5}>
             <Link href={`/admin/manage_all_sections/articles`}>
-            <Paper 
-              sx={{
-                width: "100%",
-                p: 2,
-                mb: 4, 
-                ":hover": { bgcolor: "lightgray" },
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                Manage Articles
-              </Typography>
-            </Paper>
+              <Paper
+                sx={{
+                  width: "100%",
+                  p: 2,
+                  mb: 4,
+                  ":hover": { bgcolor: "lightgray" },
+                }}
+              >
+                <Typography variant="h6" component="h2">
+                  Manage Articles
+                </Typography>
+              </Paper>
             </Link>
           </Grid>
           <Grid xs={5.5}>
             <Link href={`/admin/manage_all_sections/mobile`}>
-            <Paper 
-              sx={{
-                width: "100%",
-                p: 2,
-                mb: 4, 
-                ":hover": { bgcolor: "lightgray" },
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                Manage Mobiles
-              </Typography>
-            </Paper>
+              <Paper
+                sx={{
+                  width: "100%",
+                  p: 2,
+                  mb: 4,
+                  ":hover": { bgcolor: "lightgray" },
+                }}
+              >
+                <Typography variant="h6" component="h2">
+                  Manage Mobiles
+                </Typography>
+              </Paper>
             </Link>
-          </Grid> 
+          </Grid>
           <Grid xs={5.5}>
             <Link href={`/admin/manage_all_sections/brands`}>
-            <Paper 
-              sx={{
-                width: "100%",
-                p: 2,
-                mb: 4, 
-                ":hover": { bgcolor: "lightgray" },
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                Brands
-              </Typography>
-            </Paper>
+              <Paper
+                sx={{
+                  width: "100%",
+                  p: 2,
+                  mb: 4,
+                  ":hover": { bgcolor: "lightgray" },
+                }}
+              >
+                <Typography variant="h6" component="h2">
+                  Brands
+                </Typography>
+              </Paper>
             </Link>
-          </Grid> 
+          </Grid>
           <Grid xs={5.5}>
             <Link href={`/admin/manage_all_sections/category`}>
-            <Paper 
-              sx={{
-                width: "100%",
-                p: 2,
-                mb: 4, 
-                ":hover": { bgcolor: "lightgray" },
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                Categories
-              </Typography>
-            </Paper>
+              <Paper
+                sx={{
+                  width: "100%",
+                  p: 2,
+                  mb: 4,
+                  ":hover": { bgcolor: "lightgray" },
+                }}
+              >
+                <Typography variant="h6" component="h2">
+                  Categories
+                </Typography>
+              </Paper>
             </Link>
-          </Grid> 
+          </Grid>
+          {user?.role === "admin" ? (
+            <Grid xs={5.5}>
+              <Link href={`/admin/manage_all_sections/users`}>
+                <Paper
+                  sx={{
+                    width: "100%",
+                    p: 2,
+                    mb: 4,
+                    ":hover": { bgcolor: "lightgray" },
+                  }}
+                >
+                  <Typography variant="h6" component="h2">
+                    Users
+                  </Typography>
+                </Paper>
+              </Link>
+            </Grid>
+          ) : null}
         </Grid>
       </Box>
     </Container>
