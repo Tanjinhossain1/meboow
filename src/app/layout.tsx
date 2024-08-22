@@ -6,16 +6,16 @@ import ThemeProvider from "@/Component/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { BackdropProviderComponent } from "@/Component/BackdropProvider";
 import { SnackbarProviderComponent } from "@/Component/SnackbarProvider";
-import Script from 'next/script';
-
+import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Safari List - Latest Tech News, Reviews, and Prices",
-  description: "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio",
+  description:
+    "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio",
 };
-
 
 export default async function RootLayout({
   children,
@@ -38,6 +38,16 @@ export default async function RootLayout({
           }}
         />
         {/* End Google Tag Manager */}
+
+        <script
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TKJYDEXYCF');`,
+        }}
+      />
       </head>
       <body className={inter.className}>
         {/* Google Tag Manager (noscript) */}
@@ -46,7 +56,7 @@ export default async function RootLayout({
             src="https://www.googletagmanager.com/ns.html?id=GTM-57S9R35L"
             height="0"
             width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
+            style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
@@ -57,6 +67,8 @@ export default async function RootLayout({
         <Toaster />
         {/* </ThemeProvider> */}
       </body>
+      
+      <GoogleAnalytics gaId="G-TKJYDEXYCF" />
     </html>
   );
 }
