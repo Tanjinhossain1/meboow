@@ -135,18 +135,18 @@ export default function MainSubmitForm({
   };
 
   const onSubmit = async (data: any) => {
-    // if (!fileUploadRef.current[0]) {
-    //   // setImageError(true);
-    //   setErrorOpen(true);
-    //   setShowErrorText("Please Select Image");
-    //   return;
-    // }
-    // if (!displayFileUploadRef.current) {
-    //   // setImageError(true);
-    //   setErrorOpen(true);
-    //   setShowErrorText("Please Select Display Image");
-    //   return;
-    // }
+    if (!fileUploadRef.current[0]) {
+      // setImageError(true);
+      setErrorOpen(true);
+      setShowErrorText("Please Select Image");
+      return;
+    }
+    if (!displayFileUploadRef.current) {
+      // setImageError(true);
+      setErrorOpen(true);
+      setShowErrorText("Please Select Display Image");
+      return;
+    }
 
     handleBackDropOpen();
     const physicalSpecificationData =
@@ -166,6 +166,7 @@ export default function MainSubmitForm({
 
     const formData = {
       ...data,
+      title: data?.title.trim(),
       image: fileUploadRef.current,
       display_image: displayFileUploadRef.current,
       physicalSpecification: physicalSpecificationData,

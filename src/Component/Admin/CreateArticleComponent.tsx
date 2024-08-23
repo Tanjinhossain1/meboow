@@ -272,6 +272,7 @@ export default function CreateArticleComponent({
 
     const data = {
       ...allValues,
+      title: allValues?.title.trim(),
       image: imageRef.current,
       content: fieldData,
       brands: brands,

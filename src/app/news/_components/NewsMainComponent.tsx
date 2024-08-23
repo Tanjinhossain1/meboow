@@ -152,21 +152,19 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
               </Grid>
             </Grid>
             <Grid sx={{ mt: 4 }} container>
+              {/* left  */}
               <Grid xs={12} sm={6} md={4}>
                 <PhoneFinder brands={SampleBrands} />
-              </Grid>
-              <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
-                <MobileReviews mobilesArticles={mobilesArticles} />
-              </Grid>
-            </Grid>
-
-            <Grid sx={{ mb: 4 }} container>
-              <Grid item xs={12} sm={6} md={4}>
                 <LatestDevices mobiles={latestDeviceMobiles} />
                 <MobileReviews isTrending mobilesArticles={latestArticles} />
+                <TopDevicesTable
+                  byFans={byFansMobiles}
+                  dailyInterest={dailyInterestMobiles}
+                />
               </Grid>
-              <Grid item sx={{ pl: 2, height: "350px" }} xs={12} sm={6} md={8}>
-                {/* <PopularMobiles user={user} articles={mobileArticles} /> */}
+              {/* right  */}
+              <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
+                <MobileReviews mobilesArticles={mobilesArticles} />
                 <BestArticles bestArticles={bestReviewsArticles} />
                 <Categories category={category} />
                 <NewsAndReviews mobilesArticles={newsAndReviews} />
@@ -203,73 +201,8 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
                     </Link>
                   </Grid>
                 </Grid>
-              </Grid> 
-            </Grid>
-
-            <Grid sx={{ my: 4 }} container>
-              <Grid xs={12} sm={6} md={4}>
-                <TopDevicesTable
-                  byFans={byFansMobiles}
-                  dailyInterest={dailyInterestMobiles}
-                />
               </Grid>
-                {/* <Grid sx={{ pl: 2, mt: 2 }} xs={12} sm={6} md={8}>
-                  <NewsAndReviews mobilesArticles={newsAndReviews} />
-                </Grid> */}
-              {/* <Grid sx={{ pl: 2, mt: 2 }} xs={12} sm={6} md={8}>
-                <NewsAndReviews mobilesArticles={newsAndReviews} />
-              </Grid> */}
-            </Grid>
-            {/* <Grid container>
-              <Grid xs={12} md={10}>
-                <Grid container>
-                  {articles &&
-                    articles?.map((data: RecentArticleDataType) => {
-                      console.log(data);
-                      return (
-                        <Fragment key={data.id}>
-                          <DisplayArticleComponent asSmall data={data} />
-                        </Fragment>
-                      );
-                    })}
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid sx={{ mt: 3 }} container>
-              <Grid xs={1}></Grid>
-              <Grid xs={10} sm={4}>
-                {isHideLoadMore ? null : (
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      borderColor: "#1976d2", // Border color
-                      color: "#1976d2", // Text color
-                      padding: "10px 20px",
-                      fontSize: "16px",
-                      width: "100%",
-                      textTransform: "none",
-                      transition:
-                        "border-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out",
-                      "&:hover": {
-                        borderColor: "#115293", // Darker shade for hover
-                        color: "#115293",
-                        transform: "scale(1.05)",
-                      },
-                      "&:active": {
-                        borderColor: "#4791db", // Lighter shade for active
-                        color: "#4791db",
-                        transform: "scale(0.95)",
-                      },
-                    }}
-                    onClick={loadMoreArticles}
-                  >
-                    Load More
-                  </Button>
-                )}
-              </Grid>
-              <Grid xs={1}></Grid>
-            </Grid> */}
+            </Grid> 
           </Paper>
         </Grid>
         <Grid xs={0} md={1} lg={1.1} xl={2}></Grid>

@@ -126,9 +126,7 @@ function NavbarHelper({
             </ListItemButton>
           </ListItem>
         ))}
-        {/* <Link href={"/news"}>
-          <Typography>News And Reviews</Typography>
-        </Link> */}
+         
 
         <Link href={"/news"}>
           <ListItem disablePadding>

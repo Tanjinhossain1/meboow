@@ -46,7 +46,6 @@ export default function MobileDetails({
   brands: BrandTypes[];
   category: CategoryTypes[];
 }) {
-  const params = useParams();
   const articlesRef = useRef<MobileArticleType[]>([]);
   const loaderRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState<string>(""); // Search term state
@@ -103,12 +102,11 @@ export default function MobileDetails({
               </Link>
               <Link underline="hover" color="inherit" href="/brands">
                 Brand
-              </Link>
-              <Typography sx={{ fontSize: 12 }}>{params?.brand}</Typography>
+              </Link> 
             </Breadcrumbs>
 
             <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 2 }}>
-              {params.brand} Mobile Phones
+              Mobile Phones
             </Typography>
             <div className="flex mt-3 mb-5 items-center w-full max-w-md bg-card border border-input rounded-md shadow-sm">
               <div className="pl-3 text-muted-foreground">
@@ -143,7 +141,7 @@ export default function MobileDetails({
 
             {searchTerm !=="" && articlesRef.current && articlesRef.current.length === 0 && (
               <Alert severity="warning">
-                No Mobile Found For {params?.brand}
+                No Mobile Found   
               </Alert>
             )}
             <Grid container>
@@ -314,7 +312,9 @@ export default function MobileDetails({
                   {" "}
                   List Of Brands
                 </Typography>
+                <Grid gap={2} container>
                 <BrandDisplayComponent brands={brands} />
+                </Grid>
               </Grid>
               
               <Grid xs={12} sx={{ mt: 10 }} lg={4}>

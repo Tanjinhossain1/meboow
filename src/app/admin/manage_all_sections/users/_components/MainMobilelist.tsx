@@ -29,7 +29,7 @@ export default function UserList({
 }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
-  ); 
+  );
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
   const [brandDialogOpen, setBrandDialogOpen] = React.useState(false);
@@ -52,7 +52,7 @@ export default function UserList({
   };
   const columns = [
     { field: "fullName", headerName: "Name", width: 150 },
-    { field: "email", headerName: "Email", width: 300 },
+    { field: "email", headerName: "Email", width: 200 },
     { field: "role", headerName: "Role", width: 80 },
     {
       field: "createdAt",
@@ -64,39 +64,77 @@ export default function UserList({
       ),
       width: 200,
     },
+    user?.email === "tanjinhossain2003@gmail.com" &&
+      user?.role === "admin" && {
+        field: "",
+        headerName: "Make Admin",
+        renderCell: (params: any) =>
+          params?.row?.role === "admin" ? null : (
+            <Button
+              onClick={() => {
+                if (window.confirm("Are you sure you want to Make Admin?")) {
+                  console.log("update");
+                  handleOpen();
+                  axios
+                    .put(`/api/auth/login`, {
+                      id: params?.row?.id,
+                      role: "admin",
+                    })
+                    .then((response) => {
+                      if (response?.data?.success) {
+                        handleClose();
+                        SnackbarOpen("Success Fully Make Admin", "success");
+                        window.location.reload();
+                      }
+                    })
+                    .catch((err) => {
+                      handleClose();
+                      console.error("Error creating admin:", err);
+                    });
+                }
+              }}
+              size="small"
+              variant="contained"
+              color="info"
+            >
+              Make Admin
+            </Button>
+          ),
+        width: 120,
+      },
     {
       field: "id",
       headerName: "Action",
       renderCell: (params: any) => (
         <Button
-        onClick={() => {
-          if (window.confirm("Are you sure you want to Make Sub Admin?")) {
-            console.log("update");
-            handleOpen();
-            axios
-              .put(`/api/auth/login`,{
-                id: params?.row?.id,
-                role: "sub_admin",
-              })
-              .then((response) => {
-                if (response?.data?.success) {
+          onClick={() => {
+            if (window.confirm("Are you sure you want to Make Sub Admin?")) {
+              console.log("update");
+              handleOpen();
+              axios
+                .put(`/api/auth/login`, {
+                  id: params?.row?.id,
+                  role: "sub_admin",
+                })
+                .then((response) => {
+                  if (response?.data?.success) {
+                    handleClose();
+                    SnackbarOpen("Success Fully Make Sub Admin", "success");
+                    window.location.reload();
+                  }
+                })
+                .catch((err) => {
                   handleClose();
-                  SnackbarOpen("Success Fully Make Sub Admin", "success");
-                  window.location.reload();
-                }
-              })
-              .catch((err) => {
-                handleClose();
-                console.error("Error creating Brand:", err);
-              });
-          }
-        }}
-        size="small"
-        variant="contained"
-        color="info"
-      >
-        Make Sub Admin
-      </Button>
+                  console.error("Error creating Brand:", err);
+                });
+            }
+          }}
+          size="small"
+          variant="contained"
+          color="info"
+        >
+          Make Sub Admin
+        </Button>
       ),
       width: 150,
     },
@@ -113,39 +151,39 @@ export default function UserList({
     //     </Button>
     //   ),
     //   width: 100,
-    // }, 
+    // },
     user?.role === "admin" && {
       field: "delete",
       headerName: "Delete",
-      renderCell: (params: any) => (
-        params?.row?.role === "admin" ? null :
-        <Button
-        size="small"
-          onClick={() => {
-            if (window.confirm("Are you sure you want to Delete Brand?")) {
-              console.log("delete");
-              handleOpen();
-              axios
-                .delete(`/api/auth/login/delete/${params?.row?.id}`)
-                .then((response) => {
-                  if (response?.data?.success) {
+      renderCell: (params: any) =>
+        params?.row?.role === "admin" ? null : (
+          <Button
+            size="small"
+            onClick={() => {
+              if (window.confirm("Are you sure you want to Delete Brand?")) {
+                console.log("delete");
+                handleOpen();
+                axios
+                  .delete(`/api/auth/login/delete/${params?.row?.id}`)
+                  .then((response) => {
+                    if (response?.data?.success) {
+                      handleClose();
+                      SnackbarOpen("Success Fully Delete Brand", "success");
+                      window.location.reload();
+                    }
+                  })
+                  .catch((err) => {
                     handleClose();
-                    SnackbarOpen("Success Fully Delete Brand", "success");
-                    window.location.reload();
-                  }
-                })
-                .catch((err) => {
-                  handleClose();
-                  console.error("Error creating Brand:", err);
-                });
-            }
-          }}
-          variant="contained"
-          color="error"
-        >
-          Delete
-        </Button>
-      ),
+                    console.error("Error creating Brand:", err);
+                  });
+              }
+            }}
+            variant="contained"
+            color="error"
+          >
+            Delete
+          </Button>
+        ),
       width: 100,
     },
   ];
