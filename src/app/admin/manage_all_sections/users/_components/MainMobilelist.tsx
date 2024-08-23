@@ -106,7 +106,7 @@ export default function UserList({
       field: "id",
       headerName: "Action",
       renderCell: (params: any) => (
-        <Button
+       params?.email === "tanjinhossain2003@gmail.com" || params?.email === user?.email ? null : <Button
           onClick={() => {
             if (window.confirm("Are you sure you want to Make Sub Admin?")) {
               console.log("update");
