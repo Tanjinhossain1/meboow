@@ -15,11 +15,11 @@ export default function DesktopViewToggle() {
   console.log("desktopView  on top     ", desktopView);
   useEffect(() => {
     // Check if the user previously enabled Desktop View
-    const savedView = localStorage.getItem('desktopView');
-    // console.log('savedView      ', savedView);
-    if (savedView === 'true') {
-      setDesktopView(true);
-    }
+    // const savedView = localStorage.getItem('desktopView');
+    // // console.log('savedView      ', savedView);
+    // if (savedView === 'true') {
+    //   setDesktopView(true);
+    // }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
     };

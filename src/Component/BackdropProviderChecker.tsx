@@ -1,6 +1,6 @@
 
 "use client";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 // Define the types for the context values
 interface DekstopAndMobileViewType {
@@ -30,6 +30,11 @@ export const DekstopAndMobileViewComponent = ({
   const [desktopView, setDesktopView] = useState<boolean>(false
     // localStorage.getItem("desktopView") === "true" ? true : false
   );
+  useEffect(() => {
+    // Check localStorage only after the component has mounted
+    const savedDesktopView = localStorage.getItem("desktopView") === "true";
+    setDesktopView(savedDesktopView);
+  }, []);
   const toggleDesktopView = () => {
     setDesktopView(!desktopView);
   };
