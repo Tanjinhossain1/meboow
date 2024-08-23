@@ -2,12 +2,12 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
-import ThemeProvider from "@/Component/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { BackdropProviderComponent } from "@/Component/BackdropProvider";
 import { SnackbarProviderComponent } from "@/Component/SnackbarProvider";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { DekstopAndMobileViewComponent } from "@/Component/BackdropProviderChecker";
+import { BackdropProviderComponent } from "@/Component/BackdropProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +25,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"
@@ -40,14 +41,14 @@ export default async function RootLayout({
         {/* End Google Tag Manager */}
 
         <script
-        dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-TKJYDEXYCF');`,
-        }}
-      />
+          }}
+        />
       </head>
       <body className={inter.className}>
         {/* Google Tag Manager (noscript) */}
@@ -61,13 +62,15 @@ export default async function RootLayout({
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         {/* <ThemeProvider> */}
-        <BackdropProviderComponent>
-          <SnackbarProviderComponent>{children}</SnackbarProviderComponent>
-        </BackdropProviderComponent>
+        <SnackbarProviderComponent>
+          <DekstopAndMobileViewComponent>
+            <BackdropProviderComponent>{children}</BackdropProviderComponent>
+          </DekstopAndMobileViewComponent>
+        </SnackbarProviderComponent>
         <Toaster />
         {/* </ThemeProvider> */}
       </body>
-      
+
       <GoogleAnalytics gaId="G-TKJYDEXYCF" />
     </html>
   );

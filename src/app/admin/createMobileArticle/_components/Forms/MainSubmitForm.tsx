@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -36,6 +36,8 @@ import ExpertView from "./ExpertView";
 import EditorForCreateArticle from "./EditorForSpecification/EditorForSpecification";
 import DevicesDetails from "./DevicesDetails";
 import { RecentArticleDataType } from "@/types/RecentArticle";
+import BackdropProviderContext from "@/Component/BackdropProvider";
+import DekstopAndMobileViewContext from "@/Component/BackdropProviderChecker";
 
 export default function MainSubmitForm({
   brands,
@@ -57,6 +59,9 @@ export default function MainSubmitForm({
       : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGB(168, 10, 10) 100%)"
   );
 
+  const { desktopView } = useContext(
+    DekstopAndMobileViewContext
+  );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -359,7 +364,7 @@ export default function MainSubmitForm({
             setGradient={setGradient}
           />
           <DevicesDetails isEdit={isEdit} />
-          <Paper className="max-w-[1000px] mx-auto p-1 mt-1">
+          <Paper className="md:max-w-[1000px] mx-auto p-1 mt-1">
             <Box sx={{ mb: 2 }}>
               <Typography variant="h5" sx={{mb:1,fontWeight:600,fontSize:20}} component="h2">
                 Tags

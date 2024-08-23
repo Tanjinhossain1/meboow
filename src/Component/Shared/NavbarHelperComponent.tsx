@@ -29,17 +29,15 @@ import { CategoryTypes } from "@/types/category";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FeedIcon from "@mui/icons-material/Feed";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "next-auth/react";
-import BackdropProviderContext from "../BackdropProvider";
 import TagIcon from "@mui/icons-material/Tag";
 import CreateTag from "./CreateTag";
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import ContactsIcon from '@mui/icons-material/Contacts';
+import BackdropProviderContext from "../BackdropProvider";
 
 function NavbarHelper({
   isLoginUser,

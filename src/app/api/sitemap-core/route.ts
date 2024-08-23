@@ -9,6 +9,7 @@ export async function GET() {
     try {
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
 
+        sitemapStream.write({ url: `/`, lastmod: new Date() });
         sitemapStream.write({ url: `/aboutus`, lastmod: new Date() });
         sitemapStream.write({ url: `/contactUs`, lastmod: new Date() });
         sitemapStream.write({ url: `/privacyPolicy`, lastmod: new Date() });

@@ -29,6 +29,7 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import { formatForUrl } from "@/utils/utils";
+import DesktopViewToggle from "@/components/DesktopViewToggle";
 
 export default async function Footer() {
   const newsAndReviews = await fetchArticles({ limit: "10" });
@@ -140,6 +141,7 @@ export default async function Footer() {
             and gadget and news to the world.
           </Typography>
         </Box>
+        <DesktopViewToggle />
         <Box
           sx={{
             backgroundColor: "#1A202C",
@@ -368,6 +370,8 @@ export default async function Footer() {
             /> */}
           </Box>
         </Box>
+        
+      
       </Grid>
     </Grid>
   );

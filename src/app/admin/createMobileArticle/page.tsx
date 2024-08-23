@@ -4,6 +4,8 @@ import MainSubmitForm from "./_components/Forms/MainSubmitForm";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
+import Footer from "@/Component/HomePage/Footer";
+import DesktopViewToggle from "@/components/DesktopViewToggle";
 
 export default async function createMobileArticle() {
     
@@ -22,6 +24,10 @@ export default async function createMobileArticle() {
   return (
     <Fragment>
       <MainSubmitForm user={user} brands={brands.data} />
+      <br />
+      <br />
+      <br />
+      <DesktopViewToggle />
     </Fragment>
   );
 }

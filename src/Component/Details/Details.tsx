@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
@@ -33,6 +33,8 @@ import Opinion from "@/app/mobile/[title]/_components/Opinion";
 import { ArrowDownIcon } from "lucide-react";
 import CommonEditorDisplayer from "./CommonEditorDisplayer";
 import Tags from "@/app/mobile/[title]/_components/Tags";
+import BackdropProviderContext from "../BackdropProvider";
+import DekstopAndMobileViewContext from "../BackdropProviderChecker";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -59,7 +61,9 @@ export default function DetailsComponent({
   const params = useParams();
   const history = useRouter();
   console.log(" details  ", articleDetail);
-  const searchParams = useSearchParams();
+  const { desktopView } = useContext(
+    DekstopAndMobileViewContext
+  );
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
@@ -218,7 +222,7 @@ export default function DetailsComponent({
           {articleDetail?.category}
         </Button>
         <Grid container>
-          <Grid xs={12} lg={7.5}>
+          <Grid xs={desktopView === true ? 7.5 :12} lg={7.5}>
             <h1 className="mt-1 font-2xl text-[#333333] font-semibold">
               {articleDetail?.title}
             </h1>
@@ -733,8 +737,8 @@ export default function DetailsComponent({
                   }
                 })}
           </Grid>
-          <Grid xs={12} lg={0.5}></Grid>
-          <Grid xs={12} sx={{ mt: 10 }} lg={4}>
+          <Grid xs={desktopView === true ? 0.5 :12} lg={0.5}></Grid>
+          <Grid xs={desktopView === true ? 4 : 12} sx={{ mt: 10 }} lg={4}>
             <MobileListComponent mobileArticles={mobileArticles} />
             <BrandListComponent brands={brands} />
             <CategoryListComponent category={category} />

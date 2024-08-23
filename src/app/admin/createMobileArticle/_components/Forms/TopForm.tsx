@@ -200,8 +200,12 @@ export default function TopForm({
           sx={{ width: "100%", mx: "auto" }}
         >
           <div style={{ marginBottom: "20px" }} id="top">
-            <Button
-              onClick={() => history.push("/admin")}
+            <Button 
+              onClick={() => {
+                if (window.confirm("Are you sure you want to back to Dashboard?")) {
+                  history.push("/admin")
+                }
+              }}
               variant="contained"
               color="success"
               sx={{ mt: 1, mr: 1 }}
