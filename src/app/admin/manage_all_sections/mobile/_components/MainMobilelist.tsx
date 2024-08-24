@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { formatDate,formatForUrl } from "@/utils/utils";
+import { formatDate, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
@@ -23,9 +23,10 @@ export default function MainMobilesDetailList({
   const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const handleCopy = async (params: MobileArticleType) => {
-   
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/mobile/${formatForUrl(params?.title)}`;
+      const textToCopy = `${
+        process.env.NEXT_PUBLIC_DOMAIN_URL
+      }/mobile/${formatForUrl(params?.title)}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -37,6 +38,28 @@ export default function MainMobilesDetailList({
   };
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
+  const handlePostToFacebook = async (params: MobileArticleType) => {
+    try {
+      const postUrl = `${
+        process.env.NEXT_PUBLIC_DOMAIN_URL
+      }/mobile/${formatForUrl(params?.title)}`;
+
+      // Ensure you replace {PAGE_ACCESS_TOKEN} with your actual Page Access Token
+      const response = await axios.post(
+        `https://graph.facebook.com/${process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID}/feed`,
+        {
+          message: `${params?.title}`,
+          link: postUrl,
+          access_token: process.env.NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN,
+        }
+      );
+      console.log("Post successful:", response.data);
+      SnackbarOpen("Article posted to Facebook successfully!", "success");
+    } catch (error) {
+      console.error("Error posting to Facebook:", error);
+      SnackbarOpen("Error posting to Facebook", "error");
+    }
+  };
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     { field: "title", headerName: "Title", width: 400 },
@@ -49,6 +72,25 @@ export default function MainMobilesDetailList({
         </Typography>
       ),
       width: 200,
+    },
+    {
+      field: "post",
+      headerName: "Post",
+      renderCell: (params: any) => (
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            if (window.confirm("Are you sure you want to POST?")) {
+              handlePostToFacebook(params.row);
+            }
+          }}
+        >
+          Post
+        </Button>
+      ),
+      width: 100,
     },
     {
       field: "actions",

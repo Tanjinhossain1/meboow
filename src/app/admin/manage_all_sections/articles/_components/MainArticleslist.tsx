@@ -91,7 +91,11 @@ export default function MainArticlesDetailList({
           size="small"
           variant="contained"
           color="primary"
-          onClick={() => handlePostToFacebook(params.row)}
+          onClick={() => {
+            if (window.confirm("Are you sure you want to POST?")) {
+              handlePostToFacebook(params.row)}
+            }
+          } 
         >
           Post
         </Button>
