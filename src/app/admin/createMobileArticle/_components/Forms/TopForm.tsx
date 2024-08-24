@@ -322,7 +322,7 @@ export default function TopForm({
                             // })}
                             labelId="number-select-label"
                             label="Total Score"
-                            value={
+                            defaultValue={
                               isEdit?.isEdit
                                 ? isEdit?.mobileArticles[0]?.expert_view
                                     ?.total_score

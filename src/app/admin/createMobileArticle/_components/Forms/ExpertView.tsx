@@ -277,7 +277,7 @@ export default function ExpertView({
                     //     required: "Required Field",
                     //   }
                     // )}
-                    value={
+                    defaultValue={
                       isEdit?.isEdit
                         ? (
                             isEdit?.mobileArticles[0]?.expert_view
