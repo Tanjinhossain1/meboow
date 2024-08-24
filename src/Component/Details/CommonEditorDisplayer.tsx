@@ -5,6 +5,23 @@ import React from 'react'
 function formatText(text: string) {
     return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
   }
+  function modifyLinks(html:string) {
+    // Create a temporary DOM element to work with
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+  
+    // Find all <a> tags and change their color
+    const links = tempDiv.querySelectorAll('a');
+    links.forEach(link => {
+      link.style.color = 'red';
+      link.style.textDecoration = 'underline';
+    });
+  
+    // Return the modified HTML as a string
+    return tempDiv.innerHTML;
+  }
+  
+  // Now use modifiedHtml in your React component
   
 export default function CommonEditorDisplayer({blocks,tableOfContents}:{blocks:any[],tableOfContents:any[]}) {
     return blocks?.map((block: any) => {
@@ -74,9 +91,9 @@ export default function CommonEditorDisplayer({blocks,tableOfContents}:{blocks:a
                 style={{ marginTop: "30px" }}
                 key={block.id}
                 dangerouslySetInnerHTML={{
-                  __html: formatText(block.data.text),
+                  __html: modifyLinks(block.data.text),
                 }}
-              ></div>
+              />
             );
           }
         } else if (block.type === "header") {

@@ -9,6 +9,7 @@ import { ResizableImageTool } from "./EditorImage";
 import { Container } from "@mui/material";
 import Delimiter from "@editorjs/delimiter";
 import Marker from "@editorjs/marker";
+import SearchAndLinkTool from "./SearchAndLinkTool";
 
 const EditorForArticle = ({
   holderId,
@@ -40,6 +41,7 @@ const EditorForArticle = ({
               class: Header as any,
               inlineToolbar: true,
             },
+            searchAndLink: SearchAndLinkTool as any,
             table: {
               class: Table as any,
               inlineToolbar: true,
@@ -127,7 +129,7 @@ const EditorForArticle = ({
             console.log(
               api,
               "Now I know that Editor's content changed!",
-              event
+             await editorRef.current?.save()
             );
             const content = await editorRef.current?.save();
             onChange(content); // Pass data to form
@@ -153,9 +155,9 @@ const EditorForArticle = ({
     //     editorRef.current = null;
     //   }
     // };
-  }, [editorRef, defaultData, holderId]);
-
+  }, [editorRef, defaultData, holderId,onChange,value]);
   return (
+    <>
     <Container
       id={holderId ? `editorjs-${holderId}` : `editorjs`}
       sx={{
@@ -171,6 +173,7 @@ const EditorForArticle = ({
         margin: "auto",
       }}
     />
+    </>
   );
 };
 

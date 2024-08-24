@@ -8,6 +8,7 @@ import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
+
 export default function MainArticlesDetailList({
   articles,
   user,
@@ -17,13 +18,21 @@ export default function MainArticlesDetailList({
 }) {
   const [copied, setCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null); // State to track copied row ID
+  const { handleOpen, handleClose } = useContext(BackdropProviderContext);
+  const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
+    SnackbarProviderContext
+  );
 
   const handleCopy = async (params: RecentArticleDataType) => {
     try {
       const textToCopy =
         params.category === "Mobiles"
-          ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(params.title)}`
-          : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(params.title)}`;
+          ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(
+              params.title
+            )}`
+          : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(
+              params.title
+            )}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -33,10 +42,33 @@ export default function MainArticlesDetailList({
       console.error("Failed to copy: ", error);
     }
   };
-  const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
-    SnackbarProviderContext
-  );
-  const { handleOpen, handleClose } = useContext(BackdropProviderContext);
+  const handlePostToFacebook = async (params: RecentArticleDataType) => {
+    try {
+      const postUrl =
+        params.category === "Mobiles"
+          ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(
+              params.title
+            )}`
+          : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(
+              params.title
+            )}`;
+
+      // Ensure you replace {PAGE_ACCESS_TOKEN} with your actual Page Access Token
+      const response = await axios.post(
+        `https://graph.facebook.com/${process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID}/feed`,
+        {
+          message: `${params?.title}`,
+          link:postUrl,
+          access_token: process.env.NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN,
+        }
+      );
+      console.log("Post successful:", response.data);
+      SnackbarOpen("Article posted to Facebook successfully!", "success");
+    } catch (error) {
+      console.error("Error posting to Facebook:", error);
+      SnackbarOpen("Error posting to Facebook", "error");
+    }
+  };
 
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
@@ -50,6 +82,21 @@ export default function MainArticlesDetailList({
         </Typography>
       ),
       width: 150,
+    },
+    {
+      field: "post",
+      headerName: "Post",
+      renderCell: (params: any) => (
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => handlePostToFacebook(params.row)}
+        >
+          Post
+        </Button>
+      ),
+      width: 100,
     },
     {
       field: "actions",
