@@ -40,7 +40,8 @@ export default function MainMobilesDetailList({
 
   const handlePostToFacebook = async (params: MobileArticleType) => {
     try {
-      const postUrl = `${
+      const postUrl = 
+       `${
         process.env.NEXT_PUBLIC_DOMAIN_URL
       }/mobile/${formatForUrl(params?.title)}`;
 
