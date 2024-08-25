@@ -239,7 +239,7 @@ export default function BrandWiseDetails({
                         </Grid>
                         <Grid
                           item
-                          sx={{ width: "100%",  height: "30px" }}
+                          sx={{ width: "100%",  height: "40px" }}
                         >
                           <Link sx={{textDecoration:"none"}}
                             style={{ textDecoration: "none" }}
