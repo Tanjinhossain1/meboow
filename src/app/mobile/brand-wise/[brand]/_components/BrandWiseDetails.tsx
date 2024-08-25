@@ -73,7 +73,7 @@ export default function BrandWiseDetails({
     } else {
       setHasMore(false);
     }
-  }, [loaderRef, hasMore === true, totalRef.current, articlesRef.current]);
+  }, [loaderRef, hasMore === true, totalRef.current, articlesRef.current,hasMore]);
 
   const loadMoreArticles = async () => {
     try {
@@ -207,7 +207,7 @@ export default function BrandWiseDetails({
                         borderRadius: "10px",
                         textAlign: "center",
                         width: "178px", // Adjusted width
-                        height: "290px", // Adjusted height
+                        height: "240px", // Adjusted height
                         position: "relative",
                         cursor: "pointer",
                       }}
@@ -221,7 +221,7 @@ export default function BrandWiseDetails({
                           xs={3}
                           // item
                         >
-                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                          <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Image
                               style={{
                                 width: "195px", // Ensure the image takes the full width of the card
@@ -239,9 +239,9 @@ export default function BrandWiseDetails({
                         </Grid>
                         <Grid
                           item
-                          sx={{ width: "100%", mt: 2, height: "45px" }}
+                          sx={{ width: "100%",  height: "30px" }}
                         >
-                          <Link
+                          <Link sx={{textDecoration:"none"}}
                             style={{ textDecoration: "none" }}
                             href={`/mobile/${formatForUrl(data?.title)}`}
                           >
@@ -260,13 +260,13 @@ export default function BrandWiseDetails({
                         </Grid>
 
                         <Grid textAlign={"left"} item sx={{ width: "100%" }}>
-                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                          <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Typography
                               sx={{
                                 color: "#45517a",
                                 width: "148px",
                                 height: "14px",
-                                mt: "13px",
+                                
                                 whiteSpace: "nowrap",
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
@@ -283,7 +283,7 @@ export default function BrandWiseDetails({
                           </Link>
                         </Grid>
                         <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                          <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
                             <Typography
                               sx={{
                                 color: "#45517a",
@@ -306,7 +306,7 @@ export default function BrandWiseDetails({
                           </Link>
                         </Grid>
                         <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                          <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                          <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
                             {" "}
                             <Typography
                               sx={{
@@ -333,7 +333,7 @@ export default function BrandWiseDetails({
                           item
                           sx={{
                             width: "100%",
-                            mt: 1,
+                            
                             ":hover": {
                               textDecoration: "underline",
                             },

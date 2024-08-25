@@ -30,7 +30,7 @@ export default function BrandDisplayComponent({
               display: "flex",
               justifyContent: "center",
               border: "1px solid lightgray",
-              p: 2,
+              p: 0.5,
               cursor: "pointer",
               height: "50px",
             }}
