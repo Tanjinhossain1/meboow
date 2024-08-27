@@ -5,14 +5,22 @@ import { Category } from "@/drizzle/schema";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
+import { NetworkBandsType } from "@/types/network-bands";
 import { UsersTypes } from "@/types/users";
 import axios from "axios";
 import { desc } from "drizzle-orm";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
-
-
-
+export const fetchCountryName = async (countryCode: string): Promise<string | null> => {
+  try {
+    const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`);
+    const data = await response.json();
+    return data[0]?.name?.common || null;
+  } catch (error) {
+    console.error("Error fetching country data:", error);
+    return null;
+  }
+};
 export async function fetchArticles({
   page = "1",
   limit = "6",
@@ -391,6 +399,45 @@ export async function fetchBrands(): Promise<{
   return {
     data: data?.data,
   };
+}
+
+export async function fetchNetworkBands({ id }: { id?: string }): Promise<{
+  data: NetworkBandsType[];
+}> {
+  if (id) {
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/network-bands/detail/${id}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch Network bands: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch Network bands");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data,
+    };
+
+  } else {
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/network-bands/all`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch Network bands: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch Network bands");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data,
+    };
+  }
 }
 export async function fetchUsers(): Promise<{
   data: UsersTypes[];

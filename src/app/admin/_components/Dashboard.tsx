@@ -11,7 +11,7 @@ const Dashboard = ({ user }: any) => {
     redirect("/");
   }
   return (
-    <Container>
+    <Container className="md:max-w-[1000px] mx-auto">
       <Link href="/">
         <Button variant="contained" sx={{ mt: 2 }}>
           Back
@@ -26,7 +26,7 @@ const Dashboard = ({ user }: any) => {
         }}
       >
         <Grid gap={2} container>
-          <Grid xs={5.5}>
+          <Grid xs={3.5}>
             <Paper
               onClick={() => router.push("/admin/createArticle")}
               sx={{
@@ -42,7 +42,7 @@ const Dashboard = ({ user }: any) => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid xs={5.5}>
+          <Grid xs={3.5}>
             <Paper
               onClick={() => router.push("/admin/createMobileArticle")}
               sx={{
@@ -57,9 +57,28 @@ const Dashboard = ({ user }: any) => {
               </Typography>
             </Paper>
           </Grid>
+        <Grid xs={3.5}>
+          <Link href={`/admin/network-bands`}>
+            <Paper
+              sx={{
+                width: "100%",
+                p: 2,
+                mb: 4,
+                ":hover": { bgcolor: "lightgray" },
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                Create Network Bands
+              </Typography>
+            </Paper>
+          </Link>
+        </Grid>
         </Grid>
         <Grid gap={2} container>
-          <Grid xs={5.5}>
+        <Grid xs={12}>
+          <Typography sx={{ fontSize: 24 ,fontWeight:600}}>Manages</Typography>
+        </Grid>
+          <Grid xs={3.5}>
             <Link href={`/admin/manage_all_sections/articles`}>
               <Paper
                 sx={{
@@ -75,7 +94,7 @@ const Dashboard = ({ user }: any) => {
               </Paper>
             </Link>
           </Grid>
-          <Grid xs={5.5}>
+          <Grid xs={3.5}>
             <Link href={`/admin/manage_all_sections/mobile`}>
               <Paper
                 sx={{
@@ -91,7 +110,7 @@ const Dashboard = ({ user }: any) => {
               </Paper>
             </Link>
           </Grid>
-          <Grid xs={5.5}>
+          <Grid xs={3.5}>
             <Link href={`/admin/manage_all_sections/brands`}>
               <Paper
                 sx={{
@@ -107,7 +126,7 @@ const Dashboard = ({ user }: any) => {
               </Paper>
             </Link>
           </Grid>
-          <Grid xs={5.5}>
+          <Grid xs={3.5}>
             <Link href={`/admin/manage_all_sections/category`}>
               <Paper
                 sx={{
@@ -123,8 +142,24 @@ const Dashboard = ({ user }: any) => {
               </Paper>
             </Link>
           </Grid>
+          <Grid xs={3.5}>
+            <Link href={`/admin/manage_all_sections/network-bands`}>
+              <Paper
+                sx={{
+                  width: "100%",
+                  p: 2,
+                  mb: 4,
+                  ":hover": { bgcolor: "lightgray" },
+                }}
+              >
+                <Typography variant="h6" component="h2">
+                  Network Bands
+                </Typography>
+              </Paper>
+            </Link>
+          </Grid>
           {user?.role === "admin" ? (
-            <Grid xs={5.5}>
+            <Grid xs={3.5}>
               <Link href={`/admin/manage_all_sections/users`}>
                 <Paper
                   sx={{

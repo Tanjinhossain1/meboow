@@ -11,17 +11,18 @@ import { Button as CompoButton } from "@/components/ui/button";
 import { MobileArticleType } from "@/types/mobiles";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { UsersTypes } from "@/types/users";
+import { NetworkBandsType } from "@/types/network-bands";
 
 export default function CommonTableComponent({
   columnData,
   columns,
 }: {
-  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[] | UsersTypes[];
+  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[] | UsersTypes[] | NetworkBandsType[];
   columns: any;
 }) {
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] =
-    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes | UsersTypes)[]>(
+    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes | UsersTypes | NetworkBandsType)[]>(
       columnData
     );
   const [paginationModel, setPaginationModel] = useState({

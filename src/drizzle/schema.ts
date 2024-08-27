@@ -168,6 +168,19 @@ export const Tags = mysqlTable("tags", {
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
 
+export const NetworkBands = mysqlTable("network_bands", {
+  id: int("id").autoincrement().primaryKey(),
+  // name: text("name"),
+  country: text("country").notNull(),
+  content: json("content"),
+  admin_detail:json('admin_detail'),
+  admin_detail_edit:json('admin_detail_edit'),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
+
+
 // // for login users auth js 
 
 export const users = mysqlTable("users", {
@@ -181,7 +194,6 @@ export const users = mysqlTable("users", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
-
 // export const sessions = mysqlTable("session", {
 //   id: int("userId").primaryKey().autoincrement()
 //     .notNull(),
