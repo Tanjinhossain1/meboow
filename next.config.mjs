@@ -56,6 +56,10 @@ const nextConfig = {
           source: '/sitemap-review.xml',
           destination: '/api/sitemap-review', // Exact path to your route
         },
+        {
+          source: '/sitemap-network-bands.xml',
+          destination: '/api/sitemap-network-bands', // Exact path to your route
+        },
       ];
     },
   

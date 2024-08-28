@@ -401,11 +401,28 @@ export async function fetchBrands(): Promise<{
   };
 }
 
-export async function fetchNetworkBands({ id }: { id?: string }): Promise<{
+export async function fetchNetworkBands({ id,country }: { id?: string,country?: string }): Promise<{
   data: NetworkBandsType[];
 }> {
   if (id) {
     const response = await fetch(`${process.env.NEXT_APP_URL}/api/network-bands/detail/${id}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch Network bands: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch Network bands");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data,
+    };
+
+  }else if(country){
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/network-bands/all?country=${country}`, {
       cache: "no-store",
     });
     if (!response.ok) {

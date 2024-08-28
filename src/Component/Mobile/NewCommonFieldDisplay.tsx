@@ -130,7 +130,7 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
                     } `}
                     // dangerouslySetInnerHTML={{ __html: cell }}
                   >
-                    {stripLinks(cell)}
+                    {stripLinks(cell) === "Technology" ? <Link className="hover:underline" href={`/network-bands`}>{stripLinks(cell)}</Link> : stripLinks(cell)}
                   </td>
                 )
               )}
