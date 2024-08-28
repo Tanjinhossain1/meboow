@@ -138,6 +138,34 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
                       <Link className="hover:underline" href={`/network-bands`}>
                         {stripLinks(cell)}
                       </Link>
+                    ) : stripLinks(cell) === "Speed" ? (
+                      <Link className="hover:underline" href={`/glossary/3g`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    )  : stripLinks(cell) === "Announced" || stripLinks(cell) === "Status" ?  (
+                      <Link className="hover:underline" href={`/glossary/Phone_Life_Cycle`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    )  :stripLinks(cell) === "SIM" ?  (
+                      <Link className="hover:underline" href={`/glossary/sim`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Type" ?  (
+                      <Link className="hover:underline" href={`/glossary/display_type`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Resolution" ?  (
+                      <Link className="hover:underline" href={`/glossary/resolution`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Protection" ?  (
+                      <Link className="hover:underline" href={`/glossary/Screen_protection`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "OS" ?  (
+                      <Link className="hover:underline" href={`/glossary/OS `}>
+                        {stripLinks(cell)}
+                      </Link>
                     ) : (
                       stripLinks(cell)
                     )}
