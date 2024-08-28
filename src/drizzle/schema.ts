@@ -179,6 +179,18 @@ export const NetworkBands = mysqlTable("network_bands", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
+export const Glossary = mysqlTable("glossary", {
+  id: int("id").autoincrement().primaryKey(),
+  // name: text("name"),
+  display_name: text("display_name").notNull(),
+  route: text("route").notNull(),
+  content: json("content"),
+  admin_detail:json('admin_detail'),
+  admin_detail_edit:json('admin_detail_edit'),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
 
 
 // // for login users auth js 

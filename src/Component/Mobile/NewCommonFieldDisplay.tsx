@@ -130,7 +130,17 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
                     } `}
                     // dangerouslySetInnerHTML={{ __html: cell }}
                   >
-                    {stripLinks(cell) === "Technology" ? <Link className="hover:underline" href={`/network-bands`}>{stripLinks(cell)}</Link> : stripLinks(cell)}
+                    {stripLinks(cell) === "Technology" ||
+                    stripLinks(cell) === "2G bands" ||
+                    stripLinks(cell) === "3G bands" ||
+                    stripLinks(cell) === "4G bands" ||
+                    stripLinks(cell) === "5G bands" ? (
+                      <Link className="hover:underline" href={`/network-bands`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : (
+                      stripLinks(cell)
+                    )}
                   </td>
                 )
               )}

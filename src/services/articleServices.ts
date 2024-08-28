@@ -5,7 +5,7 @@ import { Category } from "@/drizzle/schema";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
-import { NetworkBandsType } from "@/types/network-bands";
+import { GlossaryGroup, GlossaryType, NetworkBandsType } from "@/types/network-bands";
 import { UsersTypes } from "@/types/users";
 import axios from "axios";
 import { desc } from "drizzle-orm";
@@ -455,6 +455,83 @@ export async function fetchNetworkBands({ id,country }: { id?: string,country?: 
       data: data?.data,
     };
   }
+}
+
+export async function fetchGlossary({ id,route }: { id?: string,route?: string }): Promise<{
+  data: GlossaryType[]
+}> {
+  if (id) {
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/glossary/detail/${id}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch glossary: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch glossary");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data as GlossaryType[],
+    };
+
+  }else if(route){
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/glossary/all?route=${route}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch glossary: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch glossary");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data as GlossaryType[],
+    };
+
+  } else {
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/glossary/all`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch glossary: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch glossary");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data as GlossaryType[],
+    };
+  }
+}
+
+export async function fetchGlossaryList({isList }: { isList?:boolean }): Promise<{
+  data: GlossaryGroup[];
+}> {
+   
+    const response = await fetch(`${process.env.NEXT_APP_URL}/api/glossary/lists`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch glossary: ${response.status} ${response.statusText}`
+      );
+      throw new Error("Failed to fetch glossary");
+    }
+
+    const data = await response.json();
+    revalidatePath('/')
+    return {
+      data: data?.data ,
+    };
 }
 export async function fetchUsers(): Promise<{
   data: UsersTypes[];

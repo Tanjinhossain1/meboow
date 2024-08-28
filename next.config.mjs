@@ -60,6 +60,10 @@ const nextConfig = {
           source: '/sitemap-network-bands.xml',
           destination: '/api/sitemap-network-bands', // Exact path to your route
         },
+        {
+          source: '/sitemap-glossary.xml',
+          destination: '/api/sitemap-glossary', // Exact path to your route
+        },
       ];
     },
   

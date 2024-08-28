@@ -11,18 +11,18 @@ import { Button as CompoButton } from "@/components/ui/button";
 import { MobileArticleType } from "@/types/mobiles";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { UsersTypes } from "@/types/users";
-import { NetworkBandsType } from "@/types/network-bands";
+import { GlossaryType, NetworkBandsType } from "@/types/network-bands";
 
 export default function CommonTableComponent({
   columnData,
   columns,
 }: {
-  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[] | UsersTypes[] | NetworkBandsType[];
+  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[] | UsersTypes[] | NetworkBandsType[] | GlossaryType[];
   columns: any;
 }) {
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] =
-    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes | UsersTypes | NetworkBandsType)[]>(
+    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes | UsersTypes | NetworkBandsType | GlossaryType)[]>(
       columnData
     );
   const [paginationModel, setPaginationModel] = useState({
@@ -43,9 +43,16 @@ export default function CommonTableComponent({
         row.role.toString().includes(value)
       );
       setFilteredRows(filteredData);
+    }else if ((columnData[0] as GlossaryType)?.display_name){
+      const filteredData = (columnData as (GlossaryType)[]).filter(
+        (row) => row?.display_name.toLowerCase().includes(value)
+        //   ||
+        // row.age.toString().includes(value)
+      );
+      setFilteredRows(filteredData);
     }else{
       const filteredData = (columnData as (RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes)[]).filter(
-        (row) => row.title.toLowerCase().includes(value)
+        (row) => row?.title.toLowerCase().includes(value)
         //   ||
         // row.age.toString().includes(value)
       );

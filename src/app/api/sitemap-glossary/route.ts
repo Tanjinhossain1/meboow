@@ -1,6 +1,6 @@
 import { getDb } from '@/drizzle/db';
-import { NetworkBands } from '@/drizzle/schema';
-import { formatForUrl } from '@/utils/utils';
+import { Glossary } from '@/drizzle/schema';
+import { formatForUrlWith_under_score } from '@/utils/utils';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
@@ -9,17 +9,17 @@ export async function GET() {
     try {
         const db = await getDb();
         console.log(
-            'connected to the db: get all networkBands ---> api/v1/networkBand/site-map'
+            'connected to the db: get all Glossary ---> api/v1/networkBand/site-map'
         )
-        const networkBands = await db
+        const glossary = await db
             .select()
-            .from(NetworkBands)
-            .orderBy(desc(NetworkBands.id))
+            .from(Glossary)
+            .orderBy(desc(Glossary.id))
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
-        sitemapStream.write({ url: `/network-bands`, lastmod: new Date() });
-        networkBands.forEach((networkBand) => {
-            sitemapStream.write({ url: `/network-bands/${formatForUrl(networkBand?.country)}`, lastmod: new Date() });
+        sitemapStream.write({ url: `/glossary`, lastmod: new Date() });
+        glossary.forEach((glossaries) => {
+            sitemapStream.write({ url: `/glossary/${formatForUrlWith_under_score(glossaries?.route)}`, lastmod: new Date() });
         })
         
         sitemapStream.end();

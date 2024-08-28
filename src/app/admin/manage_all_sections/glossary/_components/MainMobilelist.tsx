@@ -1,30 +1,19 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
-import { RecentArticleDataType } from "@/types/RecentArticle";
-import { formatDate, formatForUrl } from "@/utils/utils";
+import { formatDate, formatForUrlWith_under_score } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
-import { MobileArticleType } from "@/types/mobiles";
-import { BrandTypes } from "@/types/category";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
-import DialogComponent from "@/Component/Admin/Dialog";
-import { NetworkBandsType } from "@/types/network-bands";
+import { GlossaryType } from "@/types/network-bands";
 
 export default function MainNetworkList({
-  networkBands,
+  glossary,
   user,
 }: {
-  networkBands: NetworkBandsType[];
+  glossary: GlossaryType[];
   user: any;
 }) {
   
@@ -33,9 +22,9 @@ export default function MainNetworkList({
   );
   const [copied, setCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
-  const handleCopy = async (params: NetworkBandsType) => {
+  const handleCopy = async (params: GlossaryType) => {
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/network-brands/${formatForUrl(params?.country)}`;
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/glossary/${formatForUrlWith_under_score(params?.display_name)}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -49,7 +38,7 @@ export default function MainNetworkList({
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
   const columns = [
-    { field: "country", headerName: "Country", width: 400 },
+    { field: "display_name", headerName: "Display Name", width: 400 },
     {
       field: "createdAt",
       headerName: "Create Date",
@@ -64,7 +53,7 @@ export default function MainNetworkList({
       field: "actions",
       headerName: "Edit",
       renderCell: (params: any) => (
-      <Link href={`/admin/network-bands/edit/${params?.row?.id}`}>
+      <Link href={`/admin/glossary/edit/${params?.row?.id}`}>
         <Button
            
           variant="contained"
@@ -99,21 +88,21 @@ export default function MainNetworkList({
       renderCell: (params: any) => (
         <Button
           onClick={() => {
-            if (window.confirm("Are you sure you want to Delete network Bands?")) {
+            if (window.confirm("Are you sure you want to Delete glossary?")) {
               console.log("delete");
               handleOpen();
               axios
-                .delete(`/api/network-bands/delete/${params?.row?.id}`)
+                .delete(`/api/glossary/delete/${params?.row?.id}`)
                 .then((response) => {
                   if (response?.data?.success) {
                     handleClose();
-                    SnackbarOpen("Success Fully Delete network Bands", "success");
+                    SnackbarOpen("Success Fully Delete glossary", "success");
                     window.location.reload();
                   }
                 })
                 .catch((err) => {
                   handleClose();
-                  console.error("Error creating network Bands:", err);
+                  console.error("Error creating glossary:", err);
                 });
             }
           }}
@@ -129,7 +118,7 @@ export default function MainNetworkList({
 
   return (
     <>
-      <CommonTableComponent columnData={networkBands} columns={columns} />;
+      <CommonTableComponent columnData={glossary} columns={columns} />;
       
     </>
   );

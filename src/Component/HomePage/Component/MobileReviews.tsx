@@ -19,15 +19,18 @@ export default function MobileReviews({
   mobilesArticles,
   isTrending,
   isGap,
+  isText
+
 }: {
   mobilesArticles: RecentArticleDataType[];
   isTrending?: boolean;
   isGap?: boolean;
+  isText?: boolean;
 }) {
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600,mt:isGap ? 4: 0 }}>
-        {isTrending ? "Trending" : "Mobile Reviews"}
+        {isTrending ? isText ? "Popular Reviews" : "Trending" : "Mobile Reviews"}
       </Typography>
       <Grid
         sx={{ display: "flex", mt: 1, mb: isTrending ? 0 : 2 }}
