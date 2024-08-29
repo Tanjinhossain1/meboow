@@ -142,31 +142,202 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
                       <Link className="hover:underline" href={`/glossary/3g`}>
                         {stripLinks(cell)}
                       </Link>
-                    )  : stripLinks(cell) === "Announced" || stripLinks(cell) === "Status" ?  (
-                      <Link className="hover:underline" href={`/glossary/Phone_Life_Cycle`}>
+                    ) : stripLinks(cell) === "Announced" ||
+                      stripLinks(cell) === "Status" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Phone_Life_Cycle`}
+                      >
                         {stripLinks(cell)}
                       </Link>
-                    )  :stripLinks(cell) === "SIM" ?  (
+                    ) : stripLinks(cell) === "SIM" ? (
                       <Link className="hover:underline" href={`/glossary/sim`}>
                         {stripLinks(cell)}
                       </Link>
-                    ) : stripLinks(cell) === "Type" ?  (
-                      <Link className="hover:underline" href={`/glossary/display_type`}>
+                    ) : stripLinks(cell) === "Type" && title !== "Battery"  ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/display_type`}
+                      >
                         {stripLinks(cell)}
                       </Link>
-                    ) : stripLinks(cell) === "Resolution" ?  (
-                      <Link className="hover:underline" href={`/glossary/resolution`}>
+                    ) : stripLinks(cell) === "Resolution" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/resolution`}
+                      >
                         {stripLinks(cell)}
                       </Link>
-                    ) : stripLinks(cell) === "Protection" ?  (
-                      <Link className="hover:underline" href={`/glossary/Screen_protection`}>
+                    ) : stripLinks(cell) === "Protection" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Screen_protection`}
+                      >
                         {stripLinks(cell)}
                       </Link>
-                    ) : stripLinks(cell) === "OS" ?  (
-                      <Link className="hover:underline" href={`/glossary/OS `}>
+                    ) : stripLinks(cell) === "OS" ? (
+                      <Link className="hover:underline" href={`/glossary/OS`}>
                         {stripLinks(cell)}
                       </Link>
-                    ) : (
+                    ) : stripLinks(cell) === "Chipset" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Chipset`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "CPU" ? (
+                      <Link className="hover:underline" href={`/glossary/CPU`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "GPU" ? (
+                      <Link className="hover:underline" href={`/glossary/GPU`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Card slot" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Memory_card_slot`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Internal" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Dynamic_Memory`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : title === "Selfie camera" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Secondary_camera`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : title === "Main Camera" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Camera`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    )  : stripLinks(cell) === "Loudspeaker" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Loudspeaker`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "3.5mm jack" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Audio_jack`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "WLAN" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/wi-fi`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Bluetooth" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Bluetooth`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Positioning" ? (
+                      <Link className="hover:underline" href={`/glossary/gnss`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "NFC" ? (
+                      <Link className="hover:underline" href={`/glossary/NFC`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Radio" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/FM_Radio`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "USB" ? (
+                      <Link className="hover:underline" href={`/glossary/usb`}>
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Sensors" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Sensors`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Charging" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Battery_Charging`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Colors" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Construction`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Price" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Price`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Size" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Size`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Dimensions" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Dimensions`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Weight" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Weight`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Models" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Models`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) :
+                    title === "Battery" ? (
+                        stripLinks(cell) === "Type" ? (
+                        <Link
+                          className="hover:underline"
+                          href={`/glossary/Rechargeable_Battery_Types`}
+                        >
+                          {stripLinks(cell)}
+                        </Link>
+                      ) : (
+                        stripLinks(cell)
+                      )
+                    ):  (
                       stripLinks(cell)
                     )}
                   </td>
