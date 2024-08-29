@@ -15,7 +15,7 @@ export async function generateMetadata(
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   
-      const title = `${formatCountry} - Glossary`;
+      const title = `${formatCountry} - Definition`;
       const desc = `Here will show this ${formatCountry} Glossary Details. ${title} show of details in this properly.`;
       const previousImages = (await parent).openGraph?.images || [];
   
