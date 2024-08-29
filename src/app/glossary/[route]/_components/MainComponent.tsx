@@ -196,6 +196,7 @@ export default function MainComponent({
                 isTocAdmin.current = true;
                 return (
                   <Box
+                    id="versions"
                     sx={{
                       p: 2,
                       border: "1px solid gray",
@@ -325,15 +326,25 @@ export default function MainComponent({
               );
             } else if (block.type === "list") {
               return block.data.style === "unordered" ? (
-                <ul className={isTocAdmin.current === true ?  "bg-gray-100 border-l-8 border-[#023359] p-1 my-4" : ""} key={block.id}>
+                <ul
+                  className={
+                    isTocAdmin.current === true
+                      ? "bg-gray-100 border-l-8 border-[#023359] p-1 my-4"
+                      : ""
+                  }
+                  key={block.id}
+                >
                   {block.data.items.map((item: any) => {
                     return (
                       <li
                         style={{
-                          marginTop: isTocAdmin.current === true ? "":"10px",
+                          marginTop: isTocAdmin.current === true ? "" : "10px",
                         }}
-                        className={isTocAdmin.current === true ? "text-gray-600 pl-2 ":"hover:text-red-600 hover:underline"}
-
+                        className={
+                          isTocAdmin.current === true
+                            ? "text-gray-600 pl-2 "
+                            : "hover:text-red-600 hover:underline"
+                        }
                         key={item}
                         // dangerouslySetInnerHTML={{ __html: item }}
                       >
