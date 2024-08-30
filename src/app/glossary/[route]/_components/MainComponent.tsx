@@ -344,7 +344,7 @@ export default function MainComponent({
                           ${
                             isTocAdmin.current === true
                               ? "text-gray-600 pl-2 "
-                              : "hover:text-red-600 hover:underline"
+                              : ""
                           } ${
                           /<a\s+(.*?)>.*<\/a>/.test(item) ? "hover:underline hover:text-red-500" : ""
                         }`}
