@@ -24,7 +24,7 @@ export default function MainNetworkList({
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const handleCopy = async (params: GlossaryType) => {
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/glossary/${formatForUrlWith_under_score(params?.display_name)}`;
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/glossary/${formatForUrlWith_under_score(params?.route)}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);

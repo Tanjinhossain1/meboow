@@ -135,8 +135,10 @@ export default function CreateGlossary({
   // Sync the route field with display_name field initially
   useEffect(() => {
     // Only set route to display_name if route is empty
-    methods?.setValue("route", display_name);
-  }, [display_name, methods]);
+    if(!isEdit?.isEdit){
+      methods?.setValue("route", display_name);
+    }
+  }, [display_name, methods,isEdit]);
   return (
     <div>
       <FormProvider {...methods}>
