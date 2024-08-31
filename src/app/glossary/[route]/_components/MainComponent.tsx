@@ -338,21 +338,26 @@ export default function MainComponent({
                     return (
                       <li
                         style={{
-                          marginTop: isTocAdmin.current === true ? "" : "10px",
+                          marginTop:
+                            isTocAdmin.current === true ? "1px" : "10px",
                         }}
-                        className={`
+                        className={`${
+                          /<a\s+(.*?)>.*<\/a>/.test(item)
+                            ? "hover:underline hover:text-red-500"
+                            : ""
+                        } 
                           ${
                             isTocAdmin.current === true
                               ? "text-gray-600 pl-2 "
                               : ""
-                          } ${
-                          /<a\s+(.*?)>.*<\/a>/.test(item) ? "hover:underline hover:text-red-500" : ""
-                        }`}
+                          } `}
                         key={item}
                         // dangerouslySetInnerHTML={{ __html: item }}
                       >
                         {isTocAdmin.current && (
-                          <span className="mr-2 text-gray-600 no-underline">›</span>
+                          <span className="mr-2 text-gray-600 no-underline">
+                            ›
+                          </span>
                         )}
                         <span dangerouslySetInnerHTML={{ __html: item }}></span>
                       </li>
