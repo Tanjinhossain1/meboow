@@ -108,7 +108,7 @@ export default function MainComponent({
           xs={12}
           sm={7.8}
         >
-          <div
+          <h1
             style={{
               position: "absolute",
               bottom: "50px", // Position the text at the bottom
@@ -123,7 +123,7 @@ export default function MainComponent({
             {glossary
               ? `${glossary?.display_name} - definition`
               : "Mobile terms glossary"}
-          </div>
+          </h1>
         </Grid>
         <Grid
           sx={{
@@ -145,7 +145,7 @@ export default function MainComponent({
           }}
           xs={12}
         >
-          <div
+          <h1
             style={{
               // position: "absolute",
               bottom: "50px", // Position the text at the bottom
@@ -160,7 +160,7 @@ export default function MainComponent({
             {glossary
               ? `${glossary?.display_name} - definition`
               : "Mobile terms glossary"}
-          </div>
+          </h1>
         </Grid>
 
         <Grid
