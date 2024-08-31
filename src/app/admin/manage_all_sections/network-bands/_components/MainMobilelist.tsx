@@ -35,7 +35,7 @@ export default function MainNetworkList({
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const handleCopy = async (params: NetworkBandsType) => {
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/network-brands/${formatForUrl(params?.country)}`;
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/network-bands/${formatForUrl(params?.country)}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
