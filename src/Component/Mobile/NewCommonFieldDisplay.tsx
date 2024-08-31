@@ -325,6 +325,27 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
                       >
                         {stripLinks(cell)}
                       </Link>
+                    ) : stripLinks(cell) === "Performance" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/benchmarking`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Camera" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Camera`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
+                    ) : stripLinks(cell) === "Build" ? (
+                      <Link
+                        className="hover:underline"
+                        href={`/glossary/Build`}
+                      >
+                        {stripLinks(cell)}
+                      </Link>
                     ) :
                     title === "Battery" ? (
                         stripLinks(cell) === "Type" ? (

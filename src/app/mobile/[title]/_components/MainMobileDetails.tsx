@@ -21,6 +21,7 @@ import Image from "next/image";
 import Opinion from "./Opinion";
 import Link from "next/link";
 import Tags from "./Tags";
+import { formatForUrl } from "@/utils/utils";
 
 export default function MainMobileDetails({
   mobileArticles,
@@ -139,8 +140,8 @@ export default function MainMobileDetails({
                     }}
                     className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
                   >
-                    {mobileArticles?.key_specifications?.review ? (
-                      <Link href={mobileArticles?.key_specifications?.review}>
+                    {mobileArticles?.selected_articles?.title ? (
+                      <Link href={`/review/${formatForUrl(mobileArticles?.selected_articles?.title)}`}>
                         <Button
                           sx={{ color: "white" }}
                           className="hover:bg-red-600 px-3"

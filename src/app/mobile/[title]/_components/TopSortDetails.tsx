@@ -33,6 +33,7 @@ import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
 import axios from "axios";
 import Email from "next-auth/providers/email";
+import { formatForUrl } from "@/utils/utils";
 
 const transformStringToTypography = (inputString: string) => {
   // Split the string into value and description based on the first space
@@ -583,8 +584,8 @@ const IphoneCard = ({
           }}
           className="w-full   flex justify-end gap-2 "
         >
-          {mobileDetail?.key_specifications?.review ? (
-            <Link href={mobileDetail?.key_specifications?.review}>
+         {mobileDetail?.selected_articles?.id ? (
+            <Link href={`/review/${formatForUrl(mobileDetail?.selected_articles?.title)}`}>
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Review
               </Button>
