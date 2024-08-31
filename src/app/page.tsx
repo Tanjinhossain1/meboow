@@ -57,6 +57,11 @@ async function Home({ searchParams }: HomePropsType) {
   const user = session?.user;
   return (
     <>
+     <link
+        rel="canonical"
+        href={`${process.env.NEXT_APP_CANONICAL_URL}`}
+        key="canonical"
+      />
       <Suspense>
         <Navbar />
       </Suspense>
