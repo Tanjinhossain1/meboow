@@ -350,7 +350,7 @@ export default function MainComponent({
                             isTocAdmin.current === true
                               ? "text-gray-600 pl-2 "
                               : ""
-                          } `}
+                          }`}
                         key={item}
                         // dangerouslySetInnerHTML={{ __html: item }}
                       >
