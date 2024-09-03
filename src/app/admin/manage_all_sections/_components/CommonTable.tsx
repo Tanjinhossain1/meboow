@@ -50,6 +50,13 @@ export default function CommonTableComponent({
         // row.age.toString().includes(value)
       );
       setFilteredRows(filteredData);
+    }else if ((columnData[0] as NetworkBandsType)?.country){
+      const filteredData = (columnData as (NetworkBandsType)[]).filter(
+        (row) => row?.country.toLowerCase().includes(value)
+        //   ||
+        // row.age.toString().includes(value)
+      );
+      setFilteredRows(filteredData);
     }else{
       const filteredData = (columnData as (RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes)[]).filter(
         (row) => row?.title.toLowerCase().includes(value)
