@@ -23,7 +23,9 @@ export async function generateMetadata(
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  const mobileArticles = await fetchMobileArticleDetails({ title: formattedTitle });
+  const mobileArticles = await fetchMobileArticleDetails({
+    title: formattedTitle,
+  });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
     const title = `${params?.title} - Full phone Specification`;
     const desc = `Here will show this ${params?.title} mobile details and specification this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of details of this phone.`;
@@ -48,11 +50,16 @@ export async function generateMetadata(
         url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`,
         siteName: "Safari List",
         type: "website",
-        images: [image, ...previousImages],
+        images: [
+          {
+            url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
+            alt: `${title} image`,
+            width: 800, // optional, adjust based on your image size
+            height: 600, // optional, adjust based on your image size
+          },
+          ...previousImages,
+        ],
       },
-      alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`,
-      }, 
     };
   }
 }
@@ -99,7 +106,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
         key="canonical"
       />
       <Navbar />
-       
+
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>
           <MainMobileDetails

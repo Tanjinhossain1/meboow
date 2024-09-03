@@ -45,11 +45,12 @@ export async function generateMetadata(
       //   title,
       // ],
       openGraph: {
-        images: [image, ...previousImages],
-      },
-         
-      alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}/${params?.page}`,
+        images: [ {
+          url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
+          alt: `${title} image`,
+          width: 800, // optional, adjust based on your image size
+          height: 600, // optional, adjust based on your image size
+        }, ...previousImages],
       },
     };
   }

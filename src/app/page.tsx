@@ -12,6 +12,7 @@ import { Suspense } from "react";
 import HomePageLoadingSkeleton from "@/Component/LoadingSkeleton/HomePageLoadingSkeleton";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
+import { Metadata } from "next";
 
 interface HomePropsType {
   searchParams: {
@@ -20,6 +21,11 @@ interface HomePropsType {
   };
 }
 
+export const metadata: Metadata = {
+  title: "Safari List - Latest Tech News, Reviews, and Prices",
+  description:
+    "Safari List - Latest Tech News, Reviews, and Prices and advice. We cover all categories in tech including mobiles and audio",
+};
 async function Home({ searchParams }: HomePropsType) {
   const { page, limit } = searchParams;
   const articles = await fetchArticles({ page, limit });
