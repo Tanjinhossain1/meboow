@@ -36,6 +36,9 @@ export async function generateMetadata(
       type: "website",
       images: [...previousImages],
     },
+    alternates: {
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${searchParams?.search}`,
+    },
   };
 }
 

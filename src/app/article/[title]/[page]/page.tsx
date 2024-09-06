@@ -52,6 +52,9 @@ export async function generateMetadata(
           height: 600, // optional, adjust based on your image size
         }, ...previousImages],
       },
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}/${params?.page}`,
+      },
     };
   }
 }

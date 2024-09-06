@@ -60,6 +60,9 @@ export async function generateMetadata(
           ...previousImages,
         ],
       },
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`,
+      },
     };
   }
 }

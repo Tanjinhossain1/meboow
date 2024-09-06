@@ -1,4 +1,3 @@
-
 import DetailsReviewComponent from "@/Component/Details/ReviewDetails";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
@@ -41,7 +40,7 @@ export async function generateMetadata(
         "reviews",
         "Page",
         "mobile",
-        "details", 
+        "details",
         "articles",
         "number",
         title,
@@ -52,13 +51,20 @@ export async function generateMetadata(
         url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}/${params?.page}`,
         siteName: "Safari List",
         type: "website",
-        images: [ {
-          url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
-          alt: `${title} image`,
-          width: 800, // optional, adjust based on your image size
-          height: 600, // optional, adjust based on your image size
-        }, ...previousImages],
-      }, 
+        images: [
+          {
+            url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
+            alt: `${title} image`,
+            width: 800, // optional, adjust based on your image size
+            height: 600, // optional, adjust based on your image size
+          },
+          ...previousImages,
+        ],
+      },
+
+      alternates: {
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}/${params?.page}`,
+      },
     };
   }
 }

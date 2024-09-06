@@ -41,6 +41,10 @@ export async function generateMetadata(
       openGraph: {
         images: [image, ...previousImages],
       },
+      
+    alternates: {
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`,
+    },
     };
   }
 }

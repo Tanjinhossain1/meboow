@@ -23,15 +23,16 @@ export async function generateMetadata(
     return {
       title: title,
       description: desc,
-      keywords: ['Article', 'Safari List', 'article', 'have', 'mobile', title],
+      keywords: ["Article", "Safari List", "article", "have", "mobile", title],
       openGraph: {
         title: title,
         description: desc,
         url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/brand-wise/${params?.brand}`,
-        siteName: 'Safari List',
-        type: 'website',
+        siteName: "Safari List",
+        type: "website",
         images: [...previousImages],
-      },   alternates: {
+      },
+      alternates: {
         canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/brand-wise/${params?.brand}`,
       },
     };
