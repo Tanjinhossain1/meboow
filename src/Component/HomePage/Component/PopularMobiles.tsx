@@ -17,10 +17,12 @@ import CommonMobileSlider from "./CommonMobileSlider";
 export default function PopularMobiles({
   articles,
   googleMobiles,
+  SamsungMobiles,
   user,
 }: {
   articles: MobileArticleType[];
   googleMobiles: MobileArticleType[];
+  SamsungMobiles: MobileArticleType[];
   user: any;
 }) {
   return (
@@ -30,6 +32,7 @@ export default function PopularMobiles({
       </Typography>
      <CommonMobileSlider articles={articles} user={user} />
      <CommonMobileSlider articles={googleMobiles} user={user} />
+     <CommonMobileSlider articles={SamsungMobiles} user={user} />
     </Paper>
   );
 }

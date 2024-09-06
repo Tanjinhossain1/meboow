@@ -42,6 +42,7 @@ async function Home({ searchParams }: HomePropsType) {
   const newsAndReviews = await fetchArticles({ showInNewsWithAll: "show" });
   const ApplesMobile = await fetchMobileArticles({ limit: "20",brands:"Apple" });
   const GoogleMobiles = await fetchMobileArticles({ limit: "20",brands:"Google" });
+  const SamsungMobiles = await fetchMobileArticles({ limit: "20",brands:"Samsung" });
   const DailyInterestMobiles = await fetchMobileArticles({
     limit: "10",
     is_daily_interest: "YES",
@@ -75,6 +76,7 @@ async function Home({ searchParams }: HomePropsType) {
         <Suspense>
           <Banner
             // tags={AllMobilesTags.data}
+            SamsungMobiles={SamsungMobiles.data}
             dailyInterestMobiles={DailyInterestMobiles.data}
             byFansMobiles={ByFansMobiles.data}
             latestDeviceMobiles={LatestDeviceMobiles.data}
