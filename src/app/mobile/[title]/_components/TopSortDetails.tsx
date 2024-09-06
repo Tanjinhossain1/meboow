@@ -605,13 +605,13 @@ const IphoneCard = ({
               </Button>
             </Link>
           ) : null}
-          {isPicture ? null : (
+          {isPicture ? null :mobileDetail?.image[0] ? (
             <Link href={`/mobile/${formattedTitle}/pictures`}>
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Picture
               </Button>
             </Link>
-          )}
+          ):null}
         </Paper>
       </Grid>
     </Card>

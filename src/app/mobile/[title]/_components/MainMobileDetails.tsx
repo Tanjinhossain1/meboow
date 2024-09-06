@@ -170,7 +170,7 @@ export default function MainMobileDetails({
                         </Button>
                       </Link>
                     ) : null}
-                    {isPicture ? null : (
+                    {isPicture ? null :mobileArticles?.image[0] ? (
                       <Link href={`/mobile/${formattedTitle}/pictures`}>
                         <Button
                           sx={{ color: "white" }}
@@ -179,7 +179,7 @@ export default function MainMobileDetails({
                           Picture
                         </Button>
                       </Link>
-                    )}
+                    ):null}
                   </Paper>
                   {
                     mobileArticles?.tags  && mobileArticles?.tags[0]?.name !== "" ? 

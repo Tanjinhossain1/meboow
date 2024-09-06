@@ -265,7 +265,7 @@ const UploadImageField = ({
         action="/api/file"
         beforeUpload={beforeUpload}
         onChange={(e)=>handleChange(e)}
-        multiple={isMultiple ? true : false}
+        multiple={isMultiple?.isMultiple ? true : false}
         fileList={fileLists}
         // disabled={ isMultiple ? false : imageUrl ? true : false}
       >

@@ -39,6 +39,7 @@ import { useFormContext } from "react-hook-form";
 import { MobileArticleType } from "@/types/mobiles";
 import ColorPickerComponent from "./ColorPickForTop";
 import { RecentArticleDataType } from "@/types/RecentArticle";
+import UploadMultipleImageField from "@/Component/Forms/MultipleUpload";
 
 export default function TopForm({
   brandsData,
@@ -614,7 +615,7 @@ export default function TopForm({
                       </FormControl>
                     </Grid>
                     <Grid xs={8}>
-                      <FileUpload
+                      <UploadMultipleImageField
                         isAdminImages
                         isMultiple={{
                           isMultiple: true,

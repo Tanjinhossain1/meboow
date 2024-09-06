@@ -128,7 +128,7 @@ export default function MainSubmitForm({
   });
 
   const fileUploadRef = useRef<string[]>([]);
-  const displayFileUploadRef = useRef<string[]>([]);
+  const displayFileUploadRef = useRef<string | null>(null);
 
   const { handleSubmit, register } = methods;
 
@@ -140,12 +140,12 @@ export default function MainSubmitForm({
   };
 
   const onSubmit = async (data: any) => {
-    if (!fileUploadRef.current[0]) {
-      // setImageError(true);
-      setErrorOpen(true);
-      setShowErrorText("Please Select Image");
-      return;
-    }
+    // if (!fileUploadRef.current[0]) {
+    //   // setImageError(true);
+    //   setErrorOpen(true);
+    //   setShowErrorText("Please Select Image");
+    //   return;
+    // }
     if (!displayFileUploadRef.current) {
       // setImageError(true);
       setErrorOpen(true);
