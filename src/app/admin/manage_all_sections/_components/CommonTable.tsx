@@ -68,7 +68,7 @@ export default function CommonTableComponent({
   };
 
   return (
-    <div className="max-w-[1000px] mx-auto mt-3" style={{ width: "100%" }}>
+    <div className="max-w-[1400px] mx-auto mt-3" style={{ width: "100%" }}>
       {/* Search input */}
       {/* <TextField
         label="Search"

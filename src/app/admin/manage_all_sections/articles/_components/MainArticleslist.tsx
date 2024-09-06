@@ -83,6 +83,22 @@ export default function MainArticlesDetailList({
       ),
       width: 150,
     },
+    user?.role === "admin" &&{
+      field: "admin_detail",
+      headerName: "Created By",
+      renderCell: (params: any) => (
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>{params?.row?.admin_detail?.name}</Typography>
+      ),
+      width: 150,
+    },
+    user?.role === "admin" && {
+      field: "admin_detail.role",
+      headerName: "Role",
+      renderCell: (params: any) => (
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>{params?.row?.admin_detail?.role}</Typography>
+      ),
+      width: 150,
+    },
     {
       field: "post",
       headerName: "Post",

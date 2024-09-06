@@ -21,6 +21,10 @@ export interface MobileTagsType {
 
 export interface MobileArticleType {
     id: number;
+    admin_detail: {
+        email:string;
+        name: string;
+    }
     createdAt: string;
     updatedAt: string;
     title: string;

@@ -16,6 +16,10 @@ export interface RecentArticleDataType {
     deviceName?:string;
     showInNews?:string;
     selected_mobile:MobileArticleType;
+    admin_detail: {
+        email:string;
+        name: string;
+    }
     pages:{
         page:number;
         title:string;
