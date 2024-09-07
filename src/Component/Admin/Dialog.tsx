@@ -103,7 +103,7 @@ export default function DialogComponent({
           console.log("error", err);
         });
     }
-    if (!brandSelectedForEdit || !categorySelectedForEdit) {
+    if (!brandSelectedForEdit && !categorySelectedForEdit) {
       await axios
         .post(isBrand ? `/api/brands/create` : `/api/category/create`, data, {
           headers: {
