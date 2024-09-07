@@ -44,7 +44,7 @@ export default function MainArticlesDetailList({
   };
   const handlePostToFacebook = async (params: RecentArticleDataType) => {
     try {
-      const postUrl =
+      const url =
         params.category === "Mobiles"
           ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(
               params.title
@@ -52,18 +52,13 @@ export default function MainArticlesDetailList({
           : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(
               params.title
             )}`;
-
-      // Ensure you replace {PAGE_ACCESS_TOKEN} with your actual Page Access Token
-      const response = await axios.post(
-        `https://graph.facebook.com/${process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID}/feed`,
-        {
-          message: `${params?.title}`,
-          link:postUrl,
-          access_token: process.env.NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN,
-        }
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          url
+        )}`,
+        "_blank",
+        "noopener,noreferrer"
       );
-      console.log("Post successful:", response.data);
-      SnackbarOpen("Article posted to Facebook successfully!", "success");
     } catch (error) {
       console.error("Error posting to Facebook:", error);
       SnackbarOpen("Error posting to Facebook", "error");
@@ -83,11 +78,13 @@ export default function MainArticlesDetailList({
       ),
       width: 150,
     },
-    user?.role === "admin" &&{
+    user?.role === "admin" && {
       field: "admin_detail",
       headerName: "Created By",
       renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 }}>{params?.row?.admin_detail?.name}</Typography>
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>
+          {params?.row?.admin_detail?.name}
+        </Typography>
       ),
       width: 150,
     },
@@ -95,7 +92,9 @@ export default function MainArticlesDetailList({
       field: "admin_detail.role",
       headerName: "Role",
       renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 }}>{params?.row?.admin_detail?.role}</Typography>
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>
+          {params?.row?.admin_detail?.role}
+        </Typography>
       ),
       width: 150,
     },
@@ -109,9 +108,9 @@ export default function MainArticlesDetailList({
           color="primary"
           onClick={() => {
             if (window.confirm("Are you sure you want to POST?")) {
-              handlePostToFacebook(params.row)}
+              handlePostToFacebook(params.row);
             }
-          } 
+          }}
         >
           Post
         </Button>

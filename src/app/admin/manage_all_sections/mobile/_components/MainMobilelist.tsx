@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate, formatForUrl } from "@/utils/utils";
@@ -22,6 +22,10 @@ export default function MainMobilesDetailList({
   const [copied, setCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
 
+  const [isPosting, setIsPosting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  console.log("is posting", isPosting, error);
   const handleCopy = async (params: MobileArticleType) => {
     try {
       const textToCopy = `${
@@ -39,28 +43,15 @@ export default function MainMobilesDetailList({
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
   const handlePostToFacebook = async (params: MobileArticleType) => {
-    try {
-      const postUrl = `${
-        process.env.NEXT_PUBLIC_DOMAIN_URL
-      }/mobile/${formatForUrl(params?.title)}`;
-
-      // Ensure you replace {PAGE_ACCESS_TOKEN} with your actual Page Access Token
-      const response = await axios.post(
-        `https://graph.facebook.com/${process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID}/feed`,
-        {
-          message: `${params?.title}`,
-          link: postUrl,
-          access_token: process.env.NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN,
-        }
-      );
-      console.log("Post successful:", response.data);
-      SnackbarOpen("Article posted to Facebook successfully!", "success");
-    } catch (error) {
-      console.error("Error posting to Facebook:", error);
-      SnackbarOpen("Error posting to Facebook", "error");
-    }
+    const url = `https://safarilist.com/mobile/${formatForUrl(params?.title)}`;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
-  console.log('mobile mobile mobile   ',mobile)
+
+  console.log("mobile mobile mobile   ", mobile);
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     { field: "title", headerName: "Title", width: 400 },
@@ -78,7 +69,9 @@ export default function MainMobilesDetailList({
       field: "admin_detail",
       headerName: "Created By",
       renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 }}>{params?.row?.admin_detail?.name}</Typography>
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>
+          {params?.row?.admin_detail?.name}
+        </Typography>
       ),
       width: 150,
     },
@@ -86,7 +79,9 @@ export default function MainMobilesDetailList({
       field: "admin_detail.role",
       headerName: "Role",
       renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 }}>{params?.row?.admin_detail?.role}</Typography>
+        <Typography alignItems={"center"} sx={{ mt: 2 }}>
+          {params?.row?.admin_detail?.role}
+        </Typography>
       ),
       width: 150,
     },
