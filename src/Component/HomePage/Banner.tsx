@@ -198,7 +198,8 @@ export default function Banner({
   byFansMobiles,
   latestDeviceMobiles,
   googleMobiles,
-  SamsungMobiles
+  SamsungMobiles,
+  LastUpdatedMobiles
 }: // tags
 {
   articles: RecentArticleDataType[];
@@ -214,6 +215,7 @@ export default function Banner({
   latestDeviceMobiles: MobileArticleType[];
   googleMobiles: MobileArticleType[];
   SamsungMobiles: MobileArticleType[];
+  LastUpdatedMobiles: MobileArticleType[];
   user: any;
   // tags:MobileTagsType[]
 }) {
@@ -347,7 +349,7 @@ export default function Banner({
                 mobilesArticles ? mobilesArticles[0] ?  <MobileReviews mobilesArticles={mobilesArticles} /> :null :null
               }
              
-              <PopularMobiles SamsungMobiles={SamsungMobiles} googleMobiles={googleMobiles} user={user} articles={mobileArticles} />
+              <PopularMobiles LastUpdatedMobiles={LastUpdatedMobiles} SamsungMobiles={SamsungMobiles} googleMobiles={googleMobiles} user={user} articles={mobileArticles} />
               {/* <Tags tags={tags} /> */}
               {/* <Categories category={category} /> */}
               <Grid gap={1} container>

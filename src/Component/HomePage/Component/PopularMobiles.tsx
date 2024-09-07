@@ -18,11 +18,13 @@ export default function PopularMobiles({
   articles,
   googleMobiles,
   SamsungMobiles,
+  LastUpdatedMobiles,
   user,
 }: {
   articles: MobileArticleType[];
   googleMobiles: MobileArticleType[];
   SamsungMobiles: MobileArticleType[];
+  LastUpdatedMobiles: MobileArticleType[];
   user: any;
 }) {
   return (
@@ -30,9 +32,10 @@ export default function PopularMobiles({
       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
         Popular Mobiles
       </Typography>
-     <CommonMobileSlider articles={articles} user={user} />
-     <CommonMobileSlider articles={googleMobiles} user={user} />
-     <CommonMobileSlider articles={SamsungMobiles} user={user} />
+      <CommonMobileSlider articles={articles} user={user} />
+      <CommonMobileSlider articles={googleMobiles} user={user} />
+      <CommonMobileSlider articles={SamsungMobiles} user={user} />
+      <CommonMobileSlider articles={LastUpdatedMobiles} user={user} />
     </Paper>
   );
 }
