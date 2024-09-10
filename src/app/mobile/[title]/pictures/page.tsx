@@ -61,7 +61,6 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
   const mobileArticles = await fetchMobileArticleDetails({
     title: formattedTitle,
   });
-  const articles = await fetchArticles({ page: "1", limit: "12" });
   const LatestArticles = await fetchArticles({
     page: "1",
     limit: "8",
@@ -77,8 +76,6 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     page: "1",
     limit: "10",
   });
-  console.log(" this is the data mobile   ", mobileArticles);
-  const brands = await fetchBrands();
   return (
     <Fragment>
       <link
@@ -91,11 +88,9 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
         <>
           <MainMobileDetails
             isPicture
-            brands={brands.data}
             relatedMobileDevices={RelatedMobileDevices.data}
             latestDevices={LatestDeviceMobiles.data}
             latestArticles={LatestArticles.data}
-            articles={articles.data}
             mobileArticles={mobileArticles.data[0]}
           />
         </>
