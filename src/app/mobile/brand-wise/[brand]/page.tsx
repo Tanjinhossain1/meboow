@@ -6,15 +6,20 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import Footer from "@/Component/HomePage/Footer";
 import { Metadata, ResolvingMetadata } from "next";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 
 export async function generateMetadata(
   { params }: { params: { brand: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const formattedBrand = params?.brand
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
   const mobileArticles = await fetchMobileArticles({
     page: "1",
     limit: "20",
-    brands: params?.brand,
+    brands: formattedBrand,
   });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
     const title = `${params?.brand} - List Of Mobiles`;
@@ -39,14 +44,15 @@ export async function generateMetadata(
   }
 }
 export default async function page({ params }: { params: { brand: string } }) {
-  const session = await getServerSession(authConfig);
-  console.log("this is the user  in app/page", session);
-  const user = session?.user;
+  const formattedBrand = params?.brand
+  .split("_")
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ");
 
   const mobileArticles = await fetchMobileArticles({
     page: "1",
     limit: "20",
-    brands: params?.brand,
+    brands: formattedBrand,
   });
   return (
     <Fragment>

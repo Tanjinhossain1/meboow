@@ -1,6 +1,7 @@
 // app/sitemap-article/route.ts
 import { getDb } from '@/drizzle/db';
 import { TechBrands } from '@/drizzle/schema';
+import { formatForUrlWith_under_score } from '@/utils/utils';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
@@ -18,7 +19,7 @@ export async function GET() {
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
         brands.forEach((brand) => {
-            sitemapStream.write({ url: `/mobile/brand-wise/${brand?.title}`, lastmod: new Date() });
+            sitemapStream.write({ url: `/mobile/brand-wise/${formatForUrlWith_under_score(brand?.title)}`, lastmod: new Date() });
         })
         
         sitemapStream.end();

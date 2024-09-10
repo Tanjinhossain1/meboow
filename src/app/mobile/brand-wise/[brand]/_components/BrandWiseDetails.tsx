@@ -135,6 +135,10 @@ export default function BrandWiseDetails({
       console.error("Failed to fetch searched articles", error);
     }
   };
+  const formattedBrand = (params?.brand as string)
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
   return (
     <Fragment>
       <Grid container>
@@ -152,11 +156,11 @@ export default function BrandWiseDetails({
               <Link underline="hover" color="inherit" href="/brands">
                 Brand
               </Link>
-              <Typography sx={{ fontSize: 12 }}>{params?.brand}</Typography>
+              <Typography sx={{ fontSize: 12 }}>{formattedBrand}</Typography>
             </Breadcrumbs>
 
             <Typography component={'h1'} sx={{ fontSize: 25, fontWeight: 600, mt: 2 }}>
-              {params.brand} Mobile Phones
+              {formattedBrand} Mobile Phones
             </Typography>
             <div className="flex mt-3 mb-5 items-center w-full max-w-md bg-card border border-input rounded-md shadow-sm">
               <div className="pl-3 text-muted-foreground">

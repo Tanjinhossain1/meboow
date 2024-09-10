@@ -8,7 +8,6 @@ import {
   Button,
   Paper,
 } from "@mui/material";
-import { Favorite } from "@mui/icons-material";
 import Image from "next/image";
 import { MobileArticleType } from "@/types/mobiles";
 import { Progress } from "antd";
@@ -26,13 +25,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useContext, useEffect, useState } from "react";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
 import axios from "axios";
-import Email from "next-auth/providers/email";
 import { formatForUrl } from "@/utils/utils";
 
 const transformStringToTypography = (inputString: string) => {
@@ -81,10 +78,7 @@ const IphoneCard = ({
   isOpinion?: boolean;
   user?: any;
 }) => {
-  const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
-    SnackbarProviderContext
-  );
-  const { handleOpen, handleClose } = useContext(BackdropProviderContext);
+  const { handleOpen: SnackbarOpen } = useContext(SnackbarProviderContext);
 
   const [mouseEnter, setMouseEnter] = useState<boolean>(false);
   const [alreadyFan, setALreadyFan] = useState<boolean>(false);
@@ -120,9 +114,12 @@ const IphoneCard = ({
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("-");
   return (
-    <Card style={{
-      background: mobileDetail.top_background_color
-    }} className="w-full  mx-auto mt-2 ">
+    <Card
+      style={{
+        background: mobileDetail.top_background_color,
+      }}
+      className="w-full  mx-auto mt-2 "
+    >
       <Box className=" justify-between items-center p-1 mb-4  ">
         <Typography component="h1" className="font-bold text-xl ">
           {mobileDetail.title}
@@ -178,17 +175,22 @@ const IphoneCard = ({
         <Grid item xs={6} sm={3}>
           <Image
             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobileDetail.display_image}`}
-            alt={mobileDetail.title}
-            className="  pl-2 h-auto rounded"
+            alt={`Display image of ${mobileDetail.title}`}
+            title={mobileDetail.title}
+            className="pl-2 h-auto rounded"
             width={180}
             height={180}
+            priority={true} // Preload important images for SEO
+            loading="eager" // Eager loading since it's a key image
           />
+
+           
         </Grid>
         {/* mobile slider  */}
         <Grid
           item
           xs={6}
-           className="bg-transparent"
+          className="bg-transparent"
           sx={{
             width: "100%",
             mb: 2,
@@ -200,7 +202,7 @@ const IphoneCard = ({
           }}
         >
           <Swiper
-           className="bg-transparent"
+            className="bg-transparent"
             pagination={{ clickable: true }} // Enable clickable pagination dots
             modules={[Pagination]}
             spaceBetween={10}
@@ -395,14 +397,25 @@ const IphoneCard = ({
               }
             }}
           >
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center",color:"white" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+                color: "white",
+              }}
+            >
               <FavoriteIcon
                 className={`${alreadyFan || mouseEnter ? "text-red-600" : ""}`}
                 sx={{ fontSize: 30 }}
               />
-              <Typography sx={{ fontSize: 16,color:"white" }}>{totalFanCount}</Typography>
+              <Typography sx={{ fontSize: 16, color: "white" }}>
+                {totalFanCount}
+              </Typography>
             </Box>
-            <Typography sx={{ fontSize: 16,color:"white" }}>BECOME A FAN</Typography>
+            <Typography sx={{ fontSize: 16, color: "white" }}>
+              BECOME A FAN
+            </Typography>
           </Box>
         </Grid>
 
@@ -526,11 +539,13 @@ const IphoneCard = ({
                       } text-white `}
                       sx={{ fontSize: 40 }}
                     />
-                    <Typography sx={{ fontSize: 16,color:"white" }}>
+                    <Typography sx={{ fontSize: 16, color: "white" }}>
                       {totalFanCount}
                     </Typography>
                   </Box>
-                  <Typography sx={{ fontSize: 16,color:"white" }}>BECOME A FAN</Typography>
+                  <Typography sx={{ fontSize: 16, color: "white" }}>
+                    BECOME A FAN
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -580,12 +595,16 @@ const IphoneCard = ({
         <Paper
           elevation={1}
           style={{
-            background: mobileDetail.top_background_color
+            background: mobileDetail.top_background_color,
           }}
           className="w-full   flex justify-end gap-2 "
         >
-         {mobileDetail?.selected_articles?.id ? (
-            <Link href={`/review/${formatForUrl(mobileDetail?.selected_articles?.title)}`}>
+          {mobileDetail?.selected_articles?.id ? (
+            <Link
+              href={`/review/${formatForUrl(
+                mobileDetail?.selected_articles?.title
+              )}`}
+            >
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Review
               </Button>
@@ -605,13 +624,13 @@ const IphoneCard = ({
               </Button>
             </Link>
           ) : null}
-          {isPicture ? null :mobileDetail?.image[0] ? (
+          {isPicture ? null : mobileDetail?.image[0] ? (
             <Link href={`/mobile/${formattedTitle}/pictures`}>
               <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Picture
               </Button>
             </Link>
-          ):null}
+          ) : null}
         </Paper>
       </Grid>
     </Card>

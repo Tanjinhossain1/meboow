@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { formatDate } from "@/utils/utils";
+import { formatDate, formatForUrlWith_under_score } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
@@ -33,7 +33,7 @@ export default function MainBrandsList({
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const handleCopy = async (params: BrandTypes) => {
     try {
-      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/mobile/brand-wise/${params?.title}`;
+      const textToCopy = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/mobile/brand-wise/${formatForUrlWith_under_score(params?.title)}`;
 
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);

@@ -3,10 +3,8 @@ import PhoneFinder from "@/Component/Common/PhoneFinder";
 import { SampleBrands } from "@/Component/HomePage/Banner";
 import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
 import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
-import AllImageDisplaying from "@/Component/Mobile/AllImageDisplay";
 import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
 import ExpertViewComponent from "@/Component/Mobile/ExpertView";
-import LatestNews from "@/Component/Mobile/LatestNews";
 import { BrandTypes } from "@/types/category";
 import {
   MobileArticleType,
@@ -25,28 +23,26 @@ import { formatForUrl } from "@/utils/utils";
 
 export default function MainMobileDetails({
   mobileArticles,
-  articles,
+
   latestArticles,
   latestDevices,
   relatedMobileDevices,
-  brands,
+
   isPicture,
   isOpinion,
   user,
   allMobilesOpinion,
-  tags,
 }: {
   mobileArticles: MobileArticleType;
   latestDevices: MobileArticleType[];
   relatedMobileDevices: MobileArticleType[];
-  articles: RecentArticleDataType[];
+
   latestArticles: RecentArticleDataType[];
-  brands: BrandTypes[];
+
   isPicture?: boolean;
   isOpinion?: boolean;
   allMobilesOpinion?: MobileOpinionType[];
   user?: any;
-  tags?: MobileTagsType[];
 }) {
   const formattedTitle = mobileArticles.title
     .split(" ")
@@ -55,7 +51,6 @@ export default function MainMobileDetails({
   return (
     <Fragment>
       {" "}
-      {/* <TopMobileDetails mobileArticles={mobileArticles.data[0]} /> */}
       <Grid container>
         <Paper
           elevation={0}
@@ -77,8 +72,6 @@ export default function MainMobileDetails({
               xs={12}
               sm={3.9}
             >
-              {/* <AllImageDisplaying mobileArticles={mobileArticles} /> */}
-
               <PhoneFinder brands={SampleBrands} />
 
               <MobileReviews
@@ -114,10 +107,12 @@ export default function MainMobileDetails({
                     >
                       <Image
                         src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
-                        alt={mobileArticles.title}
+                        alt={`Image of ${mobileArticles.title}`}
+                        title={mobileArticles.title}
                         width={300}
                         height={300}
-                        //   layout="responsive"
+                        loading="lazy" // Lazy loading for better performance
+                        priority={false} // Set to true if it's above-the-fold or important
                       />
                     </Grid>
                   );
@@ -141,7 +136,11 @@ export default function MainMobileDetails({
                     className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 flex justify-end gap-2 "
                   >
                     {mobileArticles?.selected_articles?.title ? (
-                      <Link href={`/review/${formatForUrl(mobileArticles?.selected_articles?.title)}`}>
+                      <Link
+                        href={`/review/${formatForUrl(
+                          mobileArticles?.selected_articles?.title
+                        )}`}
+                      >
                         <Button
                           sx={{ color: "white" }}
                           className="hover:bg-red-600 px-3"
@@ -170,7 +169,7 @@ export default function MainMobileDetails({
                         </Button>
                       </Link>
                     ) : null}
-                    {isPicture ? null :mobileArticles?.image[0] ? (
+                    {isPicture ? null : mobileArticles?.image[0] ? (
                       <Link href={`/mobile/${formattedTitle}/pictures`}>
                         <Button
                           sx={{ color: "white" }}
@@ -179,12 +178,12 @@ export default function MainMobileDetails({
                           Picture
                         </Button>
                       </Link>
-                    ):null}
+                    ) : null}
                   </Paper>
-                  {
-                    mobileArticles?.tags  && mobileArticles?.tags[0]?.name !== "" ? 
+                  {mobileArticles?.tags &&
+                  mobileArticles?.tags[0]?.name !== "" ? (
                     <Tags pageTag={mobileArticles?.tags} />
-                  :null}
+                  ) : null}
                   <Opinion
                     allMobilesOpinion={allMobilesOpinion}
                     user={user}
@@ -196,9 +195,6 @@ export default function MainMobileDetails({
           </Grid>
         </Paper>
       </Grid>
-      {/* <ExpertViewComponent mobileArticles={mobileArticles} />
-      <LatestNews articles={articles} />
-      <AllImageDisplaying mobileArticles={mobileArticles} /> */}
     </Fragment>
   );
 }

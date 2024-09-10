@@ -19,8 +19,7 @@ export default function MobileReviews({
   mobilesArticles,
   isTrending,
   isGap,
-  isText
-
+  isText,
 }: {
   mobilesArticles: RecentArticleDataType[];
   isTrending?: boolean;
@@ -29,8 +28,12 @@ export default function MobileReviews({
 }) {
   return (
     <Fragment>
-      <Typography sx={{ fontSize: 25, fontWeight: 600,mt:isGap ? 4: 0 }}>
-        {isTrending ? isText ? "Popular Reviews" : "Trending" : "Mobile Reviews"}
+      <Typography sx={{ fontSize: 25, fontWeight: 600, mt: isGap ? 4 : 0 }}>
+        {isTrending
+          ? isText
+            ? "Popular Reviews"
+            : "Trending"
+          : "Mobile Reviews"}
       </Typography>
       <Grid
         sx={{ display: "flex", mt: 1, mb: isTrending ? 0 : 2 }}
@@ -46,7 +49,11 @@ export default function MobileReviews({
         >
           <div style={{ width: "100%" }}>
             <Link
-              href={mobilesArticles[0]?.category === "Mobiles" ? `/review/${formatForUrl(mobilesArticles[0]?.title) }` : `/article/${formatForUrl(mobilesArticles[0]?.title)}`}
+              href={
+                mobilesArticles[0]?.category === "Mobiles"
+                  ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
+                  : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
+              }
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
@@ -80,7 +87,11 @@ export default function MobileReviews({
             </Typography>
           )}
           <Link
-            href={mobilesArticles[0]?.category === "Mobiles" ? `/review/${formatForUrl(mobilesArticles[0]?.title) }` : `/article/${formatForUrl(mobilesArticles[0]?.title)}`}
+            href={
+              mobilesArticles[0]?.category === "Mobiles"
+                ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
+                : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
+            }
           >
             <p className="text-sm hover:text-red-600 font-bold text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
               {mobilesArticles[0]?.title}
@@ -88,7 +99,11 @@ export default function MobileReviews({
           </Link>
           {isTrending ? null : (
             <Link
-            href={mobilesArticles[0]?.category === "Mobiles" ? `/review/${formatForUrl(mobilesArticles[0]?.title) }` : `/article/${formatForUrl(mobilesArticles[0]?.title)}`}
+              href={
+                mobilesArticles[0]?.category === "Mobiles"
+                  ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
+                  : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
+              }
             >
               {" "}
               <p className="text-[12px] mt-2 hover:text-red-600 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -131,7 +146,11 @@ export default function MobileReviews({
               >
                 <div style={{ width: "100%" }}>
                   <Link
-                   href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
+                    href={
+                      article?.category === "Mobiles"
+                        ? `/review/${formatForUrl(article?.title)}`
+                        : `/article/${formatForUrl(article?.title)}`
+                    }
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -145,12 +164,16 @@ export default function MobileReviews({
                 </div>
               </Grid>
               <Grid item xs={8}>
-              <Link
-                   href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
-                  >
-                <p className="text-xs hover:text-red-600 font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
-                  {article.title}
-                </p>
+                <Link
+                  href={
+                    article?.category === "Mobiles"
+                      ? `/review/${formatForUrl(article?.title)}`
+                      : `/article/${formatForUrl(article?.title)}`
+                  }
+                >
+                  <p className="text-xs hover:text-red-600 font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                    {article.title}
+                  </p>
                 </Link>
                 <Typography sx={{ fontSize: 12, textAlign: "left", mt: 1 }}>
                   <svg
@@ -201,8 +224,12 @@ export default function MobileReviews({
                       alignItems="center"
                     >
                       <div style={{ width: "100%" }}>
-                        <Link 
-                          href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
+                        <Link
+                          href={
+                            article?.category === "Mobiles"
+                              ? `/review/${formatForUrl(article?.title)}`
+                              : `/article/${formatForUrl(article?.title)}`
+                          }
                         >
                           <Image
                             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -234,8 +261,11 @@ export default function MobileReviews({
                         {formatDate(article.createdAt)}
                       </Typography>
                       <Link
-                         
-                        href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
+                        href={
+                          article?.category === "Mobiles"
+                            ? `/review/${formatForUrl(article?.title)}`
+                            : `/article/${formatForUrl(article?.title)}`
+                        }
                       >
                         {" "}
                         <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -249,16 +279,6 @@ export default function MobileReviews({
             ))}
         </Swiper>
       )}
-      {/* <Grid container>
-        {mobilesArticles.map((article: RecentArticleDataType) => {
-          return (
-            <Fragment key={article.id}>
-              <Grid></Grid>
-            </Fragment>
-          );
-        })}
-        <Grid></Grid>
-      </Grid> */}
     </Fragment>
   );
 }

@@ -1,8 +1,8 @@
 import { BrandTypes } from '@/types/category'
+import { formatForUrlWith_under_score } from '@/utils/utils'
 import React from 'react'
 
 export default function PhoneFinder({brands}:{brands:string[]}) {
-// export default function PhoneFinder({brands}:{brands:BrandTypes[]}) {
   return (
     <div className=" mx-auto">
     <div className="bg-[#023359] text-white text-center py-2 rounded-t-lg">
@@ -12,14 +12,14 @@ export default function PhoneFinder({brands}:{brands:string[]}) {
     </div>
     <div className="grid grid-cols-4   bg-gray-100  py-1 rounded-b-lg">
       {brands?.map((brand, index) => (
-      // {brands.map((brand:BrandTypes, index) => (
+     
         <a
           key={index}
-          href={`/mobile/brand-wise/${brand}`}
+          href={`/mobile/brand-wise/${formatForUrlWith_under_score(brand)}`}
           className="text-gray-800  p-[5px] text-[11px] border-l font-semibold   hover:text-white hover:bg-[#023359]"
         >
           {brand}
-          {/* {brand?.title} */}
+         
         </a>
       ))}
     </div>

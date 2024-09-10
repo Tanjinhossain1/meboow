@@ -6,6 +6,7 @@ import React from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Image from "next/image";
 import Link from "next/link";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 
 export default function BrandDisplayComponent({
   brands,
@@ -24,7 +25,7 @@ export default function BrandDisplayComponent({
           md={2}
 
         >
-         <Link href={`/mobile/brand-wise/${data.title}`}>
+         <Link href={`/mobile/brand-wise/${formatForUrlWith_under_score(data?.title)}`}>
          <Box
             sx={{
               display: "flex",

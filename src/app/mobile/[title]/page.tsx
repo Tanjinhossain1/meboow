@@ -75,7 +75,6 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
   const mobileArticles = await fetchMobileArticleDetails({
     title: formattedTitle,
   });
-  const articles = await fetchArticles({ page: "1", limit: "12" });
   const LatestArticles = await fetchArticles({
     page: "1",
     limit: "8",
@@ -92,11 +91,10 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     limit: "10",
   });
   console.log(" this is the data mobile   ", mobileArticles);
-  const brands = await fetchBrands();
+
   const AllMobilesOpinion = await fetchMobileOpinions({
     mobileId: `${mobileArticles.data[0].id}`,
   });
-  const AllMobilesTags = await fetchMobileTags({});
 
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
@@ -113,14 +111,11 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>
           <MainMobileDetails
-            tags={AllMobilesTags.data}
             user={user}
             allMobilesOpinion={AllMobilesOpinion.data}
-            brands={brands.data}
             relatedMobileDevices={RelatedMobileDevices.data}
             latestDevices={LatestDeviceMobiles.data}
             latestArticles={LatestArticles.data}
-            articles={articles.data}
             mobileArticles={mobileArticles.data[0]}
           />
         </>
