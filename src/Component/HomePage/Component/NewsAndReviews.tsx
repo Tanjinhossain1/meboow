@@ -2,7 +2,7 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Grid, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Grid as SwiperGrid, Pagination, Scrollbar } from "swiper/modules";
+import { Grid as SwiperGrid, Scrollbar } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
@@ -18,10 +18,8 @@ import Link from "next/link";
 // import required modules
 export default function NewsAndReviews({
   mobilesArticles,
-  isTrending,
 }: {
   mobilesArticles: RecentArticleDataType[];
-  isTrending?: boolean;
 }) {
   const [progress, setProgress] = useState(
     mobilesArticles.length >= 6 ? 0 : 100
@@ -38,7 +36,7 @@ export default function NewsAndReviews({
       setProgress(progressRatio);
     }
   };
-  
+
   useEffect(() => {
     if (swiperRef.current) {
       const swiper = swiperRef.current.swiper;
@@ -84,7 +82,6 @@ export default function NewsAndReviews({
         }}
         style={{ height: "800px" }}
         modules={[SwiperGrid, Scrollbar]}
-        //  pagination={{ clickable: true, el: '.swiper-pagination', type: 'progressbar' }}
       >
         {mobilesArticles
           .slice(1, mobilesArticles.length)
@@ -102,8 +99,11 @@ export default function NewsAndReviews({
                   >
                     <div style={{ width: "100%" }}>
                       <Link
-                       
-                        href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
+                        href={
+                          article?.category === "Mobiles"
+                            ? `/review/${formatForUrl(article?.title)}`
+                            : `/article/${formatForUrl(article?.title)}`
+                        }
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
@@ -112,6 +112,7 @@ export default function NewsAndReviews({
                           width={10} // Aspect ratio: width
                           height={40} // Aspect ratio: height
                           className="object-cover"
+                          loading="lazy" // lazy loading for reduce loading time
                         />
                       </Link>
                     </div>
@@ -135,14 +136,22 @@ export default function NewsAndReviews({
                       {formatDate(article.updateAt)}
                     </Typography>
                     <Link
-                   href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
+                      href={
+                        article?.category === "Mobiles"
+                          ? `/review/${formatForUrl(article?.title)}`
+                          : `/article/${formatForUrl(article?.title)}`
+                      }
                     >
                       <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
                         {article.title}
                       </p>
                     </Link>
                     <Link
-                    href={article?.category === "Mobiles" ? `/review/${formatForUrl(article?.title) }` : `/article/${formatForUrl(article?.title)}`}
+                      href={
+                        article?.category === "Mobiles"
+                          ? `/review/${formatForUrl(article?.title)}`
+                          : `/article/${formatForUrl(article?.title)}`
+                      }
                     >
                       <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
                         {article?.description}

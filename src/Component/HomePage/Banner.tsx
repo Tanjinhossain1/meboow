@@ -1,34 +1,16 @@
 "use client";
-import React, { useContext, useState } from "react";
-import {
-  Grid,
-  Paper,
-  Box,
-  Typography,
-  IconButton,
-  Card,
-  CardMedia,
-  CardContent,
-} from "@mui/material";
+import React from "react";
+import { Grid, Paper, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import { formatForUrl, truncateText } from "@/utils/utils";
-import { useRouter, useSearchParams } from "next/navigation";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import RecentArticleComponent from "./RecentArticleComponent";
-import { BrandTypes, CategoryTypes } from "@/types/category";
+import { BrandTypes } from "@/types/category";
 import BrandDisplayComponent from "./BrandDisplay";
-import TopLatestMobile from "./TopLatestMobile";
-import { MobileArticleType, MobileTagsType } from "@/types/mobiles";
+import { MobileArticleType } from "@/types/mobiles";
 import PhoneFinder from "../Common/PhoneFinder";
 import MobileReviews from "./Component/MobileReviews";
 import PopularMobiles from "./Component/PopularMobiles";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import Categories from "./Component/Categories";
 import NewsAndReviews from "./Component/NewsAndReviews";
 import TopDevicesTable from "./Component/TopDevicesTable";
 import LatestDevices from "./Component/LatestDevices";
@@ -38,7 +20,6 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 const HoverBox = styled(Box)(({ theme }) => ({
   position: "relative",
   overflow: "hidden",
-  // cursor: "pointer",
   width: "100%",
   height: "100%",
   "&:hover .title": {
@@ -86,21 +67,13 @@ export const ContentBox = ({
   title,
   category,
   description,
-  history,
-  id,
   isBig,
-  page,
-  limit,
   tooSmall,
 }: {
   image: string;
   category: string;
   title: string;
   description: string;
-  id: string;
-  history: any;
-  page: string;
-  limit: string;
   isBig?: boolean;
   tooSmall?: boolean;
 }) => (
@@ -110,21 +83,29 @@ export const ContentBox = ({
         position: "relative",
         width: "100%",
         height: isBig ? "348px" : "170px",
-      }} 
+      }}
     >
       <Link
-        href={category === "Mobiles" ? `/review/${formatForUrl(title) }` : `/article/${formatForUrl(title)}`}
-       
+        href={
+          category === "Mobiles"
+            ? `/review/${formatForUrl(title)}`
+            : `/article/${formatForUrl(title)}`
+        }
       >
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`}
           alt={title}
           layout="fill"
+          priority={true} // Preload important images for SEO
         />
       </Link>
     </Box>
     <Link
-      href={category === "Mobiles" ? `/review/${formatForUrl(title) }` : `/article/${formatForUrl(title)}`}
+      href={
+        category === "Mobiles"
+          ? `/review/${formatForUrl(title)}`
+          : `/article/${formatForUrl(title)}`
+      }
     >
       <Title
         sx={{ fontSize: isBig ? 21 : 20, fontWeight: 600 }}
@@ -138,7 +119,11 @@ export const ContentBox = ({
       </Title>
     </Link>
     <Link
-      href={category === "Mobiles" ? `/review/${formatForUrl(title) }` : `/article/${formatForUrl(title)}`}
+      href={
+        category === "Mobiles"
+          ? `/review/${formatForUrl(title)}`
+          : `/article/${formatForUrl(title)}`
+      }
     >
       <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">
         {isBig ? description : truncateText(description, tooSmall ? 100 : 190)}
@@ -186,8 +171,6 @@ export const SampleBrands = [
 ];
 export default function Banner({
   articles,
-  total,
-  category,
   latestArticles,
   brands,
   mobileArticles,
@@ -199,13 +182,10 @@ export default function Banner({
   latestDeviceMobiles,
   googleMobiles,
   SamsungMobiles,
-  LastUpdatedMobiles
-}: // tags
-{
+  LastUpdatedMobiles,
+}: {
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
-  total: number;
-  category: CategoryTypes[];
   latestArticles: RecentArticleDataType[];
   newsAndReviews: RecentArticleDataType[];
   brands: BrandTypes[];
@@ -217,20 +197,7 @@ export default function Banner({
   SamsungMobiles: MobileArticleType[];
   LastUpdatedMobiles: MobileArticleType[];
   user: any;
-  // tags:MobileTagsType[]
 }) {
-  console.log("articles articles ", articles);
-  const history = useRouter();
-
-  console.log(
-    "dailyInterestMobiles,byFansMobiles,latestDeviceMobiles  ",
-    dailyInterestMobiles,
-    byFansMobiles,
-    latestDeviceMobiles
-  );
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-  const limit = searchParams.get("limit") ?? "3";
 
   return articles ? (
     <Grid sx={{ mt: 1 }} container>
@@ -250,11 +217,7 @@ export default function Banner({
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6.5}>
               <ContentBox
-                page={page}
-                limit={limit}
                 category={articles[0]?.category}
-                id={articles[0]?.id}
-                history={history}
                 image={articles[0]?.image}
                 title={articles[0]?.title}
                 description={articles[0]?.description}
@@ -265,11 +228,7 @@ export default function Banner({
               <Grid container spacing={1}>
                 <Grid item xs={6} sm={12}>
                   <ContentBox
-                    page={page}
-                    limit={limit}
                     category={articles[1]?.category}
-                    id={articles[1]?.id}
-                    history={history}
                     image={articles[1]?.image}
                     title={articles[1]?.title}
                     description={articles[1]?.description}
@@ -277,11 +236,7 @@ export default function Banner({
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <ContentBox
-                    page={page}
-                    limit={limit}
                     category={articles[2]?.category}
-                    id={articles[2]?.id}
-                    history={history}
                     image={articles[2]?.image}
                     title={articles[2]?.title}
                     description={articles[2]?.description}
@@ -290,11 +245,7 @@ export default function Banner({
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <ContentBox
-                    page={page}
-                    limit={limit}
                     category={articles[3]?.category}
-                    id={articles[3]?.id}
-                    history={history}
                     image={articles[3]?.image}
                     title={articles[3]?.title}
                     description={articles[3]?.description}
@@ -304,25 +255,6 @@ export default function Banner({
               </Grid>
             </Grid>
           </Grid>
-          {/* <Grid container>
-            <Grid xs={12}> */}
-
-          {/* </Grid>
-          </Grid> */}
-
-          {/* <Grid sx={{ py: 4 }} container>
-            <Grid
-              sx={{ borderRight: "1px solid lightgray", pr: 1 }}
-              xs={12}
-              sm={6}
-              md={4}
-            >
-              <PhoneFinder brands={SampleBrands} />
-            </Grid>
-            <Grid sx={{ pl: 1 }} xs={12} sm={6} md={8}>
-              <MobileReviews mobilesArticles={mobilesArticles} />
-            </Grid>
-          </Grid> */}
 
           <Grid sx={{ py: 4 }} container>
             <Grid
@@ -345,28 +277,33 @@ export default function Banner({
               <LatestDevices mobiles={latestDeviceMobiles} />
             </Grid>
             <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
-              {
-                mobilesArticles ? mobilesArticles[0] ?  <MobileReviews mobilesArticles={mobilesArticles} /> :null :null
-              }
-             
-              <PopularMobiles LastUpdatedMobiles={LastUpdatedMobiles} SamsungMobiles={SamsungMobiles} googleMobiles={googleMobiles} user={user} articles={mobileArticles} />
-              {/* <Tags tags={tags} /> */}
-              {/* <Categories category={category} /> */}
+              {mobilesArticles ? (
+                mobilesArticles[0] ? (
+                  <MobileReviews mobilesArticles={mobilesArticles} />
+                ) : null
+              ) : null}
+
+              <PopularMobiles
+                LastUpdatedMobiles={LastUpdatedMobiles}
+                SamsungMobiles={SamsungMobiles}
+                googleMobiles={googleMobiles}
+                user={user}
+                articles={mobileArticles}
+              />
               <Grid gap={1} container>
-                <Typography
-                  sx={{
-                    mb: 1,
-                    // borderBottom: "2px solid lightgray",
-                    fontSize: 25,
-                    mt: 2,
-                    width: "100%",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => history.push("/brands")}
-                  // onclick={()=>history.push('/brands')}
-                >
-                  Mobile Brands
-                </Typography>
+                  <Typography
+                    sx={{
+                      mb: 1,
+                      fontSize: 25,
+                      mt: 2,
+                      width: "100%",
+                      fontWeight: 600,
+                    }}
+                  >
+                <Link href={"/brands"}>
+                    Mobile Brands
+                </Link>
+                  </Typography>
 
                 <BrandDisplayComponent brands={brands} />
                 <Grid display={"flex"} justifyContent={"end"} xs={12}>
@@ -388,19 +325,6 @@ export default function Banner({
               <NewsAndReviews mobilesArticles={newsAndReviews} />
             </Grid>
           </Grid>
-
-          {/* <Grid sx={{ my: 4 }} container>
-            <Grid sx={{borderRight:"1px solid lightgray",pr:1}} xs={12} sm={6} md={4}>
-              {/* <TopDevicesTable
-                byFans={byFansMobiles}
-                dailyInterest={dailyInterestMobiles}
-              />
-              <LatestDevices mobiles={latestDeviceMobiles} />  
-            </Grid>
-            {/* <Grid sx={{ pl: 1, pt: 2 }} xs={12} sm={6} md={8}>
-              <NewsAndReviews mobilesArticles={newsAndReviews} />
-            </Grid>  
-          </Grid> */}
         </Paper>
       </Grid>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>

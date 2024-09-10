@@ -47,7 +47,7 @@ export default function NewsMainComponent({
   const params = useParams();
   const history = useRouter();
   const [isHideLoadMore, setIsHideLoadMore] = useState<boolean>(false);
-console.log('bestReviewsArticles  ',bestReviewsArticles)
+  console.log("bestReviewsArticles  ", bestReviewsArticles);
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "3";
@@ -85,11 +85,7 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6.5}>
                 <ContentBox
-                  page={page}
-                  limit={limit}
                   category={articles[0]?.category}
-                  id={articles[0]?.id}
-                  history={history}
                   image={articles[0]?.image}
                   title={articles[0]?.title}
                   description={articles[0]?.description}
@@ -100,11 +96,7 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
                 <Grid container spacing={1}>
                   <Grid item xs={6} sm={6}>
                     <ContentBox
-                      page={page}
-                      limit={limit}
                       category={articles[1]?.category}
-                      id={articles[1]?.id}
-                      history={history}
                       image={articles[1]?.image}
                       title={articles[1]?.title}
                       description={articles[1]?.description}
@@ -112,11 +104,7 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <ContentBox
-                      page={page}
-                      limit={limit}
                       category={articles[1]?.category}
-                      id={articles[1]?.id}
-                      history={history}
                       image={articles[1]?.image}
                       title={articles[1]?.title}
                       description={articles[1]?.description}
@@ -124,11 +112,7 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <ContentBox
-                      page={page}
-                      limit={limit}
                       category={articles[2]?.category}
-                      id={articles[2]?.id}
-                      history={history}
                       image={articles[2]?.image}
                       title={articles[2]?.title}
                       description={articles[2]?.description}
@@ -137,11 +121,7 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <ContentBox
-                      page={page}
-                      limit={limit}
                       category={articles[3]?.category}
-                      id={articles[3]?.id}
-                      history={history}
                       image={articles[3]?.image}
                       title={articles[3]?.title}
                       description={articles[3]?.description}
@@ -202,7 +182,7 @@ console.log('bestReviewsArticles  ',bestReviewsArticles)
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid> 
+            </Grid>
           </Paper>
         </Grid>
         <Grid xs={0} md={1} lg={1.1} xl={2}></Grid>

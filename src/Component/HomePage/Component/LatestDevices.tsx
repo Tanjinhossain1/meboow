@@ -41,6 +41,7 @@ export default function LatestDevices({
                   alt={mobile.title}
                   width={45}
                   height={45}
+                  loading="lazy" // lazy loading for reduce loading time
                 />
               </Link>
               <Link href={`/mobile/${formatForUrl(mobile?.title)}`}>

@@ -19,10 +19,6 @@ export default function DisplayArticleComponent({
 }) {
   const history = useRouter();
 
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-  const limit = searchParams.get("limit") ?? "3";
-
   return (
     <Grid
       container

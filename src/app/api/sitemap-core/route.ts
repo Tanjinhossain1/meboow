@@ -13,7 +13,7 @@ export async function GET() {
         sitemapStream.write({ url: `/aboutus`, lastmod: new Date() });
         sitemapStream.write({ url: `/contactUs`, lastmod: new Date() });
         sitemapStream.write({ url: `/privacyPolicy`, lastmod: new Date() });
-        sitemapStream.write({ url: `/termCondition`, lastmod: new Date() });
+        sitemapStream.write({ url: `/terms-and-conditions`, lastmod: new Date() });
         sitemapStream.write({ url: `/faq`, lastmod: new Date() });
 
 

@@ -111,7 +111,6 @@ export default function MainMobileDetails({
                         title={mobileArticles.title}
                         width={300}
                         height={300}
-                        loading="lazy" // Lazy loading for better performance
                         priority={false} // Set to true if it's above-the-fold or important
                       />
                     </Grid>

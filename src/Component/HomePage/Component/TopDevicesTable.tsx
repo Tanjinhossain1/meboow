@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import Link from 'next/link';
 import { MobileArticleType } from '@/types/mobiles';
 import { formatForUrl } from '@/utils/utils';

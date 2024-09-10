@@ -181,7 +181,6 @@ const IphoneCard = ({
             width={180}
             height={180}
             priority={true} // Preload important images for SEO
-            loading="eager" // Eager loading since it's a key image
           />
 
            

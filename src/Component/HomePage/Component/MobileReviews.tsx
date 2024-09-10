@@ -55,14 +55,27 @@ export default function MobileReviews({
                   : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
               }
             >
-              <Image
-                src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
-                alt="Article Image"
-                layout="responsive"
-                width={10} // Aspect ratio: width
-                height={40} // Aspect ratio: height
-                className="object-cover"
-              />
+              {isTrending ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
+                  alt="Article Image"
+                  layout="responsive"
+                  width={10} // Aspect ratio: width
+                  height={40} // Aspect ratio: height
+                  className="object-cover"
+                  loading="lazy" // lazy loading for reduce loading time
+                />
+              ) : (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
+                  alt="Article Image"
+                  layout="responsive"
+                  width={10} // Aspect ratio: width
+                  height={40} // Aspect ratio: height
+                  className="object-cover"
+                  priority={true} // Preload important images for SEO
+                />
+              )}
             </Link>
           </div>
         </Grid>
@@ -159,6 +172,7 @@ export default function MobileReviews({
                       width={10} // Aspect ratio: width
                       height={40} // Aspect ratio: height
                       className="object-cover"
+                      loading="lazy" // lazy loading for reduce loading time
                     />
                   </Link>
                 </div>
@@ -238,6 +252,7 @@ export default function MobileReviews({
                             width={10} // Aspect ratio: width
                             height={40} // Aspect ratio: height
                             className="object-cover"
+                            priority={true} // Preload important images for SEO
                           />
                         </Link>
                       </div>

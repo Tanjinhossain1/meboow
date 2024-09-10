@@ -33,40 +33,21 @@ import FeedIcon from "@mui/icons-material/Feed";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "next-auth/react";
-import TagIcon from "@mui/icons-material/Tag";
-import CreateTag from "./CreateTag";
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import BackdropProviderContext from "../BackdropProvider";
 
 function NavbarHelper({
   isLoginUser,
-  category,
 }: {
   isLoginUser: any;
-  category: CategoryTypes[];
 }) {
   const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
-  const [tagsDialogOpen, setTagsDialogOpen] = React.useState(false);
-  console.log("user  ", isLoginUser);
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleTagsDialogClose = () => {
-    setTagsDialogOpen(false);
-  };
-
-  const handleTagsDialogClickOpen = () => {
-    setTagsDialogOpen(true);
-  };
-
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log("search  ", event.target.search.value);
     const search = event.target.search.value;
     history.push(`/search?search=${search}`);
   };
@@ -165,28 +146,7 @@ function NavbarHelper({
               <ListItemText primary={"Contact"} />
             </ListItemButton>
           </ListItem>
-        </Link>  
-        
-        {/* {category?.map((data: CategoryTypes, index) => (
-          <ListItem key={data?.id} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {data?.title === "Vehicles" ? (
-                  <DirectionsCarIcon />
-                ) : data?.title === "News" ? (
-                  <FeedIcon />
-                ) : data?.title === "Sports" ? (
-                  <SportsSoccerIcon />
-                ) : data?.title === "Jobs" ? null : (
-                  <PhoneAndroidIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText
-                primary={data?.title === "Jobs" ? null : data?.title}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
+        </Link>
       </List>
       <Grid sx={{ bottom: 0, position: "absolute", ml: 2 }} container>
         <Grid xs={0} sm={4} md={5} lg={7}></Grid>
@@ -252,8 +212,8 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/termCondition"}>
-                Terms Condition
+              <Link style={{ color: "black" }} href={"/terms-and-conditions"}>
+                Terms & Condition
               </Link>
             </Typography>
           </Grid>
@@ -347,8 +307,8 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/termCondition"}>
-                    Terms Condition
+                  <Link style={{ color: "black" }} href={"/terms-and-conditions"}>
+                    Terms & Condition
                   </Link>
                 </Typography>
 
@@ -513,9 +473,7 @@ function NavbarHelper({
             sx={{ m: 0, p: 0 }}
             xs={12}
           >
-            {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
             <Grid xs={12} md={10} lg={9.8} xl={12}>
-              {/* <Container sx={{ m: 0, p: 0 }} maxWidth="xl"> */}
               <Grid
                 gap={3}
                 display={"flex"}
@@ -527,13 +485,9 @@ function NavbarHelper({
                   <Link href={"/"}>
                     <Typography
                       sx={{
-                        // cursor: "pointer",
                         mr: 2,
                         color: "white",
                       }}
-                      // onClick={() => {
-                      //   history.push(`/`);
-                      // }}
                     >
                       Home
                     </Typography>
@@ -567,12 +521,6 @@ function NavbarHelper({
                           }, 1000);
                         }}
                       />
-                      {isLoginUser.role === "admin" ? (
-                        <TagIcon
-                          onClick={handleTagsDialogClickOpen}
-                          sx={{ cursor: "pointer", ml: 2, mt: 1 }}
-                        />
-                      ) : null}
                     </>
                   ) : (
                     <>
@@ -592,95 +540,11 @@ function NavbarHelper({
                     </>
                   )}
                 </Box>
-                {/* <Grid xs={4}>
-                <ListItem
-                  sx={{
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    mt: 1,
-                    color: "#e691c4",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => signOut()}
-                >
-                  {
-                    isLoginUser ? <Typography sx={{ fontWeight: 600 }} textAlign="center">
-                    Logout
-                  </Typography> : null
-                  }
-                </ListItem>
-              </Grid> */}
-                {/* <Grid xs={4}>
-                <ListItem
-                  sx={{
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    mt: 1,
-                    color: "#e691c4",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => history.push("/")}
-                >
-                  <Typography sx={{ fontWeight: 600 }} textAlign="center">
-                    Home
-                  </Typography>
-                </ListItem>
               </Grid>
-              <Grid xs={4}>
-                <ListItem
-                  sx={{
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    mt: 1,
-                    color: "#e691c4",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => history.push("/news")}
-                >
-                  <Typography sx={{ fontWeight: 600 }} textAlign="center">
-                    News
-                  </Typography>
-                </ListItem>
-              </Grid>
-              <Grid xs={4}>
-                <ListItem
-                  sx={{
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    mt: 1,
-                    color: "#e691c4",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => history.push("/aboutus")}
-                >
-                  <Typography sx={{ fontWeight: 600 }} textAlign="center">
-                    About Us
-                  </Typography>
-                </ListItem>
-              </Grid> */}
-              </Grid>
-              {/* </Container> */}
             </Grid>
-            {/* <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid> */}
           </Grid>
         </AppBar>
       </Grid>
-      <Dialog
-        open={tagsDialogOpen}
-        onClose={handleTagsDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <CreateTag />
-      </Dialog>
     </Grid>
   );
 }

@@ -1,24 +1,20 @@
 import React from "react";
-import NavbarHelper from "./NavbarHelperComponent";
 import { fetchCategories } from "@/services/articleServices";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
+import dynamic from "next/dynamic";
 
+const NavbarHelper = dynamic(() => import("./NavbarHelperComponent"), {
+  suspense: true,
+  ssr: false, // or true, based on whether you want SSR support
+});
 
 async function Navbar() {
-  // const session = await auth();
-  
   const session = await getServerSession(authConfig);
-  console.log(
-    'this is the user  in app/page',session?.user
-  )
   const user = session?.user;
-  console.log(session, "register  ", session,user);
-   
 
-  const Category = await fetchCategories();
   return (  
-   <NavbarHelper category={Category?.data} isLoginUser={user ? user : undefined}  /> 
+   <NavbarHelper isLoginUser={user ? user : undefined}  /> 
   );
 }
 export default Navbar;

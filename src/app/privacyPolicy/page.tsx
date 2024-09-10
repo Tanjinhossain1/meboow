@@ -2,7 +2,6 @@
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import OtherPageFooter from "@/Component/Shared/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 
@@ -29,7 +28,6 @@ export const metadata = {
     title: "Privacy Policy - Safari List",
     description:
       "IN Safari List Privacy Policy page you can see all of our site rules and policies in the privacy policy section of the privacy policy.",
-    // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
     canonical: "https://safarilist.com/privacyPolicy",

@@ -1,7 +1,6 @@
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import OtherPageFooter from "@/Component/Shared/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 
@@ -13,7 +12,7 @@ export const metadata = {
   openGraph: {
     title: 'Term Condition - Safari List',
     description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
-    url: 'https://safarilist.com/termCondition',
+    url: 'https://safarilist.com/terms-and-conditions',
     siteName: 'Safari List',
     type: 'website',
   },
@@ -21,10 +20,9 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Term Condition - Safari List',
     description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
-    // images: ['https://yourwebsite.com/static/images/termCondition.jpg'],
   },
   alternates: {
-    canonical: 'https://safarilist.com/termCondition',
+    canonical: 'https://safarilist.com/terms-and-conditions',
   },
 };
 

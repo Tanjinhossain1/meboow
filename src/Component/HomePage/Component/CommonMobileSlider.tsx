@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Paper, Typography, IconButton, Card, Grid } from "@mui/material";
+import { Typography, IconButton, Card, Grid } from "@mui/material";
 import Image from "next/image";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
