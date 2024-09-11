@@ -32,12 +32,12 @@ interface HomePropsType {
 export const metadata: Metadata = {
   title: "Safari List - Tech News, Reviews, Prices | Latest in Mobiles Phones",
   description:
-    "Safari List provides the latest tech news, in-depth for all categories in technology, Mobiles Phones",
+    "Safari List provides the latest Tech News, Reviews, Prices in-depth for all categories in technology, Mobiles Phones",
   keywords: "tech news, mobile reviews, prices, technology advice, Safari List",
   openGraph: {
     title: "Safari List - Tech News, Reviews, Prices | Latest in Mobiles",
     description:
-      "Safari List provides the latest tech news, in-depth for all categories in technology, Mobiles Phones",
+      "Safari List provides the latest Tech News, Reviews, Prices in-depth for all categories in technology, Mobiles Phones",
     url: "https://safarilist.com/",
     type: "website",
     images: [
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title:
       "Safari List - Tech News, Reviews, Prices | Latest in Mobiles Phones",
     description:
-      "Safari List provides the latest tech news, in-depth for all categories in technology, Mobiles Phones",
+      "Safari List provides the latest Tech News, Reviews, Prices in-depth for all categories in technology, Mobiles Phones",
     images: [
       {
         url: "https://safarilist.com/favicon.ico", // replace with actual image
