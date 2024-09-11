@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { formatDate, formatForUrl } from "@/utils/utils";
