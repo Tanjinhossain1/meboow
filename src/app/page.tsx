@@ -1,8 +1,3 @@
-import {
-  fetchArticles,
-  fetchBrands,
-  fetchMobileArticles,
-} from "@/services/articleServices";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
@@ -14,7 +9,6 @@ import {
   getAllBrands,
   getAllMobiles,
 } from "@/lib/queries/services";
-import { AnyMySqlInsert } from "drizzle-orm/mysql-core";
 
 const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
   suspense: true,
