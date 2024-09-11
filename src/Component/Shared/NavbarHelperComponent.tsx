@@ -82,7 +82,7 @@ function NavbarHelper({
       <Grid alignItems={"center"} sx={{ bgcolor: "#023359", p: 1 }} container>
         <Grid xs={8}>
           <Grid xs={12} sm={3} md={2}>
-            <Image alt="logo" width={180} height={10} src="/app-logo/2.png" />
+            <Image alt="logo" width={180} height={10} src="/app-logo/2.png" priority />
           </Grid>
         </Grid>
         <Grid
@@ -350,6 +350,7 @@ function NavbarHelper({
                     width={180}
                     height={10}
                     src="/app-logo/3.png"
+                    priority
                   />
                 </Grid>
               </Grid>
@@ -421,6 +422,7 @@ function NavbarHelper({
                   width={300}
                   height={10}
                   src="/app-logo/1.png"
+                  priority
                 />
               </Grid>
               <Grid xs={0} sm={1}></Grid>

@@ -4,7 +4,6 @@ import { Typography, IconButton, Card, Grid } from "@mui/material";
 import Image from "next/image";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useRouter } from "next/navigation";
 import { MobileArticleType } from "@/types/mobiles";
 import MemoryIcon from "@mui/icons-material/Memory";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
@@ -20,7 +19,6 @@ export default function CommonMobileSlider({
   articles: MobileArticleType[];
   user: any;
 }) {
-  const history = useRouter();
   const [index, setIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
 
@@ -95,9 +93,10 @@ export default function CommonMobileSlider({
                           }}
                           alt={data.title}
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
-                          layout=""
+                           
                           width={50}
                           height={50}
+                          loading="lazy"
                         />
                       </Link>
                     </Grid>

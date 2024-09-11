@@ -181,7 +181,7 @@ export default function MobileDetails({
                             }}
                             alt={data.title}
                             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
-                            layout=""
+                            
                             width={50}
                             height={50}
                           />

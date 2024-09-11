@@ -1,22 +1,12 @@
 "use client";
 import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { Grid } from "@mui/material";
-import Image from "next/image";
 import Button from "@mui/material/Button";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import DisplayArticleComponent from "./DisplayArticleComponent";
-import CategoryListComponent from "../Category/CategoryListComponent";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import BrandDisplayComponent from "./BrandDisplay";
 
 export default function RecentArticleComponent({
   articles,

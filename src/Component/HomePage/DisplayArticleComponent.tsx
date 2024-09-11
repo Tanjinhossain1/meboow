@@ -1,9 +1,9 @@
 "use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { formatDate, formatForUrl, truncateText } from "@/utils/utils";
-import { Button, Grid, Typography } from "@mui/material";
+import { formatDate, formatForUrl } from "@/utils/utils";
+import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
