@@ -1,3 +1,4 @@
+"use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Grid, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
@@ -25,12 +26,12 @@ export default function NewsAndReviews({
     mobilesArticles.length >= 6 ? 0 : 100
   );
   const swiperRef = useRef<any>(null);
-
+  console.log("mobilesArticlesmobilesArticles  ", mobilesArticles);
   const updateProgress = () => {
     if (swiperRef.current) {
       const swiper = swiperRef.current.swiper;
       const totalSlides = swiper.slides.length;
-      const visibleSlides = 7;
+      const visibleSlides = mobilesArticles.length / 1.5;
       const currentIndex = swiper.activeIndex;
       const progressRatio = (currentIndex + visibleSlides) / totalSlides;
       setProgress(progressRatio);
@@ -84,7 +85,7 @@ export default function NewsAndReviews({
         modules={[SwiperGrid, Scrollbar]}
       >
         {mobilesArticles
-          .slice(1, mobilesArticles.length)
+          .slice(0, mobilesArticles.length)
           ?.map((article: RecentArticleDataType) => (
             <Fragment key={article.id}>
               <SwiperSlide>

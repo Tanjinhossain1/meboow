@@ -1,3 +1,4 @@
+'use client'
 import { formatForUrlWith_under_score } from '@/utils/utils'
 import React from 'react'
 

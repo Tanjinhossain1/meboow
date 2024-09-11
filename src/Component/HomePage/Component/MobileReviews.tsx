@@ -1,3 +1,4 @@
+'use client'
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Grid, Typography } from "@mui/material";
 import React, { Fragment } from "react";
@@ -146,7 +147,7 @@ export default function MobileReviews({
         </Grid>
       </Grid>
       {isTrending ? (
-        mobilesArticles.slice(1, 5)?.map((article: RecentArticleDataType) => (
+        mobilesArticles?.slice(1, 5)?.map((article: RecentArticleDataType) => (
           <Fragment key={article.id}>
             {/* Content Section */}
             <Grid sx={{ display: "flex", mt: 1 }} container spacing={2}>

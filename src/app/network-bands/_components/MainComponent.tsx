@@ -1,6 +1,5 @@
 "use client";
 import PhoneFinder from "@/Component/Common/PhoneFinder";
-import { SampleBrands } from "@/Component/HomePage/Banner";
 import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
 import { BrandTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
@@ -25,6 +24,7 @@ import { NetworkBandsType } from "@/types/network-bands";
 import Link from "next/link";
 import { formatForUrl } from "@/utils/utils";
 import { useRouter } from "next/navigation";
+import { SampleBrands } from "@/Component/HomePage/ContentBox";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -180,7 +180,7 @@ export default function MainComponent({
           xs={12}
           sm={3.8}
         >
-          <LatestDevices mobiles={latestDeviceMobiles} />
+          <LatestDevices mobiles={latestDeviceMobiles?.slice(0, 6)} />
         </Grid>
         <Grid
           sx={{

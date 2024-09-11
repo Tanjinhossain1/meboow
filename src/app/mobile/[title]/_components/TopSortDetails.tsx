@@ -28,7 +28,6 @@ import { Pagination } from "swiper/modules";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useContext, useEffect, useState } from "react";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
-import BackdropProviderContext from "@/Component/BackdropProvider";
 import axios from "axios";
 import { formatForUrl } from "@/utils/utils";
 
@@ -182,8 +181,6 @@ const IphoneCard = ({
             height={180}
             priority={true} // Preload important images for SEO
           />
-
-           
         </Grid>
         {/* mobile slider  */}
         <Grid

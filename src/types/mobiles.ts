@@ -25,8 +25,8 @@ export interface MobileArticleType {
         email:string;
         name: string;
     }
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
     title: string;
     market_status: string;
     release_date: string;
@@ -69,18 +69,6 @@ export interface MobileArticleType {
             features: number | string;
             battery: number | string;
             usability: number | string;
-
-            // battery: number;
-            // display: number;
-            // physicalSpecification: number;
-            // memory: number;
-            // mainCamera: number;
-            // processor: number;
-            // network: number;
-            // selfieCamera: number;
-            // connectivity: number;
-            // features: number;
-            // os: number;
         },
         pros: [
             {

@@ -1,14 +1,11 @@
 "use client";
 import PhoneFinder from "@/Component/Common/PhoneFinder";
-import { ContentBox, SampleBrands } from "@/Component/HomePage/Banner";
 import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
 import Categories from "@/Component/HomePage/Component/Categories";
 import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
 import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import NewsAndReviews from "@/Component/HomePage/Component/NewsAndReviews";
-import PopularMobiles from "@/Component/HomePage/Component/PopularMobiles";
 import TopDevicesTable from "@/Component/HomePage/Component/TopDevicesTable";
-import DisplayArticleComponent from "@/Component/HomePage/DisplayArticleComponent";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Alert, Button, Grid, Paper, Typography } from "@mui/material";
 import Link from "next/link";
@@ -18,6 +15,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
 import BestArticles from "./BestReviews";
+import { ContentBox, SampleBrands } from "@/Component/HomePage/ContentBox";
 
 export default function NewsMainComponent({
   articles,
@@ -135,7 +133,7 @@ export default function NewsMainComponent({
               {/* left  */}
               <Grid xs={12} sm={6} md={4}>
                 <PhoneFinder brands={SampleBrands} />
-                <LatestDevices mobiles={latestDeviceMobiles} />
+                <LatestDevices mobiles={latestDeviceMobiles?.slice(0, 6)} />
                 <MobileReviews isTrending mobilesArticles={latestArticles} />
                 <TopDevicesTable
                   byFans={byFansMobiles}

@@ -1,40 +1,27 @@
 "use client";
 import PhoneFinder from "@/Component/Common/PhoneFinder";
-import { SampleBrands } from "@/Component/HomePage/Banner";
-import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
-import { BrandTypes } from "@/types/category";
-import { MobileArticleType } from "@/types/mobiles";
 import {
   Box,
-  FormControl,
   Grid,
   Link as MuiLink,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  fetchCountryName,
-  fetchNetworkBands,
-} from "@/services/articleServices";
-import {
   GlossaryGroup,
   GlossaryType,
-  NetworkBandsType,
 } from "@/types/network-bands";
 import Link from "next/link";
 import {
   cleanText,
-  formatForUrl,
   formatForUrlWith_under_score,
 } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import { RecentArticleDataType } from "@/types/RecentArticle";
+import { SampleBrands } from "@/Component/HomePage/ContentBox";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");

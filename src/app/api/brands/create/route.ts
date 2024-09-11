@@ -1,11 +1,11 @@
 import { getDb } from '@/drizzle/db';
 import { TechBrands } from '@/drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { revalidatePath, unstable_noStore } from 'next/cache';
+import {  revalidateTag } from 'next/cache';
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-    unstable_noStore()
+    
     try {
         // Parse the JSON body
         const body = await req.json()
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
             image,
             admin_detail,
         });
-        revalidatePath('/')
+        revalidateTag('brands');
         return NextResponse.json({ success: true, message: "successfully created Brands", data: result })
     } catch (error) {
         console.error('Error creating brands:', error);
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     }
 }
 export async function PUT(req: Request) {
-    unstable_noStore()
+    
     try {
         // Parse the JSON body
         const body = await req.json()
@@ -53,7 +53,7 @@ export async function PUT(req: Request) {
             image,
             admin_detail_edit
         }).where(eq(TechBrands.id, id));
-        revalidatePath('/')
+        revalidateTag('brands');
         return NextResponse.json({ success: true, message: "successfully Updated Brands", data: result })
     } catch (error) {
         console.error('Error Updated brands:', error);

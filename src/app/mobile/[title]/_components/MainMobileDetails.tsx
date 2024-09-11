@@ -1,6 +1,5 @@
 "use client";
 import PhoneFinder from "@/Component/Common/PhoneFinder";
-import { SampleBrands } from "@/Component/HomePage/Banner";
 import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
 import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
@@ -20,6 +19,7 @@ import Opinion from "./Opinion";
 import Link from "next/link";
 import Tags from "./Tags";
 import { formatForUrl } from "@/utils/utils";
+import { SampleBrands } from "@/Component/HomePage/ContentBox";
 
 export default function MainMobileDetails({
   mobileArticles,
@@ -80,11 +80,11 @@ export default function MainMobileDetails({
                 mobilesArticles={latestArticles}
               />
 
-              <LatestDevices mobiles={latestDevices} />
+              <LatestDevices mobiles={latestDevices?.slice(0, 6)} />
               <LatestDevices
                 name={mobileArticles?.brands}
                 isRelated
-                mobiles={relatedMobileDevices}
+                mobiles={relatedMobileDevices?.slice(0, 6)}
               />
             </Grid>
             <Grid xs={12} sm={8}>

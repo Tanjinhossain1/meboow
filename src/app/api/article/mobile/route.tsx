@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { and, count, desc, eq, or } from "drizzle-orm";
 import { IPaginationOptions, paginationHelpers } from "../../shared/helpers";
 import { IGenericResponse, likeInsensitive } from "@/utils/utils";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -80,7 +81,7 @@ export async function POST(req: Request) {
       selected_articles,
       tags,
     });
-
+    revalidateTag('mobiles');
     return NextResponse.json({
       success: true,
       message: "successfully created mobile article",
@@ -178,7 +179,7 @@ export async function PUT(req: Request) {
         error: "Article not found or could not be updated",
       });
     }
-
+    revalidateTag('mobiles');
     return NextResponse.json({
       success: true,
       message: "Successfully updated mobile article",

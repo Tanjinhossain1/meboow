@@ -20,7 +20,7 @@ export default function LatestDevices({
       {isRelated ? `Popular From ${name} `: "Latest Devices"}  
       </Typography>
       <Grid sx={{mb:2}} container>
-        {mobiles?.slice(0, 6)?.map((mobile: MobileArticleType) => {
+        {mobiles?.map((mobile: MobileArticleType) => {
           return (
             <Grid
               container
