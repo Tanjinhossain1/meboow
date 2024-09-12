@@ -3,11 +3,9 @@ import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import {
   fetchArticles,
-  fetchBrands,
   fetchMobileArticleDetails,
   fetchMobileArticles,
   fetchMobileOpinions,
-  fetchMobileTags,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import MainMobileDetails from "./_components/MainMobileDetails";
@@ -86,7 +84,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     is_latest_device: "YES",
   });
   const RelatedMobileDevices = await fetchMobileArticles({
-    brands: mobileArticles.data[0].brands,
+    brands: mobileArticles.data[0]?.brands,
     page: "1",
     limit: "10",
   });
