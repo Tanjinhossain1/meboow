@@ -91,7 +91,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
   console.log(" this is the data mobile   ", mobileArticles);
 
   const AllMobilesOpinion = await fetchMobileOpinions({
-    mobileId: `${mobileArticles.data[0].id}`,
+    mobileId: `${mobileArticles.data[0]?.id}`,
   });
 
   const session = await getServerSession(authConfig);
