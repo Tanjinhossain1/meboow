@@ -122,7 +122,7 @@ export default function MainMobilesDetailList({
             <DialogHeader>
               <DialogTitle>Share</DialogTitle>
               <DialogDescription className="text-2xl">
-                Share witch platform you want
+                {params?.row?.title}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
