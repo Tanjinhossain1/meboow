@@ -67,14 +67,6 @@ export default function CommonTableComponent({
 
   return (
     <div className="max-w-[1400px] mx-auto mt-3" style={{ width: "100%" }}>
-      {/* Search input */}
-      {/* <TextField
-        label="Search"
-        variant="outlined"
-        value={searchText}
-        onChange={handleSearch}
-        style={{ marginBottom: 16 }}
-      /> */}
       <Link href={"/admin"}>
         <Button variant="contained" color="info">
           Back To Dashboard
