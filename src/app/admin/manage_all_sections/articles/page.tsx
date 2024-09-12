@@ -5,9 +5,10 @@ import Navbar from "@/Component/Shared/Navbar";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { getAllArticles } from "@/lib/queries/services";
 
 export default async function Page() {
-  const articles = await fetchArticles({ allArticles: true });
+  const articles = await getAllArticles({ all: true });
 
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session?.user);
@@ -17,9 +18,6 @@ export default async function Page() {
  if ( user?.role !== "admin" && user?.role !== "sub_admin") {
     redirect("/");
   }
-  // if(user?.role !== "admin" || user?.role !== "sub_admin") {
-  //   redirect("/");
-  // }
   return (
     <>
       <Navbar />

@@ -71,7 +71,7 @@ export async function getAllArticles({
 
                 whereConditions.push(or(...searchConditions));
             }
-            const articlePosts =
+            const articlePosts:any =
                 all ? await db
                     .select()
                     .from(Articles)
