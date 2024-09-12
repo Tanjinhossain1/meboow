@@ -66,8 +66,8 @@ export default function MainMobilesDetailList({
       | "Pinterest"
       | "Tumblr"
   ) => {
-    const url = `https://safarilist.com/mobile/Apple-IPhone-13`;
-    // const url = `https://safarilist.com/mobile/${formatForUrl(params?.title)}`;
+    // const url = `https://safarilist.com/mobile/Apple-IPhone-13`;
+    const url = `https://safarilist.com/mobile/${formatForUrl(params?.title)}`;
     commonShareFunc(url, params, urlPrefix);
     // window.open(
     //   `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
