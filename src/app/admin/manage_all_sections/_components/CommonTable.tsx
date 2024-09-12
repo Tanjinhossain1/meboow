@@ -58,10 +58,10 @@ export default function CommonTableComponent({
     }else if ((columnData[0] as MobileArticleType)?.admin_detail?.email){
       const filteredData = (columnData as (MobileArticleType)[]).filter(
         (row) => row?.title.toLowerCase().includes(value)
-        ||
-        row?.admin_detail?.name.toLowerCase().includes(value)
-        ||
-        row?.admin_detail?.role.toLowerCase().includes(value)
+        // ||
+        // row?.admin_detail?.name.toLowerCase().includes(value)
+        // ||
+        // row?.admin_detail?.role.toLowerCase().includes(value)
         //   ||
         // row.age.toString().includes(value)
       );
