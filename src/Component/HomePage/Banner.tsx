@@ -151,7 +151,7 @@ export default async function Banner({
                   <Link href={"/brands"}>Mobile Brands</Link>
                 </Typography>
 
-                <BrandDisplayComponent brands={brands} />
+                <BrandDisplayComponent brands={brands.slice(0, 10)} />
                 <Grid display={"flex"} justifyContent={"end"} xs={12}>
                   <Link href={"/brands"}>
                     <Typography

@@ -2,22 +2,10 @@ import React, { Fragment } from "react";
 import {
   Grid,
   Paper,
-  Box,
   Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  Container,
   Breadcrumbs,
   Link,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Image from "next/image";
-import { truncateText } from "@/utils/utils";
-import { useRouter } from "next/navigation";
-import { RecentArticleDataType } from "@/types/RecentArticle";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { BrandTypes } from "@/types/category";
 import {
   fetchBrands,
   fetchCategories,
@@ -27,7 +15,6 @@ import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
 import MobileListComponent from "@/Component/Details/MobileListComponent";
-import BrandListComponent from "@/Component/Details/BrandListComponent";
 import CategoryListComponent from "@/Component/Category/CategoryListComponent";
 
 

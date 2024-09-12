@@ -13,7 +13,7 @@ export default function BrandDisplayComponent({
 }) {
   return (
     brands &&
-    brands.slice(0, 10)?.map((data: BrandTypes) => {
+    brands?.map((data: BrandTypes) => {
       return (
         <Grid key={data?.id} xs={5} sm={3} md={2}>
           <Link

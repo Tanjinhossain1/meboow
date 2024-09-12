@@ -466,7 +466,7 @@ export default function MobileDetails({
                   List Of Brands
                 </Typography>
                 <Grid gap={2} container>
-                <BrandDisplayComponent brands={brands} />
+                <BrandDisplayComponent brands={brands.slice(0, 10)} />
                 </Grid>
               </Grid>
               

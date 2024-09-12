@@ -9,6 +9,20 @@ import CommonTableComponent from "../../_components/CommonTable";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
 import { MobileArticleType } from "@/types/mobiles";
+import { commonShareFunc } from "../../_components/CommonShare";
+import { Button as SButton } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 export default function MainMobilesDetailList({
   mobile,
   user,
@@ -42,13 +56,24 @@ export default function MainMobilesDetailList({
   };
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
-  const handlePostToFacebook = async (params: MobileArticleType) => {
-    const url = `https://safarilist.com/mobile/${formatForUrl(params?.title)}`;
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+  const handlePostToFacebook = async (
+    params: MobileArticleType,
+    urlPrefix:
+      | "Facebook"
+      | "Twitter"
+      | "Whatsapp"
+      | "Linkedin"
+      | "Pinterest"
+      | "Tumblr"
+  ) => {
+    const url = `https://safarilist.com/mobile/Apple-IPhone-13`;
+    // const url = `https://safarilist.com/mobile/${formatForUrl(params?.title)}`;
+    commonShareFunc(url, params, urlPrefix);
+    // window.open(
+    //   `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    //   "_blank",
+    //   "noopener,noreferrer"
+    // );
   };
 
   console.log("mobile mobile mobile   ", mobile);
@@ -89,18 +114,52 @@ export default function MainMobilesDetailList({
       field: "post",
       headerName: "Post",
       renderCell: (params: any) => (
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            if (window.confirm("Are you sure you want to POST?")) {
-              handlePostToFacebook(params.row);
-            }
-          }}
-        >
-          Post
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <SButton color="red"  className="bg-cyan-500">Post</SButton>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Share</DialogTitle>
+              <DialogDescription className="text-2xl">
+                Share witch platform you want
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              {[
+                "Facebook",
+                "Twitter",
+                "Whatsapp",
+                "Linkedin",
+                "Pinterest",
+                "Tumblr",
+              ].map((name, index) => {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() =>
+                      handlePostToFacebook(params.row, name as any)
+                    }
+                  >
+                    {name}
+                  </Button>
+                );
+              })}
+            </div> 
+          </DialogContent>
+        </Dialog>
+        // <Button
+        //   size="small"
+        //   variant="contained"
+        //   color="primary"
+        //   onClick={() => {
+        //     // if (window.confirm("Are you sure you want to POST?")) {
+        //     //   handlePostToFacebook(params.row);
+        //     // }
+        //   }}
+        // >
+        //   Post
+        // </Button>
       ),
       width: 100,
     },

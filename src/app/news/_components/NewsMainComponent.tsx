@@ -162,7 +162,7 @@ export default function NewsMainComponent({
                     Mobile Brands
                   </Typography>
 
-                  <BrandDisplayComponent brands={brands} />
+                  <BrandDisplayComponent brands={brands.slice(0, 10)} />
                   <Grid display={"flex"} justifyContent={"end"} xs={12}>
                     <Link href={"/brands"}>
                       <Typography
