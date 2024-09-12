@@ -55,6 +55,17 @@ export default function CommonTableComponent({
         // row.age.toString().includes(value)
       );
       setFilteredRows(filteredData);
+    }else if ((columnData[0] as MobileArticleType)?.admin_detail?.email){
+      const filteredData = (columnData as (MobileArticleType)[]).filter(
+        (row) => row?.title.toLowerCase().includes(value)
+        ||
+        row?.admin_detail?.name.toLowerCase().includes(value)
+        ||
+        row?.admin_detail?.role.toLowerCase().includes(value)
+        //   ||
+        // row.age.toString().includes(value)
+      );
+      setFilteredRows(filteredData);
     }else{
       const filteredData = (columnData as (RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes)[]).filter(
         (row) => row?.title.toLowerCase().includes(value)
