@@ -70,16 +70,6 @@ export default function HomePageLoadingSkeleton({isOffNavbar}:{isOffNavbar?:bool
                   </Fragment>
                 ))}
               </div>
-              <div className="mt-3 grid grid-cols-12 gap-4">
-                <div className="col-span-12">
-                  <Skeleton className="h-[30px] w-full bg-gray-700" />
-                  <Skeleton className="h-[200px] w-full bg-gray-700" />
-                </div>
-                <div className="col-span-12">
-                  <Skeleton className="h-[50px] w-full bg-gray-700" />
-                  <Skeleton className="h-[200px] w-full bg-gray-700" />
-                </div>
-              </div>
             </div>
           </div>
         </div>

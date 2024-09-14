@@ -1,13 +1,8 @@
-import React from "react";
-import { fetchCategories } from "@/services/articleServices";
+import React, { lazy } from "react";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
-import dynamic from "next/dynamic";
 
-const NavbarHelper = dynamic(() => import("./NavbarHelperComponent"), {
-  suspense: true,
-  ssr: false, // or true, based on whether you want SSR support
-});
+const NavbarHelper = lazy(() => import("./NavbarHelperComponent"));
 
 async function Navbar() {
   const session = await getServerSession(authConfig);
