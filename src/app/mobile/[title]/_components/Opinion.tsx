@@ -222,6 +222,7 @@ export default function Opinion({
           </Grid>
 
           <Button
+          aria-label="Post Opinion"
             sx={{ bgcolor: "#023359" }}
             type="submit"
             variant="contained"

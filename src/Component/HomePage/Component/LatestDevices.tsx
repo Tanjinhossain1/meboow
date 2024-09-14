@@ -35,7 +35,7 @@ export default function LatestDevices({
                 mt: 1,
               }}
             >
-              <Link href={`/mobile/${formatForUrl(mobile?.title)}`}>
+              <Link aria-label={`Mobile ${formatForUrl(mobile?.title)}`} href={`/mobile/${formatForUrl(mobile?.title)}`}>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobile.display_image}`}
                   alt={mobile.title}
@@ -44,7 +44,7 @@ export default function LatestDevices({
                   loading="lazy" // lazy loading for reduce loading time
                 />
               </Link>
-              <Link href={`/mobile/${formatForUrl(mobile?.title)}`}>
+              <Link aria-label={`Mobile ${formatForUrl(mobile?.title)}`} href={`/mobile/${formatForUrl(mobile?.title)}`}>
                 <Typography
                   sx={{ fontSize: 11, mt: 1, ":hover": { color: "red" } }}
                 >

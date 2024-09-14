@@ -1,12 +1,6 @@
-'use client'
+"use client";
 import React from "react";
-import {
-  Grid,
-  Typography,
-  Divider,
-  Box,
-  IconButton,
-} from "@mui/material";
+import { Grid, Typography, Divider, Box, IconButton } from "@mui/material";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {
@@ -25,7 +19,13 @@ import DesktopViewToggle from "@/components/DesktopViewToggle";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { MobileArticleType } from "@/types/mobiles";
 
-export default async function FooterHelper({newsAndReviews, mobileArticles}:{newsAndReviews:RecentArticleDataType[], mobileArticles:MobileArticleType[]}) {
+export default function FooterHelper({
+  newsAndReviews,
+  mobileArticles,
+}: {
+  newsAndReviews: RecentArticleDataType[];
+  mobileArticles: MobileArticleType[];
+}) {
   return (
     <Grid container>
       <Grid className="md:max-w-[1000px] mx-auto" xs={12}>
@@ -77,7 +77,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
             </Grid>
             {/* Recently Added Articles */}
             <Grid item xs={12} sm={5.8}>
-              <Typography variant="h6" gutterBottom>
+              <Typography  gutterBottom>
                 Recently Added Articles:
               </Typography>
               <Grid
@@ -120,6 +120,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
             sx={{ mt: 4, textAlign: "center" }}
           >
             <Link
+            aria-label="Safari List"
               href="https://www.safarilist.com"
               style={{
                 color: "#fff",
@@ -165,6 +166,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
                   }}
                 >
                   <Link
+                  aria-label="Contact Us"
                     href="/contactUs"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
@@ -181,44 +183,14 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
                   }}
                 >
                   <Link
+                  aria-label="About us"
                     href="/aboutus"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
                     About us
                   </Link>
                 </Typography>
-                {/* <Typography
-                  sx={{
-                    fontSize: 12,
-                    "&:hover": { textDecoration: "underline" },
-                    pr: 1,
-                    borderRight: "1px solid white",
-                    mr: 1,
-                  }}
-                >
-                  <Link
-                    href="#"
-                    style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
-                  >
-                    Purpose
-                  </Link>
-                </Typography> */}
-                {/* <Typography
-                  sx={{
-                    fontSize: 12,
-                    "&:hover": { textDecoration: "underline" },
-                    pr: 1,
-                    borderRight: "1px solid white",
-                    mr: 1,
-                  }}
-                >
-                  <Link
-                    href="#"
-                    style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
-                  >
-                    Advertise
-                  </Link>
-                </Typography> */}
+               
                 <Typography
                   sx={{
                     fontSize: 12,
@@ -229,6 +201,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
                   }}
                 >
                   <Link
+                  aria-label="Privacy Policy"
                     href="/privacyPolicy"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
@@ -245,6 +218,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
                   }}
                 >
                   <Link
+                  aria-label="Terms And Conditions"
                     href="/terms-and-conditions"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
@@ -261,6 +235,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
                   }}
                 >
                   <Link
+                  aria-label="faq"
                     href="/faq"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
@@ -273,6 +248,7 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
                   }}
                 >
                   <Link
+                  aria-label="Site Map"
                     href="/sitemap.xml"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
@@ -292,46 +268,86 @@ export default async function FooterHelper({newsAndReviews, mobileArticles}:{new
               >
                 <Grid container>
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <FacebookIcon />
+                    <IconButton
+                      aria-label="Facebook Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <FacebookIcon aria-label="Facebook" />
                     </IconButton>
                   </Grid>
 
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <LinkedInIcon />
+                    <IconButton
+                      aria-label="Linked In Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <LinkedInIcon aria-label="Link din" />
                     </IconButton>
                   </Grid>
 
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <TwitterIcon />
+                    <IconButton
+                      aria-label="Twitter Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <TwitterIcon aria-label="Twitter Icon" />
                     </IconButton>
                   </Grid>
 
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <YouTubeIcon />
+                    <IconButton
+                      aria-label="You Tube Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <YouTubeIcon aria-label="You Tube Icon" />
                     </IconButton>
                   </Grid>
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <InstagramIcon />
+                    <IconButton
+                      aria-label="INstagram Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <InstagramIcon aria-label="INstagram Icon" />
                     </IconButton>
                   </Grid>
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <WhatsAppIcon />
+                    <IconButton
+                      aria-label="Whats App Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <WhatsAppIcon aria-label="Whats App Icon" />
                     </IconButton>
                   </Grid>
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <TelegramIcon />
+                    <IconButton
+                      aria-label="Telegram Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <TelegramIcon aria-label="Telegram Icon" />
                     </IconButton>
                   </Grid>
                   <Grid xs={3}>
-                    <IconButton component="a" href="#" sx={{ color: "white" }}>
-                      <RedditIcon />
+                    <IconButton
+                      aria-label="Reddit Icon"
+                      component="a"
+                      href="#"
+                      sx={{ color: "white" }}
+                    >
+                      <RedditIcon aria-label="Reddit Icon" />
                     </IconButton>
                   </Grid>
                 </Grid>

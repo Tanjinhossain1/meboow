@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
-  Dialog,
   Drawer,
   Grid,
   ListItem,
@@ -25,7 +24,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import LoginComponent from "../Login/LoginComponent";
-import { CategoryTypes } from "@/types/category";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
@@ -33,15 +31,11 @@ import FeedIcon from "@mui/icons-material/Feed";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "next-auth/react";
-import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
-import ContactsIcon from '@mui/icons-material/Contacts';
+import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
+import ContactsIcon from "@mui/icons-material/Contacts";
 import BackdropProviderContext from "../BackdropProvider";
 
-function NavbarHelper({
-  isLoginUser,
-}: {
-  isLoginUser: any;
-}) {
+function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
   const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
@@ -82,7 +76,13 @@ function NavbarHelper({
       <Grid alignItems={"center"} sx={{ bgcolor: "#023359", p: 1 }} container>
         <Grid xs={8}>
           <Grid xs={12} sm={3} md={2}>
-            <Image alt="logo" width={180} height={10} src="/app-logo/2.png" priority />
+            <Image
+              alt="logo"
+              width={180}
+              height={10}
+              src="/app-logo/2.png"
+              priority
+            />
           </Grid>
         </Grid>
         <Grid
@@ -97,7 +97,7 @@ function NavbarHelper({
       <List>
         {["Home"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton aria-label="Home Icon">
               <ListItemIcon>
                 <HomeIcon></HomeIcon>
               </ListItemIcon>
@@ -105,11 +105,10 @@ function NavbarHelper({
             </ListItemButton>
           </ListItem>
         ))}
-         
 
-        <Link href={"/news"}>
+        <Link aria-label="Feed Icon" href={"/news"}>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton aria-label="Feed Icon">
               <ListItemIcon>
                 <FeedIcon />
               </ListItemIcon>
@@ -117,29 +116,29 @@ function NavbarHelper({
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href={"/brands"}>
+        <Link aria-label="Brands" href={"/brands"}>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton aria-label="Brand watermark icon">
               <ListItemIcon>
                 <BrandingWatermarkIcon />
               </ListItemIcon>
               <ListItemText primary={"Brands"} />
             </ListItemButton>
           </ListItem>
-        </Link> 
-        <Link href={"/mobile"}>
+        </Link>
+        <Link aria-label="Mobile" href={"/mobile"}>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton aria-label="Phone Android Icon">
               <ListItemIcon>
                 <PhoneAndroidIcon />
               </ListItemIcon>
               <ListItemText primary={"Mobiles"} />
             </ListItemButton>
           </ListItem>
-        </Link>  
-        <Link href={"/contactUs"}>
+        </Link>
+        <Link aria-label="Contact us" href={"/contactUs"}>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton aria-label="Contacts Icon">
               <ListItemIcon>
                 <ContactsIcon />
               </ListItemIcon>
@@ -153,12 +152,8 @@ function NavbarHelper({
 
         <Grid
           xs={0}
-          // sx={{ display: "flex" }}
-          // gap={2}
           sm={12}
-          // md={7}
           sx={{ mb: 2 }}
-          // lg={5}
           container
         >
           <Grid xs={4}>
@@ -170,7 +165,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/aboutus"}>
+              <Link aria-label="Black" style={{ color: "black" }} href={"/aboutus"}>
                 About Us
               </Link>
             </Typography>
@@ -184,7 +179,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/contactUs"}>
+              <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contactUs"}>
                 Contact us
               </Link>
             </Typography>
@@ -198,7 +193,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/privacyPolicy"}>
+              <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacyPolicy"}>
                 Privacy Policy
               </Link>
             </Typography>
@@ -212,7 +207,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/terms-and-conditions"}>
+              <Link aria-label="Terms And Conditions" style={{ color: "black" }} href={"/terms-and-conditions"}>
                 Terms & Condition
               </Link>
             </Typography>
@@ -226,7 +221,7 @@ function NavbarHelper({
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link style={{ color: "black" }} href={"/faq"}>
+              <Link aria-label="faq" style={{ color: "black" }} href={"/faq"}>
                 FAQ
               </Link>
             </Typography>
@@ -268,7 +263,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/aboutus"}>
+                  <Link aria-label="About Us" style={{ color: "black" }} href={"/aboutus"}>
                     About Us
                   </Link>
                 </Typography>
@@ -281,7 +276,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/contactUs"}>
+                  <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contactUs"}>
                     Contact us
                   </Link>
                 </Typography>
@@ -294,7 +289,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/privacyPolicy"}>
+                  <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacyPolicy"}>
                     Privacy Policy
                   </Link>
                 </Typography>
@@ -307,7 +302,11 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/terms-and-conditions"}>
+                  <Link
+                  aria-label="Terms And Conditions"
+                    style={{ color: "black" }}
+                    href={"/terms-and-conditions"}
+                  >
                     Terms & Condition
                   </Link>
                 </Typography>
@@ -320,7 +319,7 @@ function NavbarHelper({
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link style={{ color: "black" }} href={"/faq"}>
+                  <Link aria-label="Faq" style={{ color: "black" }} href={"/faq"}>
                     FAQ
                   </Link>
                 </Typography>
@@ -337,7 +336,10 @@ function NavbarHelper({
           >
             <Grid container>
               <Grid xs={1}>
-                <Button onClick={toggleDrawer("left", true)}>
+                <Button
+                  aria-label="Toggle Drawer"
+                  onClick={toggleDrawer("left", true)}
+                >
                   <MenuIcon className=" text-white" />
                 </Button>
               </Grid>
@@ -415,7 +417,6 @@ function NavbarHelper({
               }}
               container
             >
-              {/* <Grid xs={0} md={1} lg={1.1} xl={0.5}></Grid> */}
               <Grid xs={12} sm={3} md={2} xl={3}>
                 <Image
                   alt="logo"
@@ -484,7 +485,7 @@ function NavbarHelper({
                 container
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <Link href={"/"}>
+                  <Link aria-label="Home" href={"/"}>
                     <Typography
                       sx={{
                         mr: 2,
@@ -494,19 +495,21 @@ function NavbarHelper({
                       Home
                     </Typography>
                   </Link>
-                  <Link href={"/news"}>
-                    <Typography sx={{color:"white"}}>News And Reviews</Typography>
+                  <Link aria-label="News" href={"/news"}>
+                    <Typography sx={{ color: "white" }}>
+                      News And Reviews
+                    </Typography>
                   </Link>
-                  <Link href={"/brands"}>
+                  <Link aria-label="Brands" href={"/brands"}>
                     {" "}
-                    <Typography sx={{color:"white"}}>Brands</Typography>
+                    <Typography sx={{ color: "white" }}>Brands</Typography>
                   </Link>
-                  <Link href={"/mobile"}>
-                    <Typography sx={{color:"white"}}>Mobiles</Typography>
+                  <Link aria-label="Mobile" href={"/mobile"}>
+                    <Typography sx={{ color: "white" }}>Mobiles</Typography>
                   </Link>
-                  <Link href={"/contactUs"}>
+                  <Link aria-label="Contact us" href={"/contactUs"}>
                     {" "}
-                    <Typography sx={{color:"white"}}>Contact</Typography>
+                    <Typography sx={{ color: "white" }}>Contact</Typography>
                   </Link>
                 </Box>
 
@@ -514,6 +517,7 @@ function NavbarHelper({
                   {isLoginUser ? (
                     <>
                       <LogoutIcon
+                        aria-label="Log out"
                         sx={{ cursor: "pointer", mt: 1 }}
                         onClick={() => {
                           handleOpen();
@@ -527,15 +531,19 @@ function NavbarHelper({
                   ) : (
                     <>
                       <Popover>
-                        <PopoverTrigger>
+                        <PopoverTrigger aria-label="Login Icon">
                           <LoginIcon sx={{ mt: 1 }} />
                         </PopoverTrigger>
-                        <PopoverContent className="w-[355px] md:w-[550px]">
+                        <PopoverContent
+                          aria-label="Login component"
+                          className="w-[355px] md:w-[550px]"
+                        >
                           <LoginComponent />
                         </PopoverContent>
                       </Popover>
 
                       <GroupAddIcon
+                        aria-label="Add Tag"
                         sx={{ ml: 1.5, mt: 1 }}
                         onClick={() => history.push("/register")}
                       />

@@ -17,6 +17,7 @@ export default function BrandDisplayComponent({
       return (
         <Grid key={data?.id} xs={5} sm={3} md={2}>
           <Link
+            aria-label="Mobile Brands Wise"
             href={`/mobile/brand-wise/${formatForUrlWith_under_score(
               data?.title
             )}`}
@@ -32,7 +33,7 @@ export default function BrandDisplayComponent({
               }}
             >
               <Image
-                alt={data?.title}
+                alt={` ${data?.title} Brand Logo For Display`}
                 src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data?.image}`}
                 loading="lazy" // lazy loading for reduce loading time
                 width={
@@ -56,7 +57,7 @@ export default function BrandDisplayComponent({
               />
             </Box>
             <Typography
-              variant="h6"
+            className="bg-gray-50"
               sx={{ textAlign: "center", color: "gray", fontSize: 14 }}
             >
               {data?.title}

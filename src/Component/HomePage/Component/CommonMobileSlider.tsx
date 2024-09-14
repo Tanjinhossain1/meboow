@@ -45,6 +45,7 @@ export default function CommonMobileSlider({
   return (
     <div className="flex justify-center items-center   w-full ">
       <IconButton
+      aria-label="Arrow Back Ios Icon"
         className="mr-[-27px]"
         onClick={handlePrev}
         disabled={index === 0}
@@ -78,19 +79,19 @@ export default function CommonMobileSlider({
                   <Grid container direction="column" alignItems="center">
                     <Grid
                       sx={{
-                        width: "192px", // Ensure the image takes the full width of the card
+                        width: "250px", // Ensure the image takes the full width of the card
                         height: "98px", // Adjust the height for uniformity
                       }}
                       xs={3}
                     >
-                      <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                      <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
                         <Image
                           style={{
-                            width: "195px", // Ensure the image takes the full width of the card
+                            width: "220px", // Ensure the image takes the full width of the card
                             height: "95px", // Adjust the height for uniformity
                             cursor: "pointer",
-                            // objectFit: "cover",
                           }}
+                          objectFit={"cover"}
                           alt={data.title}
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
                            
@@ -100,11 +101,8 @@ export default function CommonMobileSlider({
                         />
                       </Link>
                     </Grid>
-                    <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
-                        // onClick={() => {
-                        //   // history.push(`/mobile/${formatForUrl(data?.title)}`);
-                        // }}
                         item
                         sx={{ width: "100%", mt: 2, height: "25px" }}
                       >
@@ -120,11 +118,8 @@ export default function CommonMobileSlider({
                         </Typography>
                       </Grid>
                     </Link>
-                    <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
-                        // onClick={() => {
-                        //   history.push(`/mobile/${formatForUrl(data?.title)}`);
-                        // }}
                         textAlign={"left"}
                         item
                         sx={{ width: "100%" }}
@@ -149,11 +144,8 @@ export default function CommonMobileSlider({
                       </Grid>
                     </Link>
 
-                    <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
-                        // onClick={() => {
-                        //   history.push(`/mobile/${formatForUrl(data?.title)}`);
-                        // }}
                         item
                         textAlign={"left"}
                         sx={{ width: "100%" }}
@@ -177,11 +169,8 @@ export default function CommonMobileSlider({
                         </Typography>
                       </Grid>
                     </Link>
-                    <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
                       <Grid
-                        // onClick={() => {
-                        //   history.push(`/mobile/${formatForUrl(data?.title)}`);
-                        // }}
                         item
                         textAlign={"left"}
                         sx={{ width: "100%" }}
@@ -214,17 +203,15 @@ export default function CommonMobileSlider({
                           ? {
                               display: "flex",
                               justifyContent: "space-around",
-                              width: "100%",
-                            //   mt: 1,
+                              width: "100%"
                             }
                           : {
-                              width: "100%",
-                            //   mt: 1,
+                              width: "100%"
                             }
                       }
                     >
                       {data?.prices[0].start_from ? (
-                        <Link href={`/mobile/${formatForUrl(data?.title)}`}>
+                        <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
                           <Typography
                             sx={{
                               color: "#055491",
@@ -232,9 +219,6 @@ export default function CommonMobileSlider({
                               fontSize: "16px",
                               textAlign: "center",
                             }}
-                            // onClick={() => {
-                            //   history.push(`/mobile/${formatForUrl(data?.title)}`);
-                            // }}
                           >
                             ${data?.prices[0].start_from}
                           </Typography>
@@ -242,7 +226,7 @@ export default function CommonMobileSlider({
                       ) : null}
 
                       {user?.role === "admin" || user?.role === "sub_admin" ? (
-                        <Link href={`/admin/mobile/edit/${data.id}`}>
+                        <Link aria-label={`Admin Mobile ${data?.id}`} href={`/admin/mobile/edit/${data.id}`}>
                           <Typography
                             sx={{
                               color: "#055491",
@@ -251,9 +235,6 @@ export default function CommonMobileSlider({
                               textAlign: "center",
                               cursor: "pointer",
                             }}
-                            // onClick={() => {
-                            //   history.push(`/admin/mobile/edit/${data.id}`);
-                            // }}
                           >
                             <EditNoteIcon />
                           </Typography>
@@ -266,7 +247,7 @@ export default function CommonMobileSlider({
             })}
         </div>
       </div>
-      <IconButton onClick={handleNext} disabled={index >= articles?.length - 3}>
+      <IconButton aria-label="Arrow Forward Ios Icon" onClick={handleNext} disabled={index >= articles?.length - 3}>
         <ArrowForwardIosIcon className="h-6 w-6" />
       </IconButton>
     </div>

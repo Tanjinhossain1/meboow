@@ -8,7 +8,6 @@ import { Grid as SwiperGrid, Scrollbar } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/grid";
-// import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import "./MobileReviews.css";
@@ -26,7 +25,6 @@ export default function NewsAndReviews({
     mobilesArticles.length >= 6 ? 0 : 100
   );
   const swiperRef = useRef<any>(null);
-  console.log("mobilesArticlesmobilesArticles  ", mobilesArticles);
   const updateProgress = () => {
     if (swiperRef.current) {
       const swiper = swiperRef.current.swiper;
@@ -100,6 +98,7 @@ export default function NewsAndReviews({
                   >
                     <div style={{ width: "100%" }}>
                       <Link
+                      aria-label={`Mobile & Review ${formatForUrl(article?.title)}`}
                         href={
                           article?.category === "Mobiles"
                             ? `/review/${formatForUrl(article?.title)}`
@@ -137,6 +136,7 @@ export default function NewsAndReviews({
                       {formatDate(article.updateAt)}
                     </Typography>
                     <Link
+                    aria-label={`Mobile & Review ${formatForUrl(article?.title)}`}
                       href={
                         article?.category === "Mobiles"
                           ? `/review/${formatForUrl(article?.title)}`
@@ -148,6 +148,7 @@ export default function NewsAndReviews({
                       </p>
                     </Link>
                     <Link
+                    aria-label={`Mobile & Review ${formatForUrl(article?.title)}`}
                       href={
                         article?.category === "Mobiles"
                           ? `/review/${formatForUrl(article?.title)}`

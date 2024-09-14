@@ -1,24 +1,25 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import BrandDisplayComponent from "./BrandDisplay";
 import { MobileArticleType } from "@/types/mobiles";
-import PhoneFinder from "../Common/PhoneFinder";
-import MobileReviews from "./Component/MobileReviews";
-import PopularMobiles from "./Component/PopularMobiles";
-import NewsAndReviews from "./Component/NewsAndReviews";
-import TopDevicesTable from "./Component/TopDevicesTable";
-import LatestDevices from "./Component/LatestDevices";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { ContentBox, SampleBrands } from "./ContentBox";
+import { SampleBrands } from "./ContentBox";
 import { BrandTypes } from "@/types/category";
+
+const ContentBox = lazy(() => import("@/Component/HomePage/ContentBox"));
+const PhoneFinder = lazy(() => import("../Common/PhoneFinder"));
+const MobileReviews = lazy(() => import("./Component/MobileReviews"));
+const TopDevicesTable = lazy(() => import("./Component/TopDevicesTable"));
+const LatestDevices = lazy(() => import("./Component/LatestDevices"));
+const PopularMobiles = lazy(() => import("./Component/PopularMobiles"));
+const NewsAndReviews = lazy(() => import("./Component/NewsAndReviews"));
+const BrandDisplayComponent = lazy(() => import("./BrandDisplay"));
 
 export default async function Banner({
   articles,
   latestArticles,
   brands,
-  // totalBrands,
   AppleMobiles,
   user,
   mobilesArticles,
@@ -35,7 +36,6 @@ export default async function Banner({
   latestArticles: RecentArticleDataType[];
   newsAndReviews: RecentArticleDataType[];
   brands: BrandTypes[];
-  // totalBrands: BrandTypes[];
   AppleMobiles: MobileArticleType[];
   dailyInterestMobiles: MobileArticleType[];
   byFansMobiles: MobileArticleType[];
@@ -45,15 +45,13 @@ export default async function Banner({
   LastUpdatedMobiles: MobileArticleType[];
   user: any;
 }) {
-  // const [brands] = await Promise.all([totalBrands]);
-   
   return (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
       <Grid xs={12} md={10} lg={9.8} xl={7}>
         <Paper
           className="lg:max-w-[1000px] mx-auto"
-          sx={{ p: 2, mb: 2, bgcolor: "white" }}
+          sx={{ p: 2, mb: 2 }}
           elevation={0}
         >
           <Typography
@@ -148,12 +146,14 @@ export default async function Banner({
                     fontWeight: 600,
                   }}
                 >
-                  <Link href={"/brands"}>Mobile Brands</Link>
+                  <Link aria-label="Brands" href={"/brands"}>
+                    Mobile Brands
+                  </Link>
                 </Typography>
 
                 <BrandDisplayComponent brands={brands.slice(0, 10)} />
                 <Grid display={"flex"} justifyContent={"end"} xs={12}>
-                  <Link href={"/brands"}>
+                  <Link aria-label="Brands" href={"/brands"}>
                     <Typography
                       sx={{
                         fontSize: 16,

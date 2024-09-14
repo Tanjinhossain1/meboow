@@ -13,7 +13,7 @@ const Dashboard = ({ user }: any) => {
   return (
     <Container className="md:max-w-[1000px] mx-auto">
       <Link href="/">
-        <Button variant="contained" sx={{ mt: 2 }}>
+        <Button aria-label="Back" variant="contained" sx={{ mt: 2 }}>
           Back
         </Button>
       </Link>

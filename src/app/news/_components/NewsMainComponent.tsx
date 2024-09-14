@@ -15,7 +15,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
 import BestArticles from "./BestReviews";
-import { ContentBox, SampleBrands } from "@/Component/HomePage/ContentBox";
+import ContentBox, { SampleBrands } from "@/Component/HomePage/ContentBox";
 
 export default function NewsMainComponent({
   articles,

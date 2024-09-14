@@ -128,12 +128,6 @@ export async function getAllMobiles({
             const { limit, skip } = paginationHelpers.calculatePagination(options);
 
             const whereConditions: any = [];
-            console.log(
-                "checking the data is coing searchTermsearchTermsearchTerm ",
-                searchTerm,
-                is_daily_interest,
-                is_latest_device
-            );
             if (brands) {
                 const searchConditions = likeInsensitive(
                     MobileArticles["brands"],
@@ -211,7 +205,7 @@ export async function getAllBrands() {
         },
         ["brands"],
         {
-            revalidate: 300, // every 5 minutes
+            revalidate: 3600, // every 5 minutes
             tags: ["brands"],
         }
     )()

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Grid, Typography } from "@mui/material";
 import React, { Fragment } from "react";
@@ -50,6 +50,9 @@ export default function MobileReviews({
         >
           <div style={{ width: "100%" }}>
             <Link
+              aria-label={`Mobile & Review ${formatForUrl(
+                mobilesArticles[0]?.title
+              )}`}
               href={
                 mobilesArticles[0]?.category === "Mobiles"
                   ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
@@ -101,6 +104,9 @@ export default function MobileReviews({
             </Typography>
           )}
           <Link
+            aria-label={`Mobile & Review ${formatForUrl(
+              mobilesArticles[0]?.title
+            )}`}
             href={
               mobilesArticles[0]?.category === "Mobiles"
                 ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
@@ -113,6 +119,9 @@ export default function MobileReviews({
           </Link>
           {isTrending ? null : (
             <Link
+              aria-label={`Mobile & Review ${formatForUrl(
+                mobilesArticles[0]?.title
+              )}`}
               href={
                 mobilesArticles[0]?.category === "Mobiles"
                   ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
@@ -160,6 +169,9 @@ export default function MobileReviews({
               >
                 <div style={{ width: "100%" }}>
                   <Link
+                    aria-label={`Mobile & Review ${formatForUrl(
+                      mobilesArticles[0]?.title
+                    )}`}
                     href={
                       article?.category === "Mobiles"
                         ? `/review/${formatForUrl(article?.title)}`
@@ -180,6 +192,9 @@ export default function MobileReviews({
               </Grid>
               <Grid item xs={8}>
                 <Link
+                  aria-label={`Mobile & Review ${formatForUrl(
+                    mobilesArticles[0]?.title
+                  )}`}
                   href={
                     article?.category === "Mobiles"
                       ? `/review/${formatForUrl(article?.title)}`
@@ -240,6 +255,9 @@ export default function MobileReviews({
                     >
                       <div style={{ width: "100%" }}>
                         <Link
+                          aria-label={`Mobile & Review ${formatForUrl(
+                            mobilesArticles[0]?.title
+                          )}`}
                           href={
                             article?.category === "Mobiles"
                               ? `/review/${formatForUrl(article?.title)}`
@@ -277,6 +295,9 @@ export default function MobileReviews({
                         {formatDate(article.createdAt)}
                       </Typography>
                       <Link
+                        aria-label={`Mobile & Review ${formatForUrl(
+                          mobilesArticles[0]?.title
+                        )}`}
                         href={
                           article?.category === "Mobiles"
                             ? `/review/${formatForUrl(article?.title)}`

@@ -141,6 +141,7 @@ export default function MainMobileDetails({
                         )}`}
                       >
                         <Button
+                          aria-label="Review"
                           sx={{ color: "white" }}
                           className="hover:bg-red-600 px-3"
                         >
@@ -151,6 +152,7 @@ export default function MainMobileDetails({
                     {isOpinion ? null : (
                       <Link href={`/mobile/${formattedTitle}/opinion`}>
                         <Button
+                          aria-label="Opinions"
                           sx={{ color: "white" }}
                           className="hover:bg-red-600 px-3"
                         >
@@ -161,6 +163,7 @@ export default function MainMobileDetails({
                     {isPicture || isOpinion ? (
                       <Link href={`/mobile/${formattedTitle}`}>
                         <Button
+                          aria-label="Specification"
                           sx={{ color: "white" }}
                           className="hover:bg-red-600 px-3"
                         >
@@ -171,6 +174,7 @@ export default function MainMobileDetails({
                     {isPicture ? null : mobileArticles?.image[0] ? (
                       <Link href={`/mobile/${formattedTitle}/pictures`}>
                         <Button
+                          aria-label="Picture"
                           sx={{ color: "white" }}
                           className="hover:bg-red-600 px-3"
                         >

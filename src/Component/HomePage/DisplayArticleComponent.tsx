@@ -3,7 +3,6 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate, formatForUrl } from "@/utils/utils";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React from "react";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
@@ -17,8 +16,6 @@ export default function DisplayArticleComponent({
   asSmall?: boolean;
   user?: any; // Replace with actual user data type
 }) {
-  const history = useRouter();
-
   return (
     <Grid
       container
@@ -36,6 +33,7 @@ export default function DisplayArticleComponent({
     >
       <Grid xs={asSmall ? 5 : 12} sm={5.5} sx={{ height: "100%" }}>
         <Link
+          aria-label="Article Image"
           href={
             data?.category === "Mobiles"
               ? `/review/${formatForUrl(data?.title)}`
@@ -55,6 +53,7 @@ export default function DisplayArticleComponent({
       <Grid xs={0} sm={0.5}></Grid>
       <Grid xs={asSmall ? 7 : 12} sm={6}>
         <Link
+          aria-label="Review & Article"
           href={
             data?.category === "Mobiles"
               ? `/review/${formatForUrl(data?.title)}`
@@ -74,19 +73,26 @@ export default function DisplayArticleComponent({
             {data.title}
           </Typography>
         </Link>
-        <Link href={data?.category === "Mobiles" ? `/review/${formatForUrl(data?.title) }` : `/article/${formatForUrl(data?.title)}`}>
-        <Typography
-          sx={{
-            fontSize: 13,
-            fontWeight: 500,
-            mt: asSmall ? 0.5 : 2,
-            ml: 1,
-          }}
+        <Link
+          aria-label="Date"
+          href={
+            data?.category === "Mobiles"
+              ? `/review/${formatForUrl(data?.title)}`
+              : `/article/${formatForUrl(data?.title)}`
+          }
+        >
+          <Typography
+            sx={{
+              fontSize: 13,
+              fontWeight: 500,
+              mt: asSmall ? 0.5 : 2,
+              ml: 1,
+            }}
           >
-          {formatDate(data.createdAt)}
-          {/* {asSmall ? formatDate(data.createdAt) : null} */}
-        </Typography>
-          </Link>
+            {formatDate(data.createdAt)}
+            {/* {asSmall ? formatDate(data.createdAt) : null} */}
+          </Typography>
+        </Link>
         {user?.role === "admin" || user?.role === "sub_admin" ? (
           <Typography
             sx={{
@@ -95,12 +101,9 @@ export default function DisplayArticleComponent({
               fontSize: "16px",
               textAlign: "center",
               cursor: "pointer",
-            }}
-            onClick={() => {
-              history.push(`/admin/article/edit/${data.id}`);
-            }}
+            }} 
           >
-            <EditNoteIcon />
+            <Link aria-label="Edit Not Icon" href={`/admin/article/edit/${data.id}`}><EditNoteIcon /></Link>
           </Typography>
         ) : null}
       </Grid>

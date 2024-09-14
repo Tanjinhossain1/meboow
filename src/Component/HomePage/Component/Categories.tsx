@@ -2,7 +2,6 @@ import { CategoryTypes } from "@/types/category";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function Categories({
@@ -10,7 +9,6 @@ export default function Categories({
 }: {
   category: CategoryTypes[];
 }) {
-  const router = useRouter();
   return (
     <Paper
       className="lg:max-w-[1000px] mx-auto"
@@ -20,7 +18,6 @@ export default function Categories({
       <Typography
         sx={{
           fontSize: 25,
-          // fontFamily: "Arial, sans-serif",
           fontWeight: 600,
           mb: 1,
         }}
@@ -37,7 +34,6 @@ export default function Categories({
               sm={3.5}
               md={2.5}
               lg={2}
-              // onClick={() => router.push(`/category/${value.title}`)}
               sx={{
                 cursor: "pointer",
                 textAlign: "center",
@@ -62,7 +58,7 @@ export default function Categories({
                 ":hover": { bgcolor: "#f584b7" },
               }}
             >
-              <Link href={`/category/${value.title}`}>
+              <Link aria-label={`Category ${value?.title}`} href={`/category/${value.title}`}>
                 <Box
                   sx={{
                     width: 40,
@@ -84,7 +80,7 @@ export default function Categories({
                       height={40}
                       width={40}
                     />
-                  ) : // <NewspaperIcon sx={{ fontSize: 40 }} />
+                  ) :
                   value.title === "Sports" ? (
                     <Image
                       alt={value.title}

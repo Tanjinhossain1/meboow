@@ -13,6 +13,13 @@ module.exports = {
       fontSize: {
         'base': 'inherit', // Set the base font size to inherit the default browser font size
       },
+      colors: {
+        topTableCustomGreen: '#e8f6e9', // custom color
+        topTableCustomBlue: '#e8eff6', // custom color
+        topTableHeadCustomGreen: '#a4c08d', // custom color
+        topTableHeadCustomBlue: '#82a2bd', // custom color
+      },
+
       keyframes: {
         slideInFromTop: {
           '0%': { transform: 'translateY(-100%)', opacity: '0' },

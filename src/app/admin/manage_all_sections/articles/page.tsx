@@ -8,8 +8,11 @@ import { redirect } from "next/navigation";
 import { getAllArticles } from "@/lib/queries/services";
 
 export default async function Page() {
-  const articles = await getAllArticles({ all: true });
-
+  const [
+    articles,
+  ] = await Promise.all([
+    getAllArticles({ all: true })
+  ]);
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session?.user);
   const user: any = session?.user;
@@ -21,7 +24,7 @@ export default async function Page() {
   return (
     <>
       <Navbar />
-      <MainArticlesDetailList user={user} articles={articles.data} />
+      <MainArticlesDetailList user={user} articles={articles} />
     </>
   );
 }

@@ -601,28 +601,28 @@ const IphoneCard = ({
                 mobileDetail?.selected_articles?.title
               )}`}
             >
-              <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
+              <Button aria-label="Review" sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Review
               </Button>
             </Link>
           ) : null}
           {isOpinion ? null : (
             <Link href={`/mobile/${formattedTitle}/opinion`}>
-              <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
+              <Button aria-label="Options" sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Opinions
               </Button>
             </Link>
           )}
           {isPicture || isOpinion ? (
             <Link href={`/mobile/${formattedTitle}`}>
-              <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
+              <Button aria-label="Specification" sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Specification
               </Button>
             </Link>
           ) : null}
           {isPicture ? null : mobileDetail?.image[0] ? (
             <Link href={`/mobile/${formattedTitle}/pictures`}>
-              <Button sx={{ color: "white" }} className="hover:bg-red-600 px-3">
+              <Button aria-label="Picture" sx={{ color: "white" }} className="hover:bg-red-600 px-3">
                 Picture
               </Button>
             </Link>

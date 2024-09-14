@@ -528,6 +528,7 @@ export default function MainSubmitForm({
                           />
                           {index > 0 && (
                             <IconButton
+                            aria-label="Remove "
                               color="error"
                               onClick={() => remove(index)}
                             >
@@ -540,6 +541,7 @@ export default function MainSubmitForm({
                   </Grid>
                   <Box sx={{ mt: 2 }}>
                     <Button
+                    aria-label="Add Price"
                       variant="contained"
                       color="primary"
                       onClick={() => append({ gbs: "", start_from: "" })}
@@ -581,7 +583,7 @@ export default function MainSubmitForm({
             <div id="bottom">
               <a href="#top">
                 {" "}
-                <Button variant="contained" color="secondary" sx={{ mt: 1 }}>
+                <Button aria-label="Go Up" variant="contained" color="secondary" sx={{ mt: 1 }}>
                   Go Up
                 </Button>
               </a>

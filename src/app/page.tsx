@@ -2,13 +2,17 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import HomePageLoadingSkeleton from "@/Component/LoadingSkeleton/HomePageLoadingSkeleton";
+import { lazy, Suspense } from "react";
 import {
   getAllArticles,
   getAllBrands,
   getAllMobiles,
 } from "@/lib/queries/services";
+
+const HomePageLoadingSkeleton = dynamic(() => import("@/Component/LoadingSkeleton/HomePageLoadingSkeleton"), {
+  suspense: true,
+  ssr: true, // or true, based on whether you want SSR support
+});
 
 const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
   suspense: true,
@@ -18,10 +22,11 @@ const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
   suspense: true,
   ssr: true, // or true, based on whether you want SSR support
 });
-const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
-  suspense: true,
-  ssr: true,
-});
+// const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+//   suspense: true,
+//   ssr: true,
+// });
+const Footer = lazy(() => import("@/Component/HomePage/Footer"));
 
 interface HomePropsType {
   searchParams: {
