@@ -10,22 +10,20 @@ import {
 } from "@/lib/queries/services";
 import NavbarLoadingSkeleton from "@/Component/Shared/NavbarLoadingSkeleton";
 
-const HomePageLoadingSkeleton = dynamic(
-  () => import("@/Component/LoadingSkeleton/HomePageLoadingSkeleton"),
-  {
-    suspense: true,
-    ssr: true, // or true, based on whether you want SSR support
-  }
+const HomePageLoadingSkeleton = lazy(
+  () => import("@/Component/LoadingSkeleton/HomePageLoadingSkeleton")
 );
 
-const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
-  suspense: true,
-  ssr: true, // or true, based on whether you want SSR support
-});
-const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
-  suspense: true,
-  ssr: true, // or true, based on whether you want SSR support
-});
+const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
+const Banner = lazy(() => import("@/Component/HomePage/Banner"));
+// const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
+//   suspense: true,
+//   ssr: true, // or true, based on whether you want SSR support
+// });
+// const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
+//   suspense: true,
+//   ssr: true, // or true, based on whether you want SSR support
+// });
 // const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
 //   suspense: true,
 //   ssr: true,
@@ -115,29 +113,25 @@ async function Home({ searchParams }: HomePropsType) {
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
         key="canonical"
       />
-
-      <Suspense fallback={<NavbarLoadingSkeleton />}>
-        <Navbar />
-      </Suspense>
-
-      <Suspense fallback={<HomePageLoadingSkeleton isOffNavbar />}>
-        <Banner
-          LastUpdatedMobiles={LastUpdatedMobiles as any}
-          SamsungMobiles={SamsungMobiles as any}
-          dailyInterestMobiles={DailyInterestMobiles as any}
-          byFansMobiles={ByFansMobiles as any}
-          latestDeviceMobiles={LatestDeviceMobiles as any}
-          newsAndReviews={newsAndReviews as any}
-          mobilesArticles={MobilesArticles as any}
-          user={user}
-          brands={brands}
-          latestArticles={LatestArticles as any}
-          articles={articles as any}
-          AppleMobiles={ApplesMobile as any}
-          googleMobiles={GoogleMobiles as any}
-        />
-        <Footer />
-      </Suspense>
+      <Navbar />
+      {/* <Suspense fallback={<HomePageLoadingSkeleton isOffNavbar />}> */}
+      <Banner
+        LastUpdatedMobiles={LastUpdatedMobiles as any}
+        SamsungMobiles={SamsungMobiles as any}
+        dailyInterestMobiles={DailyInterestMobiles as any}
+        byFansMobiles={ByFansMobiles as any}
+        latestDeviceMobiles={LatestDeviceMobiles as any}
+        newsAndReviews={newsAndReviews as any}
+        mobilesArticles={MobilesArticles as any}
+        user={user}
+        brands={brands}
+        latestArticles={LatestArticles as any}
+        articles={articles as any}
+        AppleMobiles={ApplesMobile as any}
+        googleMobiles={GoogleMobiles as any}
+      />
+      <Footer />
+      {/* </Suspense> */}
 
       {/* <Suspense fallback={<p>loading...</p>}>
       </Suspense> */}
