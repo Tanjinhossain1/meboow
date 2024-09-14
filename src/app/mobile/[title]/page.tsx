@@ -52,8 +52,8 @@ export async function generateMetadata(
           {
             url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
             alt: `${title} image`,
-            width: 400, // optional, adjust based on your image size
-            height: 400, // optional, adjust based on your image size
+            width: 600, // optional, adjust based on your image size
+            height: 600, // optional, adjust based on your image size
             
           },
           ...previousImages,
