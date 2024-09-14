@@ -8,11 +8,15 @@ import {
   getAllBrands,
   getAllMobiles,
 } from "@/lib/queries/services";
+import NavbarLoadingSkeleton from "@/Component/Shared/NavbarLoadingSkeleton";
 
-const HomePageLoadingSkeleton = dynamic(() => import("@/Component/LoadingSkeleton/HomePageLoadingSkeleton"), {
-  suspense: true,
-  ssr: true, // or true, based on whether you want SSR support
-});
+const HomePageLoadingSkeleton = dynamic(
+  () => import("@/Component/LoadingSkeleton/HomePageLoadingSkeleton"),
+  {
+    suspense: true,
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
 
 const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
   suspense: true,
@@ -72,7 +76,7 @@ export const metadata: Metadata = {
 async function Home({ searchParams }: HomePropsType) {
   const { page, limit } = searchParams;
   const session = await getServerSession(authConfig);
-  
+
   const [
     articles,
     LatestArticles,
@@ -90,7 +94,7 @@ async function Home({ searchParams }: HomePropsType) {
     getAllArticles({ pages: page, limits: limit }),
     getAllArticles({ pages: page, limits: limit, latestDevice: "latest" }),
     getAllArticles({ limits: "20", category: "Mobiles" }),
-    getAllArticles({ showInNews: "show",limits:"30" }),
+    getAllArticles({ showInNews: "show", limits: "30" }),
     // mobiles
     getAllMobiles({ limits: "30", brands: "Apple" }),
     getAllMobiles({ limits: "30", brands: "Google" }),
@@ -112,7 +116,10 @@ async function Home({ searchParams }: HomePropsType) {
         key="canonical"
       />
 
-      <Navbar />
+      <Suspense fallback={<NavbarLoadingSkeleton />}>
+        <Navbar />
+      </Suspense>
+
       <Suspense fallback={<HomePageLoadingSkeleton isOffNavbar />}>
         <Banner
           LastUpdatedMobiles={LastUpdatedMobiles as any}
