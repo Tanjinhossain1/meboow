@@ -129,7 +129,7 @@ export default function MainMobilesDetailList({
               {[
                 "Facebook",
                 "Twitter",
-                "Whatsapp",
+                // "Whatsapp",
                 "Linkedin",
                 "Pinterest",
                 "Tumblr",
