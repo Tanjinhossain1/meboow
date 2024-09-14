@@ -29,7 +29,7 @@ export const commonShareFunc = async (
     case "Twitter":
       shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
         url
-      )}&text=${encodeURIComponent(articles?.title)}
+      )}&text=${articles?.title} - Full phone Specification 🔥🤩
       `;
       break;
     case "Tumblr":
