@@ -113,7 +113,7 @@ async function Home({ searchParams }: HomePropsType) {
       />
 
       <Navbar />
-      <Suspense fallback={<HomePageLoadingSkeleton />}>
+      <Suspense fallback={<HomePageLoadingSkeleton isOffNavbar />}>
         <Banner
           LastUpdatedMobiles={LastUpdatedMobiles as any}
           SamsungMobiles={SamsungMobiles as any}
@@ -129,11 +129,11 @@ async function Home({ searchParams }: HomePropsType) {
           AppleMobiles={ApplesMobile as any}
           googleMobiles={GoogleMobiles as any}
         />
-      </Suspense>
-
-      <Suspense fallback={<HomePageLoadingSkeleton />}>
         <Footer />
       </Suspense>
+
+      {/* <Suspense fallback={<p>loading...</p>}>
+      </Suspense> */}
     </>
   );
 }
