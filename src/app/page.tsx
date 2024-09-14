@@ -1,18 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import {
   getAllArticles,
   getAllBrands,
   getAllMobiles,
 } from "@/lib/queries/services";
-import NavbarLoadingSkeleton from "@/Component/Shared/NavbarLoadingSkeleton";
-
-const HomePageLoadingSkeleton = lazy(
-  () => import("@/Component/LoadingSkeleton/HomePageLoadingSkeleton")
-);
 
 const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
 const Banner = lazy(() => import("@/Component/HomePage/Banner"));
