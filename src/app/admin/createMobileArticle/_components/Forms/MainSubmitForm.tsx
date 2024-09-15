@@ -46,7 +46,7 @@ export default function MainSubmitForm({
   const [gradient, setGradient] = useState(
     isEdit?.isEdit && isEdit?.mobileArticles[0]
       ? isEdit?.mobileArticles[0]?.top_background_color
-      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, rgba(79,133,218,0.01) 21%, rgba(123,79,218,0.77) 51%, rgba(103,4,201,0.71) 61%, rgba(114,4,201,0.84) 66%, RGBA(126, 4, 201, 0.85) 75%, rgba(114,4,201,0.85) 82%, rgba(153,4,223,1) 100%)"
+      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGBA(79,133,218,0.01) 25%, rgba(156,95,111,1) 100%)"
   );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
