@@ -25,8 +25,8 @@ export async function generateMetadata(
     title: formattedTitle,
   });
   if (mobileArticles?.data && mobileArticles?.data[0]) {
-    const title = `${params?.title} - Full phone Specification`;
-    const desc = `Here will show this ${params?.title} mobile details and specification this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of details of this phone.`;
+    const title = `${formattedTitle} - Full phone Specification`;
+    const desc = `Here will show this ${formattedTitle} mobile details and specification this mobile is this ${mobileArticles?.data[0]?.brands} brand. you can see all of details of this phone.`;
     const previousImages = (await parent).openGraph?.images || [];
     const image = mobileArticles?.data[0]?.display_image;
     return {
