@@ -1,9 +1,9 @@
-import React from 'react'
-import MainComponent from './_components/MainComponent'
-import Navbar from '@/Component/Shared/Navbar'
-import Footer from '@/Component/HomePage/Footer'
-import { fetchBrands, fetchMobileArticles } from '@/services/articleServices';
+import React, { lazy } from "react";
+import { fetchMobileArticles } from "@/services/articleServices";
 
+const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
+const Footer = lazy(() => import("@/Component/HomePage/Footer"));
+const MainComponent = lazy(() => import("./_components/MainComponent"));
 
 export const metadata = {
   title: "Network Bands - Safari List",
@@ -30,18 +30,16 @@ export const metadata = {
   },
 };
 
-
 export default async function page() {
-    const brands = await fetchBrands();
-    const LatestDeviceMobiles = await fetchMobileArticles({
-      limit: "10",
-      is_latest_device: "YES",
-    });
+  const LatestDeviceMobiles = await fetchMobileArticles({
+    limit: "10",
+    is_latest_device: "YES",
+  });
   return (
     <>
-    <Navbar />
-    <MainComponent latestDeviceMobiles={LatestDeviceMobiles.data} brands={brands.data} />
-    <Footer />
+      <Navbar />
+      <MainComponent latestDeviceMobiles={LatestDeviceMobiles.data} />
+      <Footer />
     </>
-  )
+  );
 }

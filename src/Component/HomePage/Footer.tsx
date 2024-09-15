@@ -1,11 +1,7 @@
-import React, { Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import { fetchArticles, fetchMobileArticles } from "@/services/articleServices";
-import dynamic from "next/dynamic";
 
-const FooterHelper = dynamic(() => import("./FooterHelper"), {
-  suspense: true,
-  ssr: false,
-});
+const FooterHelper = lazy(() => import("./FooterHelper"));
 
 export default async function Footer() {
   const [newsAndReviews, mobileArticles] = await Promise.all([

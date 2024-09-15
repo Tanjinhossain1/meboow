@@ -1,13 +1,11 @@
 "use client";
 import PhoneFinder from "@/Component/Common/PhoneFinder";
 import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
-import { BrandTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
 import {
   Box,
   FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   Paper,
   Select,
@@ -31,11 +29,9 @@ function formatText(text: string) {
 }
 
 export default function MainComponent({
-  brands,
   latestDeviceMobiles,
   isEdit,
 }: {
-  brands: BrandTypes[];
   latestDeviceMobiles: MobileArticleType[];
   isEdit?: {
     isEdit: boolean;
@@ -51,8 +47,6 @@ export default function MainComponent({
   const handleChange = (event: any) => {
     const selectedCountry = event.target.value;
     router.push(`/network-bands/${formatForUrl(selectedCountry)}`);
-    // setCountry(selectedCountry);
-    // setCountryDetail(selectedCountry);
   };
 
   useEffect(() => {
@@ -61,7 +55,6 @@ export default function MainComponent({
         const countryDetails = await fetchNetworkBands({
           country: isEdit?.country ? isEdit?.country : undefined,
         });
-        console.log("first country ", countryDetails, isEdit?.country);
         setCountryDetails(countryDetails?.data[0]);
         setCountry(isEdit?.country);
       } else {
@@ -72,13 +65,11 @@ export default function MainComponent({
           const countryDetails = await fetchNetworkBands({
             country: countryName ? countryName : undefined,
           });
-          console.log("first country ", countryDetails, countryName);
           setCountryDetails(countryDetails?.data[0]);
           setCountry(countryName);
         }
       }
     }
-
     fetchCountry();
   }, [isEdit]);
   return (
@@ -102,13 +93,9 @@ export default function MainComponent({
           sx={{
             my: 1,
             ml: 1,
-            backgroundImage: "url(/network.jpeg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "grayscale(100%)", // Apply grayscale filter
-            position: "relative", // Ensure the text is positioned relative to the image
-            // border: "4px solid rgba(128, 128, 128, 0.8)", // Add gray border
-            // borderRadius: "8px", // Optional: add some border-radius for a smoother look
+            position: "relative", // Keep the container relative for text overlay
+            width: "100%",
+            height: "320px", // Set a fixed height for the container
             display: {
               xs: "none",
               sm: "block",
@@ -117,13 +104,29 @@ export default function MainComponent({
           xs={12}
           sm={7.8}
         >
+          {/* Using Next.js Image component for optimized image handling */}
+          <Image
+            src="/network.jpeg"
+            alt="Network coverage"
+            fill
+            sizes="(max-width: 600px) 100vw, (max-width: 960px) 75vw, 50vw"
+            quality={75}
+            priority={true}
+            style={{
+              filter: "grayscale(100%)",
+              objectFit: "cover",
+              objectPosition: "center",
+            }} // Apply object-fit and object-position here
+          />
+
+          {/* Text content overlay */}
           <div
             style={{
               position: "absolute",
-              bottom: "50px", // Position the text at the bottom
+              bottom: "50px",
               left: "10px",
-              color: "white", // Set text color to white
-              backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: add a semi-transparent background for better text readability
+              color: "white",
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
               padding: "5px 10px",
               borderRadius: "4px",
               fontSize: "30px",
@@ -132,42 +135,6 @@ export default function MainComponent({
             Network coverage {country ? `in ${country}` : ""}
           </div>
         </Grid>
-        <Grid
-          sx={{
-            my: 1,
-            ml: 1,
-            mr: 1,
-            backgroundImage: "url(/network.jpeg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "grayscale(100%)", // Apply grayscale filter
-            position: "relative", // Ensure the text is positioned relative to the image
-            // border: "4px solid rgba(128, 128, 128, 0.8)", // Add gray border
-            // borderRadius: "8px", // Optional: add some border-radius for a smoother look
-            display: {
-              xs: "block",
-              sm: "none",
-            },
-            height: "200px",
-          }}
-          xs={12}
-        >
-          <div
-            style={{
-              // position: "absolute",
-              bottom: "50px", // Position the text at the bottom
-              left: "10px",
-              color: "white", // Set text color to white
-              backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: add a semi-transparent background for better text readability
-              padding: "5px 10px",
-              borderRadius: "4px",
-              fontSize: "30px",
-            }}
-          >
-            Network coverage {country ? `in ${country}` : ""}
-          </div>
-        </Grid>
-
         <Grid
           sx={{
             my: 1,
@@ -190,6 +157,20 @@ export default function MainComponent({
           xs={12}
           sm={7.8}
         >
+          <Typography
+            sx={{
+              fontSize: 24,
+              fontWeight: 600,
+              mb: 2,
+              display: {
+                xs: "block",
+                sm: "none",
+              },
+            }}
+          >
+            Network Coverage {country ? `in ${country}` : ""}
+          </Typography>
+
           <Typography sx={{ fontSize: 15 }}>
             A key part of any mobile phone specification is its operating
             frequency bands. The supported frequency bands determine whether a
@@ -222,7 +203,6 @@ export default function MainComponent({
                   md: "flex",
                 },
                 alignItems: "center",
-                // marginBottom: "8px",
               }}
             >
               <Box sx={{ flexGrow: 1 }}>
@@ -264,13 +244,21 @@ export default function MainComponent({
                     },
                   }}
                 >
-                  {countries.map((country) => (
-                    <MenuItem key={country} value={country}>
+                  {countries.map((countryName) => (
+                    <MenuItem key={countryName} value={countryName}>
                       <Link
-                        style={{ width: "100%" }}
-                        href={`/network-bands/${formatForUrl(country)}`}
+                        aria-label={`Network Band: ${countryName}`}
+                        href={`/network-bands/${formatForUrl(countryName)}`}
+                        style={{
+                          display: "inline-block", // Allow padding and dimensions
+                          width: "100%", // Ensure it takes up the full width
+                          minHeight: "44px", // Ensure minimum touch target height
+                          padding: "17px 12px", // Add padding for larger touch area
+                          textDecoration: "none", // Ensure the link style remains clean
+                          color: "inherit", // Maintain text color
+                        }}
                       >
-                        {country}
+                        {countryName}
                       </Link>
                     </MenuItem>
                   ))}
@@ -331,31 +319,19 @@ export default function MainComponent({
                     __html: block.data.text,
                   }}
                 />
-                // <TagLevel
-                //   className={`text-${
-                //     block.data.level === 1
-                //       ? "4xl"
-                //       : block.data.level === 2
-                //       ? "3xl"
-                //       : "2xl"
-                //   }`} // Adjust Tailwind classes as needed
-                //   key={block.id}
-                //   dangerouslySetInnerHTML={{
-                //     __html: block.data.text,
-                //   }}
-                // ></TagLevel>
               );
             } else if (block.type === "image") {
               return (
                 <Image
                   loading="lazy"
+                  quality={70}
                   key={block.id}
                   layout="responsive"
                   width={block.data.height}
                   height={block.data.height}
                   src={block.data.file.url}
                   alt={block.data.file.url}
-                ></Image>
+                />
               );
             } else if (block.type === "list") {
               return block.data.style === "unordered" ? (
@@ -396,7 +372,6 @@ export default function MainComponent({
                   }}
                 >
                   <thead>
-                    {/* {block.data.withHeadings && ( */}
                     <tr>
                       {block.data.content[0].map(
                         (heading: any, index: number) => (
@@ -428,10 +403,6 @@ export default function MainComponent({
                             style={{
                               borderRight:
                                 index === 0 ? "1px solid #dddddd" : undefined,
-                              // backgroundColor:
-                              //   index % 2 === 0
-                              //     ? "#e6e6e6"
-                              //     : "#f5f5f5",
                             }}
                             key={index}
                           >
