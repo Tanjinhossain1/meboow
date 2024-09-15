@@ -1,9 +1,13 @@
 import React, { lazy } from "react";
 import { Metadata, ResolvingMetadata } from "next";
 import { getAllMobiles } from "@/lib/queries/services";
+import dynamic from "next/dynamic";
 
 const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
-const Footer = lazy(() => import("@/Component/HomePage/Footer"));
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"),{
+  suspense: true,
+  ssr: false,
+});
 const MainComponent = lazy(() => import("../_components/MainComponent"));
 
 export async function generateMetadata(

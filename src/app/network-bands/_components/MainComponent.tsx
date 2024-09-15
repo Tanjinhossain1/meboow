@@ -1,6 +1,4 @@
 "use client";
-import PhoneFinder from "@/Component/Common/PhoneFinder";
-import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
 import { MobileArticleType } from "@/types/mobiles";
 import {
   Box,
@@ -12,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { countries } from "./Countries";
 import {
   fetchCountryName,
@@ -23,6 +21,11 @@ import Link from "next/link";
 import { formatForUrl } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 import { SampleBrands } from "@/Component/HomePage/ContentBox";
+
+const LatestDevices = lazy(
+  () => import("@/Component/HomePage/Component/LatestDevices")
+);
+const PhoneFinder = lazy(() => import("@/Component/Common/PhoneFinder"));
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -111,7 +114,7 @@ export default function MainComponent({
             fill
             sizes="(max-width: 600px) 100vw, (max-width: 960px) 75vw, 50vw"
             quality={75}
-            priority={true}
+            loading="lazy"
             style={{
               filter: "grayscale(100%)",
               objectFit: "cover",
@@ -120,7 +123,7 @@ export default function MainComponent({
           />
 
           {/* Text content overlay */}
-          <div
+          <h1
             style={{
               position: "absolute",
               bottom: "50px",
@@ -133,7 +136,7 @@ export default function MainComponent({
             }}
           >
             Network coverage {country ? `in ${country}` : ""}
-          </div>
+          </h1>
         </Grid>
         <Grid
           sx={{
@@ -158,6 +161,7 @@ export default function MainComponent({
           sm={7.8}
         >
           <Typography
+            variant="h1"
             sx={{
               fontSize: 24,
               fontWeight: 600,
@@ -218,6 +222,7 @@ export default function MainComponent({
               </Box>
               <FormControl sx={{ minWidth: "200px" }}>
                 <Select
+                  aria-label="Select Country"
                   value={country || "Afghanistan"}
                   onChange={handleChange}
                   displayEmpty
@@ -245,17 +250,24 @@ export default function MainComponent({
                   }}
                 >
                   {countries.map((countryName) => (
-                    <MenuItem key={countryName} value={countryName}>
+                    <MenuItem
+                      key={countryName}
+                      value={countryName}
+                      style={{
+                        padding: 0, // Remove padding from the MenuItem to rely on the Link for full control
+                      }}
+                    >
                       <Link
                         aria-label={`Network Band: ${countryName}`}
                         href={`/network-bands/${formatForUrl(countryName)}`}
                         style={{
                           display: "inline-block", // Allow padding and dimensions
                           width: "100%", // Ensure it takes up the full width
-                          minHeight: "44px", // Ensure minimum touch target height
-                          padding: "17px 12px", // Add padding for larger touch area
+                          minHeight: "48px", // Ensure minimum touch target height (48px for better touch)
+                          padding: "16px 12px", // Add padding for larger touch area
                           textDecoration: "none", // Ensure the link style remains clean
                           color: "inherit", // Maintain text color
+                          boxSizing: "border-box", // Ensures padding is counted within the width and height
                         }}
                       >
                         {countryName}
