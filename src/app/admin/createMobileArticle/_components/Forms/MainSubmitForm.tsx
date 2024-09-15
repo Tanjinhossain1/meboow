@@ -346,17 +346,19 @@ export default function MainSubmitForm({
 
     // Dynamically fill the next fields with the words
     words.forEach((word, i) => {
-      if (i === 0) return; // Skip the first word (handled above)
+      // if (i === 0) return; // Skip the first word (handled above)
       
       // If more fields are needed, append them
-      if (index + i >= tagFields.length) {
+      if (i + 1 >= tagFields.length) {
         tagAppend({ name: "" });
       }
 
       // Set the value for the following fields
-      methods.setValue(`tags.${index + i}.name`, word);
+      methods.setValue(`tags.${i + 1}.name`, word);
     });
   };
+  
+  
 
   return (
     <Fragment>
