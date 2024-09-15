@@ -15,12 +15,6 @@ import {
   TextField,
   Box,
   IconButton,
-  FormControl,
-  InputLabel,
-  FilledInput,
-  InputAdornment,
-  MenuItem,
-  Autocomplete,
   Paper,
 } from "@mui/material";
 import { BrandTypes } from "@/types/category";
@@ -33,10 +27,7 @@ import { AddCircle, RemoveCircle } from "@mui/icons-material";
 import { MobileArticleType } from "@/types/mobiles";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
 import ExpertView from "./ExpertView";
-import EditorForCreateArticle from "./EditorForSpecification/EditorForSpecification";
 import DevicesDetails from "./DevicesDetails";
-import { RecentArticleDataType } from "@/types/RecentArticle";
-import BackdropProviderContext from "@/Component/BackdropProvider";
 import DekstopAndMobileViewContext from "@/Component/BackdropProviderChecker";
 
 export default function MainSubmitForm({
@@ -51,16 +42,11 @@ export default function MainSubmitForm({
   };
   user?: any;
 }) {
-  const [value, setValue] = useState("");
 
   const [gradient, setGradient] = useState(
     isEdit?.isEdit && isEdit?.mobileArticles[0]
       ? isEdit?.mobileArticles[0]?.top_background_color
-      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, RGB(168, 10, 10) 100%)"
-  );
-
-  const { desktopView } = useContext(
-    DekstopAndMobileViewContext
+      : "linear-gradient(90deg, rgba(253,253,253,1) 0%, rgba(79,133,218,0.01) 21%, rgba(123,79,218,0.77) 51%, rgba(103,4,201,0.71) 61%, rgba(114,4,201,0.84) 66%, RGBA(126, 4, 201, 0.85) 75%, rgba(114,4,201,0.85) 82%, rgba(153,4,223,1) 100%)"
   );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [imageError, setImageError] = useState<boolean>(false);
@@ -350,6 +336,28 @@ export default function MainSubmitForm({
       tagA({ name: "" });
     }
   };
+  const handlePaste = (e: React.ClipboardEvent, index: number) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData.getData("text");
+    const words = pasteData.split(/\s+/); // Split by spaces
+
+    // Set the first field with the full pasted value
+    methods.setValue(`tags.${index}.name`, pasteData);
+
+    // Dynamically fill the next fields with the words
+    words.forEach((word, i) => {
+      if (i === 0) return; // Skip the first word (handled above)
+      
+      // If more fields are needed, append them
+      if (index + i >= tagFields.length) {
+        tagAppend({ name: "" });
+      }
+
+      // Set the value for the following fields
+      methods.setValue(`tags.${index + i}.name`, word);
+    });
+  };
+
   return (
     <Fragment>
       <FormProvider {...methods}>
@@ -389,6 +397,7 @@ export default function MainSubmitForm({
                         size="small"
                         fullWidth
                         onKeyPress={(e) => handleKeyPress(e, tagAppend)}
+                        onPaste={(e) => handlePaste(e, index)}
                       />
                       {index > 0 && (
                         <IconButton

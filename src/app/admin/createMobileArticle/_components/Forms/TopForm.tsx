@@ -5,13 +5,10 @@ import {
   Backdrop,
   Button,
   CircularProgress,
-  Container,
   Dialog,
-  FilledInput,
   FormControl,
   Grid,
   IconButton,
-  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
@@ -27,8 +24,9 @@ import {
   DialogContentText,
   FormHelperText,
   Autocomplete,
+  Chip,
 } from "@mui/material";
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileUpload from "@/Component/Forms/UploadImage";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -40,6 +38,16 @@ import { MobileArticleType } from "@/types/mobiles";
 import ColorPickerComponent from "./ColorPickForTop";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import UploadMultipleImageField from "@/Component/Forms/MultipleUpload";
+
+import {
+  Dialog as UIDialog,
+  DialogContent as UIDialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle as UIDialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
 
 export default function TopForm({
   brandsData,
@@ -69,6 +77,17 @@ export default function TopForm({
   let debounceTimeout: NodeJS.Timeout;
   const [searchTerm, setSearchTerm] = useState("");
   const [options, setOptions] = useState<RecentArticleDataType[]>([]);
+
+  const [selectedMultipleUploadsBrand, setSelectedMultipleUploadsBrand] =
+    useState<string | null>(null);
+  // Access localStorage only after the component mounts
+  useEffect(() => {
+    const storedBrand = localStorage.getItem("selectedBrand");
+    if (storedBrand) {
+      setSelectedMultipleUploadsBrand(storedBrand);
+    }
+  }, []);
+
   const [finalValueSelectedArticle, setFinalValueSelectedArticle] =
     useState<RecentArticleDataType | null>(
       isEdit?.isEdit && isEdit?.mobileArticles[0]
@@ -153,7 +172,11 @@ export default function TopForm({
   };
 
   const [brands, setBrands] = React.useState(
-    isEdit?.isEdit ? isEdit?.mobileArticles[0].brands : ""
+    isEdit?.isEdit
+      ? isEdit?.mobileArticles[0].brands
+      : localStorage.getItem("selectedBrand")
+      ? localStorage.getItem("selectedBrand")
+      : ""
   );
   const [showSuccessText, setShowSuccessText] = useState<string>("");
   const [brandDialogOpen, setBrandDialogOpen] = React.useState(false);
@@ -193,6 +216,13 @@ export default function TopForm({
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (brands !== "" && brands) {
+      setValue("brands", brands);
+    } else {
+      setValue("brands", null);
+    }
+  }, [brands, setValue]);
   return (
     <div>
       <div style={{ width: "100%" }}>
@@ -201,10 +231,12 @@ export default function TopForm({
           sx={{ width: "100%", mx: "auto" }}
         >
           <div style={{ marginBottom: "20px" }} id="top">
-            <Button  
+            <Button
               onClick={() => {
-                if (window.confirm("Are you sure you want to back to Dashboard?")) {
-                  history.push("/admin")
+                if (
+                  window.confirm("Are you sure you want to back to Dashboard?")
+                ) {
+                  history.push("/admin");
                 }
               }}
               variant="contained"
@@ -245,6 +277,68 @@ export default function TopForm({
                 Delete
               </Button>
             ) : null}
+            {
+              isEdit?.isEdit ? null :
+            <UIDialog>
+              <DialogTrigger asChild>
+                <Button variant="contained" color="info" sx={{ mt: 1, ml: 2 }}>
+                  {selectedMultipleUploadsBrand &&
+                  selectedMultipleUploadsBrand !== ""
+                    ? "Remove Brand Or Change "
+                    : "Chose Brand For Multiple Uploads"}
+                </Button>
+              </DialogTrigger>
+              <UIDialogContent className="sm:max-w-[425px] ">
+                <DialogHeader>
+                  <UIDialogTitle>Share</UIDialogTitle>
+                  <DialogDescription className="text-2xl">
+                    Choose Brand For Multiple Uploads
+                  </DialogDescription>
+                </DialogHeader>
+                {selectedMultipleUploadsBrand &&
+                selectedMultipleUploadsBrand !== "" ? (
+                  <Chip
+                    onClick={() => {
+                      // Store the title in local storage
+                      localStorage.setItem("selectedBrand", "");
+                      setBrands("");
+                      setSelectedMultipleUploadsBrand(null);
+                      // window.location.reload();
+                    }}
+                    sx={{ bgColor: "white", color: "white" }}
+                    label={`Remove ${selectedMultipleUploadsBrand}`}
+                    clickable
+                    variant="outlined"
+                  />
+                ) : null}
+                <div className="grid grid-cols-4 gap-4 bg-white p-2">
+                  {brandsData.map((name, index) => {
+                    return (
+                      <DialogClose key={index} asChild>
+                        <Chip
+                          onClick={() => {
+                            if (name?.title) {
+                              // Store the title in local storage
+                              localStorage.setItem(
+                                "selectedBrand",
+                                name?.title
+                              );
+                              setSelectedMultipleUploadsBrand(name?.title);
+                              setBrands(name?.title);
+                            }
+                            // window.location.reload();
+                          }}
+                          label={name?.title}
+                          clickable
+                          variant="outlined"
+                        />
+                      </DialogClose>
+                    );
+                  })}
+                </div>
+              </UIDialogContent>
+            </UIDialog>
+            }
           </div>
           <Accordion
             expanded={expanded === "panel1"}
@@ -580,8 +674,7 @@ export default function TopForm({
                           })}
                           labelId="demo-simple-select-filled-label"
                           // id="demo-simple-select-filled"
-                          value={brands}
-                          defaultValue="dk"
+                          value={brands ? brands : ""}
                           error={!!errors?.brands}
                           name="brands"
                           onChange={handleBrandChange}

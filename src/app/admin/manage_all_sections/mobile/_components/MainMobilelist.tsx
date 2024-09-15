@@ -1,7 +1,6 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
-import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
@@ -15,13 +14,10 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function MainMobilesDetailList({
   mobile,
