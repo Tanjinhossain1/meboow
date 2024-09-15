@@ -1,11 +1,15 @@
-
-import Navbar from '@/Component/Shared/Navbar';
 import { fetchArticles, fetchGlossaryList } from '@/services/articleServices';
 import { Metadata, ResolvingMetadata } from 'next';
-import React from 'react'
-import Footer from '@/Component/HomePage/Footer';
-import MainComponent from './[route]/_components/MainComponent';
+import dynamic from 'next/dynamic';
+import React, { lazy } from 'react'
 
+
+const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
+const MainComponent = lazy(() => import("./[route]/_components/MainComponent"));
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"),{
+  suspense: true,
+  ssr:false,
+});
 
 export async function generateMetadata(
     { params }: { params: { route: string } },

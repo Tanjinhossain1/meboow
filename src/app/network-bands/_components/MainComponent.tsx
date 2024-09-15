@@ -113,8 +113,8 @@ export default function MainComponent({
             alt="Network coverage"
             fill
             sizes="(max-width: 600px) 100vw, (max-width: 960px) 75vw, 50vw"
-            quality={75}
-            loading="lazy"
+            quality={50}
+            priority
             style={{
               filter: "grayscale(100%)",
               objectFit: "cover",
@@ -161,7 +161,6 @@ export default function MainComponent({
           sm={7.8}
         >
           <Typography
-            variant="h1"
             sx={{
               fontSize: 24,
               fontWeight: 600,
@@ -220,7 +219,7 @@ export default function MainComponent({
                   Please select the country you are interested in:
                 </label>
               </Box>
-              <FormControl sx={{ minWidth: "200px" }}>
+              <FormControl aria-label="Select Country" sx={{ minWidth: "200px" }}>
                 <Select
                   aria-label="Select Country"
                   value={country || "Afghanistan"}

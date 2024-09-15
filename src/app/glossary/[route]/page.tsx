@@ -1,13 +1,18 @@
-import Navbar from "@/Component/Shared/Navbar";
+import { getAllArticles } from "@/lib/queries/services";
 import {
-  fetchArticles,
   fetchGlossary,
   fetchGlossaryList,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
-import React from "react";
-import MainComponent from "./_components/MainComponent";
-import Footer from "@/Component/HomePage/Footer";
+import dynamic from "next/dynamic";
+import React, { lazy } from "react";
+
+const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
+const MainComponent = lazy(() => import("./_components/MainComponent"));
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+  suspense: true,
+  ssr: false,
+});
 
 export async function generateMetadata(
   { params }: { params: { route: string } },
@@ -34,7 +39,7 @@ export async function generateMetadata(
       type: "website",
       images: [...previousImages],
     },
-    
+
     alternates: {
       canonical: `${process.env.NEXT_APP_CANONICAL_URL}/glossary/${params?.route}`,
     },
@@ -46,14 +51,15 @@ export default async function page({ params }: { params: { route: string } }) {
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-  const glossary = await fetchGlossary({ route: formatRoute });
-  const glossaryList = await fetchGlossaryList({ isList: true });
 
-  const MobilesArticles = await fetchArticles({
-    limit: "10",
-    category: "Mobiles",
-  });
-
+  const [MobilesArticles, glossaryList, glossary] = await Promise.all([
+    getAllArticles({
+      limits: "10",
+      category: "Mobiles",
+    }),
+    fetchGlossaryList({ isList: true }),
+    fetchGlossary({ route: formatRoute }),
+  ]);
   return (
     <>
       <link
@@ -64,7 +70,7 @@ export default async function page({ params }: { params: { route: string } }) {
       <Navbar />
       <MainComponent
         glossaryList={glossaryList.data}
-        latestArticles={MobilesArticles?.data}
+        latestArticles={MobilesArticles as any}
         glossary={glossary.data && glossary.data[0] ? glossary.data[0] : null}
       />
       <Footer />

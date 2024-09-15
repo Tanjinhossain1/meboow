@@ -1,5 +1,4 @@
 "use client";
-import PhoneFinder from "@/Component/Common/PhoneFinder";
 import {
   Box,
   Grid,
@@ -8,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import {
   GlossaryGroup,
   GlossaryType,
@@ -18,10 +17,11 @@ import {
   cleanText,
   formatForUrlWith_under_score,
 } from "@/utils/utils";
-import { useRouter } from "next/navigation";
-import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { SampleBrands } from "@/Component/HomePage/ContentBox";
+
+const PhoneFinder = lazy(() => import("@/Component/Common/PhoneFinder"));
+const MobileReviews = lazy(() => import("@/Component/HomePage/Component/MobileReviews"));
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -36,7 +36,6 @@ export default function MainComponent({
   glossaryList: GlossaryGroup[];
   latestArticles: RecentArticleDataType[];
 }) {
-  const router = useRouter();
   const isTocAdmin = useRef<boolean>(false);
 
   const [tableOfContents, setTableOfContents] = useState<string[]>([]);
@@ -45,7 +44,6 @@ export default function MainComponent({
     if (glossary) {
       glossary.content?.blocks?.forEach((block: any) => {
         if (block.type === "header") {
-          console.log("header of content ", block);
           const headerText = block?.data?.text;
           setTableOfContents((prev) => {
             // Check if header already exists
@@ -58,7 +56,7 @@ export default function MainComponent({
       });
     }
   }, [glossary]);
-  console.log("glossaryListglossaryList   ", glossaryList);
+
   return (
     <Paper className="md:max-w-[1000px] mx-auto">
       <Grid container>
@@ -80,13 +78,9 @@ export default function MainComponent({
           sx={{
             my: 1,
             ml: 1,
-            backgroundImage: "url(/network.jpeg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "grayscale(100%)", // Apply grayscale filter
-            position: "relative", // Ensure the text is positioned relative to the image
-            // border: "4px solid rgba(128, 128, 128, 0.8)", // Add gray border
-            // borderRadius: "8px", // Optional: add some border-radius for a smoother look
+            position: "relative", // Keep the container relative for text overlay
+            width: "100%",
+            height: "320px", // Set a fixed height for the container
             display: {
               xs: "none",
               sm: "block",
@@ -95,13 +89,29 @@ export default function MainComponent({
           xs={12}
           sm={7.8}
         >
+          {/* Using Next.js Image component for optimized image handling */}
+          <Image
+            src="/network.jpeg"
+            alt="Network coverage"
+            fill
+            sizes="(max-width: 600px) 100vw, (max-width: 960px) 75vw, 50vw"
+            quality={50}
+            priority
+            style={{
+              filter: "grayscale(100%)",
+              objectFit: "cover",
+              objectPosition: "center",
+            }} // Apply object-fit and object-position here
+          />
+
+          {/* Text content overlay */}
           <h1
             style={{
               position: "absolute",
-              bottom: "50px", // Position the text at the bottom
+              bottom: "50px",
               left: "10px",
-              color: "white", // Set text color to white
-              backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: add a semi-transparent background for better text readability
+              color: "white",
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
               padding: "5px 10px",
               borderRadius: "4px",
               fontSize: "30px",
@@ -111,45 +121,26 @@ export default function MainComponent({
               ? `${glossary?.display_name} - definition`
               : "Mobile terms glossary"}
           </h1>
-        </Grid>
+        </Grid> 
         <Grid
           sx={{
-            my: 1,
+            mt: 1,
             ml: 1,
-            mr: 1,
-            backgroundImage: "url(/network.jpeg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "grayscale(100%)", // Apply grayscale filter
-            position: "relative", // Ensure the text is positioned relative to the image
-            // border: "4px solid rgba(128, 128, 128, 0.8)", // Add gray border
-            // borderRadius: "8px", // Optional: add some border-radius for a smoother look
             display: {
               xs: "block",
               sm: "none",
             },
-            height: "200px",
           }}
           xs={12}
+          sm={7.8}
         >
-          <h1
-            style={{
-              // position: "absolute",
-              bottom: "50px", // Position the text at the bottom
-              left: "10px",
-              color: "white", // Set text color to white
-              backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: add a semi-transparent background for better text readability
-              padding: "5px 10px",
-              borderRadius: "4px",
-              fontSize: "30px",
-            }}
-          >
-            {glossary
+           <Typography sx={{fontSize:25,fontWeight:600 }}>
+              {glossary
               ? `${glossary?.display_name} - definition`
               : "Mobile terms glossary"}
-          </h1>
-        </Grid>
-
+              </Typography>
+        </Grid> 
+              
         <Grid
           sx={{
             my: 1,
@@ -168,7 +159,6 @@ export default function MainComponent({
             isText
             mobilesArticles={latestArticles}
           />
-          {/* <LatestDevices mobiles={latestDeviceMobiles} /> */}
         </Grid>
         <Grid
           sx={{
@@ -440,9 +430,9 @@ export default function MainComponent({
           <div className="space-y-6 mt-6">
             {glossaryList.map((group) => (
               <div key={group.type}>
-                <h2 className="font-bold text-xl mb-4 border-l-8 border-[#17819f] pl-1 border-b border-b-gray-300">
+                <p className="font-bold text-xl mb-4 border-l-8 border-[#17819f] pl-1 border-b border-b-gray-300">
                   {group.type}
-                </h2>
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {group.data.map((item, index) => {
                     return (
