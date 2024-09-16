@@ -51,7 +51,7 @@ export default function DesktopViewToggle() {
 
   useEffect(() => {
     // This effect will run on every route change because `pathname` changes
-    const savedView = localStorage.getItem("desktopView");
+    const savedView = localStorage?.getItem("desktopView");
     if (savedView === "true") {
         setDesktopView(true)
     } else {

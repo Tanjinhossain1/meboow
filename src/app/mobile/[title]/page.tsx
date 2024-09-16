@@ -1,6 +1,4 @@
-import React, { Fragment } from "react";
-import Navbar from "@/Component/Shared/Navbar";
-import Footer from "@/Component/HomePage/Footer";
+import React, { Fragment, lazy } from "react";
 import {
   fetchArticles,
   fetchMobileArticleDetails,
@@ -8,9 +6,13 @@ import {
   fetchMobileOpinions,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
-import MainMobileDetails from "./_components/MainMobileDetails";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
+
+
+const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
+const Footer = lazy(() => import("@/Component/HomePage/Footer"));
+const MainMobileDetails = lazy(() => import("./_components/MainMobileDetails"));
 
 export async function generateMetadata(
   { params }: { params: { title: string } },
@@ -89,14 +91,12 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     page: "1",
     limit: "10",
   });
-  console.log(" this is the data mobile   ", mobileArticles);
 
   const AllMobilesOpinion = await fetchMobileOpinions({
     mobileId: `${mobileArticles.data[0]?.id}`,
   });
 
   const session = await getServerSession(authConfig);
-  console.log("this is the user  in app/page", session);
   const user = session?.user;
   return (
     <Fragment>

@@ -104,19 +104,10 @@ export default function MainSubmitForm({
     name: "tags",
   });
 
-  const {
-    fields: custom_fields,
-    append: custom_field_append,
-    remove: custom_field_remove,
-  } = useFieldArray({
-    control: methods.control,
-    name: "custom_specification_fields",
-  });
-
   const fileUploadRef = useRef<string[]>([]);
   const displayFileUploadRef = useRef<string | null>(null);
 
-  const { handleSubmit, register } = methods;
+  const { handleSubmit } = methods;
 
   const handleBackdropClose = () => {
     setOpenBackDrop(false);

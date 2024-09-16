@@ -30,6 +30,34 @@ import { useContext, useEffect, useState } from "react";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import axios from "axios";
 import { formatForUrl } from "@/utils/utils";
+import TripOriginIcon from '@mui/icons-material/TripOrigin';
+
+const formatBatterySpecification = (spec: string) => {
+  // Extract the mAh value (e.g., 4355mAh)
+  const batteryMatch = spec.match(/(\d+mAh)/);
+
+  // Extract the W values (e.g., 20W, 30W)
+  const wattageMatches = spec.match(/(\d+W)/g);
+
+  return (
+    <>
+      {/* Render the mAh value */}
+      {batteryMatch && (
+        <Typography variant="body1" className="font-bold">
+          {batteryMatch[0]}
+        </Typography>
+      )}
+
+      {/* Render each W value */}
+      {wattageMatches &&
+        wattageMatches.map((watt, index) => (
+          <span key={index}  style={{fontSize:"12px",marginLeft:index === 1 ? "4px":"" }} >
+          <TripOriginIcon sx={{fontSize:11,color:"white"}} />{watt}
+          </span>
+        ))}
+    </>
+  );
+};
 
 const transformStringToTypography = (inputString: string) => {
   // Split the string into value and description based on the first space
@@ -579,7 +607,7 @@ const IphoneCard = ({
                 xs={2.5}
               >
                 <BatteryChargingFullIcon sx={{ fontSize: 30, mb: 1 }} />
-                {transformStringToTypography(
+                {formatBatterySpecification(
                   mobileDetail.key_specifications?.battery
                 )}
               </Grid>

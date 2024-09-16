@@ -32,7 +32,7 @@ export const DekstopAndMobileViewComponent = ({
   );
   useEffect(() => {
     // Check localStorage only after the component has mounted
-    const savedDesktopView = localStorage.getItem("desktopView") === "true";
+    const savedDesktopView = localStorage?.getItem("desktopView") === "true";
     setDesktopView(savedDesktopView);
   }, []);
   const toggleDesktopView = () => {

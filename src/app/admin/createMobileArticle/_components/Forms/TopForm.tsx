@@ -26,7 +26,7 @@ import {
   Autocomplete,
   Chip,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FileUpload from "@/Component/Forms/UploadImage";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -48,6 +48,11 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
+import {
+  FirstTopFormList,
+  FirstTopFormListType,
+  LastTopFormList,
+} from "./FormList";
 
 export default function TopForm({
   brandsData,
@@ -80,9 +85,86 @@ export default function TopForm({
 
   const [selectedMultipleUploadsBrand, setSelectedMultipleUploadsBrand] =
     useState<string | null>(null);
+
+  // Create refs for all fields
+  const inputRefsTopFields = useRef<(HTMLInputElement | null)[]>([]);
+  const inputRefsBottomFields = useRef<(HTMLInputElement | null)[]>([]);
+
+  // Focus the first field when the page renders
+  useEffect(() => {
+    setTimeout(() => {
+      if (inputRefsTopFields.current[0]) {
+        inputRefsTopFields.current[0].focus();
+      }
+    }, 100); // Slight delay for rendering
+  }, [inputRefsTopFields]);
+
+  const handleTopKeyPress = (
+    e: any,
+    index: number,
+    selectedRef: any,
+    variant: "top_field" | "bottom_field"
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (variant === "top_field" && index === 2) {
+        inputRefsBottomFields.current?.[0]?.focus();
+      } else {
+        selectedRef.current?.[index + 1]?.focus();
+      }
+    }
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      if (variant === "top_field" && index === 2) {
+        inputRefsBottomFields.current?.[0]?.focus();
+      } else {
+        selectedRef.current?.[index + 1]?.focus();
+      }
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      if (variant === "bottom_field" && index === 0) {
+        inputRefsTopFields.current?.[2]?.focus();
+      } else {
+        selectedRef.current?.[index - 1]?.focus();
+      }
+    }
+  };
+
+  const handlePaste = (
+    e: React.ClipboardEvent<HTMLInputElement>,
+    index: number,
+    selectedRef: any,
+ variant: "top_field" | "bottom_field"
+  ) => {
+    e.preventDefault(); // Prevent the default paste behavior
+    const pasteText = e.clipboardData.getData("text"); // Get the pasted text
+
+    // Insert the pasted text in the current field
+    const currentInput = selectedRef.current[index];
+    if (currentInput) {
+      const currentValue = currentInput.value;
+      const cursorPosition = currentInput.selectionStart || 0;
+      const newValue =
+        currentValue.slice(0, cursorPosition) +
+        pasteText +
+        currentValue.slice(cursorPosition);
+
+      currentInput.value = newValue; // Update the current input value
+    }
+
+    // Move focus to the next field after a delay
+    setTimeout(() => {
+      if(variant === "top_field" && index === 2){
+        inputRefsBottomFields.current?.[0]?.focus();
+      }else if (selectedRef.current[index + 1]) {
+        selectedRef.current?.[index + 1]?.focus();
+      }
+    }, 0); // Ensure that the value is updated before focus shift
+  };
+
   // Access localStorage only after the component mounts
   useEffect(() => {
-    const storedBrand = localStorage.getItem("selectedBrand");
+    const storedBrand = localStorage?.getItem("selectedBrand");
     if (storedBrand) {
       setSelectedMultipleUploadsBrand(storedBrand);
     }
@@ -174,8 +256,8 @@ export default function TopForm({
   const [brands, setBrands] = React.useState(
     isEdit?.isEdit
       ? isEdit?.mobileArticles[0].brands
-      : localStorage.getItem("selectedBrand")
-      ? localStorage.getItem("selectedBrand")
+      : localStorage?.getItem("selectedBrand")
+      ? localStorage?.getItem("selectedBrand")
       : ""
   );
   const [showSuccessText, setShowSuccessText] = useState<string>("");
@@ -223,6 +305,7 @@ export default function TopForm({
       setValue("brands", null);
     }
   }, [brands, setValue]);
+
   return (
     <div>
       <div style={{ width: "100%" }}>
@@ -277,68 +360,71 @@ export default function TopForm({
                 Delete
               </Button>
             ) : null}
-            {
-              isEdit?.isEdit ? null :
-            <UIDialog>
-              <DialogTrigger asChild>
-                <Button variant="contained" color="info" sx={{ mt: 1, ml: 2 }}>
+            {isEdit?.isEdit ? null : (
+              <UIDialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="contained"
+                    color="info"
+                    sx={{ mt: 1, ml: 2 }}
+                  >
+                    {selectedMultipleUploadsBrand &&
+                    selectedMultipleUploadsBrand !== ""
+                      ? "Remove Brand Or Change "
+                      : "Chose Brand For Multiple Uploads"}
+                  </Button>
+                </DialogTrigger>
+                <UIDialogContent className="sm:max-w-[425px] ">
+                  <DialogHeader>
+                    <UIDialogTitle>Share</UIDialogTitle>
+                    <DialogDescription className="text-2xl">
+                      Choose Brand For Multiple Uploads
+                    </DialogDescription>
+                  </DialogHeader>
                   {selectedMultipleUploadsBrand &&
-                  selectedMultipleUploadsBrand !== ""
-                    ? "Remove Brand Or Change "
-                    : "Chose Brand For Multiple Uploads"}
-                </Button>
-              </DialogTrigger>
-              <UIDialogContent className="sm:max-w-[425px] ">
-                <DialogHeader>
-                  <UIDialogTitle>Share</UIDialogTitle>
-                  <DialogDescription className="text-2xl">
-                    Choose Brand For Multiple Uploads
-                  </DialogDescription>
-                </DialogHeader>
-                {selectedMultipleUploadsBrand &&
-                selectedMultipleUploadsBrand !== "" ? (
-                  <Chip
-                    onClick={() => {
-                      // Store the title in local storage
-                      localStorage.setItem("selectedBrand", "");
-                      setBrands("");
-                      setSelectedMultipleUploadsBrand(null);
-                      // window.location.reload();
-                    }}
-                    sx={{ bgColor: "white", color: "white" }}
-                    label={`Remove ${selectedMultipleUploadsBrand}`}
-                    clickable
-                    variant="outlined"
-                  />
-                ) : null}
-                <div className="grid grid-cols-4 gap-4 bg-white p-2">
-                  {brandsData.map((name, index) => {
-                    return (
-                      <DialogClose key={index} asChild>
-                        <Chip
-                          onClick={() => {
-                            if (name?.title) {
-                              // Store the title in local storage
-                              localStorage.setItem(
-                                "selectedBrand",
-                                name?.title
-                              );
-                              setSelectedMultipleUploadsBrand(name?.title);
-                              setBrands(name?.title);
-                            }
-                            // window.location.reload();
-                          }}
-                          label={name?.title}
-                          clickable
-                          variant="outlined"
-                        />
-                      </DialogClose>
-                    );
-                  })}
-                </div>
-              </UIDialogContent>
-            </UIDialog>
-            }
+                  selectedMultipleUploadsBrand !== "" ? (
+                    <Chip
+                      onClick={() => {
+                        // Store the title in local storage
+                        localStorage.setItem("selectedBrand", "");
+                        setBrands("");
+                        setSelectedMultipleUploadsBrand(null);
+                        // window.location.reload();
+                      }}
+                      sx={{ bgColor: "white", color: "white" }}
+                      label={`Remove ${selectedMultipleUploadsBrand}`}
+                      clickable
+                      variant="outlined"
+                    />
+                  ) : null}
+                  <div className="grid grid-cols-4 gap-4 bg-white p-2">
+                    {brandsData.map((name, index) => {
+                      return (
+                        <DialogClose key={index} asChild>
+                          <Chip
+                            onClick={() => {
+                              if (name?.title) {
+                                // Store the title in local storage
+                                localStorage.setItem(
+                                  "selectedBrand",
+                                  name?.title
+                                );
+                                setSelectedMultipleUploadsBrand(name?.title);
+                                setBrands(name?.title);
+                              }
+                              // window.location.reload();
+                            }}
+                            label={name?.title}
+                            clickable
+                            variant="outlined"
+                          />
+                        </DialogClose>
+                      );
+                    })}
+                  </div>
+                </UIDialogContent>
+              </UIDialog>
+            )}
           </div>
           <Accordion
             expanded={expanded === "panel1"}
@@ -356,7 +442,64 @@ export default function TopForm({
               <Grid xs={9.8}>
                 <AccordionDetails>
                   <Grid gap={1} container>
-                    <Grid xs={3.5}>
+                    {FirstTopFormList.map(
+                      (list: FirstTopFormListType, index: number) => {
+                        return (
+                          <Grid key={index} xs={list.gridXs}>
+                            {/* <FormControl sx={{ width: "100%" }}> */}
+                            <TextField
+                              sx={{
+                                backgroundColor: "#ffffff", // Default background color (white)
+                                color: "#000000", // Default text color (black)
+                                "& .MuiOutlinedInput-root": {
+                                  "& input": {
+                                    color: "#000000", // Text color inside the input
+                                  },
+                                },
+                                "&.Mui-focused fieldset": {
+                                  borderColor: "transparent", // Border color when focused
+                                  border: "none",
+                                },
+                                "&:focus": {
+                                  backgroundColor: "#fffbc7", // Light yellow background color when focused
+                                },
+                                "& .MuiInputBase-root.Mui-focused": {
+                                  backgroundColor: "#fffbc7", // Light yellow background color when focused
+                                },
+                                "& .MuiInputBase-root input": {
+                                  color: "#000000", // Text color when focused
+                                },
+                              }}
+                              size="small"
+                              {...register(list.name, {
+                                required: `${list.placeholder} is Required`,
+                              })}
+                              className="focus:bg-red-500"
+                              name={list.name}
+                              id="filled-adornment-amount"
+                              placeholder={list.placeholder}
+                              error={!!errors[list.name]}
+                              helperText={errors[list.name]?.message as string}
+                              onKeyDown={(e) =>
+                                handleTopKeyPress(e, index, inputRefsTopFields,"top_field")
+                              }
+                              inputRef={(el) =>
+                                (inputRefsTopFields.current[index] = el)
+                              } // Assign refs to each field
+                              onPaste={(e) =>
+                                handlePaste(
+                                  e as React.ClipboardEvent<HTMLInputElement>,
+                                  index,
+                                  inputRefsTopFields,"top_field"
+                                )
+                              } // Correctly typing the paste event
+                            />
+                            {/* </FormControl> */}
+                          </Grid>
+                        );
+                      }
+                    )}
+                    {/* <Grid xs={3.5}>
                       <FormControl
                         sx={{ width: "100%" }}
                         // variant="filled"
@@ -373,8 +516,8 @@ export default function TopForm({
                           helperText={errors.title?.message as string}
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={3}>
+                    </Grid> */}
+                    {/* <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -388,8 +531,9 @@ export default function TopForm({
                           helperText={errors.market_status?.message as string}
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={3}>
+                    </Grid> */}
+
+                    {/* <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -403,7 +547,7 @@ export default function TopForm({
                           helperText={errors.release_date?.message as string}
                         />
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
                     <Grid xs={2}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <FormControl variant="outlined">
@@ -463,8 +607,76 @@ export default function TopForm({
                         name="displayImage"
                       />
                     </Grid>
-
-                    <Grid xs={3}>
+                    {LastTopFormList.map(
+                      (list: FirstTopFormListType, index: number) => {
+                        return (
+                          <Grid key={index} xs={list.gridXs}>
+                            {/* <FormControl sx={{ width: "100%" }}> */}
+                            <TextField
+                              sx={{
+                                backgroundColor: "#ffffff", // Default background color (white)
+                                color: "#000000", // Default text color (black)
+                                "& .MuiOutlinedInput-root": {
+                                  "& input": {
+                                    color: "#000000", // Text color inside the input
+                                  },
+                                },
+                                "&.Mui-focused fieldset": {
+                                  borderColor: "transparent", // Border color when focused
+                                  border: "none",
+                                },
+                                "&:focus": {
+                                  backgroundColor: "#fffbc7", // Light yellow background color when focused
+                                },
+                                "& .MuiInputBase-root.Mui-focused": {
+                                  backgroundColor: "#fffbc7", // Light yellow background color when focused
+                                },
+                                "& .MuiInputBase-root input": {
+                                  color: "#000000", // Text color when focused
+                                },
+                              }}
+                              size="small"
+                              {...register(`key_specifications.${list.name}`, {
+                                required: `${list.placeholder} is Required`,
+                              })}
+                              className="focus:bg-red-500"
+                              name={`key_specifications.${list.name}`}
+                              id="filled-adornment-amount"
+                              placeholder={list.placeholder}
+                              error={
+                                !!(errors?.key_specifications as any)?.[
+                                  list.name
+                                ]
+                              }
+                              helperText={
+                                (errors?.key_specifications as any)?.[list.name]
+                                  ?.message as string
+                              }
+                              onKeyDown={(e) =>
+                                handleTopKeyPress(
+                                  e,
+                                  index,
+                                  inputRefsBottomFields,
+                                  "bottom_field"
+                                )
+                              }
+                              inputRef={(el) =>
+                                (inputRefsBottomFields.current[index] = el)
+                              } // Assign refs to each field
+                              onPaste={(e) =>
+                                handlePaste(
+                                  e as React.ClipboardEvent<HTMLInputElement>,
+                                  index,
+                                  inputRefsBottomFields,"bottom_field"
+                                )
+                              } // Correctly typing the paste event
+                            />
+                            {/* </FormControl> */}
+                          </Grid>
+                        );
+                      }
+                    )}
+                    {/* <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -483,8 +695,9 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={3}>
+                    </Grid> */}
+
+                    {/* <Grid xs={3}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -501,8 +714,8 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={3.5}>
+                    </Grid> */}
+                    {/* <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -521,8 +734,9 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={3.5}>
+                    </Grid> */}
+
+                    {/* <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -539,7 +753,8 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
+                    {/*                      
                     <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
@@ -557,8 +772,9 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid xs={4}>
+                    </Grid> */}
+
+                    {/* <Grid xs={4}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -577,9 +793,9 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid xs={3.5}>
+                    {/* <Grid xs={3.5}>
                       <FormControl sx={{ width: "100%" }} variant="filled">
                         <TextField
                           size="small"
@@ -596,7 +812,7 @@ export default function TopForm({
                           }
                         />
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
                     <Grid xs={4}>
                       <Autocomplete
                         {...register("selected_articles")}
