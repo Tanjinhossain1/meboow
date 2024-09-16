@@ -29,7 +29,21 @@ export function formatDate(isoDateString: string | Date) {
   // Format the date as "25 JUNE 2024"
   return format(date, 'dd MMMM yyyy').toUpperCase();
 }
+ 
 
+export function formatDateWithTime(isoDateString: string | Date) {
+  // Parse the ISO date string into a Date object
+  const date = new Date(isoDateString);
+  if (isNaN(date.getTime())) {
+    console.error("Invalid Date value:", isoDateString); // Log invalid date
+    return "Invalid Date";
+  }
+
+  // Format the date as "25 JUNE 04:30 PM"
+  // 'dd MMMM' formats day and month
+  // 'hh:mm a' formats 12-hour time with AM/PM
+  return format(date, 'dd MMMM hh:mm a').toUpperCase();
+}
 
 
 export const truncateText = (text: string, maxLength: number) => {

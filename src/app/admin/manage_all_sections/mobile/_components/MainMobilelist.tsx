@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
-import { formatDate, formatForUrl } from "@/utils/utils";
+import { formatDateWithTime, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
@@ -81,7 +81,7 @@ export default function MainMobilesDetailList({
       headerName: "Create Date",
       renderCell: (params: any) => (
         <Typography alignItems={"center"} sx={{ mt: 2 }}>
-          {formatDate(params?.row?.createdAt)}
+          {formatDateWithTime(params?.row?.createdAt)}
         </Typography>
       ),
       width: 200,
