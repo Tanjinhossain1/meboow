@@ -1,7 +1,8 @@
 "use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate, formatForUrl } from "@/utils/utils";
-import { Grid, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import React from "react";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -101,9 +102,14 @@ export default function DisplayArticleComponent({
               fontSize: "16px",
               textAlign: "center",
               cursor: "pointer",
-            }} 
+            }}
           >
-            <Link aria-label="Edit Not Icon" href={`/admin/article/edit/${data.id}`}><EditNoteIcon /></Link>
+            <Link
+              aria-label="Edit Not Icon"
+              href={`/admin/article/edit/${data.id}`}
+            >
+              <EditNoteIcon />
+            </Link>
           </Typography>
         ) : null}
       </Grid>

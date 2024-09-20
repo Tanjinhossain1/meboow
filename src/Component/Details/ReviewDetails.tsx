@@ -66,7 +66,7 @@ export default function DetailsReviewComponent({
 }) {
   const history = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  console.log('review details   ',articleDetail)
   const { desktopView } = useContext(DekstopAndMobileViewContext);
 
   const handleHoverOpen = (event: React.MouseEvent<HTMLElement>) => {

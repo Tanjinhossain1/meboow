@@ -59,6 +59,7 @@ export async function fetchArticles({
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&searchTerm=${search}`;
   } else if (showInNews) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&showInNews=${showInNews}`;
+    console.log(`here is come  ${url}`)
   } else if (latestDevice) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?latestDevice=${latestDevice}&all=all`;
   } else if (brands) {

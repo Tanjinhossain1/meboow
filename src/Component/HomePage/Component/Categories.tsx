@@ -1,5 +1,8 @@
 import { CategoryTypes } from "@/types/category";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

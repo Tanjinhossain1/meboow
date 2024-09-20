@@ -1,16 +1,21 @@
 "use client";
-import React, { useState } from "react";
-import { Typography, IconButton, Card, Grid } from "@mui/material";
+import React, { lazy, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { MobileArticleType } from "@/types/mobiles";
-import MemoryIcon from "@mui/icons-material/Memory";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
 import { formatForUrl } from "@/utils/utils";
+
+
+const MemoryIcon = lazy(() => import("@mui/icons-material/Memory"));
 
 export default function CommonMobileSlider({
   articles,
@@ -45,7 +50,7 @@ export default function CommonMobileSlider({
   return (
     <div className="flex justify-center items-center   w-full ">
       <IconButton
-      aria-label="Arrow Back Ios Icon"
+        aria-label="Arrow Back Ios Icon"
         className="mr-[-27px]"
         onClick={handlePrev}
         disabled={index === 0}
@@ -84,7 +89,10 @@ export default function CommonMobileSlider({
                       }}
                       xs={3}
                     >
-                      <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
+                      <Link
+                        aria-label={`Mobile ${formatForUrl(data?.title)}`}
+                        href={`/mobile/${formatForUrl(data?.title)}`}
+                      >
                         <Image
                           style={{
                             width: "220px", // Ensure the image takes the full width of the card
@@ -94,18 +102,17 @@ export default function CommonMobileSlider({
                           objectFit={"cover"}
                           alt={data.title}
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
-                           
                           width={50}
                           height={50}
                           loading="lazy"
                         />
                       </Link>
                     </Grid>
-                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
-                      <Grid
-                        item
-                        sx={{ width: "100%", mt: 2, height: "25px" }}
-                      >
+                    <Link
+                      aria-label={`Mobile ${formatForUrl(data?.title)}`}
+                      href={`/mobile/${formatForUrl(data?.title)}`}
+                    >
+                      <Grid item sx={{ width: "100%", mt: 2, height: "25px" }}>
                         <Typography
                           sx={{
                             color: "#364473",
@@ -118,12 +125,11 @@ export default function CommonMobileSlider({
                         </Typography>
                       </Grid>
                     </Link>
-                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
-                      <Grid
-                        textAlign={"left"}
-                        item
-                        sx={{ width: "100%" }}
-                      >
+                    <Link
+                      aria-label={`Mobile ${formatForUrl(data?.title)}`}
+                      href={`/mobile/${formatForUrl(data?.title)}`}
+                    >
+                      <Grid textAlign={"left"} item sx={{ width: "100%" }}>
                         <Typography
                           sx={{
                             color: "#45517a",
@@ -139,17 +145,20 @@ export default function CommonMobileSlider({
                           }}
                         >
                           <MemoryIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
-                          {data?.key_specifications.ram_chipset}
+                          {data?.key_specifications.ram_chipset ? (
+                            <span>{data.key_specifications.ram_chipset}</span>
+                          ) : (
+                            <span style={{ color: "gray" }}>****</span> // or any placeholder text
+                          )}
                         </Typography>
                       </Grid>
                     </Link>
 
-                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
-                      <Grid
-                        item
-                        textAlign={"left"}
-                        sx={{ width: "100%" }}
-                      >
+                    <Link
+                      aria-label={`Mobile ${formatForUrl(data?.title)}`}
+                      href={`/mobile/${formatForUrl(data?.title)}`}
+                    >
+                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
                         <Typography
                           sx={{
                             color: "#45517a",
@@ -169,12 +178,11 @@ export default function CommonMobileSlider({
                         </Typography>
                       </Grid>
                     </Link>
-                    <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
-                      <Grid
-                        item
-                        textAlign={"left"}
-                        sx={{ width: "100%" }}
-                      >
+                    <Link
+                      aria-label={`Mobile ${formatForUrl(data?.title)}`}
+                      href={`/mobile/${formatForUrl(data?.title)}`}
+                    >
+                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
                         <Typography
                           sx={{
                             color: "#45517a",
@@ -203,15 +211,18 @@ export default function CommonMobileSlider({
                           ? {
                               display: "flex",
                               justifyContent: "space-around",
-                              width: "100%"
+                              width: "100%",
                             }
                           : {
-                              width: "100%"
+                              width: "100%",
                             }
                       }
                     >
                       {data?.prices[0].start_from ? (
-                        <Link aria-label={`Mobile ${formatForUrl(data?.title)}`} href={`/mobile/${formatForUrl(data?.title)}`}>
+                        <Link
+                          aria-label={`Mobile ${formatForUrl(data?.title)}`}
+                          href={`/mobile/${formatForUrl(data?.title)}`}
+                        >
                           <Typography
                             sx={{
                               color: "#055491",
@@ -226,7 +237,10 @@ export default function CommonMobileSlider({
                       ) : null}
 
                       {user?.role === "admin" || user?.role === "sub_admin" ? (
-                        <Link aria-label={`Admin Mobile ${data?.id}`} href={`/admin/mobile/edit/${data.id}`}>
+                        <Link
+                          aria-label={`Admin Mobile ${data?.id}`}
+                          href={`/admin/mobile/edit/${data.id}`}
+                        >
                           <Typography
                             sx={{
                               color: "#055491",
@@ -247,7 +261,11 @@ export default function CommonMobileSlider({
             })}
         </div>
       </div>
-      <IconButton aria-label="Arrow Forward Ios Icon" onClick={handleNext} disabled={index >= articles?.length - 3}>
+      <IconButton
+        aria-label="Arrow Forward Ios Icon"
+        onClick={handleNext}
+        disabled={index >= articles?.length - 3}
+      >
         <ArrowForwardIosIcon className="h-6 w-6" />
       </IconButton>
     </div>

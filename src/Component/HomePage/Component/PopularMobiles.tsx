@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import { Paper, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+
 import { MobileArticleType } from "@/types/mobiles";
 import CommonMobileSlider from "./CommonMobileSlider";
 

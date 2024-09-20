@@ -1,8 +1,16 @@
-import React, { Fragment } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import React, { Fragment, lazy } from 'react';
 import Link from 'next/link';
 import { MobileArticleType } from '@/types/mobiles';
 import { formatForUrl } from '@/utils/utils';
+
+const Table = lazy(() => import('@mui/material/Table'));
+const TableBody = lazy(() => import('@mui/material/TableBody'));
+const TableCell = lazy(() => import('@mui/material/TableCell'));
+const TableContainer = lazy(() => import('@mui/material/TableContainer'));
+const TableHead = lazy(() => import('@mui/material/TableHead'));
+const TableRow = lazy(() => import('@mui/material/TableRow'));
+const Typography = lazy(() => import('@mui/material/Typography'));
+
 
 const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dailyInterest:MobileArticleType[]}) => {
 

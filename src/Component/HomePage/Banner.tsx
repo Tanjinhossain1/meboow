@@ -1,20 +1,39 @@
-import React, { lazy } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import React from "react";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { MobileArticleType } from "@/types/mobiles";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { SampleBrands } from "./ContentBox";
 import { BrandTypes } from "@/types/category";
+import dynamic from "next/dynamic";
 
-const ContentBox = lazy(() => import("@/Component/HomePage/ContentBox"));
-const PhoneFinder = lazy(() => import("../Common/PhoneFinder"));
-const MobileReviews = lazy(() => import("./Component/MobileReviews"));
-const TopDevicesTable = lazy(() => import("./Component/TopDevicesTable"));
-const LatestDevices = lazy(() => import("./Component/LatestDevices"));
-const PopularMobiles = lazy(() => import("./Component/PopularMobiles"));
-const NewsAndReviews = lazy(() => import("./Component/NewsAndReviews"));
-const BrandDisplayComponent = lazy(() => import("./BrandDisplay"));
+const ContentBox = React.memo(
+  dynamic(() => import("@/Component/HomePage/ContentBox"), { ssr: false })
+);
+const PhoneFinder = React.memo(
+  dynamic(() => import("../Common/PhoneFinder"), { ssr: false })
+);
+const MobileReviews = React.memo(
+  dynamic(() => import("./Component/MobileReviews"), { ssr: false })
+);
+const TopDevicesTable = React.memo(
+  dynamic(() => import("./Component/TopDevicesTable"), { ssr: false })
+);
+const LatestDevices = React.memo(
+  dynamic(() => import("./Component/LatestDevices"), { ssr: false })
+);
+const PopularMobiles = React.memo(
+  dynamic(() => import("./Component/PopularMobiles"), { ssr: false })
+);
+const NewsAndReviews = React.memo(
+  dynamic(() => import("./Component/NewsAndReviews"), { ssr: false })
+);
+const BrandDisplayComponent = React.memo(
+  dynamic(() => import("./BrandDisplay"), { ssr: false })
+);
 
 export default async function Banner({
   articles,
@@ -104,7 +123,10 @@ export default async function Banner({
 
           <Grid sx={{ py: 4 }} container>
             <Grid
-              sx={{ borderRight: "1px solid lightgray", pr: 1 }}
+              sx={{ borderRight: "1px solid lightgray", pr: 1,display:{
+                xs:'none',
+                sm:'block'
+              } }}
               item
               xs={12}
               sm={6}

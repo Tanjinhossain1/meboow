@@ -5,6 +5,7 @@ import { IPaginationOptions, paginationHelpers } from '@/app/api/shared/helpers'
 import { getDb } from "@/drizzle/db";
 import { Articles } from "@/drizzle/schema";
 import { and, count, desc, eq, ilike, ne, or, sql } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
 
@@ -23,6 +24,7 @@ export async function POST(req: Request) {
     console.log(
         'connected to the db: get all articles ---> api/v1/article/all'
     )
+    revalidateTag('articles');
     // Perform the database insertion using Drizzle ORM
     const result = await db.insert(Articles).values({
         title,
@@ -59,9 +61,10 @@ export async function GET(req: NextRequest) {
         // sortBy: searchParams.get('sortBy') || 'createdAt',
         // sortOrder: searchParams.get('sortOrder') || 'asc',
     };
+    console.log('where conditions show in news with filters ', filters)
     // Perform the database query using Drizzle ORM
     const { data, meta } = await getAll(filters, options);
-    console.log('this is the server data of results   ', data, meta)
+    
     return NextResponse.json({
         statusCode: 200,
         success: true,
@@ -79,7 +82,7 @@ const getAll = async (
     const { limit, page, skip } = paginationHelpers.calculatePagination(options);
     const { searchTerm, category, latestDevice, all, brands, showInNews, best_reviews, is_related } = filters;
     const whereConditions = [];
-
+    console.log('where conditions show in news ', showInNews)
     if (category) {
         const searchConditions = likeInsensitive(Articles["category"], `%${category}%`)
 
@@ -117,7 +120,7 @@ const getAll = async (
 
     const db = await getDb();
     console.log(
-        'connected to the db: get all articles ---> api/v1/article/all'
+        'connected to the db: get all articles ---> api/v1/article/all',filters
     )
 
     const articles = all === "all" ? await db

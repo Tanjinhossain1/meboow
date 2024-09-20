@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import { Typography, Card, Grid } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import { MobileArticleType } from "@/types/mobiles";
 import MemoryIcon from "@mui/icons-material/Memory";

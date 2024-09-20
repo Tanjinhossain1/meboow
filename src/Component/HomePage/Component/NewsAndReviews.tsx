@@ -48,6 +48,7 @@ export default function NewsAndReviews({
     }
   }, []);
 
+  console.log('newsAndReviews ', mobilesArticles)
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
@@ -107,7 +108,7 @@ export default function NewsAndReviews({
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                          alt="Article Image"
+                          alt={`Article Image ${article.title}`}
                           layout="responsive"
                           width={10} // Aspect ratio: width
                           height={40} // Aspect ratio: height

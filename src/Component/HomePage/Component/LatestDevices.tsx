@@ -1,6 +1,7 @@
 import { MobileArticleType } from "@/types/mobiles";
 import { formatForUrl } from "@/utils/utils";
-import { Grid, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
@@ -8,18 +9,18 @@ import React, { Fragment } from "react";
 export default function LatestDevices({
   mobiles,
   isRelated,
-  name
+  name,
 }: {
   mobiles: MobileArticleType[];
-  isRelated?:boolean;
-  name?:string;
+  isRelated?: boolean;
+  name?: string;
 }) {
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 3, mb: 1 }}>
-      {isRelated ? `Popular From ${name} `: "Latest Devices"}  
+        {isRelated ? `Popular From ${name} ` : "Latest Devices"}
       </Typography>
-      <Grid sx={{mb:2}} container>
+      <Grid sx={{ mb: 2 }} container>
         {mobiles?.map((mobile: MobileArticleType) => {
           return (
             <Grid
@@ -35,7 +36,10 @@ export default function LatestDevices({
                 mt: 1,
               }}
             >
-              <Link aria-label={`Mobile ${formatForUrl(mobile?.title)}`} href={`/mobile/${formatForUrl(mobile?.title)}`}>
+              <Link
+                aria-label={`Mobile ${formatForUrl(mobile?.title)}`}
+                href={`/mobile/${formatForUrl(mobile?.title)}`}
+              >
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobile.display_image}`}
                   alt={mobile.title}
@@ -44,7 +48,10 @@ export default function LatestDevices({
                   loading="lazy" // lazy loading for reduce loading time
                 />
               </Link>
-              <Link aria-label={`Mobile ${formatForUrl(mobile?.title)}`} href={`/mobile/${formatForUrl(mobile?.title)}`}>
+              <Link
+                aria-label={`Mobile ${formatForUrl(mobile?.title)}`}
+                href={`/mobile/${formatForUrl(mobile?.title)}`}
+              >
                 <Typography
                   sx={{ fontSize: 11, mt: 1, ":hover": { color: "red" } }}
                 >

@@ -1,7 +1,7 @@
 "use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Grid, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import React, { Fragment, lazy } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Grid as SwiperGrid } from "swiper/modules";
 import Image from "next/image";
@@ -62,22 +62,26 @@ export default function MobileReviews({
               {isTrending ? (
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
-                  alt="Article Image"
+                  alt={`Article Image ${mobilesArticles[0]?.title}`}
                   layout="responsive"
                   width={10} // Aspect ratio: width
                   height={40} // Aspect ratio: height
                   className="object-cover"
                   loading="lazy" // lazy loading for reduce loading time
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+
                 />
               ) : (
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobilesArticles[0]?.image}`}
-                  alt="Article Image"
+                  alt={`Article Image ${mobilesArticles[0]?.title}`}
                   layout="responsive"
                   width={10} // Aspect ratio: width
                   height={40} // Aspect ratio: height
                   className="object-cover"
-                  priority={true} // Preload important images for SEO
+                            loading="lazy"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+
                 />
               )}
             </Link>
@@ -180,7 +184,8 @@ export default function MobileReviews({
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                      alt="Article Image"
+                      alt={`Article Image ${article.title}`}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       layout="responsive"
                       width={10} // Aspect ratio: width
                       height={40} // Aspect ratio: height
@@ -238,6 +243,17 @@ export default function MobileReviews({
           }}
           style={{ height: "220px", paddingTop: "30px" }}
           modules={[SwiperGrid, Pagination]}
+          breakpoints={{
+            // when window width is >= 320px (for mobile)
+            0: {
+              slidesPerView: 1,
+            },
+            // when window width is >= 768px (for tablets and larger devices)
+            768: {
+              slidesPerView: 2,
+            },
+          }}
+        
         >
           {mobilesArticles
             .slice(1, mobilesArticles.length)
@@ -266,12 +282,13 @@ export default function MobileReviews({
                         >
                           <Image
                             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                            alt="Article Image"
+                            alt={`Article Image ${article.title}`}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             layout="responsive"
                             width={10} // Aspect ratio: width
                             height={40} // Aspect ratio: height
                             className="object-cover"
-                            // priority={true} // Preload important images for SEO
+                            loading="lazy"
                           />
                         </Link>
                       </div>

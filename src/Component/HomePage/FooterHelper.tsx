@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
-import { Grid, Typography, Divider, Box, IconButton } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import {
-  Facebook as FacebookIcon,
-  LinkedIn as LinkedInIcon,
-  Twitter as TwitterIcon,
-  YouTube as YouTubeIcon,
-  Instagram as InstagramIcon,
-  WhatsApp as WhatsAppIcon,
-  Telegram as TelegramIcon,
-  Reddit as RedditIcon,
-} from "@mui/icons-material";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import RedditIcon from '@mui/icons-material/Reddit';
 import Image from "next/image";
 import { formatForUrl } from "@/utils/utils";
 import DesktopViewToggle from "@/components/DesktopViewToggle";
@@ -271,14 +272,15 @@ export default function FooterHelper({
                     <IconButton
                       aria-label="Facebook Icon"
                       component="a"
-                      href="#"
+                      target="_blank"
+                      href="https://www.facebook.com/profile.php?id=61562261948643"
                       sx={{ color: "white" }}
                     >
                       <FacebookIcon aria-label="Facebook" />
                     </IconButton>
                   </Grid>
 
-                  <Grid xs={3}>
+                  {/* <Grid xs={3}>
                     <IconButton
                       aria-label="Linked In Icon"
                       component="a"
@@ -287,13 +289,14 @@ export default function FooterHelper({
                     >
                       <LinkedInIcon aria-label="Link din" />
                     </IconButton>
-                  </Grid>
+                  </Grid> */}
 
                   <Grid xs={3}>
                     <IconButton
                       aria-label="Twitter Icon"
                       component="a"
-                      href="#"
+                      href="https://x.com/safarilist"
+                      target="_blank"
                       sx={{ color: "white" }}
                     >
                       <TwitterIcon aria-label="Twitter Icon" />
@@ -304,7 +307,8 @@ export default function FooterHelper({
                     <IconButton
                       aria-label="You Tube Icon"
                       component="a"
-                      href="#"
+                      href="https://youtube.com/@safarilist?si=7ZbK4JwsUgsAqKQH"
+                      target="_blank"
                       sx={{ color: "white" }}
                     >
                       <YouTubeIcon aria-label="You Tube Icon" />

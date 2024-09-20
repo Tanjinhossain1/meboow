@@ -1,6 +1,9 @@
 "use client";
 import { formatForUrl, truncateText } from "@/utils/utils";
-import { Box, styled, Typography } from "@mui/material";
+import styled from "@mui/system/styled";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -124,7 +127,8 @@ const ContentBox = ({
           alt={title}
           layout="fill"
           objectFit="contain"
-          priority={true} // Preload important images for SEO
+          priority={isBig} // Preload only if critical
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Ensure responsive loading
         />
       </Link>
     </Box>

@@ -1,28 +1,30 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
-import { lazy } from "react";
 import {
   getAllArticles,
+  getAllArticlesWithShowInNews,
   getAllBrands,
   getAllMobiles,
 } from "@/lib/queries/services";
+import dynamic from "next/dynamic";
+import { Fragment } from "react";
 
-const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
-const Banner = lazy(() => import("@/Component/HomePage/Banner"));
-// const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
-//   suspense: true,
-//   ssr: true, // or true, based on whether you want SSR support
-// });
-// const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
-//   suspense: true,
-//   ssr: true, // or true, based on whether you want SSR support
-// });
-// const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
-//   suspense: true,
-//   ssr: true,
-// });
-const Footer = lazy(() => import("@/Component/HomePage/Footer"));
+// const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
+// const Banner = lazy(() => import("@/Component/HomePage/Banner"));
+const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
+  suspense: true,
+  ssr: false, // or true, based on whether you want SSR support
+});
+const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
+  suspense: true,
+  ssr: false, // or true, based on whether you want SSR support
+});
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+  suspense: true,
+  ssr: false,
+});
+// const Footer = lazy(() => import("@/Component/HomePage/Footer"));
 
 interface HomePropsType {
   searchParams: {
@@ -86,7 +88,7 @@ async function Home({ searchParams }: HomePropsType) {
     getAllArticles({ pages: page, limits: limit }),
     getAllArticles({ pages: page, limits: limit, latestDevice: "latest" }),
     getAllArticles({ limits: "20", category: "Mobiles" }),
-    getAllArticles({ showInNews: "show", limits: "30" }),
+    getAllArticlesWithShowInNews({ limits: "30" }),
     // mobiles
     getAllMobiles({ limits: "30", brands: "Apple" }),
     getAllMobiles({ limits: "30", brands: "Google" }),
@@ -101,7 +103,7 @@ async function Home({ searchParams }: HomePropsType) {
 
   const user = session?.user;
   return (
-    <>
+    <Fragment>
       <link
         rel="canonical"
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
@@ -129,7 +131,7 @@ async function Home({ searchParams }: HomePropsType) {
 
       {/* <Suspense fallback={<p>loading...</p>}>
       </Suspense> */}
-    </>
+    </Fragment>
   );
 }
 export default Home;
