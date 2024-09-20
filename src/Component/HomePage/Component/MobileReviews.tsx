@@ -271,7 +271,7 @@ export default function MobileReviews({
                             width={10} // Aspect ratio: width
                             height={40} // Aspect ratio: height
                             className="object-cover"
-                            priority={true} // Preload important images for SEO
+                            // priority={true} // Preload important images for SEO
                           />
                         </Link>
                       </div>

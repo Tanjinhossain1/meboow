@@ -62,6 +62,9 @@ export default function TopForm({
   gradient,
   setGradient,
   user,
+  methods,
+  tagFields,
+  tagAppend,
 }: {
   brandsData: BrandTypes[];
   fileUploadRef: any;
@@ -73,6 +76,9 @@ export default function TopForm({
     mobileArticles: MobileArticleType[];
   };
   user?: any;
+  methods: any;
+  tagFields: any;
+  tagAppend: any;
 }) {
   const history = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -134,7 +140,7 @@ export default function TopForm({
     e: React.ClipboardEvent<HTMLInputElement>,
     index: number,
     selectedRef: any,
- variant: "top_field" | "bottom_field"
+    variant: "top_field" | "bottom_field"
   ) => {
     e.preventDefault(); // Prevent the default paste behavior
     const pasteText = e.clipboardData.getData("text"); // Get the pasted text
@@ -151,12 +157,34 @@ export default function TopForm({
 
       currentInput.value = newValue; // Update the current input value
     }
+    if (user?.email === "tanjinhossain2003@gmail.com") {
+      if (variant === "top_field" && index === 0) {
+        const pasteData = e.clipboardData.getData("text");
+        const words = pasteData.split(/\s+/); // Split by spaces
 
+        // Set the first field with the full pasted value
+        methods.setValue(`tags.${index}.name`, pasteData);
+
+        // Dynamically fill the next fields with the words
+        words.forEach((word, i) => {
+          // if (i === 0) return; // Skip the first word (handled above)
+
+          // If more fields are needed, append them
+          if (i + 1 >= tagFields.length) {
+            tagAppend({ name: "" });
+          }
+
+          // Set the value for the following fields
+          methods.setValue(`tags.${i + 1}.name`, word);
+        });
+        inputRefsBottomFields.current?.[1]?.focus();
+      }
+    }
     // Move focus to the next field after a delay
     setTimeout(() => {
-      if(variant === "top_field" && index === 2){
+      if (variant === "top_field" && index === 2) {
         inputRefsBottomFields.current?.[0]?.focus();
-      }else if (selectedRef.current[index + 1]) {
+      } else if (selectedRef.current[index + 1]) {
         selectedRef.current?.[index + 1]?.focus();
       }
     }, 0); // Ensure that the value is updated before focus shift
@@ -481,7 +509,12 @@ export default function TopForm({
                               error={!!errors[list.name]}
                               helperText={errors[list.name]?.message as string}
                               onKeyDown={(e) =>
-                                handleTopKeyPress(e, index, inputRefsTopFields,"top_field")
+                                handleTopKeyPress(
+                                  e,
+                                  index,
+                                  inputRefsTopFields,
+                                  "top_field"
+                                )
                               }
                               inputRef={(el) =>
                                 (inputRefsTopFields.current[index] = el)
@@ -490,7 +523,8 @@ export default function TopForm({
                                 handlePaste(
                                   e as React.ClipboardEvent<HTMLInputElement>,
                                   index,
-                                  inputRefsTopFields,"top_field"
+                                  inputRefsTopFields,
+                                  "top_field"
                                 )
                               } // Correctly typing the paste event
                             />
@@ -667,7 +701,8 @@ export default function TopForm({
                                 handlePaste(
                                   e as React.ClipboardEvent<HTMLInputElement>,
                                   index,
-                                  inputRefsBottomFields,"bottom_field"
+                                  inputRefsBottomFields,
+                                  "bottom_field"
                                 )
                               } // Correctly typing the paste event
                             />

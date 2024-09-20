@@ -363,6 +363,10 @@ export default function MainSubmitForm({
             brandsData={brands}
             gradient={gradient}
             setGradient={setGradient}
+            methods={methods}
+            tagAppend={tagAppend}
+            tagFields={tagFields}
+
           />
           <DevicesDetails isEdit={isEdit} />
           <Paper className="md:max-w-[1000px] mx-auto p-1 mt-1">
