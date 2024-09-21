@@ -77,7 +77,7 @@ export default async function Banner({
             variant="h1"
             sx={{ fontSize: 25, fontWeight: 600, mb: 1 }}
           >
-            Latest Article
+            Latest Articles
           </Typography>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6.5}>
