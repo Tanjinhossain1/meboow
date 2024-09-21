@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import { RecentArticleDataType } from "@/types/RecentArticle";
@@ -10,58 +10,123 @@ import { MobileArticleType } from "@/types/mobiles";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { UsersTypes } from "@/types/users";
 import { GlossaryType, NetworkBandsType } from "@/types/network-bands";
+import axios from "axios";
 
 export default function CommonTableComponent({
   columnData,
   columns,
+  endpoint,
 }: {
-  columnData: RecentArticleDataType[] | MobileArticleType[] | BrandTypes[] | CategoryTypes[] | UsersTypes[] | NetworkBandsType[] | GlossaryType[];
+  columnData:
+    | RecentArticleDataType[]
+    | MobileArticleType[]
+    | BrandTypes[]
+    | CategoryTypes[]
+    | UsersTypes[]
+    | NetworkBandsType[]
+    | GlossaryType[];
   columns: any;
+  endpoint?: string;
 }) {
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] =
-    useState<(RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes | UsersTypes | NetworkBandsType | GlossaryType)[]>(
-      columnData
-    );
+    useState<
+      (
+        | RecentArticleDataType
+        | MobileArticleType
+        | BrandTypes
+        | CategoryTypes
+        | UsersTypes
+        | NetworkBandsType
+        | GlossaryType
+      )[]
+    >(columnData);
+  // paginate for mobile
+  const [rows, setRows] = useState<RecentArticleDataType[]>([]);
+  const [rowCount, setRowCount] = useState(0); // total row count
+
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 20,
   });
 
+  // Fetch data when pagination model changes
+  useEffect(() => {
+    const fetchData = async (page: number, pageSize: number) => {
+      try {
+        if (endpoint) {
+          const response = await axios.get(endpoint, {
+            params: {
+              page: page + 1, // Page index starts from 1 in most APIs
+              limit: pageSize,
+            },
+          });
+          console.log("first page: admin mobile manage ", response);
+          setRows(response?.data?.data); // set the fetched rows
+          setRowCount(response?.data?.meta?.total); // set the total number of rows
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    if (endpoint) {
+      fetchData(paginationModel.page, paginationModel.pageSize);
+    }
+  }, [endpoint, paginationModel]);
+
   // Handle search
-  const handleSearch = (event: any) => {
+  const handleSearch = async (event: any) => {
     const value = event.target.value.toLowerCase();
     setSearchText(value);
-    if((columnData[0] as UsersTypes)?.email){
-      const filteredData = (columnData as UsersTypes[]).filter(
-        (row) => row.fullName.toLowerCase().includes(value)
-          ||
-        row.email.toString().includes(value)
-          ||
-        row.role.toString().includes(value)
-      );
-      setFilteredRows(filteredData);
-    }else if ((columnData[0] as GlossaryType)?.display_name){
-      const filteredData = (columnData as (GlossaryType)[]).filter(
-        (row) => row?.display_name.toLowerCase().includes(value)
-        //   ||
-        // row.age.toString().includes(value)
-      );
-      setFilteredRows(filteredData);
-    }else if ((columnData[0] as NetworkBandsType)?.country){
-      const filteredData = (columnData as (NetworkBandsType)[]).filter(
-        (row) => row?.country.toLowerCase().includes(value)
-        //   ||
-        // row.age.toString().includes(value)
-      );
-      setFilteredRows(filteredData);
-    }else{
-      const filteredData = (columnData as (RecentArticleDataType | MobileArticleType | BrandTypes| CategoryTypes)[]).filter(
-        (row) => row?.title.toLowerCase().includes(value)
-        //   ||
-        // row.age.toString().includes(value)
-      );
-      setFilteredRows(filteredData);
+    if (endpoint) {
+      const response = await axios.get(endpoint, {
+        params: {
+          page: paginationModel.page + 1, // Page index starts from 1 in most APIs
+          limit: paginationModel.pageSize,
+          searchTerm: value
+        },
+      });
+      console.log("first page: admin mobile manage ", response);
+      setRows(response?.data?.data); // set the fetched rows
+      setRowCount(response?.data?.meta?.total); // set the total number of rows
+    } else {
+      if ((columnData[0] as UsersTypes)?.email) {
+        const filteredData = (columnData as UsersTypes[]).filter(
+          (row) =>
+            row.fullName.toLowerCase().includes(value) ||
+            row.email.toString().includes(value) ||
+            row.role.toString().includes(value)
+        );
+        setFilteredRows(filteredData);
+      } else if ((columnData[0] as GlossaryType)?.display_name) {
+        const filteredData = (columnData as GlossaryType[]).filter(
+          (row) => row?.display_name.toLowerCase().includes(value)
+          //   ||
+          // row.age.toString().includes(value)
+        );
+        setFilteredRows(filteredData);
+      } else if ((columnData[0] as NetworkBandsType)?.country) {
+        const filteredData = (columnData as NetworkBandsType[]).filter(
+          (row) => row?.country.toLowerCase().includes(value)
+          //   ||
+          // row.age.toString().includes(value)
+        );
+        setFilteredRows(filteredData);
+      } else {
+        const filteredData = (
+          columnData as (
+            | RecentArticleDataType
+            | MobileArticleType
+            | BrandTypes
+            | CategoryTypes
+          )[]
+        ).filter(
+          (row) => row?.title.toLowerCase().includes(value)
+          //   ||
+          // row.age.toString().includes(value)
+        );
+        setFilteredRows(filteredData);
+      }
     }
   };
 
@@ -92,13 +157,26 @@ export default function CommonTableComponent({
         </CompoButton>
       </div>
       {/* DataGrid */}
-      <DataGrid
-        rows={filteredRows}
-        columns={columns}
-        paginationModel={paginationModel}
-        onPaginationModelChange={(newModel) => setPaginationModel(newModel)}
-        pageSizeOptions={[20, 30, 40, 50]} // options for page sizes
-      />
+      {endpoint ? (
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newModel) => setPaginationModel(newModel)}
+          rowCount={rowCount} // set total rows count
+          paginationMode="server" // enable server-side pagination
+          pageSizeOptions={[20, 30, 40, 50]} // options for page sizes
+          loading={!rows?.length} // show a loading spinner when fetching data
+        />
+      ) : (
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newModel) => setPaginationModel(newModel)}
+          pageSizeOptions={[20, 30, 40, 50]} // options for page sizes
+        />
+      )}
     </div>
   );
 }

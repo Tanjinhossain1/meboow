@@ -19,13 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function MainMobilesDetailList({
-  mobile,
-  user,
-}: {
-  mobile: MobileArticleType[];
-  user: any;
-}) {
+export default function MainMobilesDetailList({ user }: { user: any }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
     SnackbarProviderContext
   );
@@ -71,20 +65,19 @@ export default function MainMobilesDetailList({
     //   "noopener,noreferrer"
     // );
   };
-
-  console.log("mobile mobile mobile   ", mobile);
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
-    { field: "title", headerName: "Title", width: 400 },
+    { field: "title", headerName: "Title", width: 300 },
+    { field: "brands", headerName: "Brand", width: 100 },
     {
       field: "createdAt",
       headerName: "Create Date",
       renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 }}>
+        <Typography alignItems={"center"} sx={{ mt: 2 , fontSize:15}}>
           {formatDateWithTime(params?.row?.createdAt)}
         </Typography>
       ),
-      width: 200,
+      width: 230,
     },
     user?.role === "admin" && {
       field: "admin_detail",
@@ -112,7 +105,9 @@ export default function MainMobilesDetailList({
       renderCell: (params: any) => (
         <Dialog>
           <DialogTrigger asChild>
-            <SButton color="red"  className="bg-cyan-500">Post</SButton>
+            <SButton color="red" className="bg-cyan-500">
+              Post
+            </SButton>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -141,7 +136,7 @@ export default function MainMobilesDetailList({
                   </Button>
                 );
               })}
-            </div> 
+            </div>
           </DialogContent>
         </Dialog>
         // <Button
@@ -224,5 +219,11 @@ export default function MainMobilesDetailList({
       width: 100,
     },
   ];
-  return <CommonTableComponent columnData={mobile} columns={columns} />;
+  return (
+    <CommonTableComponent
+      columnData={[]}
+      endpoint={`/api/article/mobile`}
+      columns={columns}
+    />
+  );
 }

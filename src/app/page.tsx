@@ -33,12 +33,12 @@ interface HomePropsType {
   };
 }
 export const metadata: Metadata = {
-  title: "Safari List - Tech News, Reviews, Prices | Latest in Mobiles Phones",
+  title: "Safari List",
   description:
     "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
   keywords: "tech news, mobile reviews, prices, technology advice, Safari List",
   openGraph: {
-    title: "Safari List - Tech News, Reviews, Prices | Latest in Mobiles",
+    title: "Safari List",
     description:
       "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
     url: "https://safarilist.com/",
@@ -54,8 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Safari List - Tech News, Reviews, Prices | Latest in Mobiles Phones",
+    title:"Safari List",
     description:
       "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
     images: [

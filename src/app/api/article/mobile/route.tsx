@@ -1,7 +1,7 @@
 import { getDb } from "@/drizzle/db";
 import { MobileArticles } from "@/drizzle/schema";
 import { NextRequest, NextResponse } from "next/server";
-import { and, count, desc, eq, or } from "drizzle-orm";
+import { and, count, desc, eq, or, sql } from "drizzle-orm";
 import { IPaginationOptions, paginationHelpers } from "../../shared/helpers";
 import { IGenericResponse, likeInsensitive } from "@/utils/utils";
 import { revalidateTag } from "next/cache";
@@ -288,10 +288,22 @@ const getAll = async (
   }
 
   if (searchTerm) {
-    const searchConditions = ["title"].map((field) =>
-      likeInsensitive((MobileArticles as any)[field], `%${searchTerm}%`)
-    );
+    // const searchConditions = ["title","market_status","brands","$admin_detail?.name$"].map((field) =>
+    //   likeInsensitive((MobileArticles as any)[field], `%${searchTerm}%`)
+    // );
+    const lowerSearchTerm = searchTerm.toLowerCase(); // Convert search term to lowercase
 
+    const searchConditions = [
+      likeInsensitive(MobileArticles.title, `%${searchTerm}%`),
+      likeInsensitive(MobileArticles.market_status, `%${searchTerm}%`),
+      likeInsensitive(MobileArticles.brands, `%${searchTerm}%`),
+      // JSON path query for admin_detail.name
+      // sql`${MobileArticles.admin_detail} ->> '$.name' LIKE ${`%${searchTerm}%`}`
+      sql`LOWER(${MobileArticles.admin_detail} ->> '$.name') LIKE ${`%${lowerSearchTerm}%`}`,
+      sql`LOWER(${MobileArticles.admin_detail} ->> '$.role') LIKE ${`%${lowerSearchTerm}%`}`,
+      sql`LOWER(${MobileArticles.admin_detail} ->> '$.email') LIKE ${`%${lowerSearchTerm}%`}`
+
+    ];
     whereConditions.push(or(...searchConditions));
   }
 
