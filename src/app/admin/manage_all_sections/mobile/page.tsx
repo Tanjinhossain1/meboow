@@ -7,9 +7,7 @@ import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authConfig);
-  console.log("this is the user  in app/page", session?.user);
   const user: any = session?.user;
-  console.log(session, "register  ", user);
   if (!user) redirect("/");
   if (user?.role !== "admin" && user?.role !== "sub_admin") {
     redirect("/");
