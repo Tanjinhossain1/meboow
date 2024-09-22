@@ -40,11 +40,12 @@ export default async function page() {
  
     const brands = await fetchBrands();
     const mobileArticles = await fetchMobileArticles({page:'1',limit:'20'});
+    const articleLists = await fetchArticles({page:'1',limit:'20',category:"Mobiles"});
     const Category = await fetchCategories();
   return (
    <Fragment>
     <Navbar />
-    <MobileDetails brands={brands?.data} mobileArticles={mobileArticles.data} category={Category.data}  />
+    <MobileDetails articleLists={articleLists.data} brands={brands?.data} mobileArticles={mobileArticles.data} category={Category.data}  />
     <Footer />
    </Fragment>
   )

@@ -39,7 +39,7 @@ export default function BrandWiseDetails({
 }) {
   const params = useParams();
   const articlesRef = useRef<MobileArticleType[]>(mobileArticles);
-  const [page, setPage] = useState(2); // Start from the second page
+  const [page, setPage] = useState(1); // Start from the second page
   const [hasMore, setHasMore] = useState(true);
   const totalRef = useRef<number>(0);
   const loaderRef = useRef(null);
@@ -47,7 +47,37 @@ export default function BrandWiseDetails({
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
 
+
+  
   useEffect(() => {
+    const loadMoreArticles = async () => {
+      try {
+        const res = await fetch(
+          searchTerm !== ""
+            ? `${
+                process.env.NEXT_PUBLIC_BASE_URL
+              }/api/article/mobile?page=${page}&limit=${20}&searchTerm=${searchTerm}`
+            : `${
+                process.env.NEXT_PUBLIC_BASE_URL
+              }/api/article/mobile?page=${page}&limit=${20}`
+        );
+        const newArticles = await res.json();
+        console.log(
+          "newArticles?.meta?.total >= articles.length  ",
+          newArticles?.meta?.total,
+          articlesRef.current?.length
+        );
+        if (newArticles?.meta?.total > articlesRef.current?.length) {
+          setHasMore(false);
+        }
+        totalRef.current = newArticles?.meta?.total;
+        console.log("asdfdsf", newArticles);
+        articlesRef.current = [...articlesRef.current, ...newArticles?.data];
+        setPage((prevPage) => prevPage + 1);
+      } catch (error) {
+        console.error("Failed to load more articles", error);
+      }
+    };
     if (
       totalRef.current === 0 ||
       totalRef.current > articlesRef?.current?.length
@@ -73,36 +103,7 @@ export default function BrandWiseDetails({
     } else {
       setHasMore(false);
     }
-  }, [loaderRef, hasMore === true, totalRef.current, articlesRef.current,hasMore]);
-
-  const loadMoreArticles = async () => {
-    try {
-      const res = await fetch(
-        searchTerm !== ""
-          ? `${
-              process.env.NEXT_PUBLIC_BASE_URL
-            }/api/article/mobile?page=${page}&limit=${20}&searchTerm=${searchTerm}`
-          : `${
-              process.env.NEXT_PUBLIC_BASE_URL
-            }/api/article/mobile?page=${page}&limit=${20}`
-      );
-      const newArticles = await res.json();
-      console.log(
-        "newArticles?.meta?.total >= articles.length  ",
-        newArticles?.meta?.total,
-        articlesRef.current?.length
-      );
-      if (newArticles?.meta?.total > articlesRef.current?.length) {
-        setHasMore(false);
-      }
-      totalRef.current = newArticles?.meta?.total;
-      console.log("asdfdsf", newArticles);
-      articlesRef.current = [...articlesRef.current, ...newArticles?.data];
-      setPage((prevPage) => prevPage + 1);
-    } catch (error) {
-      console.error("Failed to load more articles", error);
-    }
-  };
+  }, [loaderRef,hasMore,page,searchTerm]);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

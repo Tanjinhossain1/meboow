@@ -1,24 +1,18 @@
 "use client";
-import PopularMobiles from "@/Component/HomePage/Component/PopularMobiles";
 import { MobileArticleType } from "@/types/mobiles";
 import {
   Alert,
   Box,
   Breadcrumbs,
-  Button,
   Card,
   Grid,
-  InputAdornment,
   Link,
   Paper,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useParams } from "next/navigation";
 import React, {
   ChangeEvent,
   Fragment,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -29,20 +23,23 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Image from "next/image";
 import Lottie from "lottie-react";
 import searchLoading from "@/animationIcon/search-loader.json";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
-import MobileListComponent from "@/Component/Details/MobileListComponent";
 import CategoryListComponent from "@/Component/Category/CategoryListComponent";
 import MobileCommonDetails from "@/Component/HomePage/Component/MobileCommonDetails";
 import { formatForUrl } from "@/utils/utils";
+import ArticleListComponent from "@/Component/Details/ArticleListComponent";
+import { RecentArticleDataType } from "@/types/RecentArticle";
 
 export default function MobileDetails({
   mobileArticles,
   brands,
-  category
+  category,
+  articleLists
 }: {
   mobileArticles: MobileArticleType[];
+  articleLists: RecentArticleDataType[];
   brands: BrandTypes[];
   category: CategoryTypes[];
 }) {
@@ -51,12 +48,11 @@ export default function MobileDetails({
   const [searchTerm, setSearchTerm] = useState<string>(""); // Search term state
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
- 
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchTerm(value);
-    if(value === "") {
+    if (value === "") {
       return;
     }
     if (debounceTimeoutRef.current) {
@@ -102,7 +98,7 @@ export default function MobileDetails({
               </Link>
               <Link underline="hover" color="inherit" href="/brands">
                 Brand
-              </Link> 
+              </Link>
             </Breadcrumbs>
 
             <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 2 }}>
@@ -119,7 +115,7 @@ export default function MobileDetails({
                 onChange={handleSearchChange}
                 className="flex-1 py-2 pr-3 text-sm bg-transparent border-none focus:ring-0 focus:outline-none"
               />
-            </div> 
+            </div>
             {loader ? (
               <Box
                 sx={{
@@ -139,326 +135,182 @@ export default function MobileDetails({
               </Box>
             ) : null}
 
-            {searchTerm !=="" && articlesRef.current && articlesRef.current.length === 0 && (
-              <Alert severity="warning">
-                No Mobile Found   
-              </Alert>
-            )}
+            {searchTerm !== "" &&
+              articlesRef.current &&
+              articlesRef.current.length === 0 && (
+                <Alert severity="warning">No Mobile Found</Alert>
+              )}
             <Grid container>
               {articlesRef.current &&
                 articlesRef.current?.map((data: MobileArticleType, index) => {
                   return (
                     <Card
-                    key={data.id}
-                    className="m-2 flex-shrink-0"
-                    sx={{
-                      p: 1,
-                      border: "1px solid lightgray",
-                      borderRadius: "10px",
-                      textAlign: "center",
-                      width: "178px", // Adjusted width
-                      height: "240px", // Adjusted height
-                      position: "relative",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Grid container direction="column" alignItems="center">
-                      <Grid
-                        sx={{
-                          width: "192px", // Ensure the image takes the full width of the card
-                          height: "98px", // Adjust the height for uniformity
-                        }}
-                        xs={3}
-                        // item
-                      >
-                        <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
-                          <Image
-                            style={{
-                              width: "195px", // Ensure the image takes the full width of the card
-                              height: "95px", // Adjust the height for uniformity
-                              cursor: "pointer",
-                              // objectFit: "cover",
-                            }}
-                            alt={data.title}
-                            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
-                            
-                            width={50}
-                            height={50}
-                          />
-                        </Link>
-                      </Grid>
-                      <Grid
-                        item
-                        sx={{ width: "100%",  height: "30px" }}
-                      >
-                        <Link sx={{textDecoration:"none"}}
-                          style={{ textDecoration: "none" }}
-                          href={`/mobile/${formatForUrl(data?.title)}`}
+                      key={data.id}
+                      className="m-2 flex-shrink-0"
+                      sx={{
+                        p: 1,
+                        border: "1px solid lightgray",
+                        borderRadius: "10px",
+                        textAlign: "center",
+                        width: "178px", // Adjusted width
+                        height: "240px", // Adjusted height
+                        position: "relative",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Grid container direction="column" alignItems="center">
+                        <Grid
+                          sx={{
+                            width: "192px", // Ensure the image takes the full width of the card
+                            height: "98px", // Adjust the height for uniformity
+                          }}
+                          xs={3}
+                          // item
                         >
-                          <Typography
-                            sx={{
-                              color: "#364473",
-                              // fontWeight: 600,
-                              fontSize: 15,
+                          <Link
+                            sx={{ textDecoration: "none" }}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
+                          >
+                            <Image
+                              style={{
+                                width: "195px", // Ensure the image takes the full width of the card
+                                height: "95px", // Adjust the height for uniformity
+                                cursor: "pointer",
+                                // objectFit: "cover",
+                              }}
+                              alt={data.title}
+                              src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
+                              width={50}
+                              height={50}
+                            />
+                          </Link>
+                        </Grid>
+                        <Grid item sx={{ width: "100%", height: "30px" }}>
+                          <Link
+                            sx={{ textDecoration: "none" }}
+                            style={{ textDecoration: "none" }}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
+                          >
+                            <Typography
+                              sx={{
+                                color: "#364473",
+                                // fontWeight: 600,
+                                fontSize: 15,
 
-                              textAlign: "center",
-                            }}
-                          >
-                            {data?.title}
-                          </Typography>
-                        </Link>
-                      </Grid>
+                                textAlign: "center",
+                              }}
+                            >
+                              {data?.title}
+                            </Typography>
+                          </Link>
+                        </Grid>
 
-                      <Grid textAlign={"left"} item sx={{ width: "100%" }}>
-                        <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
-                          <Typography
-                            sx={{
-                              color: "#45517a",
-                              width: "148px",
-                              height: "14px",
-                              
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              // fontWeight: 600,
-                              fontSize: 12,
-                              // textAlign: "center",
-                            }}
+                        <Grid textAlign={"left"} item sx={{ width: "100%" }}>
+                          <Link
+                            sx={{ textDecoration: "none" }}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
                           >
-                            <MemoryIcon
-                              sx={{ fontSize: 15, color: "gray" }}
-                            />{" "}
-                            {data?.key_specifications.ram_chipset}
-                          </Typography>
-                        </Link>
-                      </Grid>
-                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                        <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
-                          <Typography
-                            sx={{
-                              color: "#45517a",
-                              width: "148px",
-                              height: "14px",
-                              mt: "7px",
-                              // fontWeight: 600,
-                              fontSize: 12,
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              // textAlign: "center",
-                            }}
-                          >
-                            <CameraAltIcon
-                              sx={{ fontSize: 15, color: "gray" }}
-                            />{" "}
-                            {data?.key_specifications.camera}
-                          </Typography>
-                        </Link>
-                      </Grid>
-                      <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                        <Link sx={{textDecoration:"none"}} href={`/mobile/${formatForUrl(data?.title)}`}>
-                          {" "}
-                          <Typography
-                            sx={{
-                              color: "#45517a",
-                              width: "148px",
-                              height: "14px",
-                              mt: "7px",
-                              fontSize: 12,
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              mb: "15px",
-                            }}
-                          >
-                            <BatteryChargingFullIcon
-                              sx={{ fontSize: 15, color: "gray" }}
-                            />{" "}
-                            {data?.key_specifications.battery}
-                          </Typography>
-                        </Link>
-                      </Grid>
+                            <Typography
+                              sx={{
+                                color: "#45517a",
+                                width: "148px",
+                                height: "14px",
 
-                      <Grid
-                        item
-                        sx={{
-                          width: "100%",
-                          
-                          ":hover": {
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        <Link
-                          style={{ textDecoration: "none" }}
-                          href={`/mobile/${formatForUrl(data?.title)}`}
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                // fontWeight: 600,
+                                fontSize: 12,
+                                // textAlign: "center",
+                              }}
+                            >
+                              <MemoryIcon
+                                sx={{ fontSize: 15, color: "gray" }}
+                              />{" "}
+                              {data?.key_specifications.ram_chipset}
+                            </Typography>
+                          </Link>
+                        </Grid>
+                        <Grid item textAlign={"left"} sx={{ width: "100%" }}>
+                          <Link
+                            sx={{ textDecoration: "none" }}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
+                          >
+                            <Typography
+                              sx={{
+                                color: "#45517a",
+                                width: "148px",
+                                height: "14px",
+                                mt: "7px",
+                                // fontWeight: 600,
+                                fontSize: 12,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                // textAlign: "center",
+                              }}
+                            >
+                              <CameraAltIcon
+                                sx={{ fontSize: 15, color: "gray" }}
+                              />{" "}
+                              {data?.key_specifications.camera}
+                            </Typography>
+                          </Link>
+                        </Grid>
+                        <Grid item textAlign={"left"} sx={{ width: "100%" }}>
+                          <Link
+                            sx={{ textDecoration: "none" }}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
+                          >
+                            {" "}
+                            <Typography
+                              sx={{
+                                color: "#45517a",
+                                width: "148px",
+                                height: "14px",
+                                mt: "7px",
+                                fontSize: 12,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                mb: "15px",
+                              }}
+                            >
+                              <BatteryChargingFullIcon
+                                sx={{ fontSize: 15, color: "gray" }}
+                              />{" "}
+                              {data?.key_specifications.battery}
+                            </Typography>
+                          </Link>
+                        </Grid>
+
+                        <Grid
+                          item
+                          sx={{
+                            width: "100%",
+
+                            ":hover": {
+                              textDecoration: "underline",
+                            },
+                          }}
                         >
-                          <Typography sx={{ fontSize: 14 }}>
-                            See Full Specification{" "}
-                            <KeyboardArrowRightIcon sx={{ fontSize: 15 }} />
-                          </Typography>
-                        </Link>
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            href={`/mobile/${formatForUrl(data?.title)}`}
+                          >
+                            <Typography sx={{ fontSize: 14 }}>
+                              See Full Specification{" "}
+                              <KeyboardArrowRightIcon sx={{ fontSize: 15 }} />
+                            </Typography>
+                          </Link>
+                        </Grid>
                       </Grid>
-                    </Grid> 
-                  </Card>
-                    // <Card
-                    //   key={data.id}
-                    //   className="m-2 flex-shrink-0"
-                    //   sx={{
-                    //     p: 1,
-                    //     border: "1px solid lightgray",
-                    //     borderRadius: "10px",
-                    //     textAlign: "center",
-                    //     width: "178px", // Adjusted width
-                    //     height: "290px", // Adjusted height
-                    //     position: "relative",
-                    //     cursor: "pointer",
-                    //   }}
-                    // >
-                    //   <Grid container direction="column" alignItems="center">
-                    //     <Grid
-                    //       sx={{
-                    //         width: "192px", // Ensure the image takes the full width of the card
-                    //         height: "98px", // Adjust the height for uniformity
-                    //       }}
-                    //       xs={3}
-                    //       // item
-                    //     >
-                    //       <Link href={`/mobile/${formatForUrl(data?.title)}`}>
-                    //         <Image
-                    //           style={{
-                    //             width: "195px", // Ensure the image takes the full width of the card
-                    //             height: "95px", // Adjust the height for uniformity
-                    //             cursor: "pointer",
-                    //             // objectFit: "cover",
-                    //           }}
-                    //           alt={data.title}
-                    //           src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data.display_image}`}
-                    //           layout=""
-                    //           width={50}
-                    //           height={50}
-                    //         />
-                    //       </Link>
-                    //     </Grid>
-                    //     <Grid
-                    //       item
-                    //       sx={{ width: "100%", mt: 2, height: "45px" }}
-                    //     >
-                    //       <Link
-                    //         style={{ textDecoration: "none" }}
-                    //         href={`/mobile/${formatForUrl(data?.title)}`}
-                    //       >
-                    //         <Typography
-                    //           sx={{
-                    //             color: "#364473",
-                    //             // fontWeight: 600,
-                    //             fontSize: 15,
-
-                    //             textAlign: "center",
-                    //           }}
-                    //         >
-                    //           {data?.title}
-                    //         </Typography>
-                    //       </Link>
-                    //     </Grid>
-
-                    //     <Grid textAlign={"left"} item sx={{ width: "100%" }}>
-                    //       <Link href={`/mobile/${formatForUrl(data?.title)}`}>
-                    //         <Typography
-                    //           sx={{
-                    //             color: "#45517a",
-                    //             width: "148px",
-                    //             height: "14px",
-                    //             mt: "13px",
-                    //             whiteSpace: "nowrap",
-                    //             overflow: "hidden",
-                    //             textOverflow: "ellipsis",
-                    //             // fontWeight: 600,
-                    //             fontSize: 12,
-                    //             // textAlign: "center",
-                    //           }}
-                    //         >
-                    //           <MemoryIcon
-                    //             sx={{ fontSize: 15, color: "gray" }}
-                    //           />{" "}
-                    //           {data?.key_specifications.ram_chipset}
-                    //         </Typography>
-                    //       </Link>
-                    //     </Grid>
-                    //     <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                    //       <Link href={`/mobile/${formatForUrl(data?.title)}`}>
-                    //         <Typography
-                    //           sx={{
-                    //             color: "#45517a",
-                    //             width: "148px",
-                    //             height: "14px",
-                    //             mt: "7px",
-                    //             // fontWeight: 600,
-                    //             fontSize: 12,
-                    //             whiteSpace: "nowrap",
-                    //             overflow: "hidden",
-                    //             textOverflow: "ellipsis",
-                    //             // textAlign: "center",
-                    //           }}
-                    //         >
-                    //           <CameraAltIcon
-                    //             sx={{ fontSize: 15, color: "gray" }}
-                    //           />{" "}
-                    //           {data?.key_specifications.camera}
-                    //         </Typography>
-                    //       </Link>
-                    //     </Grid>
-                    //     <Grid item textAlign={"left"} sx={{ width: "100%" }}>
-                    //       <Link href={`/mobile/${formatForUrl(data?.title)}`}>
-                    //         {" "}
-                    //         <Typography
-                    //           sx={{
-                    //             color: "#45517a",
-                    //             width: "148px",
-                    //             height: "14px",
-                    //             mt: "7px",
-                    //             fontSize: 12,
-                    //             whiteSpace: "nowrap",
-                    //             overflow: "hidden",
-                    //             textOverflow: "ellipsis",
-                    //             mb: "15px",
-                    //           }}
-                    //         >
-                    //           <BatteryChargingFullIcon
-                    //             sx={{ fontSize: 15, color: "gray" }}
-                    //           />{" "}
-                    //           {data?.key_specifications.battery}
-                    //         </Typography>
-                    //       </Link>
-                    //     </Grid>
-
-                    //     <Grid
-                    //       item
-                    //       sx={{
-                    //         width: "100%",
-                    //         mt: 1,
-                    //         ":hover": {
-                    //           textDecoration: "underline",
-                    //         },
-                    //       }}
-                    //     >
-                    //       <Link
-                    //         style={{ textDecoration: "none" }}
-                    //         href={`/mobile/${formatForUrl(data?.title)}`}
-                    //       >
-                    //         <Typography sx={{ fontSize: 14 }}>
-                    //           See Full Specification{" "}
-                    //           <KeyboardArrowRightIcon sx={{ fontSize: 15 }} />
-                    //         </Typography>
-                    //       </Link>
-                    //     </Grid>
-                    //   </Grid> 
-                    // </Card>
+                    </Card>
                   );
                 })}
             </Grid>
             <Grid container>
-            <Grid xs={8}>
+              <Grid xs={8}>
                 <Typography
                   sx={{ fontSize: 25, fontWeight: 600, mt: 5, mb: 2 }}
                 >
@@ -466,18 +318,21 @@ export default function MobileDetails({
                   List Of Brands
                 </Typography>
                 <Grid gap={2} container>
-                <BrandDisplayComponent brands={brands.slice(0, 10)} />
+                  <BrandDisplayComponent brands={brands.slice(0, 10)} />
+                </Grid>
+                <Typography sx={{ fontSize: 20, fontWeight: 600, mt: 3 }}>
+                  Latest Mobiles
+                </Typography>
+                <Grid container>
+                  <MobileCommonDetails articles={mobileArticles} />
                 </Grid>
               </Grid>
-              
+
               <Grid xs={12} sx={{ mt: 10 }} lg={4}>
-                  <MobileListComponent mobileArticles={mobileArticles} />
-                  <CategoryListComponent category={category} /> 
+                <ArticleListComponent articles={articleLists} />
+                
+                <CategoryListComponent category={category} />
               </Grid>
-            </Grid>
-              <Typography sx={{fontSize:20,fontWeight:600,mt:3}}>Latest Mobiles</Typography>
-            <Grid container>
-              <MobileCommonDetails articles={mobileArticles} />
             </Grid>
           </Paper>
 
@@ -488,22 +343,22 @@ export default function MobileDetails({
     </Fragment>
   );
 }
-function SearchIcon(props:any) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.3-4.3" />
-      </svg>
-    )
-  }
+function SearchIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  );
+}
