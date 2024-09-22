@@ -4,7 +4,7 @@ Allow: /
 Disallow: /admin/
 
 # Host
-Host: https://safarilist.com
+Host: https://www.safarilist.com
 
 # Sitemaps
-Sitemap: https://safarilist.com/sitemap.xml
+Sitemap: https://www.safarilist.com/sitemap.xml

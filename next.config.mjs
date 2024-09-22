@@ -2,6 +2,21 @@
 const nextConfig = {
   productionBrowserSourceMaps: true,
   siteUrl: 'https://www.safarilist.com', // Your website URL
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'safarilist.com', // Matches any path on safarilist.com without "www"
+          },
+        ],
+        destination: 'https://www.safarilist.com', // Redirect to the same path with "www"
+        permanent: true, // Use a 301 permanent redirect
+      },
+    ];
+  },  
   generateRobotsTxt: true, // Generate a robots.txt file
     images: {
       // domains: ['res.cloudinary.com','assets.mspimages.in',"localhost","images.safarilist.com"],

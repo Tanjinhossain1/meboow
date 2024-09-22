@@ -12,3 +12,11 @@
     ExpiresByType image/x-icon "access plus 1 year"
     ExpiresDefault "access plus 2 days"
 </IfModule>
+
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Redirect all traffic from "safarilist.com" to "www.safarilist.com"
+RewriteCond %{HTTP_HOST} ^safarilist\.com [NC]
+RewriteRule ^(.*)$ https://www.safarilist.com/$1 [L,R=301]
