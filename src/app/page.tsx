@@ -33,14 +33,14 @@ interface HomePropsType {
   };
 }
 export const metadata: Metadata = {
-  title: "Safari List",
+  title: "SafariList",
   description:
-    "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
-  keywords: "tech news, mobile reviews, prices, technology advice, Safari List",
+    "SafariList - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
+  keywords: "tech news, mobile reviews, prices, technology advice, SafariList",
   openGraph: {
-    title: "Safari List",
+    title: "SafariList",
     description:
-      "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
+      "SafariList - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
     url: "https://www.safarilist.com/",
     type: "website",
     images: [
@@ -48,19 +48,19 @@ export const metadata: Metadata = {
         url: "https://www.safarilist.com/favicon.ico", // replace with actual image
         width: 1200,
         height: 630,
-        alt: "Safari List Logo",
+        alt: "SafariList Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title:"Safari List",
+    title:"SafariList",
     description:
-      "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
+      "SafariList - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
     images: [
       {
         url: "https://www.safarilist.com/favicon.ico", // replace with actual image
-        alt: "Safari List Logo",
+        alt: "SafariList Logo",
       },
     ],
   },
