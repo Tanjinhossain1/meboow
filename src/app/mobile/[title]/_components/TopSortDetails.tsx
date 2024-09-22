@@ -31,6 +31,7 @@ import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import axios from "axios";
 import { formatForUrl } from "@/utils/utils";
 import TripOriginIcon from '@mui/icons-material/TripOrigin';
+import { transformCameraStringToTypographyCamera, transformStringToTypographyForPixel } from "./utils";
 
 const formatBatterySpecification = (spec: string) => {
   // Extract the mAh value (e.g., 4355mAh)
@@ -42,12 +43,12 @@ const formatBatterySpecification = (spec: string) => {
   return (
     <>
       {/* Render the mAh value */}
-      {batteryMatch && (
+      {batteryMatch ? (
         <Typography variant="body1" className="font-bold">
           {batteryMatch[0]}
         </Typography>
-      )}
-
+      ): <br />}
+      
       {/* Render each W value */}
       {wattageMatches &&
         wattageMatches.map((watt, index) => (
@@ -577,7 +578,7 @@ const IphoneCard = ({
             <Grid container>
               <Grid sx={{ mt: 2.5 }} item xs={3.4}>
                 <CheckBoxOutlineBlankIcon sx={{ fontSize: 30, mb: 1 }} />
-                {transformStringToTypography(
+                {transformStringToTypographyForPixel(
                   mobileDetail.key_specifications?.pixel
                 )}
               </Grid>
@@ -587,7 +588,7 @@ const IphoneCard = ({
                 xs={2.5}
               >
                 <CameraIcon sx={{ fontSize: 30, mb: 1 }} />
-                {transformStringToTypography(
+                {transformCameraStringToTypographyCamera(
                   mobileDetail.key_specifications?.camera
                 )}
               </Grid>
