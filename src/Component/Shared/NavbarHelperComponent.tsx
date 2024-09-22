@@ -165,7 +165,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Black" style={{ color: "black" }} href={"/aboutus"}>
+              <Link aria-label="Black" style={{ color: "black" }} href={"/about"}>
                 About Us
               </Link>
             </Typography>
@@ -263,7 +263,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="About Us" style={{ color: "black" }} href={"/aboutus"}>
+                  <Link aria-label="About Us" style={{ color: "black" }} href={"/about"}>
                     About Us
                   </Link>
                 </Typography>

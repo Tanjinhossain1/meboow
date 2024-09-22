@@ -185,7 +185,7 @@ export default function FooterHelper({
                 >
                   <Link
                   aria-label="About us"
-                    href="/aboutus"
+                    href="/about"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
                     About us
