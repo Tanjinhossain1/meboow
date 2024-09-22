@@ -136,7 +136,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link aria-label="Contact us" href={"/contactUs"}>
+        <Link aria-label="Contact us" href={"/contact"}>
           <ListItem disablePadding>
             <ListItemButton aria-label="Contacts Icon">
               <ListItemIcon>
@@ -179,7 +179,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contactUs"}>
+              <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contact"}>
                 Contact us
               </Link>
             </Typography>
@@ -276,7 +276,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contactUs"}>
+                  <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contact"}>
                     Contact us
                   </Link>
                 </Typography>
@@ -507,7 +507,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                   <Link aria-label="Mobile" href={"/mobile"}>
                     <Typography sx={{ color: "white" }}>Mobiles</Typography>
                   </Link>
-                  <Link aria-label="Contact us" href={"/contactUs"}>
+                  <Link aria-label="Contact us" href={"/contact"}>
                     {" "}
                     <Typography sx={{ color: "white" }}>Contact</Typography>
                   </Link>

@@ -168,7 +168,7 @@ export default function FooterHelper({
                 >
                   <Link
                   aria-label="Contact Us"
-                    href="/contactUs"
+                    href="/contact"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
                     Contact us

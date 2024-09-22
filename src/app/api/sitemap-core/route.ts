@@ -12,7 +12,9 @@ export async function GET() {
 
         sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/`, changefreq: "hourly", priority: 0.8 });
         sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/aboutus`, changefreq: "hourly", priority: 0.6 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/about`, changefreq: "hourly", priority: 0.7 });
         sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/contactUs`, changefreq: "hourly", priority: 0.7 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/contact`, changefreq: "hourly", priority: 0.7 });
         sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/privacyPolicy`, changefreq: "hourly", priority: 0.5 });
         sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/privacy-policy`, changefreq: "hourly", priority: 0.8 });
         sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/terms-and-conditions`, changefreq: "hourly", priority: 0.8 });
