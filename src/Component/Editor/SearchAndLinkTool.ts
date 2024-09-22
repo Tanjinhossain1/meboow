@@ -22,7 +22,7 @@ class SelectAndLinkTool implements InlineTool {
 
     return this.button;
   }
-
+  
   private async handleClick() {
     const selection = window.getSelection();
 
@@ -53,6 +53,7 @@ class SelectAndLinkTool implements InlineTool {
       alert('Please select some text first.');
     }
   }
+
   private async selectAllInstances(searchWord: string) {
     const totalBlocks = this.api.blocks.getBlocksCount();
   
@@ -60,17 +61,15 @@ class SelectAndLinkTool implements InlineTool {
       try {
         const block = this.api.blocks.getBlockByIndex(i);
   
-        if (block && block.holder) {  // Check if the block and holder are not undefined
-          const blockContent = (block.holder as HTMLElement).innerHTML;  // Get the current block content as HTML
+        if (block && block.holder) {
+          const blockContent = (block.holder as HTMLElement).innerHTML;
   
-          const regex = new RegExp(`\\b${searchWord}\\b`, 'gi');
-          // const regex = new RegExp(`\\b${searchWord}\\b`, 'gi');
+          const regex = new RegExp(`\\b${searchWord}\\b(?![^<]*<\/a>)`, 'gi'); // Ensure it doesn't match already linked text
           const updatedContent = blockContent.replace(
             regex,
             (match) => `<span class="selected">${match}</span>`
           );
   
-          // Update the block content using the block ID
           await this.api.blocks.update(block.id, {
             text: updatedContent
           });
@@ -81,6 +80,33 @@ class SelectAndLinkTool implements InlineTool {
     }
   }
   
+  // private async selectAllInstances(searchWord: string) {
+  //   const totalBlocks = this.api.blocks.getBlocksCount();
+  
+  //   for (let i = 0; i < totalBlocks; i++) {
+  //     try {
+  //       const block = this.api.blocks.getBlockByIndex(i);
+  
+  //       if (block && block.holder) {  // Check if the block and holder are not undefined
+  //         const blockContent = (block.holder as HTMLElement).innerHTML;  // Get the current block content as HTML
+  
+  //         const regex = new RegExp(`\\b${searchWord}\\b`, 'gi');
+  //         // const regex = new RegExp(`\\b${searchWord}\\b`, 'gi');
+  //         const updatedContent = blockContent.replace(
+  //           regex,
+  //           (match) => `<span class="selected">${match}</span>`
+  //         );
+  
+  //         // Update the block content using the block ID
+  //         await this.api.blocks.update(block.id, {
+  //           text: updatedContent
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error('Error updating block:', error);
+  //     }
+  //   }
+  // }
   private async applyLinkToAllSelected(link: string) {
     const totalBlocks = this.api.blocks.getBlocksCount();
   
@@ -88,19 +114,31 @@ class SelectAndLinkTool implements InlineTool {
       try {
         const block = this.api.blocks.getBlockByIndex(i);
   
-        if (block && block.holder) {  // Check if the block and holder are not undefined
-          const blockContent = (block.holder as HTMLElement).innerHTML;  // Get the current block content as HTML
+        if (block && block.holder) {
+          const blockContent = (block.holder as HTMLElement).innerHTML;
+          console.log('block content:', blockContent);
   
-          const regex = /<span class="selected">([^<]*)<\/span>/gi;
+          // Check if the block contains any header tags
+          const containsHeader = /<h[1-6][^>]*>.*?<\/h[1-6]>/.test(blockContent);
+          if (containsHeader) {
+            continue; // Skip this block if it contains a header
+          }
   
-          // Update content by wrapping selected text with anchor tags
-          const updatedContent = blockContent.replace(regex, (_, match) => {
-            return `<a href="${link}">${match}</a>`;
+          // Replace only the selected spans that don't already have links
+          const updatedContent = blockContent.replace(/<span class="selected">([^<]*)<\/span>/gi, (_, match) => {
+            // Trim whitespace around the match
+            const trimmedMatch = match.trim();
+  
+            // Check if the match already has a link
+            const hasLink = /<a href="[^"]*">/.test(blockContent.slice(blockContent.indexOf(match)));
+            return hasLink ? `<span class="selected">${trimmedMatch}</span>` : `<a href="${link}">${trimmedMatch}</a>`;
           });
   
-          // Update the block content using the block ID
+          // Trim unnecessary spaces in the entire content
+          const finalContent = updatedContent.replace(/\s+/g, ' ').trim();
+  
           await this.api.blocks.update(block.id, {
-            text: updatedContent
+            text: finalContent
           });
         }
       } catch (error) {
@@ -108,6 +146,62 @@ class SelectAndLinkTool implements InlineTool {
       }
     }
   }
+  
+  
+  // private async applyLinkToAllSelected(link: string) {
+  //   const totalBlocks = this.api.blocks.getBlocksCount();
+  
+  //   for (let i = 0; i < totalBlocks; i++) {
+  //     try {
+  //       const block = this.api.blocks.getBlockByIndex(i);
+  
+  //       if (block && block.holder) {
+  //         const blockContent = (block.holder as HTMLElement).innerHTML;
+  //         console.log('block block   ',blockContent)
+  //         // Replace only the selected spans that don't already have links
+  //         const updatedContent = blockContent.replace(/<span class="selected">([^<]*)<\/span>/gi, (_, match) => {
+  //           // Check if the match already has a link
+  //           const hasLink = /<a href="[^"]*">/.test(blockContent.slice(blockContent.indexOf(match)));
+  //           return hasLink ? `<span class="selected">${match}</span>` : `<a href="${link}">${match}</a>`;
+  //         });
+  
+  //         await this.api.blocks.update(block.id, {
+  //           text: updatedContent
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error('Error updating block:', error);
+  //     }
+  //   }
+  // }
+  
+  // private async applyLinkToAllSelected(link: string) {
+  //   const totalBlocks = this.api.blocks.getBlocksCount();
+  
+  //   for (let i = 0; i < totalBlocks; i++) {
+  //     try {
+  //       const block = this.api.blocks.getBlockByIndex(i);
+  
+  //       if (block && block.holder) {  // Check if the block and holder are not undefined
+  //         const blockContent = (block.holder as HTMLElement).innerHTML;  // Get the current block content as HTML
+  
+  //         const regex = /<span class="selected">([^<]*)<\/span>/gi;
+  
+  //         // Update content by wrapping selected text with anchor tags
+  //         const updatedContent = blockContent.replace(regex, (_, match) => {
+  //           return `<a href="${link}">${match}</a>`;
+  //         });
+  
+  //         // Update the block content using the block ID
+  //         await this.api.blocks.update(block.id, {
+  //           text: updatedContent
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error('Error updating block:', error);
+  //     }
+  //   }
+  // }
   
 
   surround(range: Range) {
