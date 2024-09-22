@@ -82,7 +82,7 @@ const transformStringToTypographyForRam = (inputString: string) => {
   // Find the index of the first space after "RAM" to split the value from the description
   const ramIndex = inputString?.indexOf(" RAM");
   const value = inputString?.substring(0, ramIndex + 4); // Include " RAM" in the value
-  const description = inputString?.substring(ramIndex + 5); // Everything after " RAM"
+  const description = inputString?.substring(ramIndex + 4); // Everything after " RAM"
 
   return (
     <>
