@@ -132,3 +132,21 @@ export const formatForUrlWith_under_score = (text: string) => {
     return '';
   }
 }
+
+
+export function calculatePriority(article:any) {
+  // Example logic for priority calculation:
+  // You can set different conditions based on your article properties
+
+  // If the article is very recent, assign a high priority
+  // const daysOld = (new Date() - new Date(article.createdAt)) / (1000 * 60 * 60 * 24); // Calculate article age in days
+  const daysOld = (new Date().getTime() - new Date(article.createdAt as string).getTime()) / (1000 * 60 * 60 * 24);
+
+  if (daysOld < 25) {
+      return 1.0; // Highest priority for new articles
+  } else if (daysOld < 60) {
+      return 0.8; // Medium priority for semi-recent articles
+  } else {
+      return 0.5; // Lower priority for older articles
+  }
+}

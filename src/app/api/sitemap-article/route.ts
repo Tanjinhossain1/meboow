@@ -1,11 +1,10 @@
 // app/sitemap-article/route.ts
 import { getDb } from '@/drizzle/db';
 import { Articles } from '@/drizzle/schema';
-import { formatForUrl } from '@/utils/utils';
+import { calculatePriority, formatForUrl } from '@/utils/utils';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { calculatePriority } from '../sitemap-review/route';
 
 export async function GET() {
     try {
