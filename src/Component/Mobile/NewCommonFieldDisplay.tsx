@@ -50,7 +50,7 @@ export default function NewCommonFieldDisplay({
             <p>
               <b>Disclaimer.</b> We can not guarantee that the information on
               this page is 100% correct.{" "}
-              <Link className="underline" href={"https://safarilist.com/"}>
+              <Link className="underline" href={"https://www.safarilist.com/"}>
                 Read more
               </Link>
             </p>

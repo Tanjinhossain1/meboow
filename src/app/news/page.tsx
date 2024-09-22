@@ -18,7 +18,7 @@ export const metadata = {
     title: "News - Safari List",
     description:
       "In Safari List News page you get all of news related posts best articles also mobile and get many information about all article .",
-    url: "https://safarilist.com/news",
+    url: `${process.env.NEXT_PUBLIC_META_URL}/news`,
     siteName: "Safari List",
     type: "website",
   },
@@ -30,7 +30,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: "https://safarilist.com/news",
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/news`,
   },
 };
 

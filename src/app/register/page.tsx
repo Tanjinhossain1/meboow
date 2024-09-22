@@ -21,7 +21,7 @@ export const metadata = {
     title: "Register - Safari List",
     description:
       "IN Safari List Register page you Register or login of our website and get many extra feature to export all things like opinion or be a fan ob mobiles.",
-    url: "https://safarilist.com/register",
+    url: `${process.env.NEXT_PUBLIC_META_URL}/register`,
     siteName: "Safari List",
     type: "website",
   },
@@ -33,7 +33,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: "https://safarilist.com/register",
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/register`,
   },
 };
 

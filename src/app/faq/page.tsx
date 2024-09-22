@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: 'faq - Safari List',
     description: 'Here you will all of our website related questions you can see all of our ans and your questions related to our mobiles or any .',
-    url: 'https://safarilist.com/faq',
+    url: `${process.env.NEXT_PUBLIC_META_URL}/faq`,
     siteName: 'Safari List',
     type: 'website',
   },
@@ -22,7 +22,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: 'https://safarilist.com/faq',
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/faq`,
   },
 };
 

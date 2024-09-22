@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import Navbar from "@/Component/Shared/Navbar";
 import AboutUsComponent from "./_components/AboutUsComponent";
-import Footer from "@/Component/HomePage/Footer";
 
 export const metadata = {
   title: 'About Us - Safari List',
@@ -10,7 +9,7 @@ export const metadata = {
   openGraph: {
     title: 'About Us - Safari List',
     description: 'Learn more about our company, mission, and values at Safari List.',
-    url: 'https://safarilist.com/aboutus',
+    url: `${process.env.NEXT_PUBLIC_META_URL}/aboutus`,
     siteName: 'Safari List',
     type: 'website',
   },
@@ -21,7 +20,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: 'https://safarilist.com/aboutus',
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/aboutus`,
   },
 };
 

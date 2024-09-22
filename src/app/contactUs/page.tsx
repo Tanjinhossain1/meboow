@@ -29,7 +29,7 @@ export const metadata = {
     title: "Contact Us - Safari List",
     description:
       "Contact with us and here have all information to Contact Us. you can email, call, whatsapp, facebook or linkedin etc we have.",
-    url: "https://safarilist.com/contactUs",
+    url: `${process.env.NEXT_PUBLIC_META_URL}/contactUs`,
     siteName: "Safari List",
     type: "website",
   },
@@ -41,7 +41,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: "https://safarilist.com/contactUs",
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/contactUs`,
   },
 };
 

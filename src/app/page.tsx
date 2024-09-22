@@ -41,11 +41,11 @@ export const metadata: Metadata = {
     title: "Safari List",
     description:
       "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
-    url: "https://safarilist.com/",
+    url: "https://www.safarilist.com/",
     type: "website",
     images: [
       {
-        url: "https://safarilist.com/favicon.ico", // replace with actual image
+        url: "https://www.safarilist.com/favicon.ico", // replace with actual image
         width: 1200,
         height: 630,
         alt: "Safari List Logo",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
       "Safari List - Tech News, Reviews, Prices | Latest Mobiles Phones in-depth for all categories in technology, Mobiles Phones",
     images: [
       {
-        url: "https://safarilist.com/favicon.ico", // replace with actual image
+        url: "https://www.safarilist.com/favicon.ico", // replace with actual image
         alt: "Safari List Logo",
       },
     ],

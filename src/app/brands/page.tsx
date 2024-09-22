@@ -25,7 +25,7 @@ export const metadata = {
   openGraph: {
     title: 'Brands - Safari List',
     description: 'Learn more about our company, mission, and brands at Safari List, products, phones, articles.',
-    url: 'https://safarilist.com/brands',
+    url: `${process.env.NEXT_PUBLIC_META_URL}/brands`,
     siteName: 'Safari List',
     type: 'website',
   },
@@ -36,7 +36,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: 'https://safarilist.com/brands',
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/brands`,
   },
 };
 export default async function BrandPage() {

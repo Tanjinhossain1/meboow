@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: 'Login - Safari List',
     description: 'Here you will Login To Safari List. For more information visit our faq page. For more information after login you can comment and give opinion and give vote to all mobiles',
-    url: 'https://safarilist.com/login',
+    url: `${process.env.NEXT_PUBLIC_META_URL}/login`,
     siteName: 'Safari List',
     type: 'website',
   },
@@ -22,7 +22,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: 'https://safarilist.com/login',
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/login`,
   },
 };
 

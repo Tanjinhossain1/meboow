@@ -12,7 +12,7 @@ export const metadata = {
   openGraph: {
     title: 'Term Condition - Safari List',
     description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
-    url: 'https://safarilist.com/terms-and-conditions',
+    url: `${process.env.NEXT_PUBLIC_META_URL}/terms-and-conditions`,
     siteName: 'Safari List',
     type: 'website',
   },
@@ -22,7 +22,7 @@ export const metadata = {
     description: 'Learn more about our Term Condition - Safari List page to see our all conditions',
   },
   alternates: {
-    canonical: 'https://safarilist.com/terms-and-conditions',
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/terms-and-conditions`,
   },
 };
 

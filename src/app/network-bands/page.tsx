@@ -14,7 +14,7 @@ export const metadata = {
     title: "Network Bands - Safari List",
     description:
       "In Safari List Network Bands page have list of network in country wise by default show your country network but you can change the country to see your Network Bands .",
-    url: "https://safarilist.com/network-bands",
+    url: `${process.env.NEXT_PUBLIC_META_URL}/network-bands`,
     siteName: "Safari List",
     type: "website",
   },
@@ -26,7 +26,7 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: "https://safarilist.com/network-bands",
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/network-bands`,
   },
 };
 

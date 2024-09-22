@@ -134,7 +134,7 @@ export default function DetailsComponent({
   //   .join(" ");
   const handleShare = (platform: string) => {
     let shareUrl = "";
-    const url = `https://safarilist.com/${
+    const url = `https://www.safarilist.com/${
       articleDetail?.category === "Mobiles" ? "review" : "article"
     }/${formatForUrl(articleDetail.title)}`;
 
