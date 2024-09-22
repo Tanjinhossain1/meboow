@@ -5,6 +5,7 @@ import { formatForUrl } from '@/utils/utils';
 import { desc } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
+import { calculatePriority } from '../sitemap-review/route';
 
 export async function GET() {
     try {
@@ -20,10 +21,33 @@ export async function GET() {
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
         articles.forEach((article) => {
             if (article?.category !== "Mobiles") {
-                sitemapStream.write({ url: `/article/${formatForUrl(article?.title)}`, lastmod: new Date() });
+                const mainPriority = calculatePriority(article); // Example: calculate priority based on custom logic
+        
+                // Write the main article URL with priority
+                sitemapStream.write({ 
+                    url: `/article/${formatForUrl(article?.title)}`, 
+                    lastmod: new Date(),
+                    priority: mainPriority // Add priority for main article
+                });
+        
+                if (article?.pages) {
+                    (article?.pages as any)?.map((page: any) => {
+                        if (page?.page !== 1) {
+                            // Set a lower priority for subsequent pages
+                            const pagePriority = 0.6; // Example: lower priority for paginated content
+        
+                            // Write the paginated URLs with priority
+                            sitemapStream.write({ 
+                                url: `/article/${formatForUrl(article?.title)}/${page?.page}`, 
+                                lastmod: new Date(),
+                                priority: pagePriority // Add priority for paginated pages
+                            });
+                        }
+                    });
+                }
+                // sitemapStream.write({ url: `/article/${formatForUrl(article?.title)}`, lastmod: new Date() });
             }
-        })
-
+        }) 
         sitemapStream.end();
 
         const sitemapXml = await streamToPromise(sitemapStream).then((data) => data.toString());

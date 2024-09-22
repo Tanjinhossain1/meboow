@@ -193,7 +193,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacyPolicy"}>
+              <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacy-policy"}>
                 Privacy Policy
               </Link>
             </Typography>
@@ -289,7 +289,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacyPolicy"}>
+                  <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacy-policy"}>
                     Privacy Policy
                   </Link>
                 </Typography>

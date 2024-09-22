@@ -203,7 +203,7 @@ export default function FooterHelper({
                 >
                   <Link
                   aria-label="Privacy Policy"
-                    href="/privacyPolicy"
+                    href="/privacy-policy"
                     style={{ marginLeft: 1, marginRight: 1, color: "#FFFFFF" }}
                   >
                     Privacy

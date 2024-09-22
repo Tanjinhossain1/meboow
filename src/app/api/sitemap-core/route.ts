@@ -7,14 +7,16 @@ import { SitemapStream, streamToPromise } from 'sitemap';
 
 export async function GET() {
     try {
-        const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
+        const sitemapStream = new SitemapStream();
+        // const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
 
-        sitemapStream.write({ url: `/`, lastmod: new Date() });
-        sitemapStream.write({ url: `/aboutus`, lastmod: new Date() });
-        sitemapStream.write({ url: `/contactUs`, lastmod: new Date() });
-        sitemapStream.write({ url: `/privacyPolicy`, lastmod: new Date() });
-        sitemapStream.write({ url: `/terms-and-conditions`, lastmod: new Date() });
-        sitemapStream.write({ url: `/faq`, lastmod: new Date() });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/`, changefreq: "hourly", priority: 0.8 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/aboutus`, changefreq: "hourly", priority: 0.6 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/contactUs`, changefreq: "hourly", priority: 0.7 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/privacyPolicy`, changefreq: "hourly", priority: 0.5 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/privacy-policy`, changefreq: "hourly", priority: 0.8 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/terms-and-conditions`, changefreq: "hourly", priority: 0.8 });
+        sitemapStream.write({ url: `${process.env.NEXT_APP_SITEMAP_URL}/faq`, changefreq: "hourly", priority: 0.8 });
 
 
         sitemapStream.end();

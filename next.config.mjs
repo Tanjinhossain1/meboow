@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: true,
+  siteUrl: 'https://safarilist.com', // Your website URL
+  generateRobotsTxt: true, // Generate a robots.txt file
     images: {
       // domains: ['res.cloudinary.com','assets.mspimages.in',"localhost","images.safarilist.com"],
       remotePatterns: [

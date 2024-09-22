@@ -19,9 +19,9 @@ export async function GET() {
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
         mobiles.forEach((mobile) => {
-            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}`, lastmod: new Date() });
-            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}/opinion`, lastmod: new Date() });
-            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}/picture`, lastmod: new Date() });
+            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}`, lastmod: new Date(),priority:0.9 });
+            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}/picture`, lastmod: new Date(),priority: 0.8 });
+            sitemapStream.write({ url: `/mobile/${formatForUrl(mobile?.title)}/opinion`, lastmod: new Date(),priority: 0.7 });
         })
 
         sitemapStream.end();
