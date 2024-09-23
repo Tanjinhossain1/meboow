@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -10,30 +10,36 @@ import { SampleBrands } from "./ContentBox";
 import { BrandTypes } from "@/types/category";
 import dynamic from "next/dynamic";
 
+
 const ContentBox = React.memo(
-  dynamic(() => import("@/Component/HomePage/ContentBox"), { ssr: false })
+  dynamic(() => import("@/Component/HomePage/ContentBox"), {
+    ssr: true,
+    suspense: true,
+  })
 );
 const PhoneFinder = React.memo(
-  dynamic(() => import("../Common/PhoneFinder"), { ssr: false })
+  dynamic(() => import("../Common/PhoneFinder"), { ssr: true,suspense:true })
 );
 const MobileReviews = React.memo(
-  dynamic(() => import("./Component/MobileReviews"), { ssr: false })
+  dynamic(() => import("./Component/MobileReviews"), { ssr: true,suspense:true })
 );
 const TopDevicesTable = React.memo(
-  dynamic(() => import("./Component/TopDevicesTable"), { ssr: false })
+  dynamic(() => import("./Component/TopDevicesTable"), { ssr: true,suspense:true })
 );
 const LatestDevices = React.memo(
-  dynamic(() => import("./Component/LatestDevices"), { ssr: false })
+  dynamic(() => import("./Component/LatestDevices"), { ssr: true,suspense:true })
 );
 const PopularMobiles = React.memo(
-  dynamic(() => import("./Component/PopularMobiles"), { ssr: false })
+  dynamic(() => import("./Component/PopularMobiles"), { ssr: true,suspense:true })
 );
 const NewsAndReviews = React.memo(
-  dynamic(() => import("./Component/NewsAndReviews"), { ssr: false })
+  dynamic(() => import("./Component/NewsAndReviews"), { ssr: true,suspense:true })
 );
 const BrandDisplayComponent = React.memo(
-  dynamic(() => import("./BrandDisplay"), { ssr: false })
+  dynamic(() => import("./BrandDisplay"), { ssr: true,suspense:true })
 );
+
+const Loading: any = <p className="text-[60px]">loading...</p>
 
 export default async function Banner({
   articles,
@@ -81,25 +87,30 @@ export default async function Banner({
           </Typography>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6.5}>
-              <ContentBox
-                category={articles[0]?.category}
-                image={articles[0]?.image}
-                title={articles[0]?.title}
-                description={articles[0]?.description}
-                isBig
-              />
+              <Suspense fallback={<Loading />}>
+                <ContentBox
+                  category={articles[0]?.category}
+                  image={articles[0]?.image}
+                  title={articles[0]?.title}
+                  description={articles[0]?.description}
+                  isBig
+                />
+              </Suspense>
             </Grid>
             <Grid item xs={12} sm={5.5}>
               <Grid container spacing={1}>
                 <Grid item xs={6} sm={12}>
+                <Suspense fallback={<Loading />}>
                   <ContentBox
                     category={articles[1]?.category}
                     image={articles[1]?.image}
                     title={articles[1]?.title}
                     description={articles[1]?.description}
                   />
+                  </Suspense>
                 </Grid>
                 <Grid item xs={6} sm={6}>
+                <Suspense fallback={<Loading />}>
                   <ContentBox
                     category={articles[2]?.category}
                     image={articles[2]?.image}
@@ -107,8 +118,10 @@ export default async function Banner({
                     description={articles[2]?.description}
                     tooSmall
                   />
+                  </Suspense>
                 </Grid>
                 <Grid item xs={6} sm={6}>
+                <Suspense fallback={<Loading />}>
                   <ContentBox
                     category={articles[3]?.category}
                     image={articles[3]?.image}
@@ -116,6 +129,7 @@ export default async function Banner({
                     description={articles[3]?.description}
                     tooSmall
                   />
+                  </Suspense>
                 </Grid>
               </Grid>
             </Grid>
@@ -123,41 +137,50 @@ export default async function Banner({
 
           <Grid sx={{ py: 4 }} container>
             <Grid
-              sx={{ borderRight: "1px solid lightgray", pr: 1,display:{
-                xs:'none',
-                sm:'block'
-              } }}
+              sx={{
+                borderRight: "1px solid lightgray",
+                pr: 1,
+                display: {
+                  xs: "none",
+                  sm: "block",
+                },
+              }}
               item
               xs={12}
               sm={6}
               md={4}
             >
-              <PhoneFinder brands={SampleBrands} />
-              <MobileReviews
-                isGap
-                isTrending
-                mobilesArticles={latestArticles}
-              />
-              <TopDevicesTable
-                byFans={byFansMobiles}
-                dailyInterest={dailyInterestMobiles}
-              />
-              <LatestDevices mobiles={latestDeviceMobiles} />
+              <Suspense fallback={<Loading />}>
+                <PhoneFinder brands={SampleBrands} />
+                <MobileReviews
+                  isGap
+                  isTrending
+                  mobilesArticles={latestArticles}
+                />
+                <TopDevicesTable
+                  byFans={byFansMobiles}
+                  dailyInterest={dailyInterestMobiles}
+                />
+                <LatestDevices mobiles={latestDeviceMobiles} />
+              </Suspense>
             </Grid>
             <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
-              {mobilesArticles ? (
-                mobilesArticles[0] ? (
-                  <MobileReviews mobilesArticles={mobilesArticles} />
-                ) : null
-              ) : null}
-
-              <PopularMobiles
-                LastUpdatedMobiles={LastUpdatedMobiles}
-                SamsungMobiles={SamsungMobiles}
-                googleMobiles={googleMobiles}
-                user={user}
-                articles={AppleMobiles}
-              />
+              <Suspense fallback={<Loading />}>
+                {mobilesArticles ? (
+                  mobilesArticles[0] ? (
+                    <MobileReviews mobilesArticles={mobilesArticles} />
+                  ) : null
+                ) : null}
+              </Suspense>
+              <Suspense fallback={<Loading />}>
+                <PopularMobiles
+                  LastUpdatedMobiles={LastUpdatedMobiles}
+                  SamsungMobiles={SamsungMobiles}
+                  googleMobiles={googleMobiles}
+                  user={user}
+                  articles={AppleMobiles}
+                />
+              </Suspense>
               <Grid gap={1} container>
                 <Typography
                   sx={{
@@ -172,8 +195,9 @@ export default async function Banner({
                     Mobile Brands
                   </Link>
                 </Typography>
-
-                <BrandDisplayComponent brands={brands.slice(0, 10)} />
+                <Suspense fallback={<Loading />}>
+                  <BrandDisplayComponent brands={brands.slice(0, 10)} />
+                </Suspense>
                 <Grid display={"flex"} justifyContent={"end"} xs={12}>
                   <Link aria-label="Brands" href={"/brands"}>
                     <Typography
@@ -190,7 +214,9 @@ export default async function Banner({
                   </Link>
                 </Grid>
               </Grid>
-              <NewsAndReviews mobilesArticles={newsAndReviews} />
+              <Suspense fallback={<Loading />}>
+                <NewsAndReviews mobilesArticles={newsAndReviews} />
+              </Suspense>
             </Grid>
           </Grid>
         </Paper>

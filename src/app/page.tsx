@@ -17,8 +17,8 @@ const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
   ssr: false, // or true, based on whether you want SSR support
 });
 const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
-  suspense: true,
   ssr: false, // or true, based on whether you want SSR support
+  // suspense: true,
 });
 const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
   suspense: true,
@@ -109,7 +109,6 @@ async function Home({ searchParams }: HomePropsType) {
         key="canonical"
       />
       <Navbar />
-      {/* <Suspense fallback={<HomePageLoadingSkeleton isOffNavbar />}> */}
       <Banner
         LastUpdatedMobiles={LastUpdatedMobiles?.data as any}
         SamsungMobiles={SamsungMobiles?.data as any}
@@ -126,10 +125,6 @@ async function Home({ searchParams }: HomePropsType) {
         googleMobiles={GoogleMobiles?.data as any}
       />
       <Footer />
-      {/* </Suspense> */}
-
-      {/* <Suspense fallback={<p>loading...</p>}>
-      </Suspense> */}
     </Fragment>
   );
 }
