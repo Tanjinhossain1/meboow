@@ -145,7 +145,8 @@ export default function NewsMainComponent({
                 <MobileReviews mobilesArticles={mobilesArticles} />
                 <BestArticles bestArticles={bestReviewsArticles} />
                 <Categories category={category} />
-                <NewsAndReviews mobilesArticles={newsAndReviews} />
+                <NewsAndReviews /> 
+                 {/* mobilesArticles={newsAndReviews} /> */}
                 <Grid gap={1} container>
                   <Typography
                     sx={{

@@ -71,7 +71,7 @@ async function Home({ searchParams }: HomePropsType) {
     // articles,
     // LatestArticles,
     // MobilesArticles,
-    newsAndReviews,
+    // newsAndReviews,
     ApplesMobile,
     GoogleMobiles,
     SamsungMobiles,
@@ -84,7 +84,7 @@ async function Home({ searchParams }: HomePropsType) {
     // getAllArticles({ pages: page, limits: limit }),
     // getAllArticles({ pages: page, limits: limit, latestDevice: "latest" }),
     // getAllArticles({ limits: "20", category: "Mobiles" }),
-    getAllArticlesWithShowInNews({ limits: "30" }),
+    // getAllArticlesWithShowInNews({ limits: "30" }),
     // mobiles
     getAllMobiles({ limits: "30", brands: "Apple" }),
     getAllMobiles({ limits: "30", brands: "Google" }),
@@ -127,7 +127,7 @@ async function Home({ searchParams }: HomePropsType) {
         dailyInterestMobiles={DailyInterestMobiles?.data as any}
         byFansMobiles={ByFansMobiles?.data as any}
         latestDeviceMobiles={LatestDeviceMobiles?.data as any}
-        newsAndReviews={newsAndReviews as any}
+        // newsAndReviews={newsAndReviews as any}
         mobilesArticles={MobilesArticles as any}
         user={user}
         brands={brands}

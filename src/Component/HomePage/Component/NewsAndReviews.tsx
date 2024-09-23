@@ -14,29 +14,40 @@ import "./MobileReviews.css";
 import Image from "next/image";
 import { formatDate, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
+import { getAllArticlesWithShowInNews } from "@/lib/queries/services";
 
 // import required modules
-export default function NewsAndReviews({
-  mobilesArticles,
-}: {
-  mobilesArticles: RecentArticleDataType[];
-}) {
+export default function NewsAndReviews() {
+// export default function NewsAndReviews({
+//   mobilesArticles,
+// }: {
+//   mobilesArticles: RecentArticleDataType[];
+// }) {
+  
+const [mobilesArticles,setMobileArticles] = useState<RecentArticleDataType[]>([])
   const [progress, setProgress] = useState(
     mobilesArticles.length >= 6 ? 0 : 100
   );
   const swiperRef = useRef<any>(null);
-  const updateProgress = () => {
-    if (swiperRef.current) {
-      const swiper = swiperRef.current.swiper;
-      const totalSlides = swiper.slides.length;
-      const visibleSlides = mobilesArticles.length / 1.5;
-      const currentIndex = swiper.activeIndex;
-      const progressRatio = (currentIndex + visibleSlides) / totalSlides;
-      setProgress(progressRatio);
+  useEffect(()=>{
+    const fetchData =async ()=>{
+      const news = await getAllArticlesWithShowInNews({ limits: "30" })
+      setMobileArticles(news)
     }
-  };
+    fetchData()
+  },[])
 
-  useEffect(() => {
+  useEffect(() => { 
+    const updateProgress = () => {
+      if (swiperRef.current) {
+        const swiper = swiperRef.current.swiper;
+        const totalSlides = swiper.slides.length;
+        const visibleSlides = mobilesArticles.length / 1.5;
+        const currentIndex = swiper.activeIndex;
+        const progressRatio = (currentIndex + visibleSlides) / totalSlides;
+        setProgress(progressRatio);
+      }
+    };
     if (swiperRef.current) {
       const swiper = swiperRef.current.swiper;
       swiper.on("slideChange", updateProgress);
@@ -46,8 +57,9 @@ export default function NewsAndReviews({
         swiper.off("slideChange", updateProgress);
       };
     }
-  }, []);
-
+    
+  }, [mobilesArticles]);
+  
   console.log('newsAndReviews ', mobilesArticles)
   return (
     <Fragment>

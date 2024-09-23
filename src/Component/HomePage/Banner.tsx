@@ -62,7 +62,7 @@ export default async function Banner({
   AppleMobiles,
   user,
   mobilesArticles,
-  newsAndReviews,
+  // newsAndReviews,
   dailyInterestMobiles,
   byFansMobiles,
   latestDeviceMobiles,
@@ -73,7 +73,7 @@ export default async function Banner({
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
   latestArticles: RecentArticleDataType[];
-  newsAndReviews: RecentArticleDataType[];
+  // newsAndReviews: RecentArticleDataType[];
   brands: BrandTypes[];
   AppleMobiles: MobileArticleType[];
   dailyInterestMobiles: MobileArticleType[];
@@ -235,7 +235,8 @@ export default async function Banner({
                 </Grid>
               </Grid>
               <Suspense fallback={<Loading />}>
-                <NewsAndReviews mobilesArticles={newsAndReviews} />
+                <NewsAndReviews /> 
+                {/* mobilesArticles={newsAndReviews} /> */}
               </Suspense>
             </Grid>
           </Grid>
