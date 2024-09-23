@@ -4,8 +4,14 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 import { MobileArticleType } from "@/types/mobiles";
-import CommonMobileSlider from "./CommonMobileSlider";
+// import CommonMobileSlider from "./CommonMobileSlider";
 import { getAllMobiles } from "@/lib/queries/services";
+import dynamic from "next/dynamic";
+
+const CommonMobileSlider = dynamic(() => import("./CommonMobileSlider"), {
+  ssr: true,
+  suspense: true,
+});
 
 export default function PopularMobiles({ user }: { user: any }) {
   const [appleMobiles, setAppleMobiles] = useState<MobileArticleType[]>([]);
@@ -16,16 +22,16 @@ export default function PopularMobiles({ user }: { user: any }) {
   >([]);
   useEffect(() => {
     const fetchData = async () => {
-      const apple = await getAllMobiles({ limits: "30", brands: "Apple" });
+      const apple = await getAllMobiles({ limits: "3", brands: "Apple" });
+      setAppleMobiles(apple.data as any);
       const samsungData = await getAllMobiles({
-        limits: "30",
+        limits: "3",
         brands: "Samsung",
       });
-      const google = await getAllMobiles({ limits: "30", brands: "Google" });
-      const lastUpdate = await getAllMobiles({ limits: "30" });
-      setAppleMobiles(apple.data as any);
       setSamsungMobiles(samsungData.data as any);
+      const google = await getAllMobiles({ limits: "3", brands: "Google" });
       setGoogleMobiles(google.data as any);
+      const lastUpdate = await getAllMobiles({ limits: "3" });
       setLastUpdatedMobiles(lastUpdate.data as any);
     };
     fetchData();

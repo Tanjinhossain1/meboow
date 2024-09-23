@@ -236,14 +236,32 @@ export async function getAllMobiles({
     )()
 }
 
-export async function getAllBrands() {
+export async function getAllBrands({ pages, limits }: { pages?: string, limits?: string }) {
     const db = await getDb();
     return await cache(
         async () => {
-            return db
-                .select()
-                .from(TechBrands)
-                .orderBy(asc(TechBrands.createdAt))
+
+            const options = {
+                limit: parseInt(limits || '10', 10),
+                page: parseInt(pages || '1', 10),
+            };
+            const { limit, skip } = paginationHelpers.calculatePagination(options);
+            if (
+                pages &&
+                limits
+            ) {
+                return db
+                    .select()
+                    .from(TechBrands)
+                    .orderBy(asc(TechBrands.createdAt))
+                    .offset(skip)
+                    .limit(limit);
+            } else {
+                return db
+                    .select()
+                    .from(TechBrands)
+                    .orderBy(asc(TechBrands.createdAt))
+            }
         },
         ["brands"],
         {

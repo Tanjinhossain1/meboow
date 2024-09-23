@@ -97,7 +97,7 @@ export default function MobileReviews({
                   loading="lazy" // lazy loading for reduce loading time
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-              ) : (
+              ) : articles[0]?.image ? (
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${articles[0]?.image}`}
                   alt={`Article Image ${articles[0]?.title}`}
@@ -108,12 +108,12 @@ export default function MobileReviews({
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-              )}
+              ): null}
             </Link>
           </div>
         </Grid>
         <Grid item xs={isTrending ? 12 : 8}>
-          {isTrending ? null : (
+          {isTrending ? null : articles.length > 0 ? (
             <Typography sx={{ fontSize: 12, textAlign: "left" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,7 @@ export default function MobileReviews({
               </svg>
               {formatDate(articles[0]?.createdAt)}
             </Typography>
-          )}
+          ):null}
           <Link
             aria-label={`Mobile & Review ${formatForUrl(articles[0]?.title)}`}
             href={
@@ -275,7 +275,7 @@ export default function MobileReviews({
             },
           }}
         >
-          {articles ? 
+          {articles?.length > 2 ? 
             articles.slice(1, articles.length)
             ?.map((article: RecentArticleDataType) => (
               <Fragment key={article.id}>
@@ -329,7 +329,7 @@ export default function MobileReviews({
                             d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
                           />
                         </svg>
-                        {formatDate(article.createdAt)}
+                        {/* {formatDate(article.createdAt)} */}
                       </Typography>
                       <Link
                         aria-label={`Mobile & Review ${formatForUrl(

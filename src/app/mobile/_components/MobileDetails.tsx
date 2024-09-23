@@ -318,7 +318,7 @@ export default function MobileDetails({
                   List Of Brands
                 </Typography>
                 <Grid gap={2} container>
-                  <BrandDisplayComponent brands={brands.slice(0, 10)} />
+                  <BrandDisplayComponent isSelfFetch />
                 </Grid>
                 <Typography sx={{ fontSize: 20, fontWeight: 600, mt: 3 }}>
                   Latest Mobiles

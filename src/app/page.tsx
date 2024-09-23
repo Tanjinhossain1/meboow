@@ -3,8 +3,6 @@ import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
 import {
   getAllArticles,
-  getAllArticlesWithShowInNews,
-  getAllBrands,
   getAllMobiles,
 } from "@/lib/queries/services";
 import dynamic from "next/dynamic";
@@ -23,12 +21,6 @@ const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
   ssr: false,
 });
 
-interface HomePropsType {
-  searchParams: {
-    page: string;
-    limit: string;
-  };
-}
 export const metadata: Metadata = {
   title: "SafariList",
   description:
@@ -63,7 +55,7 @@ export const metadata: Metadata = {
   },
 };
 
-async function Home({ searchParams }: HomePropsType) {
+async function Home() {
   const session = await getServerSession(authConfig);
 
   const articles = await getAllArticles({ pages: "1", limits: "4" });
@@ -82,8 +74,6 @@ async function Home({ searchParams }: HomePropsType) {
     limits: "12",
     is_latest_device: "YES",
   });
-  
-  const brands = await getAllBrands();
 
   const user = session?.user;
   return (
@@ -102,7 +92,6 @@ async function Home({ searchParams }: HomePropsType) {
           byFansMobiles={ByFansMobiles?.data as any}
           latestDeviceMobiles={LatestDeviceMobiles?.data as any}
           user={user}
-          brands={brands}
           articles={articles as any}
         />
       </Suspense>

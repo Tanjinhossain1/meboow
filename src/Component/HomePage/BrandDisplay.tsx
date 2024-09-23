@@ -3,19 +3,34 @@ import { BrandTypes } from "@/types/category";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatForUrlWith_under_score } from "@/utils/utils";
+import { getAllBrands } from "@/lib/queries/services";
 
 export default function BrandDisplayComponent({
   brands,
+  isSelfFetch,
 }: {
-  brands: BrandTypes[];
+  brands?: BrandTypes[];
+  isSelfFetch?: boolean;
 }) {
+  const [listOfBrands, setListOfBrands] = useState<BrandTypes[]>(
+    brands ? brands : []
+  );
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const serverBrand = await getAllBrands({pages:'1',limits:"10"});
+      setListOfBrands(serverBrand);
+    };
+    if(isSelfFetch){
+      fetchArticles();
+    }
+  }, [isSelfFetch]);
   return (
-    brands &&
-    brands?.map((data: BrandTypes) => {
+    listOfBrands &&
+    listOfBrands?.map((data: BrandTypes) => {
       return (
         <Grid key={data?.id} xs={5} sm={3} md={2}>
           <Link
@@ -59,7 +74,7 @@ export default function BrandDisplayComponent({
               />
             </Box>
             <Typography
-            className="bg-gray-50"
+              className="bg-gray-50"
               sx={{ textAlign: "center", color: "gray", fontSize: 14 }}
             >
               {data?.title}
