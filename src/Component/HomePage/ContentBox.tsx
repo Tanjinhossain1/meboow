@@ -127,7 +127,7 @@ const ContentBox = ({
           alt={title}
           layout="fill"
           objectFit="contain"
-          priority={isBig} // Preload only if critical
+          // priority={isBig} // Preload only if critical
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Ensure responsive loading
         />
       </Link>
