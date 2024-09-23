@@ -47,8 +47,6 @@ export default function BrandWiseDetails({
   const [searchTerm, setSearchTerm] = useState<string>(""); // Search term state
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
-
-
   
   useEffect(() => {
     const loadMoreArticles = async () => {

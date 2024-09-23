@@ -343,7 +343,7 @@ export default function MobileDetails({
     </Fragment>
   );
 }
-function SearchIcon(props: any) {
+export function SearchIcon(props: any) {
   return (
     <svg
       {...props}
