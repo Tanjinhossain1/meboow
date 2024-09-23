@@ -4,14 +4,12 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-  Drawer,
-  Grid,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import Drawer from "@mui/material/Drawer";
+import Grid from "@mui/material/Grid";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import Image from "next/image";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
@@ -150,12 +148,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
       <Grid sx={{ bottom: 0, position: "absolute", ml: 2 }} container>
         <Grid xs={0} sm={4} md={5} lg={7}></Grid>
 
-        <Grid
-          xs={0}
-          sm={12}
-          sx={{ mb: 2 }}
-          container
-        >
+        <Grid xs={0} sm={12} sx={{ mb: 2 }} container>
           <Grid xs={4}>
             <Typography
               gap={2}
@@ -165,7 +158,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Black" style={{ color: "black" }} href={"/about"}>
+              <Link
+                aria-label="Black"
+                style={{ color: "black" }}
+                href={"/about"}
+              >
                 About Us
               </Link>
             </Typography>
@@ -179,7 +176,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contact"}>
+              <Link
+                aria-label="Contact Us"
+                style={{ color: "black" }}
+                href={"/contact"}
+              >
                 Contact us
               </Link>
             </Typography>
@@ -193,7 +194,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacy-policy"}>
+              <Link
+                aria-label="Privacy Policy"
+                style={{ color: "black" }}
+                href={"/privacy-policy"}
+              >
                 Privacy Policy
               </Link>
             </Typography>
@@ -207,7 +212,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                 ":hover": { textDecoration: "underline" },
               }}
             >
-              <Link aria-label="Terms And Conditions" style={{ color: "black" }} href={"/terms-and-conditions"}>
+              <Link
+                aria-label="Terms And Conditions"
+                style={{ color: "black" }}
+                href={"/terms-and-conditions"}
+              >
                 Terms & Condition
               </Link>
             </Typography>
@@ -263,7 +272,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="About Us" style={{ color: "black" }} href={"/about"}>
+                  <Link
+                    aria-label="About Us"
+                    style={{ color: "black" }}
+                    href={"/about"}
+                  >
                     About Us
                   </Link>
                 </Typography>
@@ -276,7 +289,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="Contact Us" style={{ color: "black" }} href={"/contact"}>
+                  <Link
+                    aria-label="Contact Us"
+                    style={{ color: "black" }}
+                    href={"/contact"}
+                  >
                     Contact us
                   </Link>
                 </Typography>
@@ -289,7 +306,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="Privacy Policy" style={{ color: "black" }} href={"/privacy-policy"}>
+                  <Link
+                    aria-label="Privacy Policy"
+                    style={{ color: "black" }}
+                    href={"/privacy-policy"}
+                  >
                     Privacy Policy
                   </Link>
                 </Typography>
@@ -303,7 +324,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                   }}
                 >
                   <Link
-                  aria-label="Terms And Conditions"
+                    aria-label="Terms And Conditions"
                     style={{ color: "black" }}
                     href={"/terms-and-conditions"}
                   >
@@ -319,7 +340,11 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     ":hover": { textDecoration: "underline" },
                   }}
                 >
-                  <Link aria-label="Faq" style={{ color: "black" }} href={"/faq"}>
+                  <Link
+                    aria-label="Faq"
+                    style={{ color: "black" }}
+                    href={"/faq"}
+                  >
                     FAQ
                   </Link>
                 </Typography>

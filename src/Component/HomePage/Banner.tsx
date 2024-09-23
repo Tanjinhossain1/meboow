@@ -10,7 +10,6 @@ import { SampleBrands } from "./ContentBox";
 import { BrandTypes } from "@/types/category";
 import dynamic from "next/dynamic";
 
-
 const ContentBox = React.memo(
   dynamic(() => import("@/Component/HomePage/ContentBox"), {
     ssr: true,
@@ -18,28 +17,43 @@ const ContentBox = React.memo(
   })
 );
 const PhoneFinder = React.memo(
-  dynamic(() => import("../Common/PhoneFinder"), { ssr: true,suspense:true })
+  dynamic(() => import("../Common/PhoneFinder"), { ssr: true, suspense: true })
 );
 const MobileReviews = React.memo(
-  dynamic(() => import("./Component/MobileReviews"), { ssr: true,suspense:true })
+  dynamic(() => import("./Component/MobileReviews"), {
+    ssr: true,
+    suspense: true,
+  })
 );
 const TopDevicesTable = React.memo(
-  dynamic(() => import("./Component/TopDevicesTable"), { ssr: true,suspense:true })
+  dynamic(() => import("./Component/TopDevicesTable"), {
+    ssr: true,
+    suspense: true,
+  })
 );
 const LatestDevices = React.memo(
-  dynamic(() => import("./Component/LatestDevices"), { ssr: true,suspense:true })
+  dynamic(() => import("./Component/LatestDevices"), {
+    ssr: true,
+    suspense: true,
+  })
 );
 const PopularMobiles = React.memo(
-  dynamic(() => import("./Component/PopularMobiles"), { ssr: true,suspense:true })
+  dynamic(() => import("./Component/PopularMobiles"), {
+    ssr: true,
+    suspense: true,
+  })
 );
 const NewsAndReviews = React.memo(
-  dynamic(() => import("./Component/NewsAndReviews"), { ssr: true,suspense:true })
+  dynamic(() => import("./Component/NewsAndReviews"), {
+    ssr: true,
+    suspense: true,
+  })
 );
 const BrandDisplayComponent = React.memo(
-  dynamic(() => import("./BrandDisplay"), { ssr: true,suspense:true })
+  dynamic(() => import("./BrandDisplay"), { ssr: true, suspense: true })
 );
 
-const Loading: any = <p className="text-[60px]">loading...</p>
+const Loading: any = <p className="text-[60px]">loading...</p>;
 
 export default async function Banner({
   articles,
@@ -100,35 +114,35 @@ export default async function Banner({
             <Grid item xs={12} sm={5.5}>
               <Grid container spacing={1}>
                 <Grid item xs={6} sm={12}>
-                <Suspense fallback={<Loading />}>
-                  <ContentBox
-                    category={articles[1]?.category}
-                    image={articles[1]?.image}
-                    title={articles[1]?.title}
-                    description={articles[1]?.description}
-                  />
+                  <Suspense fallback={<Loading />}>
+                    <ContentBox
+                      category={articles[1]?.category}
+                      image={articles[1]?.image}
+                      title={articles[1]?.title}
+                      description={articles[1]?.description}
+                    />
                   </Suspense>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                <Suspense fallback={<Loading />}>
-                  <ContentBox
-                    category={articles[2]?.category}
-                    image={articles[2]?.image}
-                    title={articles[2]?.title}
-                    description={articles[2]?.description}
-                    tooSmall
-                  />
+                  <Suspense fallback={<Loading />}>
+                    <ContentBox
+                      category={articles[2]?.category}
+                      image={articles[2]?.image}
+                      title={articles[2]?.title}
+                      description={articles[2]?.description}
+                      tooSmall
+                    />
                   </Suspense>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                <Suspense fallback={<Loading />}>
-                  <ContentBox
-                    category={articles[3]?.category}
-                    image={articles[3]?.image}
-                    title={articles[3]?.title}
-                    description={articles[3]?.description}
-                    tooSmall
-                  />
+                  <Suspense fallback={<Loading />}>
+                    <ContentBox
+                      category={articles[3]?.category}
+                      image={articles[3]?.image}
+                      title={articles[3]?.title}
+                      description={articles[3]?.description}
+                      tooSmall
+                    />
                   </Suspense>
                 </Grid>
               </Grid>
@@ -152,15 +166,21 @@ export default async function Banner({
             >
               <Suspense fallback={<Loading />}>
                 <PhoneFinder brands={SampleBrands} />
+              </Suspense>
+              <Suspense fallback={<Loading />}>
                 <MobileReviews
                   isGap
                   isTrending
                   mobilesArticles={latestArticles}
                 />
+              </Suspense>
+              <Suspense fallback={<Loading />}>
                 <TopDevicesTable
                   byFans={byFansMobiles}
                   dailyInterest={dailyInterestMobiles}
                 />
+              </Suspense>
+              <Suspense fallback={<Loading />}>
                 <LatestDevices mobiles={latestDeviceMobiles} />
               </Suspense>
             </Grid>
