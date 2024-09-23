@@ -71,7 +71,7 @@ async function Home({ searchParams }: HomePropsType) {
     // articles,
     // LatestArticles,
     // MobilesArticles,
-    // newsAndReviews,
+    newsAndReviews,
     ApplesMobile,
     GoogleMobiles,
     SamsungMobiles,
@@ -84,7 +84,7 @@ async function Home({ searchParams }: HomePropsType) {
     // getAllArticles({ pages: page, limits: limit }),
     // getAllArticles({ pages: page, limits: limit, latestDevice: "latest" }),
     // getAllArticles({ limits: "20", category: "Mobiles" }),
-    // getAllArticlesWithShowInNews({ limits: "30" }),
+    getAllArticlesWithShowInNews({ limits: "30" }),
     // mobiles
     getAllMobiles({ limits: "30", brands: "Apple" }),
     getAllMobiles({ limits: "30", brands: "Google" }),
@@ -99,7 +99,7 @@ async function Home({ searchParams }: HomePropsType) {
   const articles = await getAllArticles({ pages: page, limits: limit })
   const LatestArticles = await getAllArticles({ pages: page, limits: limit, latestDevice: "latest" })
   const MobilesArticles = await getAllArticles({ limits: "20", category: "Mobiles" })
-  const newsAndReviews = await getAllArticlesWithShowInNews({ limits: "30" })
+  // const newsAndReviews = await getAllArticlesWithShowInNews({ limits: "30" })
   // const ApplesMobile = await getAllMobiles({ limits: "30", brands: "Apple" })
   // const GoogleMobiles = await getAllMobiles({ limits: "30", brands: "Google" })
   // const SamsungMobiles = await getAllMobiles({ limits: "30", brands: "Samsung" })
