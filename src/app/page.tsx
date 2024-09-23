@@ -68,46 +68,46 @@ async function Home({ searchParams }: HomePropsType) {
   const session = await getServerSession(authConfig);
 
   const [
-    articles,
-    LatestArticles,
-    MobilesArticles,
-    newsAndReviews,
+    // articles,
+    // LatestArticles,
+    // MobilesArticles,
+    // newsAndReviews,
     ApplesMobile,
     GoogleMobiles,
     SamsungMobiles,
     LastUpdatedMobiles,
-    DailyInterestMobiles,
-    ByFansMobiles,
-    LatestDeviceMobiles,
-    brands,
+    // DailyInterestMobiles,
+    // ByFansMobiles,
+    // LatestDeviceMobiles,
+    // brands,
   ] = await Promise.all([
-    getAllArticles({ pages: page, limits: limit }),
-    getAllArticles({ pages: page, limits: limit, latestDevice: "latest" }),
-    getAllArticles({ limits: "20", category: "Mobiles" }),
-    getAllArticlesWithShowInNews({ limits: "30" }),
+    // getAllArticles({ pages: page, limits: limit }),
+    // getAllArticles({ pages: page, limits: limit, latestDevice: "latest" }),
+    // getAllArticles({ limits: "20", category: "Mobiles" }),
+    // getAllArticlesWithShowInNews({ limits: "30" }),
     // mobiles
     getAllMobiles({ limits: "30", brands: "Apple" }),
     getAllMobiles({ limits: "30", brands: "Google" }),
     getAllMobiles({ limits: "30", brands: "Samsung" }),
     getAllMobiles({ limits: "30" }),
-    getAllMobiles({ limits: "10", is_daily_interest: "YES" }),
-    getAllMobiles({ limits: "10", is_by_fans: "YES" }),
-    getAllMobiles({ limits: "12", is_latest_device: "YES" }),
+    // getAllMobiles({ limits: "10", is_daily_interest: "YES" }),
+    // getAllMobiles({ limits: "10", is_by_fans: "YES" }),
+    // getAllMobiles({ limits: "12", is_latest_device: "YES" }),
     // brands
-    getAllBrands(),
+    // getAllBrands(),
   ]);
-  // const articles = await getAllArticles({ pages: page, limits: limit })
-  // const LatestArticles = await getAllArticles({ pages: page, limits: limit, latestDevice: "latest" })
-  // const MobilesArticles = await getAllArticles({ limits: "20", category: "Mobiles" })
-  // const newsAndReviews = await getAllArticlesWithShowInNews({ limits: "30" })
+  const articles = await getAllArticles({ pages: page, limits: limit })
+  const LatestArticles = await getAllArticles({ pages: page, limits: limit, latestDevice: "latest" })
+  const MobilesArticles = await getAllArticles({ limits: "20", category: "Mobiles" })
+  const newsAndReviews = await getAllArticlesWithShowInNews({ limits: "30" })
   // const ApplesMobile = await getAllMobiles({ limits: "30", brands: "Apple" })
   // const GoogleMobiles = await getAllMobiles({ limits: "30", brands: "Google" })
   // const SamsungMobiles = await getAllMobiles({ limits: "30", brands: "Samsung" })
   // const LastUpdatedMobiles = await getAllMobiles({ limits: "30" })
-  // const DailyInterestMobiles = await getAllMobiles({ limits: "10", is_daily_interest: "YES" })
-  // const ByFansMobiles = await getAllMobiles({ limits: "10", is_by_fans: "YES" })
-  // const LatestDeviceMobiles = await getAllMobiles({ limits: "12", is_latest_device: "YES" })
-  // const brands = await getAllBrands()
+  const DailyInterestMobiles = await getAllMobiles({ limits: "10", is_daily_interest: "YES" })
+  const ByFansMobiles = await getAllMobiles({ limits: "10", is_by_fans: "YES" })
+  const LatestDeviceMobiles = await getAllMobiles({ limits: "12", is_latest_device: "YES" })
+  const brands = await getAllBrands()
 
   const user = session?.user;
   return (
