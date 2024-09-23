@@ -23,34 +23,39 @@ export default function MobileReviews({
   isGap,
   isText,
   isMobileReviews,
-  isTrendingBanner
+  isTrendingBanner,
 }: {
   mobilesArticles?: RecentArticleDataType[];
   isTrending?: boolean;
   isGap?: boolean;
   isText?: boolean;
-  isMobileReviews?:boolean;
-  isTrendingBanner?:boolean;
+  isMobileReviews?: boolean;
+  isTrendingBanner?: boolean;
 }) {
-  const [articles,setArticles] = useState<RecentArticleDataType[]>(mobilesArticles? mobilesArticles :[]);
-  useEffect(()=>{
-    const fetchArticles = async (isMobile:"isMobile" | "isTrendingBanner")=>{
-     const MobileArticles =isMobile === "isMobile" ? await getAllArticles({
-        limits: "20",
-        category: "Mobiles",
-      }) :await getAllArticles({
-        pages: '1',
-        limits: '5',
-        latestDevice: "latest",
-      });
-      setArticles(MobileArticles)
+  const [articles, setArticles] = useState<RecentArticleDataType[]>(
+    mobilesArticles ? mobilesArticles : []
+  );
+  useEffect(() => {
+    const fetchArticles = async (isMobile: "isMobile" | "isTrendingBanner") => {
+      const MobileArticles =
+        isMobile === "isMobile"
+          ? await getAllArticles({
+              limits: "20",
+              category: "Mobiles",
+            })
+          : await getAllArticles({
+              pages: "1",
+              limits: "5",
+              latestDevice: "latest",
+            });
+      setArticles(MobileArticles);
+    };
+    if (isMobileReviews) {
+      fetchArticles("isMobile");
+    } else if (isTrendingBanner) {
+      fetchArticles("isTrendingBanner");
     }
-    if(isMobileReviews){
-      fetchArticles("isMobile")
-    } else if(isTrendingBanner){
-      fetchArticles("isTrendingBanner")
-    }
-  },[isMobileReviews,isTrendingBanner])
+  }, [isMobileReviews, isTrendingBanner]);
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600, mt: isGap ? 4 : 0 }}>
@@ -74,9 +79,7 @@ export default function MobileReviews({
         >
           <div style={{ width: "100%" }}>
             <Link
-              aria-label={`Mobile & Review ${formatForUrl(
-                articles[0]?.title
-              )}`}
+              aria-label={`Mobile & Review ${formatForUrl(articles[0]?.title)}`}
               href={
                 articles[0]?.category === "Mobiles"
                   ? `/review/${formatForUrl(articles[0]?.title)}`
@@ -93,7 +96,6 @@ export default function MobileReviews({
                   className="object-cover"
                   loading="lazy" // lazy loading for reduce loading time
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-
                 />
               ) : (
                 <Image
@@ -103,9 +105,8 @@ export default function MobileReviews({
                   width={10} // Aspect ratio: width
                   height={40} // Aspect ratio: height
                   className="object-cover"
-                            loading="lazy"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               )}
             </Link>
@@ -132,9 +133,7 @@ export default function MobileReviews({
             </Typography>
           )}
           <Link
-            aria-label={`Mobile & Review ${formatForUrl(
-              articles[0]?.title
-            )}`}
+            aria-label={`Mobile & Review ${formatForUrl(articles[0]?.title)}`}
             href={
               articles[0]?.category === "Mobiles"
                 ? `/review/${formatForUrl(articles[0]?.title)}`
@@ -147,9 +146,7 @@ export default function MobileReviews({
           </Link>
           {isTrending ? null : (
             <Link
-              aria-label={`Mobile & Review ${formatForUrl(
-                articles[0]?.title
-              )}`}
+              aria-label={`Mobile & Review ${formatForUrl(articles[0]?.title)}`}
               href={
                 articles[0]?.category === "Mobiles"
                   ? `/review/${formatForUrl(articles[0]?.title)}`
@@ -277,10 +274,9 @@ export default function MobileReviews({
               slidesPerView: 2,
             },
           }}
-        
         >
-          {articles
-            .slice(1, articles.length)
+          {articles ? 
+            articles.slice(1, articles.length)
             ?.map((article: RecentArticleDataType) => (
               <Fragment key={article.id}>
                 <SwiperSlide style={{ height: "200px" }}>
@@ -354,7 +350,7 @@ export default function MobileReviews({
                   </Grid>
                 </SwiperSlide>
               </Fragment>
-            ))}
+            )): null}
         </Swiper>
       )}
     </Fragment>
