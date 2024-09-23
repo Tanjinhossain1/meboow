@@ -4,10 +4,11 @@ import Footer from "@/Component/HomePage/Footer";
 import { Metadata, ResolvingMetadata } from "next";
 import { getAllMobiles } from "@/lib/queries/services";
 import dynamic from "next/dynamic";
+import LoadingComponent from "../../_components/LoadingCompo";
 
 const BrandWiseMobile = dynamic(() => import("../../_components/BrandWiseMobile"), {
   suspense: true,
-  ssr: false,
+  ssr: true,
 });
 
 export async function generateMetadata(
@@ -42,6 +43,10 @@ export async function generateMetadata(
     };
 }
 export default async function page({ params }: { params: { brand: string,page:string } }) {
+  const formattedBrand = params?.brand
+  .split("_")
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ");
   const [
     mobiles,
   ] = await Promise.all([
@@ -50,7 +55,9 @@ export default async function page({ params }: { params: { brand: string,page:st
   return (
     <Fragment>
       <Navbar />
-      <BrandWiseMobile defaultMobiles={mobiles as any} />
+      <React.Suspense fallback={<LoadingComponent brand={formattedBrand} />}>
+        <BrandWiseMobile defaultMobiles={mobiles as any} />
+      </React.Suspense>
       <Footer />
     </Fragment>
   );

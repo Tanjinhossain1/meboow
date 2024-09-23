@@ -48,7 +48,6 @@ export default async function page({ params }: { params: { brand: string } }) {
   return (
     <Fragment>
       <Navbar />
-      
       <React.Suspense fallback={<LoadingComponent brand={formattedBrand} />}>
         <BrandWiseMobile defaultMobiles={mobiles as any} />
       </React.Suspense>

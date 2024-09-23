@@ -1,16 +1,14 @@
 "use client";
 import { MobileArticleType } from "@/types/mobiles";
-import {
-  Breadcrumbs,
-  Grid,
-  Link as MuiLink,
-  Paper,
-  Typography,
-  Pagination,
-  PaginationItem,
-  Input,
-  Box,
-} from "@mui/material";
+import  Breadcrumbs  from "@mui/material/Breadcrumbs";
+import  Grid  from "@mui/material/Grid";
+import  MuiLink  from "@mui/material/Link";
+import  Paper  from "@mui/material/Paper";
+import  Typography  from "@mui/material/Typography";
+import  Pagination  from "@mui/material/Pagination";
+import  PaginationItem  from "@mui/material/PaginationItem";
+import  Input  from "@mui/material/Input";
+import  Box  from "@mui/material/Box";
 import { useParams } from "next/navigation"; // Hook for getting params and pathname
 import React, {
   ChangeEvent,
@@ -57,16 +55,7 @@ export default function BrandWiseMobile({
   // Fetch articles on page load and when page/brand changes
   useEffect(() => {
     const fetchArticles = async () => {
-      // try {
-      //   const response = await axios.get(
-      //     `/api/article/mobile?page=${pageParam}&limit=${limit}&brands=${formattedBrand}`
-      //   );
-      //   setArticles(response.data.data);
-      // setTotalPages(Math.ceil(response.data.meta.total / limit));
       setTotalPages(Math.ceil(defaultMobiles?.meta?.total / limit));
-      // } catch (error) {
-      //   console.error("Error fetching articles:", error);
-      // }
     };
 
     fetchArticles();
@@ -169,7 +158,6 @@ export default function BrandWiseMobile({
                         width={200}
                         height={200}
                         layout="responsive"
-                        loading="lazy"
                       />
                     </Link>
                     <Typography sx={{ ":hover": { bgColor: "red" } }}>
