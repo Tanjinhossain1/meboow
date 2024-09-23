@@ -18,7 +18,6 @@ import {
   formatForUrlWith_under_score,
 } from "@/utils/utils";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { SampleBrands } from "@/Component/HomePage/ContentBox";
 
 const PhoneFinder = lazy(() => import("@/Component/Common/PhoneFinder"));
 const MobileReviews = lazy(() => import("@/Component/HomePage/Component/MobileReviews"));
@@ -72,7 +71,7 @@ export default function MainComponent({
           xs={12}
           sm={3.8}
         >
-          <PhoneFinder brands={SampleBrands} />
+          <PhoneFinder />
         </Grid>
         <Grid
           sx={{

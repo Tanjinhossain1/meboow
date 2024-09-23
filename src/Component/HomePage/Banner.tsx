@@ -57,31 +57,17 @@ const Loading: any = <p className="text-[60px]">loading...</p>;
 
 export default async function Banner({
   articles,
-  latestArticles,
   brands,
-  AppleMobiles,
   user,
-  mobilesArticles,
-  // newsAndReviews,
   dailyInterestMobiles,
   byFansMobiles,
   latestDeviceMobiles,
-  googleMobiles,
-  SamsungMobiles,
-  LastUpdatedMobiles,
 }: {
   articles: RecentArticleDataType[];
-  mobilesArticles: RecentArticleDataType[];
-  latestArticles: RecentArticleDataType[];
-  // newsAndReviews: RecentArticleDataType[];
   brands: BrandTypes[];
-  AppleMobiles: MobileArticleType[];
   dailyInterestMobiles: MobileArticleType[];
   byFansMobiles: MobileArticleType[];
   latestDeviceMobiles: MobileArticleType[];
-  googleMobiles: MobileArticleType[];
-  SamsungMobiles: MobileArticleType[];
-  LastUpdatedMobiles: MobileArticleType[];
   user: any;
 }) {
   return (
@@ -165,13 +151,13 @@ export default async function Banner({
               md={4}
             >
               <Suspense fallback={<Loading />}>
-                <PhoneFinder brands={SampleBrands} />
+                <PhoneFinder />
               </Suspense>
               <Suspense fallback={<Loading />}>
                 <MobileReviews
                   isGap
                   isTrending
-                  mobilesArticles={latestArticles}
+                  isTrendingBanner
                 />
               </Suspense>
               <Suspense fallback={<Loading />}>
@@ -186,19 +172,11 @@ export default async function Banner({
             </Grid>
             <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
               <Suspense fallback={<Loading />}>
-                {mobilesArticles ? (
-                  mobilesArticles[0] ? (
-                    <MobileReviews mobilesArticles={mobilesArticles} />
-                  ) : null
-                ) : null}
+                <MobileReviews isMobileReviews />
               </Suspense>
               <Suspense fallback={<Loading />}>
                 <PopularMobiles
-                  LastUpdatedMobiles={LastUpdatedMobiles}
-                  SamsungMobiles={SamsungMobiles}
-                  googleMobiles={googleMobiles}
                   user={user}
-                  articles={AppleMobiles}
                 />
               </Suspense>
               <Grid gap={1} container>
@@ -235,8 +213,7 @@ export default async function Banner({
                 </Grid>
               </Grid>
               <Suspense fallback={<Loading />}>
-                <NewsAndReviews /> 
-                {/* mobilesArticles={newsAndReviews} /> */}
+                <NewsAndReviews />
               </Suspense>
             </Grid>
           </Grid>

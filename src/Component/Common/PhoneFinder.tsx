@@ -1,8 +1,9 @@
 "use client";
 import { formatForUrlWith_under_score } from "@/utils/utils";
 import React from "react";
+import { SampleBrands } from "../HomePage/ContentBox";
 
-export default function PhoneFinder({ brands }: { brands: string[] }) {
+export default function PhoneFinder() {
   return (
     <div className=" mx-auto">
       <div className="bg-[#023359] text-white text-center py-2 rounded-t-lg">
@@ -11,7 +12,7 @@ export default function PhoneFinder({ brands }: { brands: string[] }) {
         </h2>
       </div>
       <div className="grid grid-cols-4   bg-gray-100  py-1 rounded-b-lg">
-        {brands?.map((brand, index) => (
+        {SampleBrands?.map((brand, index) => (
           <a
           aria-label={`Brand Name:- ${brand}`}
             key={index}

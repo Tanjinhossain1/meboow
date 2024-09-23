@@ -4,11 +4,9 @@ import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
 import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
 import ExpertViewComponent from "@/Component/Mobile/ExpertView";
-import { BrandTypes } from "@/types/category";
 import {
   MobileArticleType,
   MobileOpinionType,
-  MobileTagsType,
 } from "@/types/mobiles";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Button, Grid, Paper } from "@mui/material";
@@ -72,7 +70,7 @@ export default function MainMobileDetails({
               xs={12}
               sm={3.9}
             >
-              <PhoneFinder brands={SampleBrands} />
+              <PhoneFinder />
 
               <MobileReviews
                 isGap

@@ -7,15 +7,15 @@ import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import NewsAndReviews from "@/Component/HomePage/Component/NewsAndReviews";
 import TopDevicesTable from "@/Component/HomePage/Component/TopDevicesTable";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { Alert, Button, Grid, Paper, Typography } from "@mui/material";
+import {  Grid, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { Fragment, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
 import BestArticles from "./BestReviews";
-import ContentBox, { SampleBrands } from "@/Component/HomePage/ContentBox";
+import ContentBox from "@/Component/HomePage/ContentBox";
 
 export default function NewsMainComponent({
   articles,
@@ -132,7 +132,7 @@ export default function NewsMainComponent({
             <Grid sx={{ mt: 4 }} container>
               {/* left  */}
               <Grid xs={12} sm={6} md={4}>
-                <PhoneFinder brands={SampleBrands} />
+                <PhoneFinder />
                 <LatestDevices mobiles={latestDeviceMobiles?.slice(0, 6)} />
                 <MobileReviews isTrending mobilesArticles={latestArticles} />
                 <TopDevicesTable

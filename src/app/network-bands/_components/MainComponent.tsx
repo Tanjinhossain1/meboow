@@ -20,7 +20,6 @@ import { NetworkBandsType } from "@/types/network-bands";
 import Link from "next/link";
 import { formatForUrl } from "@/utils/utils";
 import { useRouter } from "next/navigation";
-import { SampleBrands } from "@/Component/HomePage/ContentBox";
 
 const LatestDevices = lazy(
   () => import("@/Component/HomePage/Component/LatestDevices")
@@ -90,7 +89,7 @@ export default function MainComponent({
           xs={12}
           sm={3.8}
         >
-          <PhoneFinder brands={SampleBrands} />
+          <PhoneFinder />
         </Grid>
         <Grid
           sx={{
