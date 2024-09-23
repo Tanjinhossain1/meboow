@@ -31,6 +31,7 @@ import Lottie from "lottie-react";
 import searchLoading from "@/animationIcon/search-loader.json";
 import { Input } from "@/components/ui/input"
 import { formatForUrl } from "@/utils/utils";
+import axios from "axios";
 
 export default function BrandWiseDetails({
   mobileArticles,
@@ -52,16 +53,12 @@ export default function BrandWiseDetails({
   useEffect(() => {
     const loadMoreArticles = async () => {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           searchTerm !== ""
-            ? `${
-                process.env.NEXT_PUBLIC_BASE_URL
-              }/api/article/mobile?page=${page}&limit=${20}&searchTerm=${searchTerm}`
-            : `${
-                process.env.NEXT_PUBLIC_BASE_URL
-              }/api/article/mobile?page=${page}&limit=${20}`
+            ? `/api/article/mobile?page=${page}&limit=${20}&searchTerm=${searchTerm}`
+            : `/api/article/mobile?page=${page}&limit=${20}`
         );
-        const newArticles = await res.json();
+        const newArticles = res?.data
         console.log(
           "newArticles?.meta?.total >= articles.length  ",
           newArticles?.meta?.total,
@@ -73,7 +70,7 @@ export default function BrandWiseDetails({
         totalRef.current = newArticles?.meta?.total;
         console.log("asdfdsf", newArticles);
         articlesRef.current = [...articlesRef.current, ...newArticles?.data];
-        setPage((prevPage) => prevPage + 1);
+          setPage((prevPage) => prevPage + 1);
       } catch (error) {
         console.error("Failed to load more articles", error);
       }
@@ -123,10 +120,10 @@ export default function BrandWiseDetails({
   const fetchSearchedArticles = async (search: string) => {
     setLoader(true);
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/article/mobile?searchTerm=${search}`
+      const res = await axios.get(
+        `/api/article/mobile?searchTerm=${search}`
       );
-      const newArticles = await res.json();
+      const newArticles =  res?.data
       //   totalRef.current = newArticles?.meta?.total;
       articlesRef.current = newArticles?.data || [];
       //   setPage((prevPage) => prevPage + 1);

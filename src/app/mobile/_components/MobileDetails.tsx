@@ -31,6 +31,7 @@ import MobileCommonDetails from "@/Component/HomePage/Component/MobileCommonDeta
 import { formatForUrl } from "@/utils/utils";
 import ArticleListComponent from "@/Component/Details/ArticleListComponent";
 import { RecentArticleDataType } from "@/types/RecentArticle";
+import axios from "axios";
 
 export default function MobileDetails({
   mobileArticles,
@@ -69,12 +70,11 @@ export default function MobileDetails({
   const fetchSearchedArticles = async (search: string) => {
     setLoader(true);
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/article/mobile?searchTerm=${search}`
-      );
-      const newArticles = await res.json();
+      const response = await axios.get(`/api/article/mobile?searchTerm=${search}`)
+      
+      const newArticles = response.data.data
       //   totalRef.current = newArticles?.meta?.total;
-      articlesRef.current = newArticles?.data || [];
+      articlesRef.current = newArticles || [];
       //   setPage((prevPage) => prevPage + 1);
       setLoader(false);
     } catch (error) {
