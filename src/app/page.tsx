@@ -111,19 +111,19 @@ async function Home({ searchParams }: HomePropsType) {
       <Navbar />
       {/* <Suspense fallback={<HomePageLoadingSkeleton isOffNavbar />}> */}
       <Banner
-        LastUpdatedMobiles={LastUpdatedMobiles as any}
-        SamsungMobiles={SamsungMobiles as any}
-        dailyInterestMobiles={DailyInterestMobiles as any}
-        byFansMobiles={ByFansMobiles as any}
-        latestDeviceMobiles={LatestDeviceMobiles as any}
+        LastUpdatedMobiles={LastUpdatedMobiles?.data as any}
+        SamsungMobiles={SamsungMobiles?.data as any}
+        dailyInterestMobiles={DailyInterestMobiles?.data as any}
+        byFansMobiles={ByFansMobiles?.data as any}
+        latestDeviceMobiles={LatestDeviceMobiles?.data as any}
         newsAndReviews={newsAndReviews as any}
         mobilesArticles={MobilesArticles as any}
         user={user}
         brands={brands}
         latestArticles={LatestArticles as any}
         articles={articles as any}
-        AppleMobiles={ApplesMobile as any}
-        googleMobiles={GoogleMobiles as any}
+        AppleMobiles={ApplesMobile?.data as any}
+        googleMobiles={GoogleMobiles?.data as any}
       />
       <Footer />
       {/* </Suspense> */}

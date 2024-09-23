@@ -72,7 +72,7 @@ export default async function page({
             isEdit: true,
             country: formatCountry,
           }}
-          latestDeviceMobiles={LatestDeviceMobiles as any}
+          latestDeviceMobiles={LatestDeviceMobiles?.data as any}
         />
       }
       <Footer />

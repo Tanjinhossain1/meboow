@@ -1,10 +1,14 @@
 import Navbar from "@/Component/Shared/Navbar";
 import React, { Fragment } from "react";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/lib/auth";
 import Footer from "@/Component/HomePage/Footer";
 import { Metadata, ResolvingMetadata } from "next";
-import BrandWiseMobile from "./_components/BrandWiseMobile";
+import { getAllMobiles } from "@/lib/queries/services";
+import dynamic from "next/dynamic";
+
+const BrandWiseMobile = dynamic(() => import("./_components/BrandWiseMobile"), {
+  suspense: true,
+  ssr: false,
+});
 
 export async function generateMetadata(
   { params }: { params: { brand: string } },
@@ -31,13 +35,17 @@ export async function generateMetadata(
     };
   }
 
-export default async function page() {
-  const session = await getServerSession(authConfig);
-  const user = session?.user;
+export default async function page({ params }: { params: { brand: string } }) {
+  
+  const [
+    mobiles,
+  ] = await Promise.all([
+    getAllMobiles({ limits: "50", brands: params?.brand }),
+  ]);
   return (
     <Fragment>
       <Navbar />
-      <BrandWiseMobile user={user} />
+      <BrandWiseMobile defaultMobiles={mobiles as any} />
       <Footer />
     </Fragment>
   );

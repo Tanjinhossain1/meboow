@@ -7,7 +7,7 @@ import {
     unstable_noStore as noStore,
 } from "next/cache"
 import { Articles, MobileArticles, TechBrands } from "@/drizzle/schema";
-import { and, asc, desc, eq, ne, or } from "drizzle-orm";
+import { and, asc, count, desc, eq, ne, or } from "drizzle-orm";
 import { paginationHelpers } from "@/app/api/shared/helpers";
 import { likeInsensitive } from "@/utils/utils";
 
@@ -213,8 +213,20 @@ export async function getAllMobiles({
                         .orderBy(desc(MobileArticles.createdAt))
                         .offset(skip)
                         .limit(limit);
-
-            return mobileArticles
+            const total = await db
+                .select({
+                    count: count(),
+                })
+                .from(MobileArticles)
+                .where(and(...whereConditions))
+                .execute()
+                .then((res) => res[0].count);
+            return {
+                data: mobileArticles,
+                meta: {
+                    total: total
+                }
+            }
         },
         [cacheKey],
         {

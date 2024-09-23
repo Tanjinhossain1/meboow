@@ -1,11 +1,14 @@
 import Navbar from "@/Component/Shared/Navbar";
 import React, { Fragment } from "react";
-import { fetchArticles, fetchMobileArticles } from "@/services/articleServices";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/lib/auth";
 import Footer from "@/Component/HomePage/Footer";
 import { Metadata, ResolvingMetadata } from "next";
-import BrandWiseMobile from "../../_components/BrandWiseMobile";
+import { getAllMobiles } from "@/lib/queries/services";
+import dynamic from "next/dynamic";
+
+const BrandWiseMobile = dynamic(() => import("../../_components/BrandWiseMobile"), {
+  suspense: true,
+  ssr: false,
+});
 
 export async function generateMetadata(
   { params }: { params: { brand: string,page:string } },
@@ -18,13 +21,13 @@ export async function generateMetadata(
   
   const page = params.page
 
-    const title = `All ${params?.brand} Phone - Page ${page}`;
-    const desc = `Here will show this   ${params?.brand} brand wise List Of Mobiles you can see all of mobiles with this brand.`;
+    const title = `All ${formattedBrand} Phone - Page ${page}`;
+    const desc = `Here will show this   ${formattedBrand} brand wise List Of Mobiles you can see all of mobiles with this brand.`;
     const previousImages = (await parent).openGraph?.images || [];
     return {
       title: title,
       description: desc,
-      keywords: ["Article", "Safari List", "article", "have", "mobile", title],
+      keywords: ["Page", "Safari List", "article", "have", "mobile", title],
       openGraph: {
         title: title,
         description: desc,
@@ -38,14 +41,16 @@ export async function generateMetadata(
       },
     };
 }
-export default async function page({ params }: { params: { brand: string } }) {
-
-  const session = await getServerSession(authConfig);
-  const user = session?.user;
+export default async function page({ params }: { params: { brand: string,page:string } }) {
+  const [
+    mobiles,
+  ] = await Promise.all([
+    getAllMobiles({ limits: "50", brands: params?.brand,pages: params?.page}),
+  ]);
   return (
     <Fragment>
       <Navbar />
-      <BrandWiseMobile user={user} />
+      <BrandWiseMobile defaultMobiles={mobiles as any} />
       <Footer />
     </Fragment>
   );
