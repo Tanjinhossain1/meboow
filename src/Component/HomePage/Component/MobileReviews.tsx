@@ -38,21 +38,23 @@ export default function MobileReviews({
   useEffect(() => {
     const fetchArticles = async (isMobile: "isMobile" | "isTrendingBanner") => {
       const MobileArticles =
-        isMobile === "isMobile"
-          ? await getAllArticles({
-              limits: "20",
-              category: "Mobiles",
-            })
-          : await getAllArticles({
-              pages: "1",
-              limits: "5",
-              latestDevice: "latest",
-            });
+        // isMobile === "isMobile"
+        // ? await getAllArticles({
+        //     limits: "20",
+        //     category: "Mobiles",
+        //   })
+        //   :
+        await getAllArticles({
+          pages: "1",
+          limits: "5",
+          latestDevice: "latest",
+        });
       setArticles(MobileArticles);
     };
-    if (isMobileReviews) {
-      fetchArticles("isMobile");
-    } else if (isTrendingBanner) {
+    // if (isMobileReviews) {
+    //   fetchArticles("isMobile");
+    // } else
+    if (isTrendingBanner) {
       fetchArticles("isTrendingBanner");
     }
   }, [isMobileReviews, isTrendingBanner]);
@@ -108,7 +110,7 @@ export default function MobileReviews({
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-              ): null}
+              ) : null}
             </Link>
           </div>
         </Grid>
@@ -131,7 +133,7 @@ export default function MobileReviews({
               </svg>
               {formatDate(articles[0]?.createdAt)}
             </Typography>
-          ):null}
+          ) : null}
           <Link
             aria-label={`Mobile & Review ${formatForUrl(articles[0]?.title)}`}
             href={
@@ -275,82 +277,84 @@ export default function MobileReviews({
             },
           }}
         >
-          {articles?.length > 2 ? 
-            articles.slice(1, articles.length)
-            ?.map((article: RecentArticleDataType) => (
-              <Fragment key={article.id}>
-                <SwiperSlide style={{ height: "200px" }}>
-                  {/* Content Section */}
-                  <Grid sx={{ display: "flex" }} container spacing={2}>
-                    <Grid
-                      item
-                      xs={4}
-                      container
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <div style={{ width: "100%" }}>
-                        <Link
-                          aria-label={`Mobile & Review ${formatForUrl(
-                            articles[0]?.title
-                          )}`}
-                          href={
-                            article?.category === "Mobiles"
-                              ? `/review/${formatForUrl(article?.title)}`
-                              : `/article/${formatForUrl(article?.title)}`
-                          }
+          {articles?.length > 2
+            ? articles
+                .slice(1, articles.length)
+                ?.map((article: RecentArticleDataType) => (
+                  <Fragment key={article.id}>
+                    <SwiperSlide style={{ height: "200px" }}>
+                      {/* Content Section */}
+                      <Grid sx={{ display: "flex" }} container spacing={2}>
+                        <Grid
+                          item
+                          xs={4}
+                          container
+                          justifyContent="center"
+                          alignItems="center"
                         >
-                          <Image
-                            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
-                            alt={`Article Image ${article.title}`}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            layout="responsive"
-                            width={10} // Aspect ratio: width
-                            height={40} // Aspect ratio: height
-                            className="object-cover"
-                            loading="lazy"
-                          />
-                        </Link>
-                      </div>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <Typography sx={{ fontSize: 12, textAlign: "left" }}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 text-gray-500 inline-block mr-1"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
-                          />
-                        </svg>
-                        {/* {formatDate(article.createdAt)} */}
-                      </Typography>
-                      <Link
-                        aria-label={`Mobile & Review ${formatForUrl(
-                          articles[0]?.title
-                        )}`}
-                        href={
-                          article?.category === "Mobiles"
-                            ? `/review/${formatForUrl(article?.title)}`
-                            : `/article/${formatForUrl(article?.title)}`
-                        }
-                      >
-                        {" "}
-                        <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
-                          {article.title}
-                        </p>
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </SwiperSlide>
-              </Fragment>
-            )): null}
+                          <div style={{ width: "100%" }}>
+                            <Link
+                              aria-label={`Mobile & Review ${formatForUrl(
+                                articles[0]?.title
+                              )}`}
+                              href={
+                                article?.category === "Mobiles"
+                                  ? `/review/${formatForUrl(article?.title)}`
+                                  : `/article/${formatForUrl(article?.title)}`
+                              }
+                            >
+                              <Image
+                                src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${article.image}`}
+                                alt={`Article Image ${article.title}`}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                layout="responsive"
+                                width={10} // Aspect ratio: width
+                                height={40} // Aspect ratio: height
+                                className="object-cover"
+                                loading="lazy"
+                              />
+                            </Link>
+                          </div>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <Typography sx={{ fontSize: 12, textAlign: "left" }}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 text-gray-500 inline-block mr-1"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M8 7V3m8 4V3m-9 4h10M4 12h16m-7 4h8m-8 4h8m-8-8h8m-8-4h8"
+                              />
+                            </svg>
+                            {/* {formatDate(article.createdAt)} */}
+                          </Typography>
+                          <Link
+                            aria-label={`Mobile & Review ${formatForUrl(
+                              articles[0]?.title
+                            )}`}
+                            href={
+                              article?.category === "Mobiles"
+                                ? `/review/${formatForUrl(article?.title)}`
+                                : `/article/${formatForUrl(article?.title)}`
+                            }
+                          >
+                            {" "}
+                            <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
+                              {article.title}
+                            </p>
+                          </Link>
+                        </Grid>
+                      </Grid>
+                    </SwiperSlide>
+                  </Fragment>
+                ))
+            : null}
         </Swiper>
       )}
     </Fragment>

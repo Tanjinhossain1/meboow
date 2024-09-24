@@ -76,7 +76,7 @@ export default function CommonMobileSlider({
                     borderRadius: "10px",
                     textAlign: "center",
                     width: "178px", // Adjusted width
-                    height: "250px", // Adjusted height
+                    height: "240px", // Adjusted height
                     position: "relative",
                     cursor: "pointer",
                   }}
@@ -96,7 +96,7 @@ export default function CommonMobileSlider({
                         <Image
                           style={{
                             width: "220px", // Ensure the image takes the full width of the card
-                            height: "95px", // Adjust the height for uniformity
+                            height: "80px", // Adjust the height for uniformity
                             cursor: "pointer",
                           }}
                           objectFit={"cover"}

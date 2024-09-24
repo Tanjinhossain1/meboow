@@ -1,7 +1,7 @@
 import React, { Fragment, lazy } from 'react';
 import Link from 'next/link';
-import { MobileArticleType } from '@/types/mobiles';
 import { formatForUrl } from '@/utils/utils';
+import { getAllMobiles } from '@/lib/queries/services';
 
 const Table = lazy(() => import('@mui/material/Table'));
 const TableBody = lazy(() => import('@mui/material/TableBody'));
@@ -12,8 +12,17 @@ const TableRow = lazy(() => import('@mui/material/TableRow'));
 const Typography = lazy(() => import('@mui/material/Typography'));
 
 
-const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dailyInterest:MobileArticleType[]}) => {
+const TopDevicesTable = async () => {
 
+  const ByFansMobiles = await getAllMobiles({
+    limits: "10",
+    is_by_fans: "YES",
+  });
+  
+  const DailyInterestMobiles = await getAllMobiles({
+    limits: "10",
+    is_daily_interest: "YES",
+  });
   return (
     <Fragment>
       <Typography sx={{mt:2,fontWeight:600}} gutterBottom>
@@ -28,7 +37,7 @@ const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dail
             </TableRow>
           </TableHead>
           <TableBody>
-            {dailyInterest?.map((row,index) => (
+            {DailyInterestMobiles?.data?.map((row,index) => (
               <TableRow className={index % 2 !== 0 ? 'bg-topTableCustomGreen' : ''} key={row.id}>
                 <TableCell className='p-1' sx={{m:0,p:0}}>{index + 1}.</TableCell>
                 <TableCell  className='p-1' sx={{m:0,p:0,":hover":{color:"red"}}}>
@@ -52,7 +61,7 @@ const TopDevicesTable = ({byFans,dailyInterest}:{byFans:MobileArticleType[],dail
             </TableRow>
           </TableHead>
           <TableBody>
-            {byFans?.map((row,index) => (
+            {ByFansMobiles?.data?.map((row,index) => (
               <TableRow className={index % 2 !== 0 ? 'bg-topTableCustomBlue' : ''} key={row.id}>
                 <TableCell className='p-1' sx={{p:0,m:0}}>{index + 1}.</TableCell>
                 <TableCell className='p-1' sx={{m:0,p:0,":hover":{color:"red"}}}>

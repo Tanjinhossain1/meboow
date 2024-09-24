@@ -21,10 +21,10 @@ export default function BrandDisplayComponent({
   );
   useEffect(() => {
     const fetchArticles = async () => {
-      const serverBrand = await getAllBrands({pages:'1',limits:"10"});
+      const serverBrand = await getAllBrands({ pages: "1", limits: "10" });
       setListOfBrands(serverBrand);
     };
-    if(isSelfFetch){
+    if (isSelfFetch) {
       fetchArticles();
     }
   }, [isSelfFetch]);
@@ -43,38 +43,53 @@ export default function BrandDisplayComponent({
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid lightgray",
+                width: "100px", // Consistent width for all images
+                height: "70px", // Consistent height for all images
+                padding: data?.title === "Yota" ? "15px" : "8px", // Padding around the image
+                overflow: "hidden", // Prevent any overflow
+              }}
+            >
+              <Image
+                alt={`${data?.title} Brand Logo For Display`}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data?.image}`}
+                loading="lazy"
+                layout="intrinsic"
+                width={100} // Image will scale down/up while maintaining aspect ratio
+                height={70}
+                style={{ objectFit: "contain" }} // Ensures full image is visible
+              />
+            </Box>
+
+            {/* <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
                 border: "1px solid lightgray",
                 p: 0.5,
                 cursor: "pointer",
-                height: "50px",
+                // height: "auto", // Adjust height as needed
+                width: "100%", // Image will be responsive based on parent
+                maxWidth: "150px", // Control max-width for responsiveness
               }}
             >
               <Image
                 alt={` ${data?.title} Brand Logo For Display`}
                 src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data?.image}`}
                 loading="lazy" // lazy loading for reduce loading time
+                layout="responsive"
+                style={{ objectFit: "contain" }} // Maintain the aspect ratio
                 width={
-                  data?.title === "Samsung"
-                    ? 90
-                    : data?.title === "Xiaomi"
-                    ? 30
-                    : data?.title === "OnePlus"
-                    ? 90
-                    : 70
+                  80
                 }
                 height={
-                  data?.title === "Samsung"
-                    ? 10
-                    : data?.title === "Xiaomi"
-                    ? 30
-                    : data?.title === "OnePlus"
-                    ? 90
-                    : 70
+                  50
                 }
               />
-            </Box>
+            </Box> */}
             <Typography
-              className="bg-gray-50"
+              className="bg-[#FFFFFF]"
               sx={{ textAlign: "center", color: "gray", fontSize: 14 }}
             >
               {data?.title}

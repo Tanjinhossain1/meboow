@@ -1,10 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
-import {
-  getAllArticles,
-  getAllMobiles,
-} from "@/lib/queries/services";
+import { getAllArticles } from "@/lib/queries/services";
 import dynamic from "next/dynamic";
 import { Fragment, Suspense } from "react";
 
@@ -59,22 +56,6 @@ async function Home() {
   const session = await getServerSession(authConfig);
 
   const articles = await getAllArticles({ pages: "1", limits: "4" });
-
-  const DailyInterestMobiles = await getAllMobiles({
-    limits: "10",
-    is_daily_interest: "YES",
-  });
-
-  const ByFansMobiles = await getAllMobiles({
-    limits: "10",
-    is_by_fans: "YES",
-  });
-
-  const LatestDeviceMobiles = await getAllMobiles({
-    limits: "12",
-    is_latest_device: "YES",
-  });
-
   const user = session?.user;
   return (
     <Fragment>
@@ -87,13 +68,7 @@ async function Home() {
         <Navbar />
       </Suspense>
       <Suspense>
-        <Banner
-          dailyInterestMobiles={DailyInterestMobiles?.data as any}
-          byFansMobiles={ByFansMobiles?.data as any}
-          latestDeviceMobiles={LatestDeviceMobiles?.data as any}
-          user={user}
-          articles={articles as any}
-        />
+        <Banner user={user} articles={articles as any} />
       </Suspense>
       <Footer />
     </Fragment>

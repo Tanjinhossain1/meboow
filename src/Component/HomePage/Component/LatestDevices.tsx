@@ -1,27 +1,46 @@
+"use client";
 import { MobileArticleType } from "@/types/mobiles";
 import { formatForUrl } from "@/utils/utils";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { getAllMobiles } from "@/lib/queries/services";
 
 export default function LatestDevices({
   mobiles,
   isRelated,
   name,
+  isSelfDataFetch,
 }: {
-  mobiles: MobileArticleType[];
+  mobiles?: MobileArticleType[];
   isRelated?: boolean;
   name?: string;
+  isSelfDataFetch?: boolean;
 }) {
+  const [allMobiles, setAllMobiles] = useState<MobileArticleType[]>(
+    mobiles ? mobiles : []
+  );
+  useEffect(() => {
+    if (isSelfDataFetch) {
+      const fetchMobile = async () => {
+        const LatestDeviceMobiles = await getAllMobiles({
+          limits: "12",
+          is_latest_device: "YES",
+        });
+        setAllMobiles(LatestDeviceMobiles.data as any);
+      };
+      fetchMobile();
+    }
+  }, [isSelfDataFetch]);
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 3, mb: 1 }}>
         {isRelated ? `Popular From ${name} ` : "Latest Devices"}
       </Typography>
       <Grid sx={{ mb: 2 }} container>
-        {mobiles?.map((mobile: MobileArticleType) => {
+        {allMobiles?.map((mobile: MobileArticleType) => {
           return (
             <Grid
               container

@@ -7,10 +7,10 @@ import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
 import NewsAndReviews from "@/Component/HomePage/Component/NewsAndReviews";
 import TopDevicesTable from "@/Component/HomePage/Component/TopDevicesTable";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import {  Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
@@ -135,18 +135,15 @@ export default function NewsMainComponent({
                 <PhoneFinder />
                 <LatestDevices mobiles={latestDeviceMobiles?.slice(0, 6)} />
                 <MobileReviews isTrending mobilesArticles={latestArticles} />
-                <TopDevicesTable
-                  byFans={byFansMobiles}
-                  dailyInterest={dailyInterestMobiles}
-                />
+                <TopDevicesTable />
               </Grid>
               {/* right  */}
               <Grid sx={{ pl: 2 }} xs={12} sm={6} md={8}>
                 <MobileReviews mobilesArticles={mobilesArticles} />
                 <BestArticles bestArticles={bestReviewsArticles} />
                 <Categories category={category} />
-                <NewsAndReviews /> 
-                 {/* mobilesArticles={newsAndReviews} /> */}
+                <NewsAndReviews />
+                {/* mobilesArticles={newsAndReviews} /> */}
                 <Grid gap={1} container>
                   <Typography
                     sx={{
