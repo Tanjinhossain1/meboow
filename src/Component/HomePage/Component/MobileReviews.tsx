@@ -1,6 +1,7 @@
 "use client";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { Grid, Typography } from "@mui/material";
+import Typography  from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import React, { Fragment, lazy, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Grid as SwiperGrid } from "swiper/modules";
@@ -38,12 +39,12 @@ export default function MobileReviews({
   useEffect(() => {
     const fetchArticles = async (isMobile: "isMobile" | "isTrendingBanner") => {
       const MobileArticles =
-        // isMobile === "isMobile"
-        // ? await getAllArticles({
-        //     limits: "20",
-        //     category: "Mobiles",
-        //   })
-        //   :
+        isMobile === "isMobile"
+        ? await getAllArticles({
+            limits: "20",
+            category: "Mobiles",
+          })
+          :
         await getAllArticles({
           pages: "1",
           limits: "5",
@@ -51,10 +52,9 @@ export default function MobileReviews({
         });
       setArticles(MobileArticles);
     };
-    // if (isMobileReviews) {
-    //   fetchArticles("isMobile");
-    // } else
-    if (isTrendingBanner) {
+    if (isMobileReviews) {
+      fetchArticles("isMobile");
+    } else if (isTrendingBanner) {
       fetchArticles("isTrendingBanner");
     }
   }, [isMobileReviews, isTrendingBanner]);

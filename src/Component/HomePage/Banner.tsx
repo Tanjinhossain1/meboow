@@ -3,11 +3,9 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { MobileArticleType } from "@/types/mobiles";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import dynamic from "next/dynamic";
-import { getAllArticles } from "@/lib/queries/services";
 
 const ContentBox = React.memo(
   dynamic(() => import("@/Component/HomePage/ContentBox"), {
@@ -61,10 +59,6 @@ export default async function Banner({
   articles: RecentArticleDataType[];
   user: any;
 }) {
-  const mobileReviews = await getAllArticles({
-    limits: "20",
-    category: "Mobiles",
-  })
   return (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -160,7 +154,7 @@ export default async function Banner({
             </Grid>
             <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
               <Suspense fallback={<Loading />}>
-                <MobileReviews mobilesArticles={mobileReviews} />
+                <MobileReviews isMobileReviews />
               </Suspense>
               <Suspense fallback={<Loading />}>
                 <PopularMobiles user={user} />
