@@ -1,25 +1,16 @@
 "use client";
-
 import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import BackdropProviderContext from "@/Component/BackdropProvider";
 import DekstopAndMobileViewContext from "@/Component/BackdropProviderChecker";
 
 export default function DesktopViewToggle() {
   const [isMobile, setIsMobile] = useState(false);
-//   const [desktopView, setDesktopView] = useState(
-//     localStorage.getItem("desktopView") === "true" ? true : false
-//   );
-  const {desktopView,toggleDesktopView,setDesktopView} = useContext(DekstopAndMobileViewContext)
+  const { desktopView, toggleDesktopView, setDesktopView } = useContext(
+    DekstopAndMobileViewContext
+  );
   const pathname = usePathname(); // Get the current path
   console.log("desktopView  on top     ", desktopView);
   useEffect(() => {
-    // Check if the user previously enabled Desktop View
-    // const savedView = localStorage.getItem('desktopView');
-    // // console.log('savedView      ', savedView);
-    // if (savedView === 'true') {
-    //   setDesktopView(true);
-    // }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
     };
@@ -50,18 +41,16 @@ export default function DesktopViewToggle() {
   }, [desktopView]);
 
   useEffect(() => {
-    // This effect will run on every route change because `pathname` changes
-    const savedView = localStorage?.getItem("desktopView");
-    if (savedView === "true") {
-        setDesktopView(true)
-    } else {
+    if (typeof window !== "undefined") {
+      // This effect will run on every route change because `pathname` changes
+      const savedView = localStorage?.getItem("desktopView");
+      if (savedView === "true") {
+        setDesktopView(true);
+      } else {
         setDesktopView(false);
+      }
     }
-  }, [pathname,toggleDesktopView,setDesktopView]); // Re-run effect when `pathname` changes
-
-//   const toggleDesktopView = () => {
-//     setDesktopView(!desktopView);
-//   };
+  }, [pathname, toggleDesktopView, setDesktopView]); // Re-run effect when `pathname` changes
 
   return (
     <>

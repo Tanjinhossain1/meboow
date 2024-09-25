@@ -10,16 +10,13 @@ import {
 import dynamic from "next/dynamic";
 import { Fragment } from "react";
 
-const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
-  suspense: true,
+const NavbarHelper = dynamic(() => import("@/Component/Shared/NavbarHelperComponent"), {
   ssr: true, // or true, based on whether you want SSR support
 });
 const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
   ssr: true, // or true, based on whether you want SSR support
-  suspense: true,
 });
 const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
-  suspense: true,
   ssr: true,
 });
 
@@ -105,7 +102,7 @@ async function Home() {
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
         key="canonical"
       />
-        <Navbar />
+         <NavbarHelper isLoginUser={user ? user : undefined} />
         <Banner
           MobileNewsAndReviews={MobileNewsAndReviews}
           MobileArticles={MobileArticles}

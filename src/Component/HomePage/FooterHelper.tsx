@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -29,7 +28,7 @@ export default function FooterHelper({
 }) {
   return (
     <Grid container>
-      <Grid className="md:max-w-[1000px] mx-auto" xs={12}>
+      <Grid className="md:max-w-[1000px] mx-auto">
         <Box sx={{ backgroundColor: "#1A2C41", color: "#fff", p: 4 }}>
           <Grid container spacing={4}>
             {/* Recently Added Mobiles */}
