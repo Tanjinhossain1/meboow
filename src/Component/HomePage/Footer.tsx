@@ -1,7 +1,11 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import { fetchArticles, fetchMobileArticles } from "@/services/articleServices";
+import dynamic from "next/dynamic";
 
-const FooterHelper = lazy(() => import("./FooterHelper"));
+const FooterHelper = dynamic(() => import("./FooterHelper"), {
+  suspense: true,
+  ssr: false, // or true, based on whether you want SSR support
+});
 
 export default async function Footer() {
   const [newsAndReviews, mobileArticles] = await Promise.all([
@@ -9,11 +13,9 @@ export default async function Footer() {
     fetchMobileArticles({ limit: "10" }),
   ]);
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <FooterHelper
-        mobileArticles={mobileArticles.data}
-        newsAndReviews={newsAndReviews.data}
-      />
-    </Suspense>
+    <FooterHelper
+      mobileArticles={mobileArticles.data}
+      newsAndReviews={newsAndReviews.data}
+    />
   );
 }

@@ -8,11 +8,11 @@ import {
   getAllMobiles,
 } from "@/lib/queries/services";
 import dynamic from "next/dynamic";
-import { Fragment, Suspense } from "react";
+import { Fragment } from "react";
 
 const Navbar = dynamic(() => import("@/Component/Shared/Navbar"), {
   suspense: true,
-  ssr: false, // or true, based on whether you want SSR support
+  ssr: true, // or true, based on whether you want SSR support
 });
 const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
   ssr: true, // or true, based on whether you want SSR support
@@ -20,7 +20,7 @@ const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
 });
 const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
   suspense: true,
-  ssr: false,
+  ssr: true,
 });
 
 export const metadata: Metadata = {
@@ -105,10 +105,7 @@ async function Home() {
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
         key="canonical"
       />
-      <Suspense>
         <Navbar />
-      </Suspense>
-      <Suspense>
         <Banner
           MobileNewsAndReviews={MobileNewsAndReviews}
           MobileArticles={MobileArticles}
@@ -121,7 +118,6 @@ async function Home() {
           user={user}
           articles={articles as any}
         />
-      </Suspense>
       <Footer />
     </Fragment>
   );
