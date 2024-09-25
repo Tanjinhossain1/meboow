@@ -6,7 +6,8 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import dynamic from "next/dynamic";
-import { getAllArticles, getAllBrands, getAllMobiles } from "@/lib/queries/services";
+import { MobileArticleType } from "@/types/mobiles";
+import { BrandTypes } from "@/types/category";
 
 const ContentBox = React.memo(
   dynamic(() => import("@/Component/HomePage/ContentBox"), {
@@ -56,22 +57,26 @@ const Loading: any = <p className="text-[60px]">loading...</p>;
 export default async function Banner({
   articles,
   user,
+  apple,
+  samsungData,
+  google,
+  lastUpdate,
+  serverBrand,
+  mobileReviews,
+  MobileArticles,
+  MobileNewsAndReviews
 }: {
   articles: RecentArticleDataType[];
+  mobileReviews:RecentArticleDataType[]
+  MobileArticles: RecentArticleDataType[];
+  apple: MobileArticleType[];
+  samsungData: MobileArticleType[];
+  google: MobileArticleType[];
+  lastUpdate: MobileArticleType[];
+  serverBrand:BrandTypes[]
+  MobileNewsAndReviews:RecentArticleDataType[]
   user: any;
 }) {
-  const mobileReviews = await getAllArticles({
-    limits: "20",
-    category: "Mobiles",
-  });
-  const apple = await getAllMobiles({ limits: "3", brands: "Apple" });
-  const samsungData = await getAllMobiles({
-    limits: "3",
-    brands: "Samsung",
-  });
-  const google = await getAllMobiles({ limits: "3", brands: "Google" });
-  const lastUpdate = await getAllMobiles({ limits: "3" });
-  const serverBrand:any = await getAllBrands({ pages: "1", limits: "10" });
   return (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -156,13 +161,13 @@ export default async function Banner({
                 <PhoneFinder />
               </Suspense>
               <Suspense fallback={<Loading />}>
-                <MobileReviews isGap isTrending isTrendingBanner />
+                <MobileReviews isGap isTrending mobilesArticles={MobileArticles}  />
               </Suspense>
               <Suspense fallback={<Loading />}>
                 <TopDevicesTable />
               </Suspense>
               <Suspense fallback={<Loading />}>
-                <LatestDevices isSelfDataFetch />
+                <LatestDevices />
               </Suspense>
             </Grid>
             <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
@@ -171,10 +176,10 @@ export default async function Banner({
               </Suspense>
               <Suspense fallback={<Loading />}>
                 <PopularMobiles
-                  apple={apple?.data as any}
-                  samsungData={samsungData?.data as any}
-                  google={google?.data as any}
-                  lastUpdate={lastUpdate?.data as any}
+                  apple={apple}
+                  samsungData={samsungData}
+                  google={google}
+                  lastUpdate={lastUpdate}
                   user={user}
                 />
               </Suspense>
@@ -212,7 +217,7 @@ export default async function Banner({
                 </Grid>
               </Grid>
               <Suspense fallback={<Loading />}>
-                <NewsAndReviews />
+                <NewsAndReviews mobilesArticles={MobileNewsAndReviews} />
               </Suspense>
             </Grid>
           </Grid>

@@ -1,7 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { Metadata } from "next";
-import { getAllArticles } from "@/lib/queries/services";
+import {
+  getAllArticles,
+  getAllArticlesWithShowInNews,
+  getAllBrands,
+  getAllMobiles,
+} from "@/lib/queries/services";
 import dynamic from "next/dynamic";
 import { Fragment, Suspense } from "react";
 
@@ -55,8 +60,44 @@ export const metadata: Metadata = {
 async function Home() {
   const session = await getServerSession(authConfig);
 
-  const articles = await getAllArticles({ pages: "1", limits: "4" });
+  const [
+    articles,
+    mobileReviews,
+    apple,
+    samsungData,
+    google,
+    lastUpdate,
+    serverBrand,
+    MobileArticles,
+    MobileNewsAndReviews,
+  ] = await Promise.all([
+    getAllArticles({ pages: "1", limits: "4" }),
+
+    getAllArticles({
+      limits: "20",
+      category: "Mobiles",
+    }),
+
+    getAllMobiles({ limits: "30", brands: "Apple" }),
+
+    getAllMobiles({ limits: "30", brands: "Samsung" }),
+
+    getAllMobiles({ limits: "30", brands: "Google" }),
+
+    getAllMobiles({ limits: "30" }),
+
+    getAllBrands({ pages: "1", limits: "10" }),
+
+    getAllArticles({
+      pages: "1",
+      limits: "5",
+      latestDevice: "latest",
+    }),
+
+    getAllArticlesWithShowInNews({ limits: "30" }),
+  ]);
   const user = session?.user;
+
   return (
     <Fragment>
       <link
@@ -68,7 +109,18 @@ async function Home() {
         <Navbar />
       </Suspense>
       <Suspense>
-        <Banner user={user} articles={articles as any} />
+        <Banner
+          MobileNewsAndReviews={MobileNewsAndReviews}
+          MobileArticles={MobileArticles}
+          mobileReviews={mobileReviews}
+          apple={apple?.data as any}
+          samsungData={samsungData?.data as any}
+          google={google?.data as any}
+          lastUpdate={lastUpdate?.data as any}
+          serverBrand={serverBrand}
+          user={user}
+          articles={articles as any}
+        />
       </Suspense>
       <Footer />
     </Fragment>
