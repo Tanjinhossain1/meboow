@@ -61,33 +61,6 @@ export default function BrandDisplayComponent({
                 style={{ objectFit: "contain" }} // Ensures full image is visible
               />
             </Box>
-
-            {/* <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                border: "1px solid lightgray",
-                p: 0.5,
-                cursor: "pointer",
-                // height: "auto", // Adjust height as needed
-                width: "100%", // Image will be responsive based on parent
-                maxWidth: "150px", // Control max-width for responsiveness
-              }}
-            >
-              <Image
-                alt={` ${data?.title} Brand Logo For Display`}
-                src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${data?.image}`}
-                loading="lazy" // lazy loading for reduce loading time
-                layout="responsive"
-                style={{ objectFit: "contain" }} // Maintain the aspect ratio
-                width={
-                  80
-                }
-                height={
-                  50
-                }
-              />
-            </Box> */}
             <Typography
               className="bg-[#FFFFFF]"
               sx={{ textAlign: "center", color: "gray", fontSize: 14 }}

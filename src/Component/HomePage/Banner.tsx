@@ -6,7 +6,7 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import dynamic from "next/dynamic";
-import { getAllArticles } from "@/lib/queries/services";
+import { getAllArticles, getAllBrands, getAllMobiles } from "@/lib/queries/services";
 
 const ContentBox = React.memo(
   dynamic(() => import("@/Component/HomePage/ContentBox"), {
@@ -63,7 +63,15 @@ export default async function Banner({
   const mobileReviews = await getAllArticles({
     limits: "20",
     category: "Mobiles",
-  })
+  });
+  const apple = await getAllMobiles({ limits: "3", brands: "Apple" });
+  const samsungData = await getAllMobiles({
+    limits: "3",
+    brands: "Samsung",
+  });
+  const google = await getAllMobiles({ limits: "3", brands: "Google" });
+  const lastUpdate = await getAllMobiles({ limits: "3" });
+  const serverBrand:any = await getAllBrands({ pages: "1", limits: "10" });
   return (
     <Grid sx={{ mt: 1 }} container>
       <Grid xs={0} md={1} lg={1.1} xl={2.5}></Grid>
@@ -162,7 +170,13 @@ export default async function Banner({
                 <MobileReviews mobilesArticles={mobileReviews} />
               </Suspense>
               <Suspense fallback={<Loading />}>
-                <PopularMobiles user={user} />
+                <PopularMobiles
+                  apple={apple?.data as any}
+                  samsungData={samsungData?.data as any}
+                  google={google?.data as any}
+                  lastUpdate={lastUpdate?.data as any}
+                  user={user}
+                />
               </Suspense>
               <Grid gap={1} container>
                 <Typography
@@ -179,7 +193,7 @@ export default async function Banner({
                   </Link>
                 </Typography>
                 <Suspense fallback={<Loading />}>
-                  <BrandDisplayComponent isSelfFetch />
+                  <BrandDisplayComponent brands={serverBrand} />
                 </Suspense>
                 <Grid display={"flex"} justifyContent={"end"} xs={12}>
                   <Link aria-label="Brands" href={"/brands"}>
