@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Grid as SwiperGrid } from "swiper/modules";
 import Image from "next/image";
 import { formatDate, formatForUrl } from "@/utils/utils";
+import Link from "next/link";
 
 // Import Swiper styles
 import "swiper/css";
@@ -14,7 +15,6 @@ import "swiper/css/grid";
 import "swiper/css/pagination";
 
 import "./MobileReviews.css";
-import Link from "next/link";
 
 // import required modules
 export default function MobileReviews({
@@ -247,8 +247,7 @@ export default function MobileReviews({
             },
           }}
         >
-          {mobilesArticles?.length > 2
-            ? mobilesArticles
+          {mobilesArticles
                 .slice(1, mobilesArticles.length)
                 ?.map((article: RecentArticleDataType) => (
                   <Fragment key={article.id}>
@@ -281,7 +280,6 @@ export default function MobileReviews({
                                 width={10} // Aspect ratio: width
                                 height={40} // Aspect ratio: height
                                 className="object-cover"
-                                loading="lazy"
                               />
                             </Link>
                           </div>
@@ -324,7 +322,7 @@ export default function MobileReviews({
                     </SwiperSlide>
                   </Fragment>
                 ))
-            : null}
+            }
         </Swiper>
       )}
     </Fragment>

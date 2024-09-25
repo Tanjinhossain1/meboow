@@ -3,7 +3,7 @@ import { fetchArticles, fetchMobileArticles } from "@/services/articleServices";
 import dynamic from "next/dynamic";
 
 const FooterHelper = dynamic(() => import("./FooterHelper"), {
-  ssr: true, // or true, based on whether you want SSR support
+  ssr: false, // or true, based on whether you want SSR support
 });
 
 export default async function Footer() {

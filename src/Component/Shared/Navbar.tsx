@@ -4,7 +4,7 @@ import { authConfig } from "@/lib/auth";
 import dynamic from "next/dynamic";
 
 const NavbarHelper = dynamic(() => import("./NavbarHelperComponent"), {
-  ssr: false, // or true, based on whether you want SSR support
+  ssr: true, // or true, based on whether you want SSR support
 });
 
 async function Navbar() {

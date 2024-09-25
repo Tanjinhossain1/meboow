@@ -11,7 +11,7 @@ import { BrandTypes } from "@/types/category";
 
 const ContentBox = React.memo(
   dynamic(() => import("@/Component/HomePage/ContentBox"), {
-    ssr: true,
+    ssr: true
   })
 );
 const PhoneFinder = React.memo(
@@ -19,32 +19,31 @@ const PhoneFinder = React.memo(
 );
 const MobileReviews = React.memo(
   dynamic(() => import("./Component/MobileReviews"), {
-    ssr: true,
+    ssr: true
   })
 );
 const TopDevicesTable = React.memo(
   dynamic(() => import("./Component/TopDevicesTable"), {
-    ssr: true,
+    ssr: true
   })
 );
 const LatestDevices = React.memo(
   dynamic(() => import("./Component/LatestDevices"), {
-    ssr: true,
+    ssr: true
   })
 );
 const PopularMobiles = React.memo(
   dynamic(() => import("./Component/PopularMobiles"), {
-    ssr: true,
+    ssr: true
   })
 );
 const NewsAndReviews = React.memo(
   dynamic(() => import("./Component/NewsAndReviews"), {
-    ssr: true,
-    suspense: true,
+    ssr: true
   })
 );
 const BrandDisplayComponent = React.memo(
-  dynamic(() => import("./BrandDisplay"), { ssr: true, suspense: true })
+  dynamic(() => import("./BrandDisplay"), { ssr: true })
 );
 
 export default async function Banner({

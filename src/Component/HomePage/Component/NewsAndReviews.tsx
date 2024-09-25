@@ -87,8 +87,7 @@ export default function NewsAndReviews({
         {mobilesArticles
           .slice(0, mobilesArticles.length)
           ?.map((article: RecentArticleDataType) => (
-            <Fragment key={article.id}>
-              <SwiperSlide>
+              <SwiperSlide key={article.id}>
                 {/* Content Section */}
                 <Grid sx={{ display: "flex" }} container spacing={2}>
                   <Grid
@@ -164,7 +163,6 @@ export default function NewsAndReviews({
                   </Grid>
                 </Grid>
               </SwiperSlide>
-            </Fragment>
           ))}
       </Swiper>
     </Fragment>

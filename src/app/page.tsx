@@ -102,7 +102,7 @@ async function Home() {
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
         key="canonical"
       />
-         <NavbarHelper isLoginUser={user ? user : undefined} />
+        <NavbarHelper isLoginUser={user} />
         <Banner
           MobileNewsAndReviews={MobileNewsAndReviews}
           MobileArticles={MobileArticles}
