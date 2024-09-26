@@ -1,0 +1,181 @@
+import { Fragment } from "react";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import SpotifyIcon from "@mui/icons-material/Spoke";
+import TiktokIcon from "@mui/icons-material/Spoke";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import DiscordIcon from "@mui/icons-material/Spoke";
+import PublicIcon from "@mui/icons-material/Public";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import NewOrderForm from "./NewOrderForm";
+import axios from "axios";
+
+const getTheDate =async ()=>{
+    const params = new URLSearchParams({
+        key: process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_KEY!,  // Your API key
+        action: 'services',
+    });
+
+    try {
+        const response = await axios.post(process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_URL!, params.toString(), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        // Get unique categories from the services
+        const categories = Array.from(new Set(response?.data?.map((service: any) => service.category)));
+
+        return {
+            categories,
+            services: response?.data,
+        }
+    } catch (error) {
+        console.error('Error fetching services:', error);
+        return error
+    }
+}
+export default async function NewOrder() {
+    const response:any = await getTheDate()
+
+  return (
+    <Fragment>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 w-full">
+        <div className="bg-white p-4 shadow-md rounded-lg">
+          <div className="flex items-center space-x-2">
+            <div className="bg-purple-500 text-white p-2 rounded-full">
+              {/* Avatar Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5.121 19.121A12.083 12.083 0 0112 21a12.083 12.083 0 016.879-1.879M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-700">tanjiin</p>
+              <p className="text-gray-500 text-sm">Username</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 shadow-md rounded-lg">
+          <div className="flex items-center space-x-2">
+            <div className="bg-purple-500 text-white p-2 rounded-full">
+              {/* Balance Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8c-1.1 0-2 .9-2 2h-1c0-1.66 1.34-3 3-3s3 1.34 3 3a3 3 0 01-3 3h-1c0-1.1.9-2 2-2m0 8h-1v-2h1v2z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-700">$0.6687718</p>
+              <p className="text-gray-500 text-sm">Balance</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 shadow-md rounded-lg">
+          <div className="flex items-center space-x-2">
+            <div className="bg-purple-500 text-white p-2 rounded-full">
+              {/* Spend Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 11V9h1V5h2v2h2v2h1v2h-6zm2 5v-2h-1v-1h-2v2h-1v2h6v-1h-2zm-5.293-5.293a1 1 0 011.414 0l1.414 1.414a1 1 0 11-1.414 1.414L7.707 11.707a1 1 0 010-1.414zM18.707 9.707l-1.414-1.414a1 1 0 10-1.414 1.414l1.414 1.414a1 1 0 101.414-1.414z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-700">$0.5712282</p>
+              <p className="text-gray-500 text-sm">Total Spend</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 shadow-md rounded-lg">
+          <div className="flex items-center space-x-2">
+            <div className="bg-purple-500 text-white p-2 rounded-full">
+              {/* Orders Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 2a1 1 0 00-1 1v18a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1H6zm1 6h10V5H7v3zm0 8h10v-5H7v5zm0 3h10v-2H7v2z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-700">4</p>
+              <p className="text-gray-500 text-sm">Active Orders</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Category Buttons */}
+      <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-6">
+        {[
+          { name: "Everythings", icon: <AllInclusiveIcon /> },
+          { name: "Instagram", icon: <InstagramIcon /> },
+          { name: "Facebook", icon: <FacebookIcon /> },
+          { name: "Twitter", icon: <TwitterIcon /> },
+          { name: "Spotify", icon: <SpotifyIcon /> },
+          { name: "TikTok", icon: <TiktokIcon /> },
+          { name: "LinkedIn", icon: <LinkedInIcon /> },
+          { name: "Discord", icon: <DiscordIcon /> },
+          { name: "Website Traffic", icon: <PublicIcon /> },
+          { name: "YouTube", icon: <YouTubeIcon /> },
+          { name: "Telegram", icon: <TelegramIcon /> },
+          { name: "Others", icon: <MoreHorizIcon /> },
+        ].map((item) => (
+          <button
+            key={item.name}
+            className="bg-gray-800 text-white p-4 rounded-lg shadow-md flex items-center justify-center"
+          >
+            <span>{item.icon}</span>
+            <span className="hidden md:inline text-sm ml-2">{item.name}</span>
+          </button>
+        ))}
+      </div>
+      <NewOrderForm servicesOrCategories={response} />
+    </Fragment>
+  );
+}
