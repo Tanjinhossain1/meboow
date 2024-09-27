@@ -215,7 +215,9 @@ export default function MainSubmitForm({
               `Article ${isEdit?.isEdit ? "Update" : "Created"} successfully`
             );
               handleBackdropClose();
-              window.location.reload();
+              setTimeout(() => {
+                window.location.reload();
+              }, 50);
           }
         })
         .catch((err) => {
