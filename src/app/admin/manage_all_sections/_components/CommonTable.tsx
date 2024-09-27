@@ -44,31 +44,42 @@ export default function CommonTableComponent({
   // paginate for mobile
   const [rows, setRows] = useState<RecentArticleDataType[]>([]);
   const [rowCount, setRowCount] = useState(0); // total row count
-
+      const [loading,setLoading] = useState<boolean>(false);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 20,
   });
 
   // Fetch data when pagination model changes
-  useEffect(() => {
-    const fetchData = async (page: number, pageSize: number) => {
-      try {
-        if (endpoint) {
-          const response = await axios.get(endpoint, {
-            params: {
-              page: page + 1, // Page index starts from 1 in most APIs
-              limit: pageSize,
-            },
-          });
-          console.log("first page: admin mobile manage ", response);
-          setRows(response?.data?.data); // set the fetched rows
-          setRowCount(response?.data?.meta?.total); // set the total number of rows
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const fetchData = async (page: number, pageSize: number) => {
+    try {
+      setLoading(true)
+      if (endpoint) {
+        const response = await axios.get(endpoint, {
+          params:
+            searchText !== ""
+              ? {
+                  page: paginationModel.page + 1, // Page index starts from 1 in most APIs
+                  limit: paginationModel.pageSize,
+                  searchTerm: searchText,
+                }
+              : {
+                  page: page + 1, // Page index starts from 1 in most APIs
+                  limit: pageSize,
+                },
+        });
+        console.log("first page: admin mobile manage ", response);
+
+        setRows(response?.data?.data); // set the fetched rows
+        setRowCount(response?.data?.meta?.total); // set the total number of rows
+        setLoading(false)
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false)
+    }
+  };
+  useEffect(() => {
     if (endpoint) {
       fetchData(paginationModel.page, paginationModel.pageSize);
     }
@@ -76,6 +87,7 @@ export default function CommonTableComponent({
 
   // Handle search
   const handleSearch = async (event: any) => {
+    setLoading(true)
     const value = event.target.value.toLowerCase();
     setSearchText(value);
     if (endpoint) {
@@ -83,12 +95,13 @@ export default function CommonTableComponent({
         params: {
           page: paginationModel.page + 1, // Page index starts from 1 in most APIs
           limit: paginationModel.pageSize,
-          searchTerm: value
+          searchTerm: value,
         },
       });
       console.log("first page: admin mobile manage ", response);
       setRows(response?.data?.data); // set the fetched rows
       setRowCount(response?.data?.meta?.total); // set the total number of rows
+      setLoading(false)
     } else {
       if ((columnData[0] as UsersTypes)?.email) {
         const filteredData = (columnData as UsersTypes[]).filter(
@@ -98,6 +111,7 @@ export default function CommonTableComponent({
             row.role.toString().includes(value)
         );
         setFilteredRows(filteredData);
+        setLoading(false)
       } else if ((columnData[0] as GlossaryType)?.display_name) {
         const filteredData = (columnData as GlossaryType[]).filter(
           (row) => row?.display_name.toLowerCase().includes(value)
@@ -105,6 +119,7 @@ export default function CommonTableComponent({
           // row.age.toString().includes(value)
         );
         setFilteredRows(filteredData);
+        setLoading(false)
       } else if ((columnData[0] as NetworkBandsType)?.country) {
         const filteredData = (columnData as NetworkBandsType[]).filter(
           (row) => row?.country.toLowerCase().includes(value)
@@ -112,6 +127,7 @@ export default function CommonTableComponent({
           // row.age.toString().includes(value)
         );
         setFilteredRows(filteredData);
+        setLoading(false)
       } else {
         const filteredData = (
           columnData as (
@@ -126,6 +142,7 @@ export default function CommonTableComponent({
           // row.age.toString().includes(value)
         );
         setFilteredRows(filteredData);
+        setLoading(false)
       }
     }
   };
@@ -162,11 +179,14 @@ export default function CommonTableComponent({
           rows={rows}
           columns={columns}
           paginationModel={paginationModel}
-          onPaginationModelChange={(newModel) => setPaginationModel(newModel)}
+          onPaginationModelChange={(newModel) => {
+            fetchData(newModel.page, newModel.pageSize);
+            setPaginationModel(newModel)
+          }}
           rowCount={rowCount} // set total rows count
           paginationMode="server" // enable server-side pagination
           pageSizeOptions={[20, 30, 40, 50]} // options for page sizes
-          loading={!rows?.length} // show a loading spinner when fetching data
+          loading={loading} // show a loading spinner when fetching data
         />
       ) : (
         <DataGrid
