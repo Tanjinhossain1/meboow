@@ -315,12 +315,12 @@ const getAll = async (
           .select()
           .from(MobileArticles)
           .where(and(...whereConditions))
-          .orderBy(desc(MobileArticles.id))
+          .orderBy(desc(MobileArticles.createdAt))
       : await db
           .select()
           .from(MobileArticles)
           .where(and(...whereConditions))
-          .orderBy(desc(MobileArticles.id))
+          .orderBy(desc(MobileArticles.createdAt))
           .offset(skip)
           .limit(limit);
   // .orderBy(asc(CreateArticle.createdAt))
