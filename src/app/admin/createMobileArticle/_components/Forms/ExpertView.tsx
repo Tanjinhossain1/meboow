@@ -413,29 +413,6 @@ export default function ExpertView({
             // onChange={onChange}
           />
         </Grid>
-        <Grid xs={12}>
-          {" "}
-          <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
-            Give Article Url
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            label={
-              <span>
-                Url{" "}
-                {/* Url <sup style={{ color: "red", fontSize: 12 }}>*</sup> */}
-              </span>
-            }
-            rows={4}
-            {...rhfMethods.register(`expert_view.article_urls`)}
-            // name={"verdict"}
-            sx={{ width: "100%" }}
-            size="small"
-            // value={value}
-            // onChange={onChange}
-          />
-        </Grid>
       </Grid>
     </Fragment>
   );

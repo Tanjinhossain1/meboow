@@ -3,23 +3,21 @@ import React from "react";
 import Dashboard from "./_components/Dashboard";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
-import Footer from "@/Component/HomePage/Footer";
-import Navbar from "@/Component/Shared/Navbar";
+import dynamic from "next/dynamic";
 
+const NavbarHelper = dynamic(() => import("@/Component/Shared/NavbarHelperComponent"), {
+  ssr: true, // or true, based on whether you want SSR support
+});
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+  ssr: true,
+});
 const AdminPage = async () => {
-  // const router = useRouter();
-
-    // const session = await auth();
-    
   const session = await getServerSession(authConfig);
-  console.log(
-    'this is the user  in app/page',session?.user
-  )
     const user = session?.user;
   
   return (
     <>
-    <Navbar />
+    <NavbarHelper isLoginUser={user} />
     <Dashboard user={user} />
     <Footer />
     </>

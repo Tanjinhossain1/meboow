@@ -28,7 +28,6 @@ import { MobileArticleType } from "@/types/mobiles";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
 import ExpertView from "./ExpertView";
 import DevicesDetails from "./DevicesDetails";
-import DekstopAndMobileViewContext from "@/Component/BackdropProviderChecker";
 
 export default function MainSubmitForm({
   brands,
@@ -42,7 +41,6 @@ export default function MainSubmitForm({
   };
   user?: any;
 }) {
-
   const [gradient, setGradient] = useState(
     isEdit?.isEdit && isEdit?.mobileArticles[0]
       ? isEdit?.mobileArticles[0]?.top_background_color
@@ -216,10 +214,8 @@ export default function MainSubmitForm({
             setShowSuccessText(
               `Article ${isEdit?.isEdit ? "Update" : "Created"} successfully`
             );
-            setTimeout(() => {
               handleBackdropClose();
               window.location.reload();
-            }, 10);
           }
         })
         .catch((err) => {
@@ -489,12 +485,7 @@ export default function MainSubmitForm({
           </Fragment>
 
           <Grid className="md:max-w-[1000px] mx-auto" sx={{ mt: 1 }} container>
-            <Accordion
-              defaultExpanded
-
-              // expanded={expanded === "panel0"}
-              // onChange={handleChange("panel0")}
-            >
+            <Accordion>
               <AccordionSummary
                 aria-controls="panel0d-content"
                 id="panel0d-header"
