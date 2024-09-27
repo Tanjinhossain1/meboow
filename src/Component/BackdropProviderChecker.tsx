@@ -1,4 +1,3 @@
-
 "use client";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
@@ -27,13 +26,16 @@ interface DekstopAndMobileViewProps {
 export const DekstopAndMobileViewComponent = ({
   children,
 }: DekstopAndMobileViewProps) => {
-  const [desktopView, setDesktopView] = useState<boolean>(false
+  const [desktopView, setDesktopView] = useState<boolean>(
+    false
     // localStorage.getItem("desktopView") === "true" ? true : false
   );
   useEffect(() => {
-    // Check localStorage only after the component has mounted
-    const savedDesktopView = localStorage?.getItem("desktopView") === "true";
-    setDesktopView(savedDesktopView);
+    if (typeof window !== "undefined") {
+      // Check localStorage only after the component has mounted
+      const savedDesktopView = localStorage?.getItem("desktopView") === "true";
+      setDesktopView(savedDesktopView);
+    }
   }, []);
   const toggleDesktopView = () => {
     setDesktopView(!desktopView);
