@@ -193,7 +193,7 @@ export default function ExpertView({
         </Grid> */}
         <Grid xs={12}>
           {" "}
-          <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
+          <Typography sx={{ fontSize: 20, fontWeight: 600,mt:2 }}>
             Spec Score
           </Typography>
         </Grid>
@@ -263,7 +263,7 @@ export default function ExpertView({
           return (
             <Fragment key={index}>
               <Grid xs={2}>
-                <FormControl sx={{ my: 2, width: "100%" }} variant="outlined">
+                <FormControl sx={{ mb: 2, width: "100%" }} variant="outlined">
                   <InputLabel id="number-select-label">
                     {otherDetails?.title}
                   </InputLabel>

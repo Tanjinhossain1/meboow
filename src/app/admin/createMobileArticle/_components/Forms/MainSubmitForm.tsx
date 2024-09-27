@@ -424,20 +424,14 @@ export default function MainSubmitForm({
                 >
                   {/* <Grid xs={1.2}></Grid> */}
                   <Grid xs={12}>
-                    <Accordion
-                      defaultExpanded
-                      // expanded={expanded === `panel${index + 1}`}
-                      // onChange={handleChange(`panel${index + 1}`)}
+                    <Paper
+                    sx={{p:2}}
+                    elevation={1}
                     >
-                      <AccordionSummary
-                        aria-controls={`panel${index + 1}d-content`}
-                        id={`panel${index + 1}d-header`}
-                      >
                         <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
                           {otherDetails.title}
                         </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
+                     
                         <DynamicForm
                           holderId={otherDetails.holderId}
                           editorRef={otherDetails.componentRef}
@@ -449,8 +443,7 @@ export default function MainSubmitForm({
                               : undefined
                           }
                         />
-                      </AccordionDetails>
-                    </Accordion>
+                    </Paper>
                   </Grid>
                   {/* <Grid xs={2}></Grid> */}
                 </Grid>
@@ -465,23 +458,15 @@ export default function MainSubmitForm({
               container
             >
               <Grid xs={12}>
-                <Accordion
-                  defaultExpanded
-                  // expanded={expanded === `panel${index + 1}`}
-                  // onChange={handleChange(`panel${index + 1}`)}
+                <Paper
+                   elevation={1}
+                   sx={{p:2}}
                 >
-                  <AccordionSummary
-                    aria-controls={`panelmed-content`}
-                    id={`panelmed-header`}
-                  >
                     <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
                       Expert View
                     </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
                     <ExpertView isEdit={isEdit} rhfMethods={methods} />
-                  </AccordionDetails>
-                </Accordion>
+                  </Paper>
               </Grid>
             </Grid>
           </Fragment>
