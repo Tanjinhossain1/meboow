@@ -83,7 +83,7 @@ export default function CommonTableComponent({
     if (endpoint) {
       fetchData(paginationModel.page, paginationModel.pageSize);
     }
-  }, [endpoint, paginationModel]);
+  }, [endpoint]);
 
   // Handle search
   const handleSearch = async (event: any) => {

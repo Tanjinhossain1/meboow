@@ -5,6 +5,7 @@ import AvTimerIcon from "@mui/icons-material/AvTimer";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 export default function RootLayout({
   children,
@@ -72,6 +73,16 @@ export default function RootLayout({
               >
                 <FeaturedPlayListIcon sx={{ mr: 2 }} />
                 Add Funds
+              </div>
+            </a>
+            <a href="/" className="hover:text-yellow-300">
+              <div
+                className={`${
+                  addFunds ? "bg-purple-600" : ""
+                } hover:bg-purple-600 mt-4 p-2 rounded-lg flex items-center`}
+              >
+                <ArrowBackIosIcon sx={{ mr: 2 }} />
+                Back
               </div>
             </a>
           </div>

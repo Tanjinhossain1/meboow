@@ -1,46 +1,45 @@
 import { Fragment } from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import SpotifyIcon from "@mui/icons-material/Spoke";
-import TiktokIcon from "@mui/icons-material/Spoke";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import DiscordIcon from "@mui/icons-material/Spoke";
-import PublicIcon from "@mui/icons-material/Public";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import NewOrderForm from "./NewOrderForm";
 import axios from "axios";
+import dynamic from "next/dynamic";
 
-const getTheDate =async ()=>{
-    const params = new URLSearchParams({
-        key: process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_KEY!,  // Your API key
-        action: 'services',
-    });
+const ParentShortCompo = dynamic(() => import("./ParentShortCompo"), {
+  ssr: false,
+});
 
-    try {
-        const response = await axios.post(process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_URL!, params.toString(), {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        });
 
-        // Get unique categories from the services
-        const categories = Array.from(new Set(response?.data?.map((service: any) => service.category)));
+const getTheDate = async () => {
+  const params = new URLSearchParams({
+    key: process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_KEY!, // Your API key
+    action: "services",
+  });
 
-        return {
-            categories,
-            services: response?.data,
-        }
-    } catch (error) {
-        console.error('Error fetching services:', error);
-        return error
-    }
-}
-export default async function NewOrder() {
-    const response:any = await getTheDate()
+  try {
+    const response = await axios.post(
+      process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_URL!,
+      params.toString(),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    // Get unique categories from the services
+    const categories = Array.from(
+      new Set(response?.data?.map((service: any) => service.category))
+    );
+
+    return {
+      categories,
+      services: response?.data,
+    };
+  } catch (error) {
+    console.error("Error fetching services:", error);
+    return error;
+  }
+};
+export default async function NewOrder({user}:{user:any}) {
+  const response: any = await getTheDate();
 
   return (
     <Fragment>
@@ -65,7 +64,7 @@ export default async function NewOrder() {
               </svg>
             </div>
             <div>
-              <p className="text-gray-700">tanjiin</p>
+              <p className="text-gray-700">{user?.fullName}</p>
               <p className="text-gray-500 text-sm">Username</p>
             </div>
           </div>
@@ -149,33 +148,7 @@ export default async function NewOrder() {
           </div>
         </div>
       </div>
-
-      {/* Category Buttons */}
-      <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-6">
-        {[
-          { name: "Everythings", icon: <AllInclusiveIcon /> },
-          { name: "Instagram", icon: <InstagramIcon /> },
-          { name: "Facebook", icon: <FacebookIcon /> },
-          { name: "Twitter", icon: <TwitterIcon /> },
-          { name: "Spotify", icon: <SpotifyIcon /> },
-          { name: "TikTok", icon: <TiktokIcon /> },
-          { name: "LinkedIn", icon: <LinkedInIcon /> },
-          { name: "Discord", icon: <DiscordIcon /> },
-          { name: "Website Traffic", icon: <PublicIcon /> },
-          { name: "YouTube", icon: <YouTubeIcon /> },
-          { name: "Telegram", icon: <TelegramIcon /> },
-          { name: "Others", icon: <MoreHorizIcon /> },
-        ].map((item) => (
-          <button
-            key={item.name}
-            className="bg-gray-800 text-white p-4 rounded-lg shadow-md flex items-center justify-center"
-          >
-            <span>{item.icon}</span>
-            <span className="hidden md:inline text-sm ml-2">{item.name}</span>
-          </button>
-        ))}
-      </div>
-      <NewOrderForm servicesOrCategories={response} />
+      <ParentShortCompo response={response} />
     </Fragment>
   );
 }
