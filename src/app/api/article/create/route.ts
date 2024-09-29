@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         const body = await req.json()
 
         const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews, best_reviews,
-            admin_detail, selected_mobile, pages, tags } = body;
+            admin_detail, selected_mobile, pages, tags, route } = body;
 
         console.log('body detail created', body, title, category, description, image, deviceName, content, showInNews, selected_mobile);
 
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
             admin_detail,
             selected_mobile,
             pages,
-            tags
+            tags, route
         });
         revalidateTag('articles');
         return NextResponse.json({ success: true, message: "successfully created article", data: result })
@@ -52,7 +52,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         const body = await req.json();
 
         const { title, category, description, image, content, latestDevice, brands, deviceName, showInNews, id, best_reviews,
-            admin_detail_edit, selected_mobile, pages, tags } = body;
+            admin_detail_edit, selected_mobile, pages, route, tags } = body;
 
         console.log('Body details for update:', body);
 
@@ -84,7 +84,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
                 best_reviews,
                 admin_detail_edit,
                 selected_mobile,
-                pages, tags
+                pages, tags, route
             })
             .where(eq(Articles.id, id));
 

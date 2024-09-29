@@ -87,9 +87,9 @@ export default function Opinion({
           router.push(
             isArticle
               ? articleDetail?.category === "Mobiles"
-                ? `/review/${formatForUrl(articleDetail?.title)}`
+                ? `/review/${formatForUrl(articleDetail?.route)}`
                 : `/article/${formatForUrl(
-                    articleDetail?.title ? articleDetail?.title : ""
+                    articleDetail?.route ? articleDetail?.route : ""
                   )}`
               : `/mobile/${formattedTitle}/opinion`
           );

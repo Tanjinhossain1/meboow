@@ -82,7 +82,7 @@ export default function LatestNews({
                     }}
                     
                   >
-                    <Link href={data?.category === "Mobiles" ? `/review/${formatForUrl(data?.title) }` : `/article/${formatForUrl(data?.title)}`}>
+                    <Link href={data?.category === "Mobiles" ? `/review/${formatForUrl(data?.route) }` : `/article/${formatForUrl(data?.route)}`}>
                     
                     <Grid container direction="column" alignItems="center"> 
                         <Image

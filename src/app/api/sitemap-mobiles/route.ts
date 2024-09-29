@@ -10,7 +10,7 @@ export async function GET() {
     try {
         const db = await getDb();
         console.log(
-            'connected to the db: get all Mobile xml ---> api/v1/article/all'
+            'connected to the db: get all Mobile xml ---> api/v1/sitemap-mobile/all'
         )
         const mobiles = await db
             .select()

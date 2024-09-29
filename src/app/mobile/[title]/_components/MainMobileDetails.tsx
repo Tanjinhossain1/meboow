@@ -135,7 +135,7 @@ export default function MainMobileDetails({
                     {mobileArticles?.selected_articles?.title ? (
                       <Link
                         href={`/review/${formatForUrl(
-                          mobileArticles?.selected_articles?.title
+                          mobileArticles?.selected_articles?.route
                         )}`}
                       >
                         <Button

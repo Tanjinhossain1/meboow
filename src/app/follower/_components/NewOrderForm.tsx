@@ -158,7 +158,7 @@ const NewOrderForm = ({
     const service = form.service.value;
     const link = form.link.value;
     const quantity = form.quantity.value;
-    const charge = form.charge.value;
+    const charge = form.charge.value.replace(/\$/g, '').trim();
 
     console.log({
       category,

@@ -54,8 +54,8 @@ export default function MobileReviews({
               aria-label={`Mobile & Review ${formatForUrl(mobilesArticles[0]?.title)}`}
               href={
                 mobilesArticles[0]?.category === "Mobiles"
-                  ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
-                  : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
+                  ? `/review/${formatForUrl(mobilesArticles[0]?.route)}`
+                  : `/article/${formatForUrl(mobilesArticles[0]?.route)}`
               }
             >
               {isTrending ? (
@@ -108,8 +108,8 @@ export default function MobileReviews({
             aria-label={`Mobile & Review ${formatForUrl(mobilesArticles[0]?.title)}`}
             href={
               mobilesArticles[0]?.category === "Mobiles"
-                ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
-                : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
+                ? `/review/${formatForUrl(mobilesArticles[0]?.route)}`
+                : `/article/${formatForUrl(mobilesArticles[0]?.route)}`
             }
           >
             <p className="text-sm hover:text-red-600 font-bold text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -121,8 +121,8 @@ export default function MobileReviews({
               aria-label={`Mobile & Review ${formatForUrl(mobilesArticles[0]?.title)}`}
               href={
                 mobilesArticles[0]?.category === "Mobiles"
-                  ? `/review/${formatForUrl(mobilesArticles[0]?.title)}`
-                  : `/article/${formatForUrl(mobilesArticles[0]?.title)}`
+                  ? `/review/${formatForUrl(mobilesArticles[0]?.route)}`
+                  : `/article/${formatForUrl(mobilesArticles[0]?.route)}`
               }
             >
               {" "}
@@ -171,8 +171,8 @@ export default function MobileReviews({
                     )}`}
                     href={
                       article?.category === "Mobiles"
-                        ? `/review/${formatForUrl(article?.title)}`
-                        : `/article/${formatForUrl(article?.title)}`
+                        ? `/review/${formatForUrl(article?.route)}`
+                        : `/article/${formatForUrl(article?.route)}`
                     }
                   >
                     <Image
@@ -195,8 +195,8 @@ export default function MobileReviews({
                   )}`}
                   href={
                     article?.category === "Mobiles"
-                      ? `/review/${formatForUrl(article?.title)}`
-                      : `/article/${formatForUrl(article?.title)}`
+                      ? `/review/${formatForUrl(article?.route)}`
+                      : `/article/${formatForUrl(article?.route)}`
                   }
                 >
                   <p className="text-xs hover:text-red-600 font-bold text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -268,8 +268,8 @@ export default function MobileReviews({
                               )}`}
                               href={
                                 article?.category === "Mobiles"
-                                  ? `/review/${formatForUrl(article?.title)}`
-                                  : `/article/${formatForUrl(article?.title)}`
+                                  ? `/review/${formatForUrl(article?.route)}`
+                                  : `/article/${formatForUrl(article?.route)}`
                               }
                             >
                               <Image
@@ -308,8 +308,8 @@ export default function MobileReviews({
                             )}`}
                             href={
                               article?.category === "Mobiles"
-                                ? `/review/${formatForUrl(article?.title)}`
-                                : `/article/${formatForUrl(article?.title)}`
+                                ? `/review/${formatForUrl(article?.route)}`
+                                : `/article/${formatForUrl(article?.route)}`
                             }
                           >
                             {" "}

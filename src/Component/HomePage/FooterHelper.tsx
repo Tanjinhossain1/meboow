@@ -93,8 +93,8 @@ export default function FooterHelper({
                         component="a"
                         href={
                           item?.category === "Mobiles"
-                            ? `/review/${formatForUrl(item?.title)}`
-                            : `/article/${formatForUrl(item?.title)}`
+                            ? `/review/${formatForUrl(item?.route)}`
+                            : `/article/${formatForUrl(item?.route)}`
                         }
                         sx={{
                           color: "#fff",

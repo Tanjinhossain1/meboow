@@ -102,8 +102,8 @@ export default function NewsAndReviews({
                       aria-label={`Mobile & Review ${formatForUrl(article?.title)}`}
                         href={
                           article?.category === "Mobiles"
-                            ? `/review/${formatForUrl(article?.title)}`
-                            : `/article/${formatForUrl(article?.title)}`
+                            ? `/review/${formatForUrl(article?.route)}`
+                            : `/article/${formatForUrl(article?.route)}`
                         }
                       >
                         <Image
@@ -140,8 +140,8 @@ export default function NewsAndReviews({
                     aria-label={`Mobile & Review ${formatForUrl(article?.title)}`}
                       href={
                         article?.category === "Mobiles"
-                          ? `/review/${formatForUrl(article?.title)}`
-                          : `/article/${formatForUrl(article?.title)}`
+                          ? `/review/${formatForUrl(article?.route)}`
+                          : `/article/${formatForUrl(article?.route)}`
                       }
                     >
                       <p className="text-sm font-bold hover:text-red-600 text-gray-700 overflow-hidden text-ellipsis line-clamp-3 text-left">
@@ -152,8 +152,8 @@ export default function NewsAndReviews({
                     aria-label={`Mobile & Review ${formatForUrl(article?.title)}`}
                       href={
                         article?.category === "Mobiles"
-                          ? `/review/${formatForUrl(article?.title)}`
-                          : `/article/${formatForUrl(article?.title)}`
+                          ? `/review/${formatForUrl(article?.route)}`
+                          : `/article/${formatForUrl(article?.route)}`
                       }
                     >
                       <p className="text-[12px] hover:text-red-600 mt-2 text-gray-600 overflow-hidden text-ellipsis line-clamp-3 text-left">

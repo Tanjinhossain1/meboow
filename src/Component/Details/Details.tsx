@@ -468,8 +468,8 @@ export default function DetailsComponent({
                         key={rowPage?.page}
                         href={
                           rowPage?.page === 1
-                            ? `/article/${formatForUrl(articleDetail?.title)}`
-                            : `/article/${formatForUrl(articleDetail?.title)}/${
+                            ? `/review/${formatForUrl(articleDetail?.route)}`
+                            : `/article/${formatForUrl(articleDetail?.route)}/${
                                 rowPage?.page
                               }`
                         }
@@ -786,8 +786,8 @@ export default function DetailsComponent({
                       <Link
                         href={
                           article?.category === "Mobiles"
-                            ? `/article/${formatForUrl(article?.title)}`
-                            : `/article/${formatForUrl(article?.title)}`
+                            ? `/review/${formatForUrl(article?.route)}`
+                            : `/article/${formatForUrl(article?.route)}`
                         }
                       >
                         <Image
@@ -802,8 +802,8 @@ export default function DetailsComponent({
                       <Link
                         href={
                           article?.category === "Mobiles"
-                            ? `/article/${formatForUrl(article?.title)}`
-                            : `/article/${formatForUrl(article?.title)}`
+                            ? `/review/${formatForUrl(article?.route)}`
+                            : `/article/${formatForUrl(article?.route)}`
                         }
                       >
                         <Typography

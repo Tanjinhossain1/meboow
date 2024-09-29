@@ -98,10 +98,12 @@ const ContentBox = ({
   description,
   isBig,
   tooSmall,
+  route
 }: {
   image: string;
   category: string;
   title: string;
+  route: string;
   description: string;
   isBig?: boolean;
   tooSmall?: boolean;
@@ -118,8 +120,8 @@ const ContentBox = ({
         aria-label="Image Article & Article"
         href={
           category === "Mobiles"
-            ? `/review/${formatForUrl(title)}`
-            : `/article/${formatForUrl(title)}`
+            ? `/review/${formatForUrl(route)}`
+            : `/article/${formatForUrl(route)}`
         }
       >
         <Image
@@ -136,8 +138,8 @@ const ContentBox = ({
       aria-label="Title"
       href={
         category === "Mobiles"
-          ? `/review/${formatForUrl(title)}`
-          : `/article/${formatForUrl(title)}`
+          ? `/review/${formatForUrl(route)}`
+          : `/article/${formatForUrl(route)}`
       }
     >
       <Title
@@ -155,8 +157,8 @@ const ContentBox = ({
       aria-label="Description"
       href={
         category === "Mobiles"
-          ? `/review/${formatForUrl(title)}`
-          : `/article/${formatForUrl(title)}`
+          ? `/review/${formatForUrl(route)}`
+          : `/article/${formatForUrl(route)}`
       }
     >
       <Description sx={{ fontSize: isBig ? 12 : 11 }} className="description">

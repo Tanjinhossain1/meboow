@@ -11,6 +11,7 @@ export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType): 
     console.log('mobileArticle?.expert_view  ', mobileArticle)
     return {
         title: mobileArticle?.title ? mobileArticle?.title : "",
+        route: mobileArticle?.route ? mobileArticle?.route : "",
         category: mobileArticle?.category ? mobileArticle?.category : "",
         description: mobileArticle?.description ? mobileArticle?.description : "",
         latestDevice: mobileArticle?.latestDevice ? mobileArticle?.latestDevice : "",

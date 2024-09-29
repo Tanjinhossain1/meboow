@@ -37,8 +37,8 @@ export default function DisplayArticleComponent({
           aria-label="Article Image"
           href={
             data?.category === "Mobiles"
-              ? `/review/${formatForUrl(data?.title)}`
-              : `/article/${formatForUrl(data?.title)}`
+              ? `/review/${formatForUrl(data?.route)}`
+              : `/article/${formatForUrl(data?.route)}`
           }
         >
           <Image
@@ -57,8 +57,8 @@ export default function DisplayArticleComponent({
           aria-label="Review & Article"
           href={
             data?.category === "Mobiles"
-              ? `/review/${formatForUrl(data?.title)}`
-              : `/article/${formatForUrl(data?.title)}`
+              ? `/review/${formatForUrl(data?.route)}`
+              : `/article/${formatForUrl(data?.route)}`
           }
         >
           <Typography
@@ -78,8 +78,8 @@ export default function DisplayArticleComponent({
           aria-label="Date"
           href={
             data?.category === "Mobiles"
-              ? `/review/${formatForUrl(data?.title)}`
-              : `/article/${formatForUrl(data?.title)}`
+              ? `/review/${formatForUrl(data?.route)}`
+              : `/article/${formatForUrl(data?.route)}`
           }
         >
           <Typography

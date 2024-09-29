@@ -3,6 +3,7 @@ import DetailsReviewComponent from "@/Component/Details/ReviewDetails";
 import Footer from "@/Component/HomePage/Footer";
 import Navbar from "@/Component/Shared/Navbar";
 import { authConfig } from "@/lib/auth";
+import { getAllArticles } from "@/lib/queries/services";
 import {
   fetchArticleOpinions,
   fetchArticles,
@@ -11,7 +12,6 @@ import {
   fetchCategories,
   fetchMobileArticles,
 } from "@/services/articleServices";
-import { formatForUrl } from "@/utils/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
@@ -25,14 +25,14 @@ export async function generateMetadata(
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  const articleDetail = await fetchArticlesDetails({ title: formattedTitle });
+  const articleDetail = await getAllArticles({ route: formattedTitle });
   const previousImages = (await parent).openGraph?.images || [];
-  if (articleDetail?.data && articleDetail?.data[0]) {
-    const title = `${articleDetail?.data[0]?.title}`;
+  if (articleDetail && articleDetail[0]) {
+    const title = `${articleDetail[0]?.title}`;
     const desc = `${
-      articleDetail?.data[0]?.title
-    } ${articleDetail?.data[0]?.description.slice(0, 100)}`;
-    const image = articleDetail?.data[0].image;
+      articleDetail[0]?.title
+    } ${articleDetail[0]?.description.slice(0, 100)}`;
+    const image = articleDetail[0].image;
 
     return {
       title: title,
@@ -69,20 +69,20 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     "this is the formattedTitle inthe the review title",
     formattedTitle
   );
-  const data = await fetchArticlesDetails({ title: formattedTitle });
+  const data = await getAllArticles({ route: formattedTitle });
   const Category = await fetchCategories();
   const Brands = await fetchBrands();
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "10" });
   const articlesOpinion = await fetchArticleOpinions({
     page: "1",
     limit: "20",
-    articleId: data?.data[0]?.id,
+    articleId: data[0]?.id,
   });
   const articles = await fetchArticles({
-    category: data?.data[0]?.category,
+    category: data[0]?.category,
     page: "1",
     limit: "5",
-    isRelated: data?.data[0]?.id,
+    isRelated: data[0]?.id,
   });
 
   const session = await getServerSession(authConfig);
@@ -96,7 +96,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
         key="canonical"
       />
       <Navbar />
-      {data?.data && mobileArticles.data && data?.data[0] ? (
+      {data && mobileArticles.data && data[0] ? (
         <DetailsReviewComponent
           user={user}
           articlesOpinion={articlesOpinion.data}
@@ -104,7 +104,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
           brands={Brands?.data}
           articles={articles.data}
           category={Category.data}
-          articleDetail={data?.data[0]}
+          articleDetail={data[0]}
         />
       ) : null}
 

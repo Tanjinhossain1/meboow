@@ -4,6 +4,7 @@ export interface RecentArticleDataType {
     id:string;
     image: string;
     title: string;
+    route: string;
     description: string;
     category: string;
     content:any;
@@ -32,6 +33,7 @@ export interface RecentArticleDataType {
 
 export interface RecentArticleDataCreateType {
     title: string;
+    route: string;
     description: string;
     category: string;
     latestDevice: string,

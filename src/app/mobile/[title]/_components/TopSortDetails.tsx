@@ -627,7 +627,7 @@ const IphoneCard = ({
           {mobileDetail?.selected_articles?.id ? (
             <Link
               href={`/review/${formatForUrl(
-                mobileDetail?.selected_articles?.title
+                mobileDetail?.selected_articles?.route
               )}`}
             >
               <Button aria-label="Review" sx={{ color: "white" }} className="hover:bg-red-600 px-3">

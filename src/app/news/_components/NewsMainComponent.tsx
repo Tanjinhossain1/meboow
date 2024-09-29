@@ -86,6 +86,7 @@ export default function NewsMainComponent({
                   category={articles[0]?.category}
                   image={articles[0]?.image}
                   title={articles[0]?.title}
+                  route={articles[0]?.route}
                   description={articles[0]?.description}
                   isBig
                 />
@@ -97,6 +98,7 @@ export default function NewsMainComponent({
                       category={articles[1]?.category}
                       image={articles[1]?.image}
                       title={articles[1]?.title}
+                      route={articles[1]?.route}
                       description={articles[1]?.description}
                     />
                   </Grid>
@@ -105,6 +107,7 @@ export default function NewsMainComponent({
                       category={articles[1]?.category}
                       image={articles[1]?.image}
                       title={articles[1]?.title}
+                      route={articles[1]?.route}
                       description={articles[1]?.description}
                     />
                   </Grid>
@@ -113,6 +116,7 @@ export default function NewsMainComponent({
                       category={articles[2]?.category}
                       image={articles[2]?.image}
                       title={articles[2]?.title}
+                      route={articles[2]?.route}
                       description={articles[2]?.description}
                       tooSmall
                     />
@@ -122,6 +126,7 @@ export default function NewsMainComponent({
                       category={articles[3]?.category}
                       image={articles[3]?.image}
                       title={articles[3]?.title}
+                      route={articles[3]?.route}
                       description={articles[3]?.description}
                       tooSmall
                     />

@@ -18,13 +18,14 @@ export async function getAllArticles({
     searchTerm,
     category,
     best_reviews,
-    latestDevice
+    latestDevice,
+    route,
 }: {
     all?: boolean, pages?: string, limits?: string, searchTerm?: string, brands?: string, latestDevice?: string,
-    best_reviews?: string, showInNews?: boolean, id?: string, category?: string
+    best_reviews?: string, showInNews?: boolean, id?: string, category?: string,route:string
 }) {
     noStore();
-    const cacheKey = `articles-${pages || '1'}-${limits || '10'}-${latestDevice || 'none1'}-${brands || 'none2'}-${showInNews ? "show" : 'none3'}-${searchTerm || 'none4'}-${best_reviews || 'none5'}-${category || 'none6'}-${all || 'none8'}`;
+    const cacheKey = `articles-${pages || '1'}-${limits || '10'}-${latestDevice || 'none1'}-${brands || 'none2'}-${showInNews ? "show" : 'none3'}-${searchTerm || 'none4'}-${best_reviews || 'none5'}-${category || 'none6'}-${all || 'none8'}-${route || 'none8'}`;
 
     console.log('show in news with search conditions  IN TOP SEARCH  ', showInNews);
     return await cache(
@@ -47,6 +48,10 @@ export async function getAllArticles({
                 // Build other conditions only if showInNews is not true
                 if (category) {
                     const searchConditions = likeInsensitive(Articles["category"], `%${category}%`);
+                    whereConditions.push(searchConditions);
+                }
+                if (route) {
+                    const searchConditions = eq(Articles["route"], route);
                     whereConditions.push(searchConditions);
                 }
                 if (best_reviews) {

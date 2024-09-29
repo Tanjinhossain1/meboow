@@ -24,7 +24,7 @@ export async function GET() {
         
                 // Write the main article URL with priority
                 sitemapStream.write({ 
-                    url: `/article/${formatForUrl(article?.title)}`, 
+                    url: `/article/${formatForUrl(article?.route!)}`, 
                     lastmod: new Date(),
                     priority: mainPriority // Add priority for main article
                 });
@@ -37,7 +37,7 @@ export async function GET() {
         
                             // Write the paginated URLs with priority
                             sitemapStream.write({ 
-                                url: `/article/${formatForUrl(article?.title)}/${page?.page}`, 
+                                url: `/article/${formatForUrl(article?.route!)}/${page?.page}`, 
                                 lastmod: new Date(),
                                 priority: pagePriority // Add priority for paginated pages
                             });

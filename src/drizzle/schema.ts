@@ -33,6 +33,7 @@ export const Articles = mysqlTable(
     pages:json('pages'),
 
     tags:json('tags'),
+    route:text('route'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),

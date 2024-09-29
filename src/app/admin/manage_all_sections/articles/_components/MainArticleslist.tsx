@@ -28,10 +28,10 @@ export default function MainArticlesDetailList({
       const textToCopy =
         params.category === "Mobiles"
           ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(
-              params.title
+              params.route
             )}`
           : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(
-              params.title
+              params.route
             )}`;
 
       await navigator.clipboard.writeText(textToCopy);
@@ -47,10 +47,10 @@ export default function MainArticlesDetailList({
       const url =
         params.category === "Mobiles"
           ? `${process.env.NEXT_PUBLIC_DOMAIN_URL}/review/${formatForUrl(
-              params.title
+              params.route
             )}`
           : `${process.env.NEXT_PUBLIC_DOMAIN_URL}/article/${formatForUrl(
-              params.title
+              params.route
             )}`;
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(

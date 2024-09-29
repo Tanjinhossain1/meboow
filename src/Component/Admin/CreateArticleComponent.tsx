@@ -99,8 +99,10 @@ export default function CreateArticleComponent({
     register,
     formState: { errors },
     setValue,
+    watch,
     handleSubmit,
   } = methods;
+  const { title } = watch();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "pages",
@@ -141,7 +143,11 @@ export default function CreateArticleComponent({
       }
     }, 500); // Adjust debounce timing if necessary
   };
-
+  useEffect(() => {
+    if (title && !isEdit?.isEdit) {
+      methods?.setValue("route", title);
+    }
+  }, [title]);
   const fetchData = async (query: string) => {
     setLoading(true);
     try {
@@ -273,6 +279,7 @@ export default function CreateArticleComponent({
     const data = {
       ...allValues,
       title: allValues?.title.trim(),
+      route: allValues?.route.trim(),
       image: imageRef.current,
       content: fieldData,
       brands: brands,
@@ -352,6 +359,27 @@ export default function CreateArticleComponent({
       tagA({ name: "" });
     }
   };
+  const handlePaste = (e: React.ClipboardEvent, index: number) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData.getData("text");
+    const words = pasteData.split(/\s+/); // Split by spaces
+
+    // Set the first field with the full pasted value
+    // methods.setValue(`tags.${index}.name`, pasteData);
+
+    // Dynamically fill the next fields with the words
+    words.forEach((word, i) => {
+      // if (i === 0) return; // Skip the first word (handled above)
+      
+      // If more fields are needed, append them
+      if (i >= tagFields.length) {
+        tagAppend({ name: "" });
+      }
+
+      // Set the value for the following fields
+      methods.setValue(`tags.${i}.name`, word);
+    });
+  };
   return (
     <div>
       <FormProvider {...methods}>
@@ -396,9 +424,6 @@ export default function CreateArticleComponent({
               ) : null}
             </div>
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
-              {/* <InputLabel sx={{ mb: 1 }} htmlFor="filled-adornment-amount">
-              Title <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-            </InputLabel> */}
               <TextField
                 size="small"
                 {...register("title", {
@@ -409,17 +434,18 @@ export default function CreateArticleComponent({
                 error={!!errors.title}
                 helperText={errors.title?.message as string}
               />
-              {/* <FilledInput
-              {...register(`title`)}
-              // name="title"
-              id="filled-adornment-amount"
-              placeholder="Title"
-              required
-              defaultValue={isEdit?.isEdit ? isEdit?.articleDetail?.title : ""}
-              startAdornment={
-                <InputAdornment position="start"></InputAdornment>
-              }
-            /> */}
+            </FormControl>
+            <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
+              <TextField
+                size="small"
+                {...register("route", {
+                  required: "Route is Required",
+                })}
+                id="filled-adornment-amount"
+                placeholder="Route"
+                error={!!errors.route}
+                helperText={errors.route?.message as string}
+              />
             </FormControl>
 
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
@@ -697,6 +723,7 @@ export default function CreateArticleComponent({
                           size="small"
                           fullWidth
                           onKeyPress={(e) => handleKeyPress(e, tagAppend)}
+                          onPaste={(e) => handlePaste(e, index)}
                         />
                         {index > 0 && (
                           <IconButton
