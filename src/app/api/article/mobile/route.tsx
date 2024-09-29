@@ -5,6 +5,7 @@ import { and, count, desc, eq, or, sql } from "drizzle-orm";
 import { IPaginationOptions, paginationHelpers } from "../../shared/helpers";
 import { IGenericResponse, likeInsensitive } from "@/utils/utils";
 import { revalidateTag } from "next/cache";
+const { DateTime } = require('luxon');
 
 export async function POST(req: Request) {
   try {
@@ -290,18 +291,20 @@ const getAll = async (
   }
   // Filtering for posts created today if `isTodayPost` is true
   if (isTodayPost) {
-    // Get today's date in YYYY-MM-DD format
-    const today = new Date();
-    const specificDate = today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+    const currentDateInBD = DateTime.now().setZone("Asia/Dhaka");
 
-    // Construct start and end of the day
-    const startOfDay = new Date(`${specificDate}T00:00:00`); // 12:00 AM of today
-    const endOfDay = new Date(`${specificDate}T23:59:59.999`); // 11:59 PM of today
+    // Convert to Phoenix (MST) timezone
+    const startOfDayPhoenix = currentDateInBD
+      .setZone("America/Phoenix")
+      .startOf("day")
+      .toISO();
+    const endOfDayPhoenix = currentDateInBD
+      .setZone("America/Phoenix")
+      .endOf("day")
+      .toISO();
 
-    // SQL condition for today's data
-    const todayCondition = sql`${
-      MobileArticles.createdAt
-    } BETWEEN ${startOfDay.toISOString()} AND ${endOfDay.toISOString()}`;
+    // Use this in your SQL query for filtering data created on "today" in Phoenix time
+    const todayCondition = sql`${MobileArticles.createdAt} BETWEEN ${startOfDayPhoenix} AND ${endOfDayPhoenix}`;
     whereConditions.push(todayCondition);
   }
 
