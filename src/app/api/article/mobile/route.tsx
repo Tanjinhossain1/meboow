@@ -290,16 +290,19 @@ const getAll = async (
   }
   // Filtering for posts created today if `isTodayPost` is true
   if (isTodayPost) {
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0); // 12:00 AM
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date();
+    const specificDate = today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
 
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999); // 11:59 PM
+    // Construct start and end of the day
+    const startOfDay = new Date(`${specificDate}T00:00:00`); // 12:00 AM of today
+    const endOfDay = new Date(`${specificDate}T23:59:59.999`); // 11:59 PM of today
 
-    const todayConditions = sql`${
+    // SQL condition for today's data
+    const todayCondition = sql`${
       MobileArticles.createdAt
     } BETWEEN ${startOfDay.toISOString()} AND ${endOfDay.toISOString()}`;
-    whereConditions.push(todayConditions);
+    whereConditions.push(todayCondition);
   }
 
   if (searchTerm) {
