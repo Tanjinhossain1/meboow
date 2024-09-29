@@ -68,6 +68,7 @@ export default function MainArticlesDetailList({
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     { field: "title", headerName: "Title", width: 480 },
+    { field: "route", headerName: "Route", width: 100 },
     {
       field: "createdAt",
       headerName: "Create Date",
