@@ -105,7 +105,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
         key="canonical"
       />
       <Navbar />
-      {data?.data && mobileArticles.data && data?.data[0] ? (
+      {data && mobileArticles.data && data[0] ? (
         <DetailsComponent
           articlePage={+params?.page}
           user={user}
@@ -114,7 +114,7 @@ export default async function Details({ params, searchParams }: DetailsParams) {
           brands={Brands?.data}
           articles={articles.data}
           category={Category.data}
-          articleDetail={data?.data[0]}
+          articleDetail={data[0]}
         />
       ) : null}
 
