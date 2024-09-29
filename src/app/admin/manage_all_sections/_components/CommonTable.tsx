@@ -153,6 +153,14 @@ export default function CommonTableComponent({
           );
           setFilteredRows(filteredData);
           setLoading(false);
+        }  else if ((columnData[0] as RecentArticleDataType)?.category) {
+          const filteredData = (columnData as RecentArticleDataType[]).filter(
+            (row) => row?.title.toLowerCase().includes(value)
+              ||
+            row.category.toString().includes(value)
+          );
+          setFilteredRows(filteredData);
+          setLoading(false);
         } else {
           const filteredData = (
             columnData as (
