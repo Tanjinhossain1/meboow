@@ -5,7 +5,6 @@ import { and, count, desc, eq, or, sql } from "drizzle-orm";
 import { IPaginationOptions, paginationHelpers } from "../../shared/helpers";
 import { IGenericResponse, likeInsensitive } from "@/utils/utils";
 import { revalidateTag } from "next/cache";
-const { DateTime } = require("luxon");
 
 export async function POST(req: Request) {
   try {
@@ -291,16 +290,19 @@ const getAll = async (
   }
   // Filtering for posts created today if `isTodayPost` is true
   if (isTodayPost) {
-    // Get the current time in Bangladesh timezone
-    const currentDateInBD = DateTime.now().setZone("Asia/Dhaka");
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date();
+    const specificDate = today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
 
-    // Get the start and end of the day in Bangladesh time
-    const startOfDayInBD = currentDateInBD.startOf("day").toISO(); // 12:00 AM in Bangladesh
-    const endOfDayInBD = currentDateInBD.endOf("day").toISO(); // 11:59 PM in Bangladesh
+    // Construct start and end of the day
+    const startOfDay = new Date(`${specificDate}T00:00:00`); // 12:00 AM of today
+    const endOfDay = new Date(`${specificDate}T23:59:59.999`); // 11:59 PM of today
 
-    // SQL query condition to get posts created between start and end of the Bangladesh day
-    const bangladeshTimeCondition = sql`${MobileArticles.createdAt} BETWEEN ${startOfDayInBD} AND ${endOfDayInBD}`;
-    whereConditions.push(bangladeshTimeCondition);
+    // SQL condition for today's data
+    const todayCondition = sql`${
+      MobileArticles.createdAt
+    } BETWEEN ${startOfDay.toISOString()} AND ${endOfDay.toISOString()}`;
+    whereConditions.push(todayCondition);
   }
 
   if (searchTerm) {
