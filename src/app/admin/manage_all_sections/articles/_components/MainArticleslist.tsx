@@ -69,6 +69,7 @@ export default function MainArticlesDetailList({
     { field: "id", headerName: "ID", width: 50 },
     { field: "title", headerName: "Title", width: 480 },
     { field: "route", headerName: "Route", width: 100 },
+    { field: "category", headerName: "Category", width: 100 },
     {
       field: "createdAt",
       headerName: "Create Date",
@@ -87,7 +88,7 @@ export default function MainArticlesDetailList({
           {params?.row?.admin_detail?.name}
         </Typography>
       ),
-      width: 150,
+      width: 120,
     },
     user?.role === "admin" && {
       field: "admin_detail.role",
@@ -97,7 +98,7 @@ export default function MainArticlesDetailList({
           {params?.row?.admin_detail?.role}
         </Typography>
       ),
-      width: 150,
+      width: 100,
     },
     // {
     //   field: "post",

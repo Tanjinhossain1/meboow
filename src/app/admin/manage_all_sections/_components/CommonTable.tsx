@@ -225,7 +225,7 @@ export default function CommonTableComponent({
           >
             Today Post Only
           </Button>
-        ) : (
+        ) : endpoint ?(
           <Button
             onClick={() => setIsTodayPost(false)}
             sx={{ mb: 2 }}
@@ -235,7 +235,7 @@ export default function CommonTableComponent({
           >
             Total List
           </Button>
-        )}
+        ) : null}
       </div>
       {/* DataGrid */}
       {endpoint ? (
