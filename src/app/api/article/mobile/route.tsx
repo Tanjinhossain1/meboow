@@ -293,16 +293,11 @@ const getAll = async (
     // Get today's date in YYYY-MM-DD format
     const today = new Date();
     const specificDate = today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
-
-    // Construct start and end of the day
-    const startOfDay = new Date(`${specificDate}T00:00:00`); // 12:00 AM of today
-    const endOfDay = new Date(`${specificDate}T23:59:59.999`); // 11:59 PM of today
-
-    // SQL condition for today's data
-    const todayCondition = sql`${
-      MobileArticles.createdAt
-    } BETWEEN ${startOfDay.toISOString()} AND ${endOfDay.toISOString()}`;
-    whereConditions.push(todayCondition);
+    const searchConditions = likeInsensitive(
+      MobileArticles["createdAt"],
+      `%${specificDate}%`
+    );
+    whereConditions.push(searchConditions);
   }
 
   if (searchTerm) {
