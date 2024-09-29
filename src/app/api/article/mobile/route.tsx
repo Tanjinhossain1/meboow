@@ -81,7 +81,7 @@ export async function POST(req: Request) {
       selected_articles,
       tags,
     });
-    revalidateTag('mobiles');
+    revalidateTag("mobiles");
     return NextResponse.json({
       success: true,
       message: "successfully created mobile article",
@@ -179,7 +179,7 @@ export async function PUT(req: Request) {
         error: "Article not found or could not be updated",
       });
     }
-    revalidateTag('mobiles');
+    revalidateTag("mobiles");
     return NextResponse.json({
       success: true,
       message: "Successfully updated mobile article",
@@ -204,6 +204,7 @@ export async function GET(req: NextRequest) {
       is_by_fans: searchParams.get("is_by_fans"),
       is_daily_interest: searchParams.get("is_daily_interest"),
       is_latest_device: searchParams.get("is_latest_device"),
+      isTodayPost: searchParams.get("isTodayPost"),
     };
 
     const options = {
@@ -245,6 +246,7 @@ const getAll = async (
     is_by_fans,
     is_daily_interest,
     is_latest_device,
+    isTodayPost,
   } = filters;
   const whereConditions = [];
   console.log(
@@ -286,6 +288,19 @@ const getAll = async (
 
     whereConditions.push(searchConditions);
   }
+  // Filtering for posts created today if `isTodayPost` is true
+  if (isTodayPost) {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0); // 12:00 AM
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999); // 11:59 PM
+
+    const todayConditions = sql`${
+      MobileArticles.createdAt
+    } BETWEEN ${startOfDay.toISOString()} AND ${endOfDay.toISOString()}`;
+    whereConditions.push(todayConditions);
+  }
 
   if (searchTerm) {
     // const searchConditions = ["title","market_status","brands","$admin_detail?.name$"].map((field) =>
@@ -299,10 +314,15 @@ const getAll = async (
       likeInsensitive(MobileArticles.brands, `%${searchTerm}%`),
       // JSON path query for admin_detail.name
       // sql`${MobileArticles.admin_detail} ->> '$.name' LIKE ${`%${searchTerm}%`}`
-      sql`LOWER(${MobileArticles.admin_detail} ->> '$.name') LIKE ${`%${lowerSearchTerm}%`}`,
-      sql`LOWER(${MobileArticles.admin_detail} ->> '$.role') LIKE ${`%${lowerSearchTerm}%`}`,
-      sql`LOWER(${MobileArticles.admin_detail} ->> '$.email') LIKE ${`%${lowerSearchTerm}%`}`
-
+      sql`LOWER(${
+        MobileArticles.admin_detail
+      } ->> '$.name') LIKE ${`%${lowerSearchTerm}%`}`,
+      sql`LOWER(${
+        MobileArticles.admin_detail
+      } ->> '$.role') LIKE ${`%${lowerSearchTerm}%`}`,
+      sql`LOWER(${
+        MobileArticles.admin_detail
+      } ->> '$.email') LIKE ${`%${lowerSearchTerm}%`}`,
     ];
     whereConditions.push(or(...searchConditions));
   }

@@ -76,7 +76,7 @@ export default function MainArticlesDetailList({
           {formatDate(params?.row?.createdAt)}
         </Typography>
       ),
-      width: 150,
+      width: 200,
     },
     user?.role === "admin" && {
       field: "admin_detail",
@@ -98,25 +98,25 @@ export default function MainArticlesDetailList({
       ),
       width: 150,
     },
-    {
-      field: "post",
-      headerName: "Post",
-      renderCell: (params: any) => (
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            if (window.confirm("Are you sure you want to POST?")) {
-              handlePostToFacebook(params.row);
-            }
-          }}
-        >
-          Post
-        </Button>
-      ),
-      width: 100,
-    },
+    // {
+    //   field: "post",
+    //   headerName: "Post",
+    //   renderCell: (params: any) => (
+    //     <Button
+    //       size="small"
+    //       variant="contained"
+    //       color="primary"
+    //       onClick={() => {
+    //         if (window.confirm("Are you sure you want to POST?")) {
+    //           handlePostToFacebook(params.row);
+    //         }
+    //       }}
+    //     >
+    //       Post
+    //     </Button>
+    //   ),
+    //   width: 100,
+    // },
     {
       field: "actions",
       headerName: "Edit",
