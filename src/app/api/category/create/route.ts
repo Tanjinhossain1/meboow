@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         // Parse the JSON body
         const body = await req.json()
 
-        const { title, admin_detail } = body;
+        const { title, admin_detail,sub_categories } = body;
 
         console.log('body detail created', body, title,);
 
@@ -19,7 +19,8 @@ export async function POST(req: Request) {
         // Perform the database insertion using Drizzle ORM
         const result = await db.insert(Category).values({
             title,
-            admin_detail
+            admin_detail,
+            sub_categories
         });
 
         return NextResponse.json({ success: true, message: "successfully created Category", data: result })
@@ -34,11 +35,11 @@ export async function PUT(req: Request) {
         // Parse the JSON body
         const body = await req.json()
 
-        const { title, image, id, admin_detail_edit } = body;
+        const { title, id, admin_detail_edit,sub_categories } = body;
 
         console.log('body detail Updated', body, title,);
 
-        if (!title || !image) {
+        if (!title) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
 
@@ -46,7 +47,8 @@ export async function PUT(req: Request) {
         const db = await getDb();
         const result = await db.update(Category).set({
             title,
-            admin_detail_edit
+            admin_detail_edit,
+            sub_categories
         }).where(eq(Category.id, id));
 
         return NextResponse.json({ success: true, message: "successfully Updated Category", data: result })

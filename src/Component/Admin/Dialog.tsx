@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import FileUpload from "@/Component/Forms/UploadImage";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 
@@ -32,10 +32,12 @@ export default function DialogComponent({
   categorySelectedForEdit?: CategoryTypes;
 }) {
   const fileUploadRef = useRef();
+  const [isLoading,setIsLoading] = useState<boolean>(false);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.stopPropagation();
     event.preventDefault(); // Stop the event from propagating to the outer form
     handleBackDropOpen();
+    setIsLoading(true)
     const title = (event.target as any)?.title.value;
     // const value = (event.target as any)?.value.value;
     console.log(
@@ -96,10 +98,12 @@ export default function DialogComponent({
           if (response?.data?.success) {
             handleClick(isBrand ? "SUccessfully Edit Brand" : "");
             handleDialogClose();
+            setIsLoading(false)
           }
         })
         .catch((err: any) => {
           handleBackdropClose();
+          setIsLoading(false)
           console.log("error", err);
         });
     }
@@ -118,16 +122,19 @@ export default function DialogComponent({
                 : "Successfully Category Created"
             );
             handleDialogClose();
+            setIsLoading(false)
             window.location.reload();
           }
         })
         .catch((err: any) => {
           handleBackdropClose();
+          setIsLoading(false)
           console.log("error", err);
         });
     }
 
     handleBackdropClose();
+    setIsLoading(false)
   };
   return (
     <Container sx={{ p: 3 }}>
@@ -198,7 +205,7 @@ export default function DialogComponent({
           <Button color="error" onClick={handleDialogClose} variant="contained">
             Cancel
           </Button>
-          <Button type="submit" color="primary" variant="contained">
+          <Button disabled={isLoading} type="submit" color="primary" variant="contained">
             Submit
           </Button>
         </Container>

@@ -25,7 +25,8 @@ export const Articles = mysqlTable(
     best_reviews: text('best_reviews'),
     image: text('image').notNull(),
     content: json('content'),
-    
+    sub_categories:text('sub_categories'),
+
     admin_detail:json('admin_detail'),
     admin_detail_edit:json('admin_detail_edit'),
 
@@ -43,8 +44,10 @@ export const Articles = mysqlTable(
 export const Category = mysqlTable(
   'category',
   {
+    
     id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
+    sub_categories: json('sub_categories'),
     
     admin_detail:json('admin_detail'),
     admin_detail_edit:json('admin_detail_edit'),

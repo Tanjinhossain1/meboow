@@ -13,6 +13,7 @@ export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType): 
         title: mobileArticle?.title ? mobileArticle?.title : "",
         route: mobileArticle?.route ? mobileArticle?.route : "",
         category: mobileArticle?.category ? mobileArticle?.category : "",
+        sub_categories: mobileArticle?.sub_categories ? mobileArticle?.sub_categories : "",
         description: mobileArticle?.description ? mobileArticle?.description : "",
         latestDevice: mobileArticle?.latestDevice ? mobileArticle?.latestDevice : "",
         best_reviews: mobileArticle?.best_reviews ? mobileArticle?.best_reviews : "",

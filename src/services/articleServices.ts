@@ -365,6 +365,7 @@ export async function fetchCategories()
   const categories = result.map(category => ({
     id: category.id,
     title: category.title,
+    sub_categories: category.sub_categories as any,
     updateAt: category.updateAt.toDateString(),
     createdAt: category.createdAt.toDateString(),
   }))

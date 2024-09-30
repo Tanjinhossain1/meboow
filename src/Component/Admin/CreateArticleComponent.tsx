@@ -46,6 +46,7 @@ import {
 } from "react-hook-form";
 import { RhfDefaultInitialValues } from "./DefaultRhfData";
 import { RemoveCircle } from "@mui/icons-material";
+import SubCategory from "./SubCategory";
 // import {} from 'next'
 
 const EditorForArticle = dynamic(() => import("../Editor/EditorForArticle"), {
@@ -75,6 +76,9 @@ export default function CreateArticleComponent({
   const [age, setAge] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.category : ""
   );
+  const [totalSelectedCategories, setTotalSelectedCategories] =
+    React.useState<CategoryTypes | null>(null);
+
   const [brands, setBrands] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.brands : ""
   );
@@ -148,6 +152,14 @@ export default function CreateArticleComponent({
       methods?.setValue("route", title);
     }
   }, [title]);
+  useEffect(() => {
+    if(isEdit){
+      const selectedCategories = categories.filter(
+        (category) => category?.title === age
+      );
+      setTotalSelectedCategories(selectedCategories[0]);
+    }
+  }, [isEdit?.isEdit]);
   const fetchData = async (query: string) => {
     setLoading(true);
     try {
@@ -187,6 +199,9 @@ export default function CreateArticleComponent({
   const [showSuccessText, setShowSuccessText] = useState<string>("");
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [brandDialogOpen, setBrandDialogOpen] = React.useState(false);
+  const [subCategoriesCreateModal, setSubCategoriesCreateModal] =
+    React.useState(false);
+
   const [showInNews, setShowInNews] = React.useState(
     isEdit?.isEdit ? isEdit?.articleDetail?.showInNews : ""
   );
@@ -210,6 +225,9 @@ export default function CreateArticleComponent({
   const handleBrandDialogClose = () => {
     setBrandDialogOpen(false);
   };
+  const handleSubCategoryDialogClose = () => {
+    setSubCategoriesCreateModal(false);
+  };
 
   const handleDialogClickOpen = () => {
     setDialogOpen(true);
@@ -228,6 +246,10 @@ export default function CreateArticleComponent({
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value);
+    const selectedCategories = categories.filter(
+      (category) => category?.title === event.target.value
+    );
+    setTotalSelectedCategories(selectedCategories[0]);
   };
   const handleBrandChange = (event: SelectChangeEvent) => {
     setBrands(event.target.value);
@@ -370,7 +392,7 @@ export default function CreateArticleComponent({
     // Dynamically fill the next fields with the words
     words.forEach((word, i) => {
       // if (i === 0) return; // Skip the first word (handled above)
-      
+
       // If more fields are needed, append them
       if (i >= tagFields.length) {
         tagAppend({ name: "" });
@@ -449,9 +471,6 @@ export default function CreateArticleComponent({
             </FormControl>
 
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
-              {/* <InputLabel sx={{ mb: 1 }} htmlFor="filled-adornment-amount">
-              Device Name <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-            </InputLabel> */}
               <TextField
                 size="small"
                 {...register("deviceName")}
@@ -461,18 +480,6 @@ export default function CreateArticleComponent({
                 error={!!errors.deviceName}
                 helperText={errors.deviceName?.message as string}
               />
-              {/* <FilledInput
-              defaultValue={
-                isEdit?.isEdit ? isEdit?.articleDetail?.deviceName : ""
-              }
-              name="deviceName"
-              id="filled-adornment-amount"
-              placeholder="Name"
-              required
-              startAdornment={
-                <InputAdornment position="start"></InputAdornment>
-              }
-            /> */}
             </FormControl>
             <Autocomplete
               {...register("selected_mobile")}
@@ -512,7 +519,6 @@ export default function CreateArticleComponent({
                   label="Search Mobiles"
                   variant="outlined"
                   fullWidth
-                  // name="selected_mobile"
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: loading ? (
@@ -608,13 +614,47 @@ export default function CreateArticleComponent({
                     </MenuItem>
                   );
                 })}
-                {/* <MenuItem value={"mobile"}>Mobile</MenuItem> */}
               </Select>
 
               <IconButton onClick={handleDialogClickOpen}>
                 <AddCircleIcon color="success" titleAccess="Add Category" />
               </IconButton>
             </FormControl>
+
+              <FormControl
+                variant="filled"
+                sx={{ my: 1, minWidth: "100%", display: "flex" }}
+              >
+                <InputLabel id="demo-simple-select-filled-label">
+                  Sub Category{" "}
+                  <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+                </InputLabel>
+
+                <Select
+                  {...register("sub_categories")}
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  name="sub_categories"
+                  value={isEdit?.isEdit ? isEdit?.articleDetail?.sub_categories ? isEdit?.articleDetail?.sub_categories  : undefined :undefined}
+                >
+                  {totalSelectedCategories?.sub_categories?.map(
+                    (subCategory) => {
+                      return (
+                        <MenuItem
+                          key={subCategory.title}
+                          value={subCategory.title}
+                        >
+                          {subCategory.title}
+                        </MenuItem>
+                      );
+                    }
+                  )}
+                </Select>
+
+                <IconButton onClick={() => setSubCategoriesCreateModal(true)}>
+                  <AddCircleIcon color="success" titleAccess="Add Brand" />
+                </IconButton>
+              </FormControl>
 
             {age === "Mobiles" ? (
               <FormControl
@@ -863,6 +903,21 @@ export default function CreateArticleComponent({
             Agree
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={subCategoriesCreateModal}
+        onClose={handleSubCategoryDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/* <DialogComponent
+          user={user}
+          handleClick={handleClick}
+          handleBackdropClose={handleBackdropClose}
+          handleBackDropOpen={handleBackDropOpen}
+          handleDialogClose={handleDialogClose}
+        /> */}
+        <SubCategory categories={categories} />
       </Dialog>
       <Dialog
         open={dialogOpen}

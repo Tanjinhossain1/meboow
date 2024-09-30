@@ -7,6 +7,7 @@ export interface RecentArticleDataType {
     route: string;
     description: string;
     category: string;
+    sub_categories:string;
     content:any;
     latestDevice: string,
     best_reviews: string,
@@ -36,6 +37,7 @@ export interface RecentArticleDataCreateType {
     route: string;
     description: string;
     category: string;
+    sub_categories:string;
     latestDevice: string,
     best_reviews: string,
     brands: string,
