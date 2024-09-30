@@ -99,11 +99,11 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const user = session?.user;
   return (
     <>
-      <link
+      {/* <link
         rel="canonical"
         href={`${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}/${params?.page}`}
         key="canonical"
-      />
+      /> */}
       <Navbar />
       {data && mobileArticles.data && data[0] ? (
         <DetailsComponent
