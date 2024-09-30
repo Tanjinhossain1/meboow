@@ -519,7 +519,8 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
                   <Link aria-label="Home" href={"/"}>
                     <Typography
                       sx={{
-                        mr: 2
+                        mr: 2,
+                        color:"white"
                       }}
                     >
                       Home
