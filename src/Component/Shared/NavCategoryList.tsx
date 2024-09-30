@@ -21,7 +21,7 @@ export default function Navbar({
         return (
           <HoverCard key={category?.id} openDelay={0} closeDelay={0}>
             <HoverCardTrigger style={{ margin: 0, padding: 0 }} asChild>
-              <Link href={`/category/${formatForUrlWith_under_score(category?.title)}`} style={{ margin: 0, padding: 0 }} >
+              <Link className="text-white" href={`/category/${formatForUrlWith_under_score(category?.title)}`} style={{ margin: 0, padding: 0 }} >
                 {category?.title}
                 {
                     category?.sub_categories?.length > 0 ?
@@ -38,7 +38,7 @@ export default function Navbar({
                     <Link
                     href={`/category/${formatForUrlWith_under_score(category?.title)}/${formatForUrlWith_under_score(subCategory?.title)}`}
                     key={index}
-                    className="hover:text-red-400 hover:underline px-2 py-1 rounded cursor-pointer"
+                    className="hover:text-red-400 hover:underline px-2 py-1 rounded cursor-pointer text-white"
                     >
                     {subCategory.title}
                   </Link>
