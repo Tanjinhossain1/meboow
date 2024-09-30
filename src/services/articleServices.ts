@@ -23,7 +23,7 @@ export const fetchCountryName = async (countryCode: string): Promise<string | nu
 };
 export async function fetchArticles({
   page = "1",
-  limit = "6",
+  limit = "12",
   category,
   search,
   latestDevice,
@@ -32,7 +32,7 @@ export async function fetchArticles({
   allArticles,
   showInNewsWithAll,
   best_reviews,
-  isRelated
+  isRelated,sub_categories
 }: {
   page?: string;
   limit?: string;
@@ -45,6 +45,7 @@ export async function fetchArticles({
   showInNewsWithAll?: string;
   best_reviews?: string;
   isRelated?: string;
+  sub_categories?: string;
 }): Promise<{
   data: RecentArticleDataType[];
   page: number;
@@ -72,6 +73,8 @@ export async function fetchArticles({
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?best_reviews=${best_reviews}`;
   } else if (isRelated) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}&is_related=${isRelated}`;
+  }else if (sub_categories) {
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&sub_categories=${sub_categories}`;
   }
 
   // const response = await axios.get(url);

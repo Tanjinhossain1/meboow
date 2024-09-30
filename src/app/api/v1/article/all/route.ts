@@ -53,6 +53,7 @@ export async function GET(req: NextRequest) {
         best_reviews: searchParams.get('best_reviews'),
         showInNews: searchParams.get('showInNews'),
         is_related: searchParams.get('is_related'),
+        sub_categories: searchParams.get('sub_categories'),
     };
 
     const options = {
@@ -80,11 +81,16 @@ const getAll = async (
     options: IPaginationOptions
 ): Promise<IGenericResponse<any[]>> => {
     const { limit, page, skip } = paginationHelpers.calculatePagination(options);
-    const { searchTerm, category, latestDevice, all, brands, showInNews, best_reviews, is_related } = filters;
+    const { searchTerm, category, latestDevice, all, brands, showInNews, best_reviews, is_related,sub_categories} = filters;
     const whereConditions = [];
     console.log('where conditions show in news ', showInNews)
     if (category) {
         const searchConditions = likeInsensitive(Articles["category"], `%${category}%`)
+
+        whereConditions.push(searchConditions);
+    }
+    if (sub_categories) {
+        const searchConditions = likeInsensitive(Articles["sub_categories"], `%${sub_categories}%`)
 
         whereConditions.push(searchConditions);
     }

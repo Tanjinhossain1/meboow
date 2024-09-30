@@ -25,21 +25,23 @@ export default function CategoryPageComponent({
   isSearch,
   isBrandWise,
   mobileSearch,
+  isSubCategory,
 }: {
   categoryWiseArticles: RecentArticleDataType[];
   total: number;
   category: CategoryTypes[];
   isSearch?: boolean;
+  isSubCategory?: boolean;
   isBrandWise?: boolean;
   mobileSearch?: MobileArticleType[];
 }) {
   const params = useParams();
   const history = useRouter();
   const [isHideLoadMore, setIsHideLoadMore] = useState<boolean>(false);
-
+  console.log('categoryWiseArticles  ',categoryWiseArticles)
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
-  const limit = searchParams.get("limit") ?? "3";
+  const limit = searchParams.get("limit") ?? "5";
   const search = searchParams.get("search") ?? "";
 
   // Function to load more articles
@@ -58,6 +60,16 @@ export default function CategoryPageComponent({
     } else if (isBrandWise) {
       history.push(
         `/article/brand-wise/${params?.brand}?${new URLSearchParams({
+          page: page,
+          limit: `${Number(limit) + 6}`,
+        })}`,
+        {
+          scroll: false,
+        }
+      );
+    }else if(isSubCategory){
+      history.push(
+        `/category/${params?.category}/${params?.subCategory}?${new URLSearchParams({
           page: page,
           limit: `${Number(limit) + 6}`,
         })}`,
@@ -100,11 +112,20 @@ export default function CategoryPageComponent({
                 <Typography sx={{ fontSize: 12 }}>
                   Search Results for: {search}
                 </Typography>
-              ) : (
+              ) : isSubCategory ?(
+                <Link underline="hover" color="inherit" href={`/category/${params?.category}`}>
+                  {params?.category}
+                </Link>
+              ) :(
                 <Typography sx={{ fontSize: 12 }}>
                   {params?.category}
                 </Typography>
               )}
+              {isSubCategory ? (
+                <Typography sx={{ fontSize: 12 }}>
+                  {params?.subCategory}
+                </Typography>
+              ) : null}
             </Breadcrumbs>
 
             <Grid container>
@@ -121,7 +142,11 @@ export default function CategoryPageComponent({
                   >
                     Search Results for: {search}
                   </Typography>
-                ) : (
+                ) : isSubCategory ?(
+                  <Typography sx={{ fontSize: 37, fontWeight: 550, my: 2 }}>
+                    {params?.subCategory}
+                  </Typography>
+                ) :(
                   <Typography sx={{ fontSize: 37, fontWeight: 550, my: 2 }}>
                     {params?.category}
                   </Typography>
@@ -131,9 +156,15 @@ export default function CategoryPageComponent({
             </Grid>
             <Grid container>
               <Grid xs={12} md={8}>
-                  {
-                  categoryWiseArticles && categoryWiseArticles.length !== 0 &&  isSearch ? <Typography sx={{fontSize:20,fontWeight:600,mt:2,mb:1}}>Articles</Typography> : null
-                  }
+                {categoryWiseArticles &&
+                categoryWiseArticles.length !== 0 &&
+                isSearch ? (
+                  <Typography
+                    sx={{ fontSize: 20, fontWeight: 600, mt: 2, mb: 1 }}
+                  >
+                    Articles
+                  </Typography>
+                ) : null}
                 <Grid container>
                   {categoryWiseArticles &&
                     categoryWiseArticles?.map((data: RecentArticleDataType) => {
@@ -152,11 +183,17 @@ export default function CategoryPageComponent({
               </Grid>
             </Grid>
             {isSearch ? (
-              mobileSearch && mobileSearch.length !==0? (
-              <Box> <Typography sx={{fontSize:20,fontWeight:600,mt:2}}> Mobiles </Typography>
-                <Grid container>
-                  <MobileCommonDetails articles={mobileSearch} />
-                </Grid></Box> 
+              mobileSearch && mobileSearch.length !== 0 ? (
+                <Box>
+                  {" "}
+                  <Typography sx={{ fontSize: 20, fontWeight: 600, mt: 2 }}>
+                    {" "}
+                    Mobiles{" "}
+                  </Typography>
+                  <Grid container>
+                    <MobileCommonDetails articles={mobileSearch} />
+                  </Grid>
+                </Box>
               ) : null
             ) : null}
 
@@ -167,7 +204,6 @@ export default function CategoryPageComponent({
               </Alert>
             )}
 
-            
             <Grid sx={{ mt: 3 }} container>
               <Grid xs={1}></Grid>
               <Grid xs={10} sm={4}>

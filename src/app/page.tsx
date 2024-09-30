@@ -9,6 +9,7 @@ import {
 } from "@/lib/queries/services";
 import dynamic from "next/dynamic";
 import { Fragment } from "react";
+import { fetchCategories } from "@/services/articleServices";
 
 const NavbarHelper = dynamic(() => import("@/Component/Shared/NavbarHelperComponent"), {
   ssr: true, // or true, based on whether you want SSR support
@@ -67,6 +68,7 @@ async function Home() {
     serverBrand,
     MobileArticles,
     MobileNewsAndReviews,
+    categories
   ] = await Promise.all([
     getAllArticles({ pages: "1", limits: "4" }),
 
@@ -92,6 +94,7 @@ async function Home() {
     }),
 
     getAllArticlesWithShowInNews({ limits: "30" }),
+    fetchCategories()
   ]);
   const user = session?.user;
 
@@ -102,7 +105,7 @@ async function Home() {
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
         key="canonical"
       />
-        <NavbarHelper isLoginUser={user} />
+        <NavbarHelper categories={categories?.data} isLoginUser={user} />
         <Banner
           MobileNewsAndReviews={MobileNewsAndReviews}
           MobileArticles={MobileArticles}

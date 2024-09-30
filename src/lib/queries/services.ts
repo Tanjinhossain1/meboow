@@ -7,7 +7,7 @@ import {
     unstable_noStore as noStore,
 } from "next/cache"
 import { Articles, MobileArticles, TechBrands } from "@/drizzle/schema";
-import { and, asc, count, desc, eq, ne, or } from "drizzle-orm";
+import { and, asc, count, desc, eq, or } from "drizzle-orm";
 import { paginationHelpers } from "@/app/api/shared/helpers";
 import { likeInsensitive } from "@/utils/utils";
 
@@ -20,12 +20,13 @@ export async function getAllArticles({
     best_reviews,
     latestDevice,
     route,
+    sub_categories,
 }: {
     all?: boolean, pages?: string, limits?: string, searchTerm?: string, brands?: string, latestDevice?: string,
-    best_reviews?: string, showInNews?: boolean, id?: string, category?: string,route?:string
+    best_reviews?: string, showInNews?: boolean, id?: string, category?: string,route?:string,sub_categories?:string
 }) {
     noStore();
-    const cacheKey = `articles-${pages || '1'}-${limits || '10'}-${latestDevice || 'none1'}-${brands || 'none2'}-${showInNews ? "show" : 'none3'}-${searchTerm || 'none4'}-${best_reviews || 'none5'}-${category || 'none6'}-${all || 'none8'}-${route || 'none8'}`;
+    const cacheKey = `articles-${pages || '1'}-${limits || '10'}-${latestDevice || 'none1'}-${brands || 'none2'}-${showInNews ? "show" : 'none3'}-${searchTerm || 'none4'}-${best_reviews || 'none5'}-${category || 'none6'}-${all || 'none8'}-${route || 'none8'}-${sub_categories || 'none8'}`;
 
     console.log('show in news with search conditions  IN TOP SEARCH  ', showInNews);
     return await cache(
@@ -48,6 +49,10 @@ export async function getAllArticles({
                 // Build other conditions only if showInNews is not true
                 if (category) {
                     const searchConditions = likeInsensitive(Articles["category"], `%${category}%`);
+                    whereConditions.push(searchConditions);
+                }
+                if (sub_categories) {
+                    const searchConditions = likeInsensitive(Articles["sub_categories"], `%${sub_categories}%`);
                     whereConditions.push(searchConditions);
                 }
                 if (route) {

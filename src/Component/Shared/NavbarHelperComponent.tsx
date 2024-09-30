@@ -32,8 +32,11 @@ import { signOut } from "next-auth/react";
 import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import BackdropProviderContext from "../BackdropProvider";
+import { CategoryTypes } from "@/types/category";
+import NavbarCategoryList from "./NavCategoryList";
+import { Stack } from "@mui/material";
 
-function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
+function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories:CategoryTypes[]}) {
   const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
@@ -99,7 +102,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
               <ListItemIcon>
                 <HomeIcon></HomeIcon>
               </ListItemIcon>
-              <ListItemText sx={{ color: "white" }} primary={text} />
+              <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -145,6 +148,9 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
           </ListItem>
         </Link>
       </List>
+      <Stack direction={"column"}>
+      <NavbarCategoryList categories={categories} />
+      </Stack>
       <Grid sx={{ bottom: 0, position: "absolute", ml: 2 }} container>
         <Grid xs={0} sm={4} md={5} lg={7}></Grid>
 
@@ -513,8 +519,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                   <Link aria-label="Home" href={"/"}>
                     <Typography
                       sx={{
-                        mr: 2,
-                        color: "white",
+                        mr: 2
                       }}
                     >
                       Home
@@ -536,6 +541,7 @@ function NavbarHelper({ isLoginUser }: { isLoginUser: any }) {
                     {" "}
                     <Typography sx={{ color: "white" }}>Contact</Typography>
                   </Link>
+                  <NavbarCategoryList categories={categories} />
                 </Box>
 
                 <Box>
