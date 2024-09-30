@@ -1,6 +1,7 @@
 // import CategoryPageComponent from "@/Component/Category/CategoryPageComponent";
 import { authConfig } from "@/lib/auth";
 import { fetchArticles, fetchCategories } from "@/services/articleServices";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
@@ -53,13 +54,13 @@ export async function generateMetadata(
     openGraph: {
       title: title,
       description: desc,
-      url: `${process.env.NEXT_APP_CANONICAL_URL}/category/${params?.category}/${params?.subCategory}`,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/category/${formatForUrlWith_under_score(params?.category)}/${formatForUrlWith_under_score(params?.subCategory)}`,
       siteName: "Safari List",
       type: "website",
       images: [...previousImages],
     },
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/category/${params?.category}/${params?.subCategory}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/category/${formatForUrlWith_under_score(params?.category)}/${formatForUrlWith_under_score(params?.subCategory)}`,
     },
   };
 }
@@ -67,6 +68,7 @@ export async function generateMetadata(
 interface CategoryPropsType {
   params: {
     subCategory: string;
+    category: string;
   };
   searchParams: {
     page: string;
@@ -79,13 +81,18 @@ export default async function SubCategoryPage({
   params,
   searchParams,
 }: CategoryPropsType) {
-  const formattedCategory = params?.subCategory
+  const formattedCategory = params?.category
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+  const formattedSubCategory = params?.subCategory
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
   const { page, limit } = searchParams;
   const articles = await fetchArticles({
-    sub_categories: formattedCategory,
+    sub_categories: formattedSubCategory,
+    main_category_for_sub:formattedCategory,
     page,
     limit,
   });

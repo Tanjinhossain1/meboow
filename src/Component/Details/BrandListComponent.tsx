@@ -1,4 +1,5 @@
 import { BrandTypes, CategoryTypes } from "@/types/category";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 import { Box, Container, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -40,7 +41,7 @@ export default function BrandListComponent({
             }}
             key={value.id}
             onClick={() => {
-              history.push(`/category/${value.title}`);
+              history.push(`/category/${formatForUrlWith_under_score(value.title)}`);
             }}
           >
             {value.title}

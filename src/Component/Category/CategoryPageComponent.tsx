@@ -17,6 +17,7 @@ import { CategoryTypes } from "@/types/category";
 import CategoryListComponent from "./CategoryListComponent";
 import { MobileArticleType } from "@/types/mobiles";
 import MobileCommonDetails from "../HomePage/Component/MobileCommonDetails";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 
 export default function CategoryPageComponent({
   categoryWiseArticles,
@@ -69,7 +70,7 @@ export default function CategoryPageComponent({
       );
     }else if(isSubCategory){
       history.push(
-        `/category/${params?.category}/${params?.subCategory}?${new URLSearchParams({
+        `/category/${formatForUrlWith_under_score(params?.category as any)}/${formatForUrlWith_under_score(params?.subCategory as any)}?${new URLSearchParams({
           page: page,
           limit: `${Number(limit) + 6}`,
         })}`,
@@ -79,7 +80,7 @@ export default function CategoryPageComponent({
       );
     } else {
       history.push(
-        `/category/${params?.category}/?${new URLSearchParams({
+        `/category/${formatForUrlWith_under_score(params?.category as any)}/?${new URLSearchParams({
           page: page,
           limit: `${Number(limit) + 6}`,
         })}`,

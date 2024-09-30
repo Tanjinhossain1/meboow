@@ -32,7 +32,7 @@ export async function fetchArticles({
   allArticles,
   showInNewsWithAll,
   best_reviews,
-  isRelated,sub_categories
+  isRelated,sub_categories,main_category_for_sub
 }: {
   page?: string;
   limit?: string;
@@ -46,6 +46,7 @@ export async function fetchArticles({
   best_reviews?: string;
   isRelated?: string;
   sub_categories?: string;
+  main_category_for_sub?: string;
 }): Promise<{
   data: RecentArticleDataType[];
   page: number;
@@ -74,7 +75,7 @@ export async function fetchArticles({
   } else if (isRelated) {
     url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&category=${category}&is_related=${isRelated}`;
   }else if (sub_categories) {
-    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&sub_categories=${sub_categories}`;
+    url = `${process.env.NEXT_APP_URL}/api/v1/article/all?page=${page}&limit=${limit}&sub_categories=${sub_categories}&category=${main_category_for_sub}`;
   }
 
   // const response = await axios.get(url);

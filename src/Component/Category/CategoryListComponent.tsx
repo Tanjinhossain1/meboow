@@ -1,4 +1,5 @@
 import { CategoryTypes } from "@/types/category";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 import { Container, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
@@ -18,7 +19,7 @@ export default function CategoryListComponent({
 
       {category?.map((value: CategoryTypes) => {
         return (
-          <Link key={value?.id} href={`/category/${value.title}`}>
+          <Link key={value?.id} href={`/category/${formatForUrlWith_under_score(value.title)}`}>
             <Typography
               sx={{
                 p: 1,

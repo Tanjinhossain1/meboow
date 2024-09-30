@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 
 export default function Categories({
   category,
@@ -61,7 +62,7 @@ export default function Categories({
                 ":hover": { bgcolor: "#f584b7" },
               }}
             >
-              <Link aria-label={`Category ${value?.title}`} href={`/category/${value.title}`}>
+              <Link aria-label={`Category ${value?.title}`} href={`/category/${formatForUrlWith_under_score(value.title)}`}>
                 <Box
                   sx={{
                     width: 40,

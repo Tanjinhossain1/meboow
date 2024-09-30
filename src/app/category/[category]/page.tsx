@@ -1,6 +1,7 @@
 import CategoryPageComponent from "@/Component/Category/CategoryPageComponent";
 import Navbar from "@/Component/Shared/Navbar";
 import { fetchArticles, fetchCategories } from "@/services/articleServices";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import React, { Suspense } from "react";
 
@@ -31,13 +32,13 @@ export async function generateMetadata(
     openGraph: {
       title: title,
       description: desc,
-      url: `${process.env.NEXT_APP_CANONICAL_URL}/category/${params?.category}`,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/category/${formatForUrlWith_under_score(params?.category)}`,
       siteName: "Safari List",
       type: "website",
       images: [...previousImages],
     },
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/category/${params?.category}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/category/${formatForUrlWith_under_score(params?.category)}`,
     },
   };
 }

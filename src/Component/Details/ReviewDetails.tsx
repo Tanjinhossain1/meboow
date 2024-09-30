@@ -27,7 +27,7 @@ import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import MobileListComponent from "./MobileListComponent";
-import { cleanText, formatDate, formatForUrl } from "@/utils/utils";
+import { cleanText, formatDate, formatForUrl, formatForUrlWith_under_score } from "@/utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -210,7 +210,7 @@ export default function DetailsReviewComponent({
           <MuiLink
             underline="hover"
             color="inherit"
-            href={`/category/${articleDetail?.category}`}
+            href={`/category/${formatForUrlWith_under_score(articleDetail?.category)}`}
           >
             {articleDetail?.category}
           </MuiLink>
@@ -232,7 +232,7 @@ export default function DetailsReviewComponent({
           size="small"
           variant="contained"
           onClick={() => {
-            history.push(`/category/${articleDetail?.category}`);
+            history.push(`/category/${formatForUrlWith_under_score(articleDetail?.category)}`);
           }}
         >
           {articleDetail?.category}
