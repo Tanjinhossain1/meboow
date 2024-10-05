@@ -1,5 +1,5 @@
 "use client";
-import React, { lazy, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -13,19 +13,24 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
 import { formatForUrl } from "@/utils/utils";
-
+import { getAllMobiles } from "@/lib/queries/services";
 
 const MemoryIcon = lazy(() => import("@mui/icons-material/Memory"));
 
 export default function CommonMobileSlider({
-  articles,
+  mobiles,
   user,
+  brandsName,
 }: {
-  articles: MobileArticleType[];
+  mobiles: MobileArticleType[];
   user: any;
+  brandsName?: string;
 }) {
+  const [articles, setArticles] = useState<MobileArticleType[]>(mobiles);
   const [index, setIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
+  const [page, setPage] = useState(1);
+  // const [totalData, setTotalData] = useState<number>(0)
 
   const handleNext = () => {
     if (index < articles.length - 3 && !transitioning) {
@@ -35,6 +40,28 @@ export default function CommonMobileSlider({
         setTransitioning(false);
       }, 500); // Match with the transition duration
     }
+    const mobilesDataFetch = async () => {
+      const data = await getAllMobiles(
+        brandsName
+          ? {
+              limits: "6",
+              brands: brandsName,
+              pages: `${page + 1}`,
+            }
+          : {
+              limits: "6",
+              pages: `${page + 1}`,
+            }
+      );
+      console.log("first mobiles ", data);
+      // setTotalData(data?.meta?.total)
+      setPage(page + 1);
+      if (data?.data?.length > 0) {
+        console.log("first mobiles in length ", data);
+        setArticles((prev) => [...prev, ...(data?.data as any)]);
+      }
+    };
+    mobilesDataFetch();
   };
 
   const handlePrev = () => {
@@ -45,7 +72,16 @@ export default function CommonMobileSlider({
         setTransitioning(false);
       }, 500); // Match with the transition duration
     }
+    // setTotalData(totalData - 5)
   };
+  console.log("articlesarticles  ", articles);
+  // useEffect(()=>{
+  //   const mobilesDataFetch = async () =>{
+  //     const data = await getAllMobiles({ limits: "30", brands: "Apple" })
+  //     setArticles(data?.data as any)
+  //   }
+  //   mobilesDataFetch()
+  // },[])
 
   return (
     <div className="flex justify-center items-center   w-full ">
@@ -145,8 +181,8 @@ export default function CommonMobileSlider({
                           }}
                         >
                           <MemoryIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
-                          {data?.key_specifications.ram_chipset ? (
-                            <span>{data.key_specifications.ram_chipset}</span>
+                          {data?.key_specifications?.ram_chipset ? (
+                            <span>{data.key_specifications?.ram_chipset}</span>
                           ) : (
                             <span style={{ color: "gray" }}>****</span> // or any placeholder text
                           )}
@@ -174,7 +210,7 @@ export default function CommonMobileSlider({
                           }}
                         >
                           <CameraAltIcon sx={{ fontSize: 15, color: "gray" }} />{" "}
-                          {data?.key_specifications.camera}
+                          {data?.key_specifications?.camera}
                         </Typography>
                       </Grid>
                     </Link>
@@ -199,7 +235,7 @@ export default function CommonMobileSlider({
                           <BatteryChargingFullIcon
                             sx={{ fontSize: 15, color: "gray" }}
                           />{" "}
-                          {data?.key_specifications.battery}
+                          {data?.key_specifications?.battery}
                         </Typography>
                       </Grid>
                     </Link>
@@ -218,7 +254,7 @@ export default function CommonMobileSlider({
                             }
                       }
                     >
-                      {data?.prices[0].start_from ? (
+                      {/* {data?.prices[0].start_from ? (
                         <Link
                           aria-label={`Mobile ${formatForUrl(data?.title)}`}
                           href={`/mobile/${formatForUrl(data?.title)}`}
@@ -234,7 +270,7 @@ export default function CommonMobileSlider({
                             ${data?.prices[0].start_from}
                           </Typography>
                         </Link>
-                      ) : null}
+                      ) : null} */}
 
                       {user?.role === "admin" || user?.role === "sub_admin" ? (
                         <Link
@@ -264,6 +300,7 @@ export default function CommonMobileSlider({
       <IconButton
         aria-label="Arrow Forward Ios Icon"
         onClick={handleNext}
+        // disabled={totalData === articles?.length}
         disabled={index >= articles?.length - 3}
       >
         <ArrowForwardIosIcon className="h-6 w-6" />

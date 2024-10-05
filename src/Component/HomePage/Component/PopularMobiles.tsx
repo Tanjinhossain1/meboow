@@ -29,10 +29,10 @@ export default function PopularMobiles({
       <Typography sx={{ fontSize: 25, fontWeight: 600 }}>
         Popular Mobiles
       </Typography>
-      <CommonMobileSlider articles={apple} user={user} />
-      <CommonMobileSlider articles={samsungData} user={user} />
-      <CommonMobileSlider articles={google} user={user} />
-      <CommonMobileSlider articles={lastUpdate} user={user} />
+      <CommonMobileSlider brandsName="Apple" mobiles={apple} user={user} />
+      <CommonMobileSlider brandsName="Samsung" mobiles={samsungData} user={user} />
+      <CommonMobileSlider brandsName="Google" mobiles={google} user={user} />
+      <CommonMobileSlider mobiles={lastUpdate} user={user} />
     </Paper>
   );
 }

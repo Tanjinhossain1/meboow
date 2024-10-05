@@ -11,9 +11,12 @@ import dynamic from "next/dynamic";
 import { Fragment } from "react";
 import { fetchCategories } from "@/services/articleServices";
 
-const NavbarHelper = dynamic(() => import("@/Component/Shared/NavbarHelperComponent"), {
-  ssr: true, // or true, based on whether you want SSR support
-});
+const NavbarHelper = dynamic(
+  () => import("@/Component/Shared/NavbarHelperComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
 const Banner = dynamic(() => import("@/Component/HomePage/Banner"), {
   ssr: true, // or true, based on whether you want SSR support
 });
@@ -68,7 +71,7 @@ async function Home() {
     serverBrand,
     MobileArticles,
     MobileNewsAndReviews,
-    categories
+    categories,
   ] = await Promise.all([
     getAllArticles({ pages: "1", limits: "4" }),
 
@@ -77,13 +80,13 @@ async function Home() {
       category: "Mobiles",
     }),
 
-    getAllMobiles({ limits: "30", brands: "Apple" }),
+    getAllMobiles({ limits: "6",pages:'1', brands: "Apple" }),
 
-    getAllMobiles({ limits: "30", brands: "Samsung" }),
+    getAllMobiles({ limits: "6",pages:'1', brands: "Samsung" }),
 
-    getAllMobiles({ limits: "30", brands: "Google" }),
+    getAllMobiles({ limits: "6",pages:'1', brands: "Google" }),
 
-    getAllMobiles({ limits: "30" }),
+    getAllMobiles({ limits: "6",pages:'1' }),
 
     getAllBrands({ pages: "1", limits: "10" }),
 
@@ -94,7 +97,7 @@ async function Home() {
     }),
 
     getAllArticlesWithShowInNews({ limits: "30" }),
-    fetchCategories()
+    fetchCategories(),
   ]);
   const user = session?.user;
 
@@ -105,19 +108,19 @@ async function Home() {
         href={`${process.env.NEXT_APP_CANONICAL_URL}`}
         key="canonical"
       />
-        <NavbarHelper categories={categories?.data} isLoginUser={user} />
-        <Banner
-          MobileNewsAndReviews={MobileNewsAndReviews}
-          MobileArticles={MobileArticles}
-          mobileReviews={mobileReviews}
-          apple={apple?.data as any}
-          samsungData={samsungData?.data as any}
-          google={google?.data as any}
-          lastUpdate={lastUpdate?.data as any}
-          serverBrand={serverBrand}
-          user={user}
-          articles={articles as any}
-        />
+      <NavbarHelper categories={categories?.data} isLoginUser={user} />
+      <Banner
+        MobileNewsAndReviews={MobileNewsAndReviews}
+        MobileArticles={MobileArticles}
+        mobileReviews={mobileReviews}
+        apple={apple?.data as any}
+        samsungData={samsungData?.data as any}
+        google={google?.data as any}
+        lastUpdate={lastUpdate?.data as any}
+        serverBrand={serverBrand}
+        user={user}
+        articles={articles as any}
+      />
       <Footer />
     </Fragment>
   );

@@ -379,6 +379,7 @@ export default function FooterHelper({
                   width={180}
                   height={10}
                   src="/app-logo/3.png"
+                  loading="lazy"
                 />
               </Grid>
               <Grid xs={5}>
