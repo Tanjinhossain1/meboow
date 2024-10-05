@@ -110,13 +110,15 @@ export async function getAllArticles({
 }
 export async function getAllArticlesWithShowInNews({
     limits,
-    pages
+    pages,
+    is_meta
 }: {
     limits: string,
-    pages?: string
+    pages?: string,
+    is_meta?: boolean
 }) {
     noStore();
-    const cacheKey = `articles-show-in-news`;
+    const cacheKey = `articles-show-in-news${is_meta ? '-meta data show' : ""}`;
     return await cache(
         async () => {
             const db = await getDb();
@@ -140,7 +142,12 @@ export async function getAllArticlesWithShowInNews({
                 .offset(skip)
                 .limit(limit);
             console.log(`articlePosts --> top search ---> `, articlePosts)
-            return articlePosts
+
+            const total = await db.select({
+                count: count(),
+            }).from(Articles).where(and(...whereConditions)).orderBy(desc(Articles.createdAt)).execute().then((res) => res[0].count)
+
+            return is_meta ? { data: articlePosts, total: total } : articlePosts
         },
         [cacheKey],
         {
