@@ -6,6 +6,8 @@ export interface UsersTypes {
     email: string;
     password: string;
     role: string;
+    ballance?:string;
+    totalSpend?:string;
     createdAt: string;
     updatedAt: string;
 }

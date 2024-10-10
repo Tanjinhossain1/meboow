@@ -25,16 +25,16 @@ export const Articles = mysqlTable(
     best_reviews: text('best_reviews'),
     image: text('image').notNull(),
     content: json('content'),
-    sub_categories:text('sub_categories'),
+    sub_categories: text('sub_categories'),
 
-    admin_detail:json('admin_detail'),
-    admin_detail_edit:json('admin_detail_edit'),
+    admin_detail: json('admin_detail'),
+    admin_detail_edit: json('admin_detail_edit'),
 
-    selected_mobile:json('selected_mobile'),
-    pages:json('pages'),
+    selected_mobile: json('selected_mobile'),
+    pages: json('pages'),
 
-    tags:json('tags'),
-    route:text('route'),
+    tags: json('tags'),
+    route: text('route'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
@@ -44,13 +44,13 @@ export const Articles = mysqlTable(
 export const Category = mysqlTable(
   'category',
   {
-    
+
     id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
     sub_categories: json('sub_categories'),
-    
-    admin_detail:json('admin_detail'),
-    admin_detail_edit:json('admin_detail_edit'),
+
+    admin_detail: json('admin_detail'),
+    admin_detail_edit: json('admin_detail_edit'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
@@ -63,9 +63,9 @@ export const TechBrands = mysqlTable(
     id: int('id').autoincrement().primaryKey(),
     title: text('title').notNull(),
     image: text('image').notNull(),
-    
-    admin_detail:json('admin_detail'),
-    admin_detail_edit:json('admin_detail_edit'),
+
+    admin_detail: json('admin_detail'),
+    admin_detail_edit: json('admin_detail_edit'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),
@@ -111,19 +111,19 @@ export const MobileArticles = mysqlTable(
     expert_view: json("expert_view"),
     content: json("content"),
 
-    is_daily_interest:text('is_daily_interest'),
-    is_by_fans:text('is_by_fans'),
-    is_latest_device:text('is_latest_device'),
+    is_daily_interest: text('is_daily_interest'),
+    is_by_fans: text('is_by_fans'),
+    is_latest_device: text('is_latest_device'),
 
-    total_fans:int('total_fans'),
-    top_background_color:text('top_background_color'),
+    total_fans: int('total_fans'),
+    top_background_color: text('top_background_color'),
 
-    admin_detail:json('admin_detail'),
-    admin_detail_edit:json('admin_detail_edit'),
+    admin_detail: json('admin_detail'),
+    admin_detail_edit: json('admin_detail_edit'),
 
-    selected_articles:json('selected_articles'),
-    
-    tags:json('tags'),
+    selected_articles: json('selected_articles'),
+
+    tags: json('tags'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updatedAt: timestamp('updatedAt').defaultNow().notNull(),
@@ -133,7 +133,7 @@ export const MobileArticles = mysqlTable(
 export const MobileFanDetail = mysqlTable("mobile_fans_detail", {
   id: int("id").autoincrement().primaryKey(),
   email: text("email").notNull(),
-  mobileId:int("mobileId").notNull(),
+  mobileId: int("mobileId").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
@@ -144,7 +144,7 @@ export const Opinion = mysqlTable("opinion", {
   name: text("name").notNull(),
   email: text("email").notNull(),
   comments: text("comments").notNull(),
-  mobileId:int("mobileId").notNull(),
+  mobileId: int("mobileId").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
@@ -155,7 +155,7 @@ export const ArticleOpinion = mysqlTable("articles_opinion", {
   name: text("name").notNull(),
   email: text("email").notNull(),
   comments: text("comments").notNull(),
-  articleId:int("articleId").notNull(),
+  articleId: int("articleId").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })
@@ -163,9 +163,9 @@ export const ArticleOpinion = mysqlTable("articles_opinion", {
 // opinion about mobile 
 export const Tags = mysqlTable("tags", {
   id: int("id").autoincrement().primaryKey(),
-  
-  admin_detail:json('admin_detail'),
-  admin_detail_edit:json('admin_detail_edit'),
+
+  admin_detail: json('admin_detail'),
+  admin_detail_edit: json('admin_detail_edit'),
   // name: text("name"),
   name: text("name").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -177,8 +177,8 @@ export const NetworkBands = mysqlTable("network_bands", {
   // name: text("name"),
   country: text("country").notNull(),
   content: json("content"),
-  admin_detail:json('admin_detail'),
-  admin_detail_edit:json('admin_detail_edit'),
+  admin_detail: json('admin_detail'),
+  admin_detail_edit: json('admin_detail_edit'),
 
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
@@ -189,8 +189,8 @@ export const Glossary = mysqlTable("glossary", {
   display_name: text("display_name").notNull(),
   route: text("route").notNull(),
   content: json("content"),
-  admin_detail:json('admin_detail'),
-  admin_detail_edit:json('admin_detail_edit'),
+  admin_detail: json('admin_detail'),
+  admin_detail_edit: json('admin_detail_edit'),
 
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
@@ -198,6 +198,39 @@ export const Glossary = mysqlTable("glossary", {
 
 
 // // for login users auth js 
+
+export const FollowerOrders = mysqlTable("follower_orders", {
+  id: int("id").autoincrement().primaryKey(),
+  email: text("email").notNull(),
+  fullName: text("fullName"),
+  role: text("role"),
+
+  spend: text('spend'),
+  category: text("category"),
+  charge: text('charge'),
+  link: text('link'),
+  quantity: text('quantity'),
+  service: text('service'),
+
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
+
+export const AddFunds = mysqlTable("add_funds", {
+  id: int("id").autoincrement().primaryKey(),
+  email: text("email").notNull(),
+  fullName: text("fullName"),
+  role: text("role"),
+
+  amount: text('amount'),
+  transactionId: text("transactionId"),
+  method: text("method"),
+  status: text("status"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+})
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
@@ -207,6 +240,10 @@ export const users = mysqlTable("users", {
   password: text("password").notNull(),
   role: text("role").notNull(),
   authProviderId: text("authProviderId"),
+
+  ballance: text('ballance'),
+  totalSpend: text('totalSpend'),
+
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 })

@@ -1,4 +1,3 @@
-"use client";
 import PhoneFinder from "@/Component/Common/PhoneFinder";
 import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
 import Categories from "@/Component/HomePage/Component/Categories";
@@ -9,67 +8,30 @@ import TopDevicesTable from "@/Component/HomePage/Component/TopDevicesTable";
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import { Grid, Paper, Typography } from "@mui/material";
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { BrandTypes, CategoryTypes } from "@/types/category";
+import { CategoryTypes } from "@/types/category";
 import { MobileArticleType } from "@/types/mobiles";
 import BestArticles from "./BestReviews";
 import ContentBox from "@/Component/HomePage/ContentBox";
 
 export default function NewsMainComponent({
   articles,
-  total,
   mobilesArticles,
-  brands,
   category,
   latestArticles,
-  byFansMobiles,
-  dailyInterestMobiles,
   latestDeviceMobiles,
   newsAndReviews,
   bestReviewsArticles,
 }: {
   articles: RecentArticleDataType[];
   mobilesArticles: RecentArticleDataType[];
-  total: number;
-  brands: BrandTypes[];
   category: CategoryTypes[];
   latestArticles: RecentArticleDataType[];
-  byFansMobiles: MobileArticleType[];
-  dailyInterestMobiles: MobileArticleType[];
   latestDeviceMobiles: MobileArticleType[];
   newsAndReviews: RecentArticleDataType[];
   bestReviewsArticles: RecentArticleDataType[];
 }) {
-  const params = useParams();
-  const history = useRouter();
-  const [isHideLoadMore, setIsHideLoadMore] = useState<boolean>(false);
-  console.log("bestReviewsArticles  ", bestReviewsArticles);
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-  const limit = searchParams.get("limit") ?? "3";
-  const search = searchParams.get("search") ?? "";
-
-  // Function to load more articles
-  const loadMoreArticles = async () => {
-    history.push(
-      `/news?${new URLSearchParams({
-        page: page,
-        limit: `${Number(limit) + 6}`,
-      })}`,
-      {
-        scroll: false,
-      }
-    );
-  };
-
-  useEffect(() => {
-    if (articles?.length === total) {
-      setIsHideLoadMore(true);
-    }
-  }, [articles?.length, total]);
-
   return (
     <>
       <Grid container>
@@ -151,16 +113,15 @@ export default function NewsMainComponent({
                 {/* mobilesArticles={newsAndReviews} /> */}
                 <Grid gap={1} container>
                   <Typography
+                    component={"a"}
+                    href="/brands"
                     sx={{
                       mb: 1,
-                      // borderBottom: "2px solid lightgray",
                       fontSize: 25,
                       mt: 2,
                       width: "100%",
                       fontWeight: 600,
                     }}
-                    onClick={() => history.push("/brands")}
-                    // onclick={()=>history.push('/brands')}
                   >
                     Mobile Brands
                   </Typography>

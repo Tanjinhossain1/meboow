@@ -1,12 +1,19 @@
 import { Fragment } from "react";
 import axios from "axios";
 import dynamic from "next/dynamic";
+import { getDb } from "@/drizzle/db";
+import { FollowerOrderParams } from "@/types/order";
+import { FollowerOrders } from "@/drizzle/schema";
+import { UsersTypes } from "@/types/users";
 
 const ParentShortCompo = dynamic(() => import("./ParentShortCompo"), {
   ssr: false,
 });
 
-
+export interface CreateReturnType {
+  success: boolean;
+  message: string;
+}
 const getTheDate = async () => {
   const params = new URLSearchParams({
     key: process.env.NEXT_PUBLIC_FOLLOWER_SERVICES_KEY!, // Your API key
@@ -38,9 +45,47 @@ const getTheDate = async () => {
     return error;
   }
 };
-export default async function NewOrder({user}:{user:any}) {
+export default async function NewOrder({ user }: { user: UsersTypes }) {
   const response: any = await getTheDate();
+  const createOrder = async (
+    data: FollowerOrderParams
+  ): Promise<CreateReturnType> => {
+    "use server";
+    if (user?.ballance && +user?.ballance > 0) {
+      const db = await getDb();
+      const { category, charge, link, quantity, service } = data;
+      if(+user?.ballance > +charge){
 
+        const { email, fullName, role } = user;
+        try {
+          await db.insert(FollowerOrders).values({
+            category,
+            charge,
+            link,
+            quantity,
+            service,
+            email,
+            fullName,
+            role,
+          });
+          
+          return { success: true,message:'Success Fully Order Create' };
+        } catch (err:any) {
+          return { success: false,message: err?.message};
+        } 
+      }else{
+        return {
+          success: false,
+          message: "You don't have Enough Ballance😅 ! Add Fund🥰",
+        };
+      }
+    } else {
+      return {
+        success: false,
+        message: "You Don't Have Balance Please😅 ! Add Fund🥰",
+      };
+    }
+  };
   return (
     <Fragment>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 w-full">
@@ -90,7 +135,7 @@ export default async function NewOrder({user}:{user:any}) {
               </svg>
             </div>
             <div>
-              <p className="text-gray-700">$0.6687718</p>
+              <p className="text-gray-700">${user?.ballance ? user?.ballance : "0"}</p>
               <p className="text-gray-500 text-sm">Balance</p>
             </div>
           </div>
@@ -116,7 +161,7 @@ export default async function NewOrder({user}:{user:any}) {
               </svg>
             </div>
             <div>
-              <p className="text-gray-700">$0.5712282</p>
+              <p className="text-gray-700">${user?.totalSpend ? user?.totalSpend : "0"}</p>
               <p className="text-gray-500 text-sm">Total Spend</p>
             </div>
           </div>
@@ -148,7 +193,7 @@ export default async function NewOrder({user}:{user:any}) {
           </div>
         </div>
       </div>
-      <ParentShortCompo response={response} />
+      <ParentShortCompo createOrder={createOrder} response={response} />
     </Fragment>
   );
 }

@@ -1,3 +1,4 @@
+'use client'
 import { RecentArticleDataType } from "@/types/RecentArticle";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useContext } from "react";
 import {
   TextField,
   Select,
@@ -20,6 +20,9 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import InfoIcon from "@mui/icons-material/Info";
 import { categoriesProperName } from "./CategoryButtons";
+import { FollowerOrderParams } from "@/types/order";
+import { CreateReturnType } from "./NewOrder";
+import SnackbarProviderContext from "@/Component/SnackbarProvider";
 
 function extractFirstServiceId(serviceString: string) {
   // Split the string by spaces or dashes
@@ -88,14 +91,18 @@ interface ListOfServices {
 const NewOrderForm = ({
   servicesOrCategories,
   selectedCategoryFromTop,
+  createOrder,
 }: {
   servicesOrCategories: {
     categories: string[];
     services: ListOfServices[];
   };
+  createOrder: (data: FollowerOrderParams) => Promise<CreateReturnType>;
   selectedCategoryFromTop: string;
 }) => {
-  console.log("first category  ", servicesOrCategories);
+  const { handleOpen: SnackbarOpen } = useContext(
+    SnackbarProviderContext
+  );
   // State for selected category and filtered services
   const [selectedCategory, setSelectedCategory] = useState<string>(
     servicesOrCategories.categories[0]
@@ -119,19 +126,33 @@ const NewOrderForm = ({
         setSelectedCategory(servicesOrCategories.categories[0]);
       } else if (selectedCategoryFromTop === "Others") {
         const excludedServices = [
-          "Instagram", "Facebook", "YouTube", "Twitter", "Spotify",
-          "TikTok", "Telegram", "Linkedin", "Discord", "Website Traffic"
+          "Instagram",
+          "Facebook",
+          "YouTube",
+          "Twitter",
+          "Spotify",
+          "TikTok",
+          "Telegram",
+          "Linkedin",
+          "Discord",
+          "Website Traffic",
         ];
-        
-        const servicesForCategoryFromTop = servicesOrCategories.categories.filter((service) =>
-          !excludedServices.some(excluded => service.toLowerCase().includes(excluded.toLowerCase()))
-        );
+
+        const servicesForCategoryFromTop =
+          servicesOrCategories.categories.filter(
+            (service) =>
+              !excludedServices.some((excluded) =>
+                service.toLowerCase().includes(excluded.toLowerCase())
+              )
+          );
         setSelectedCategory(servicesForCategoryFromTop[0]);
         setSelectedCategories(servicesForCategoryFromTop);
       } else {
         const servicesForCategoryFromTop =
           servicesOrCategories.categories.filter((service) =>
-            service.toLowerCase().includes(selectedCategoryFromTop.toLowerCase())
+            service
+              .toLowerCase()
+              .includes(selectedCategoryFromTop.toLowerCase())
           );
         setSelectedCategory(servicesForCategoryFromTop[0]);
         setSelectedCategories(servicesForCategoryFromTop);
@@ -149,7 +170,7 @@ const NewOrderForm = ({
   }, [listOfCategories]);
 
   // Handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
 
@@ -158,8 +179,15 @@ const NewOrderForm = ({
     const service = form.service.value;
     const link = form.link.value;
     const quantity = form.quantity.value;
-    const charge = form.charge.value.replace(/\$/g, '').trim();
-
+    const charge = form.charge.value.replace(/\$/g, "").trim();
+    const data = {
+      category,
+      service,
+      link,
+      quantity,
+      charge,
+    };
+    const result = await createOrder(data);
     console.log({
       category,
       service,
@@ -167,9 +195,24 @@ const NewOrderForm = ({
       quantity,
       charge,
     });
+
+    if (result?.success === true) {
+      SnackbarOpen(result?.message, "success");
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+    }else{
+      SnackbarOpen(result?.message, "error");
+    }
     // Further actions, like API call for payment, can be handled here
   };
-
+  console.log(
+    "first form submission ",
+    extractFirstServiceId(selectedService),
+    SAMPLE_SERVICES_SINGLE_DETAIL[extractFirstServiceId(selectedService)],
+    SAMPLE_SERVICES_SINGLE_DETAIL[extractFirstServiceId(selectedService)]
+      ?.orig_price
+  );
   return (
     <Fragment>
       <Grid container>
@@ -322,10 +365,10 @@ const NewOrderForm = ({
                 value={`$ ${
                   quantity
                     ? Number(
-                        (SAMPLE_SERVICES_SINGLE_DETAIL[
+                        (+SAMPLE_SERVICES_SINGLE_DETAIL[
                           extractFirstServiceId(selectedService)
                         ]?.orig_price *
-                          quantity) /
+                          +quantity) /
                           1000
                       )
                     : ""

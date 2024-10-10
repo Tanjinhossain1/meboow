@@ -62,8 +62,8 @@ export default function CommonTableComponent({
             isTodayPost === true
               ? searchText !== ""
                 ? {
-                    page: paginationModel.page + 1, // Page index starts from 1 in most APIs
-                    limit: paginationModel.pageSize,
+                    page: page + 1, // Page index starts from 1 in most APIs
+                    limit: pageSize,
                     searchTerm: searchText,
                     isTodayPost: true,
                   }
@@ -74,8 +74,8 @@ export default function CommonTableComponent({
                   }
               : searchText !== ""
               ? {
-                  page: paginationModel.page + 1, // Page index starts from 1 in most APIs
-                  limit: paginationModel.pageSize,
+                  page: page + 1, // Page index starts from 1 in most APIs
+                  limit: pageSize,
                   searchTerm: searchText,
                 }
               : {
@@ -153,11 +153,11 @@ export default function CommonTableComponent({
           );
           setFilteredRows(filteredData);
           setLoading(false);
-        }  else if ((columnData[0] as RecentArticleDataType)?.category) {
+        } else if ((columnData[0] as RecentArticleDataType)?.category) {
           const filteredData = (columnData as RecentArticleDataType[]).filter(
-            (row) => row?.title.toLowerCase().includes(value)
-              ||
-            row.category.toString().includes(value)
+            (row) =>
+              row?.title.toLowerCase().includes(value) ||
+              row.category.toString().includes(value)
           );
           setFilteredRows(filteredData);
           setLoading(false);
@@ -225,7 +225,7 @@ export default function CommonTableComponent({
           >
             Today Post Only
           </Button>
-        ) : endpoint ?(
+        ) : endpoint ? (
           <Button
             onClick={() => setIsTodayPost(false)}
             sx={{ mb: 2 }}

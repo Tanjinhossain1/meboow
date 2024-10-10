@@ -11,7 +11,7 @@ const NewOrder = dynamic(() => import("./_components/NewOrder"), {
 
 export default async function page() {
   const session = await getServerSession(authConfig);
-  const user = session?.user;
+  const user:any = session?.user;
   if(!user?.email) redirect('/login?follower=follow')
   return (
     <RootLayout isNewOrder>
