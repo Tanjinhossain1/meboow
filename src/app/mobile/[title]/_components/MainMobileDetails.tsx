@@ -1,30 +1,62 @@
-"use client";
-import PhoneFinder from "@/Component/Common/PhoneFinder";
-import LatestDevices from "@/Component/HomePage/Component/LatestDevices";
-import MobileReviews from "@/Component/HomePage/Component/MobileReviews";
-import BottomMobileDetails from "@/Component/Mobile/BottomDetails";
-import ExpertViewComponent from "@/Component/Mobile/ExpertView";
-import {
-  MobileArticleType,
-  MobileOpinionType,
-} from "@/types/mobiles";
+import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import { RecentArticleDataType } from "@/types/RecentArticle";
-import { Button, Grid, Paper } from "@mui/material";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import React, { Fragment } from "react";
-import IphoneCard from "./TopSortDetails";
 import Image from "next/image";
-import Opinion from "./Opinion";
 import Link from "next/link";
 import Tags from "./Tags";
 import { formatForUrl } from "@/utils/utils";
-import { SampleBrands } from "@/Component/HomePage/ContentBox";
+import dynamic from "next/dynamic";
+
+const PhoneFinder = dynamic(
+  () => import("@/Component/Common/PhoneFinder"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const Opinion = dynamic(
+  () => import("./Opinion"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const IphoneCard = dynamic(
+  () => import("./TopSortDetails"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const LatestDevices = dynamic(
+  () => import("@/Component/HomePage/Component/LatestDevices"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const MobileReviews = dynamic(
+  () => import("@/Component/HomePage/Component/MobileReviews"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const BottomMobileDetails = dynamic(
+  () => import("@/Component/Mobile/BottomDetails"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const ExpertViewComponent = dynamic(
+  () => import("@/Component/Mobile/ExpertView"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
 
 export default function MainMobileDetails({
   mobileArticles,
 
   latestArticles,
-  latestDevices,
-  relatedMobileDevices,
 
   isPicture,
   isOpinion,
@@ -32,8 +64,6 @@ export default function MainMobileDetails({
   allMobilesOpinion,
 }: {
   mobileArticles: MobileArticleType;
-  latestDevices: MobileArticleType[];
-  relatedMobileDevices: MobileArticleType[];
 
   latestArticles: RecentArticleDataType[];
 
@@ -78,11 +108,10 @@ export default function MainMobileDetails({
                 mobilesArticles={latestArticles}
               />
 
-              <LatestDevices mobiles={latestDevices?.slice(0, 6)} />
+              <LatestDevices   />
               <LatestDevices
                 name={mobileArticles?.brands}
                 isRelated
-                mobiles={relatedMobileDevices?.slice(0, 6)}
               />
             </Grid>
             <Grid xs={12} sm={8}>

@@ -63,6 +63,10 @@ const nextConfig = {
         source: "/sitemap-glossary.xml",
         destination: "/api/sitemap-glossary", // Exact path to your route
       },
+      {
+        source: "/sitemap-tags.xml",
+        destination: "/api/sitemap-tags", // Exact path to your route
+      },
     ];
   },
 };

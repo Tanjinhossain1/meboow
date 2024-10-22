@@ -11,12 +11,35 @@ import {
   fetchCategories,
   fetchMobileArticles,
 } from "@/services/articleServices";
-import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
-import BrandDisplayComponent from "@/Component/HomePage/BrandDisplay";
-import MobileListComponent from "@/Component/Details/MobileListComponent";
-import CategoryListComponent from "@/Component/Category/CategoryListComponent";
+import dynamic from "next/dynamic";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/auth";
 
+const NavbarHelper = dynamic(
+  () => import("@/Component/Shared/NavbarHelperComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const BrandDisplayComponent = dynamic(
+  () => import("@/Component/HomePage/BrandDisplay"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const MobileListComponent = dynamic(
+  () => import("@/Component/Details/MobileListComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const CategoryListComponent = dynamic(
+  () => import("@/Component/Category/CategoryListComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
 
 export const metadata = {
   title: 'Brands - Safari List',
@@ -43,9 +66,12 @@ export default async function BrandPage() {
   const brands = await fetchBrands();
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });
   const Category = await fetchCategories();
+  const session = await getServerSession(authConfig);
+  const user = session?.user;
   return (
     <Fragment>
-      <Navbar />
+
+     <NavbarHelper categories={Category?.data} isLoginUser={user} />
       <Grid container>
         <Grid xs={0} md={1} lg={1.1} xl={2}></Grid>
         <Grid xs={12} md={10} lg={9.8} xl={8}>

@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -8,7 +7,6 @@ import dynamic from "next/dynamic";
 
 const CommonMobileSlider = dynamic(() => import("./CommonMobileSlider"), {
   ssr: true,
-  suspense: true,
 });
 
 export default function PopularMobiles({

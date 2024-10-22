@@ -6,6 +6,9 @@ function formatText(text: string) {
     return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
   }
   function modifyLinks(html:string) {
+    if (typeof document === 'undefined') {
+      return html; // Ensure this doesn't run on the server-side
+    }
     // Create a temporary DOM element to work with
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;

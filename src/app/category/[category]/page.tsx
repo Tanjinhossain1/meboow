@@ -1,6 +1,6 @@
 import CategoryPageComponent from "@/Component/Category/CategoryPageComponent";
 import Navbar from "@/Component/Shared/Navbar";
-import { fetchArticles, fetchCategories } from "@/services/articleServices";
+import { fetchArticles, fetchCategories, fetchMobileArticles } from "@/services/articleServices";
 import { formatForUrlWith_under_score } from "@/utils/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import React, { Suspense } from "react";
@@ -69,10 +69,12 @@ export default async function CategoryPage({
     category: formattedCategory,
   });
   const Category = await fetchCategories();
+  const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });
   return (
     <Suspense>
       <Navbar />
       <CategoryPageComponent
+      mobileArticles={mobileArticles?.data}
         category={Category.data}
         categoryWiseArticles={articles.data}
         total={articles.total}

@@ -1,5 +1,3 @@
-import Footer from "@/Component/HomePage/Footer";
-import Navbar from "@/Component/Shared/Navbar";
 import {
   fetchArticles,
   fetchCategories,
@@ -8,9 +6,21 @@ import {
 import React from "react";
 // import NewsMainComponent from "./_components/NewsMainComponent";
 import dynamic from "next/dynamic";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/auth";
 
 const NewsMainComponent = dynamic(() => import("./_components/NewsMainComponent"), {
   ssr: true, // or true, based on whether you want SSR support
+});
+
+const NavbarHelper = dynamic(
+  () => import("@/Component/Shared/NavbarHelperComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+  ssr: true,
 });
 
 export const metadata = {
@@ -47,37 +57,6 @@ interface NewsPagePropsType {
 
 export default async function NewsPage({ searchParams }: NewsPagePropsType) {
   const { page, limit } = searchParams;
-  // const articles = await fetchArticles({ page, limit, showInNews: "show" });
-  // const MobilesArticles = await fetchArticles({
-  //   page,
-  //   limit,
-  //   category: "Mobiles",
-  // });
-  // const LatestArticles = await fetchArticles({
-  //   page,
-  //   limit,
-  //   latestDevice: "latest",
-  // });
-  // const Category = await fetchCategories();
-  // const brands = await fetchBrands();
-
-  // const newsAndReviews = await fetchArticles({ showInNewsWithAll: "show" });
-  // // const mobileArticles = await fetchMobileArticles({ limit: "20" });
-  // const DailyInterestMobiles = await fetchMobileArticles({
-  //   limit: "10",
-  //   is_daily_interest: "YES",
-  // });
-  // const ByFansMobiles = await fetchMobileArticles({
-  //   limit: "10",
-  //   is_by_fans: "YES",
-  // });
-  // const LatestDeviceMobiles = await fetchMobileArticles({
-  //   limit: "10",
-  //   is_latest_device: "YES",
-  // });
-  // const BestReviewsArticles = await fetchArticles({
-  //   best_reviews: "YES",
-  // });
   const [
     articles,
     MobilesArticles,
@@ -86,6 +65,7 @@ export default async function NewsPage({ searchParams }: NewsPagePropsType) {
     newsAndReviews,
     LatestDeviceMobiles,
     BestReviewsArticles,
+    categories
   ] = await Promise.all([
     fetchArticles({ page, limit, showInNews: "show" }),
     fetchArticles({ page, limit, category: "Mobiles" }),
@@ -94,11 +74,14 @@ export default async function NewsPage({ searchParams }: NewsPagePropsType) {
     fetchArticles({ showInNewsWithAll: "show" }),
     fetchMobileArticles({ limit: "10", is_latest_device: "YES" }),
     fetchArticles({ best_reviews: "YES" }),
+    fetchCategories(),
   ]);
   
+  const session = await getServerSession(authConfig);
+  const user = session?.user;
   return (
     <>
-        <Navbar />
+      <NavbarHelper categories={categories?.data} isLoginUser={user} />
       <NewsMainComponent
         bestReviewsArticles={BestReviewsArticles.data}
         latestDeviceMobiles={LatestDeviceMobiles.data}

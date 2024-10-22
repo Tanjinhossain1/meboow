@@ -1,19 +1,29 @@
-import React, { Fragment, lazy } from "react";
+import React, { Fragment } from "react";
 import {
   fetchArticles,
+  fetchCategories,
   fetchMobileArticleDetails,
-  fetchMobileArticles,
   fetchMobileOpinions,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
+import dynamic from "next/dynamic";
 
+const NavbarHelper = dynamic(
+  () => import("@/Component/Shared/NavbarHelperComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const MainMobileDetails = dynamic(
+  () => import("./_components/MainMobileDetails"),
+  { ssr: true }
+);
 
-const Navbar = lazy(() => import("@/Component/Shared/Navbar"));
-const Footer = lazy(() => import("@/Component/HomePage/Footer"));
-const MainMobileDetails = lazy(() => import("./_components/MainMobileDetails"));
-
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+  ssr: true,
+});
 export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
@@ -56,7 +66,6 @@ export async function generateMetadata(
             alt: `${title} image`,
             width: 400, // optional, adjust based on your image size
             height: 400, // optional, adjust based on your image size
-            
           },
           ...previousImages,
         ],
@@ -82,19 +91,11 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     latestDevice: "latest",
   });
 
-  const LatestDeviceMobiles = await fetchMobileArticles({
-    limit: "10",
-    is_latest_device: "YES",
-  });
-  const RelatedMobileDevices = await fetchMobileArticles({
-    brands: mobileArticles.data[0]?.brands,
-    page: "1",
-    limit: "10",
-  });
-
   const AllMobilesOpinion = await fetchMobileOpinions({
     mobileId: `${mobileArticles.data[0]?.id}`,
   });
+
+  const categories = await fetchCategories();
 
   const session = await getServerSession(authConfig);
   const user = session?.user;
@@ -105,15 +106,12 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
         href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}`}
         key="canonical"
       />
-      <Navbar />
-
+      <NavbarHelper categories={categories?.data} isLoginUser={user} />
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>
           <MainMobileDetails
             user={user}
-            allMobilesOpinion={AllMobilesOpinion.data}
-            relatedMobileDevices={RelatedMobileDevices.data}
-            latestDevices={LatestDeviceMobiles.data}
+            allMobilesOpinion={AllMobilesOpinion.data} 
             latestArticles={LatestArticles.data}
             mobileArticles={mobileArticles.data[0]}
           />

@@ -1,6 +1,6 @@
 // import CategoryPageComponent from "@/Component/Category/CategoryPageComponent";
 import { authConfig } from "@/lib/auth";
-import { fetchArticles, fetchCategories } from "@/services/articleServices";
+import { fetchArticles, fetchCategories, fetchMobileArticles } from "@/services/articleServices";
 import { formatForUrlWith_under_score } from "@/utils/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
@@ -99,10 +99,12 @@ export default async function SubCategoryPage({
   const Category = await fetchCategories();
   const session = await getServerSession(authConfig);
   const user = session?.user;
+  const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });
   return (
     <Fragment>
       <NavbarHelper categories={Category?.data} isLoginUser={user} />
       <CategoryPageComponent
+      mobileArticles={mobileArticles?.data}
         category={Category.data}
         isSubCategory
         categoryWiseArticles={articles?.data}

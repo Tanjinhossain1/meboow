@@ -35,6 +35,7 @@ import BackdropProviderContext from "../BackdropProvider";
 import { CategoryTypes } from "@/types/category";
 import NavbarCategoryList from "./NavCategoryList";
 import { Stack } from "@mui/material";
+import { formatForUrlWith_under_score } from "@/utils/utils";
 
 function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories:CategoryTypes[]}) {
   const history = useRouter();
@@ -44,7 +45,7 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const search = event.target.search.value;
-    history.push(`/search?search=${search}`);
+    history.push(`/search?search=${formatForUrlWith_under_score(search)}`);
   };
   const [state, setState] = React.useState({
     top: false,

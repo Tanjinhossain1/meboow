@@ -40,6 +40,10 @@ export async function GET() {
       <loc>${process.env.NEXT_APP_SITEMAP_URL}/sitemap-glossary.xml</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
     </sitemap>
+    <sitemap>
+      <loc>${process.env.NEXT_APP_SITEMAP_URL}/sitemap-tags.xml</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+    </sitemap>
   </sitemapindex>`;
 
   return new NextResponse(sitemapIndexXml, {

@@ -1,21 +1,33 @@
-import DetailsComponent from "@/Component/Details/Details";
-import DetailsReviewComponent from "@/Component/Details/ReviewDetails";
-import Footer from "@/Component/HomePage/Footer";
-import Navbar from "@/Component/Shared/Navbar";
+// import DetailsReviewComponent from "@/Component/Details/ReviewDetails";
 import { authConfig } from "@/lib/auth";
 import { getAllArticles } from "@/lib/queries/services";
 import {
   fetchArticleOpinions,
   fetchArticles,
-  fetchArticlesDetails,
   fetchBrands,
   fetchCategories,
   fetchMobileArticles,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
+import dynamic from "next/dynamic";
 import React from "react";
 
+const NavbarHelper = dynamic(
+  () => import("@/Component/Shared/NavbarHelperComponent"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const DetailsReviewComponent = dynamic(
+  () => import("@/Component/Details/ReviewDetails"),
+  {
+    ssr: true, // or true, based on whether you want SSR support
+  }
+);
+const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
+  ssr: true,
+});
 export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
@@ -84,18 +96,13 @@ export default async function Details({ params, searchParams }: DetailsParams) {
     limit: "5",
     isRelated: data[0]?.id,
   });
-
+ 
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
   const user = session?.user;
   return (
     <>
-      {/* <link
-        rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`}
-        key="canonical"
-      /> */}
-      <Navbar />
+      <NavbarHelper categories={Category?.data} isLoginUser={user} />
       {data && mobileArticles.data && data[0] ? (
         <DetailsReviewComponent
           user={user}

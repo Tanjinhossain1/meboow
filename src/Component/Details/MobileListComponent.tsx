@@ -21,6 +21,16 @@ export default function MobileListComponent({
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+      <div className="flex justify-center items-center">
+      <div className="relative w-16 h-12 flex justify-center items-center">
+        {/* First (Inner) Circle */}
+        <div className="absolute w-4 h-4 rounded-full bg-red-500 animate-circle-delay-1"></div>
+        {/* Second (Middle) Circle */}
+        <div className="absolute w-8 h-8 rounded-full border-2 border-red-500 animate-circle-delay-2"></div>
+        {/* Third (Outer) Circle */}
+        <div className="absolute w-12 h-12 rounded-full border-2 border-red-500 animate-circle-delay-3"></div>
+      </div>
+    </div>
         <Typography
           className="text-red-600"
           sx={{ fontSize: 18, fontWeight: 600 }}
