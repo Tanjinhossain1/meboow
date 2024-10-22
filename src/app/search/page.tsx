@@ -86,7 +86,7 @@ export default async function SearchFieldSearchPage({
   const Category = await fetchCategories();
   const mobileSearch = await fetchMobileArticles({
     search: formatSearch,
-    limit: "12",
+    limit: "32",
   });
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });
 
