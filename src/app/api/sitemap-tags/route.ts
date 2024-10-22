@@ -23,24 +23,62 @@ export async function GET() {
             .orderBy(desc(Articles.id))
 
         const sitemapStream = new SitemapStream({ hostname: process.env.NEXT_APP_SITEMAP_URL });
+        const processedTags = new Set<string>(); // To keep track of unique tag names
+
         mobiles.forEach((mobile) => {
-            if(mobile?.tags){
-                (mobile?.tags as any[])?.forEach((tag:MobileTagsType) => {
-                    if(tag?.name){
-                        sitemapStream.write({ url: `/search?search=${formatForUrlWith_under_score(tag?.name)}`, lastmod: new Date(),priority:0.9 });
+            if (mobile?.tags) {
+                (mobile?.tags as any[])?.forEach((tag: MobileTagsType) => {
+                    if (tag?.name) {
+                        const formattedTag = formatForUrlWith_under_score(tag.name);
+                        if (!processedTags.has(formattedTag)) { // Check if the tag is already processed
+                            sitemapStream.write({ 
+                                url: `/search?search=${formattedTag}`, 
+                                lastmod: new Date(), 
+                                priority: 0.9 
+                            });
+                            processedTags.add(formattedTag); // Mark this tag as processed
+                        }
                     }
                 });
             }
-        })
+        });
+        
         articles.forEach((mobile) => {
-            if(mobile?.tags){
-                (mobile?.tags as any[])?.forEach((tag:MobileTagsType) => {
-                    if(tag?.name){
-                        sitemapStream.write({ url: `/search?search=${formatForUrlWith_under_score(tag?.name)}`, lastmod: new Date(),priority:0.9 });
+            if (mobile?.tags) {
+                (mobile?.tags as any[])?.forEach((tag: MobileTagsType) => {
+                    if (tag?.name) {
+                        const formattedTag = formatForUrlWith_under_score(tag.name);
+                        if (!processedTags.has(formattedTag)) { // Check if the tag is already processed
+                            sitemapStream.write({ 
+                                url: `/search?search=${formattedTag}`, 
+                                lastmod: new Date(), 
+                                priority: 0.9 
+                            });
+                            processedTags.add(formattedTag); // Mark this tag as processed
+                        }
                     }
                 });
             }
-        })
+        });
+        
+        // mobiles.forEach((mobile) => {
+        //     if(mobile?.tags){
+        //         (mobile?.tags as any[])?.forEach((tag:MobileTagsType) => {
+        //             if(tag?.name){
+        //                 sitemapStream.write({ url: `/search?search=${formatForUrlWith_under_score(tag?.name)}`, lastmod: new Date(),priority:0.9 });
+        //             }
+        //         });
+        //     }
+        // })
+        // articles.forEach((mobile) => {
+        //     if(mobile?.tags){
+        //         (mobile?.tags as any[])?.forEach((tag:MobileTagsType) => {
+        //             if(tag?.name){
+        //                 sitemapStream.write({ url: `/search?search=${formatForUrlWith_under_score(tag?.name)}`, lastmod: new Date(),priority:0.9 });
+        //             }
+        //         });
+        //     }
+        // })
 
         sitemapStream.end();
 
