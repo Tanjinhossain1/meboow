@@ -98,8 +98,6 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
             allMobilesOpinion={AllMobilesOpinion.data}
             user={user}
             isOpinion
-            relatedMobileDevices={RelatedMobileDevices.data}
-            latestDevices={LatestDeviceMobiles.data}
             latestArticles={LatestArticles.data}
             mobileArticles={mobileArticles.data[0]}
           />

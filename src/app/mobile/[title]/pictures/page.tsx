@@ -88,8 +88,6 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
         <>
           <MainMobileDetails
             isPicture
-            relatedMobileDevices={RelatedMobileDevices.data}
-            latestDevices={LatestDeviceMobiles.data}
             latestArticles={LatestArticles.data}
             mobileArticles={mobileArticles.data[0]}
           />
