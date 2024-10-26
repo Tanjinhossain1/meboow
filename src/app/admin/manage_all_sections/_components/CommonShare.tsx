@@ -4,7 +4,7 @@ import { RecentArticleDataType } from "@/types/RecentArticle";
 export const commonShareFunc = async (
   url: string,
   articles: MobileArticleType | RecentArticleDataType,
-  platform: "Facebook" | "Twitter" | "Whatsapp" | "Linkedin" | "Pinterest" | "Tumblr"
+  platform: "Facebook" | "Twitter" | "Whatsapp" | "Linkedin" | "Pinterest" | "Tumblr" | "Quora"
 ) => {
   let shareUrl = "";
   switch (platform) {
@@ -42,7 +42,10 @@ export const commonShareFunc = async (
             )}`
           : ""
       }`;
+      case "Quora":
+      shareUrl = `https://www.quora.com/?title=gsd&url=https%3A%2F%2Fwww.safarilist.com%2Fmobile`;
       break;
+      // https://www.quora.com/?title=gsd&url=https://www.safarilist.com/mobile
 
     // Add cases for other platforms (e.g., Twitter, LinkedIn) here
     default:

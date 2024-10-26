@@ -118,12 +118,13 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               {[
-                "Facebook",
                 "Twitter",
-                // "Whatsapp",
-                "Linkedin",
                 "Pinterest",
                 "Tumblr",
+                "Facebook",
+                "Quora",
+                "Linkedin",
+                // "Whatsapp",
               ].map((name, index) => {
                 return (
                   <Button
