@@ -42,6 +42,7 @@ export const commonShareFunc = async (
             )}`
           : ""
       }`;
+      break;
       case "Quora":
       shareUrl = `https://www.quora.com/?title=${encodeURIComponent(articles?.title)}&url=${encodeURIComponent(url)}`;
       break;

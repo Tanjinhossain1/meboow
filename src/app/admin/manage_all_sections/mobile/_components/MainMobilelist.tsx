@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { formatDateWithTime, formatForUrl } from "@/utils/utils";
 import Link from "next/link";
 import axios from "axios";
@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { CopyIcon, DownloadIcon } from "lucide-react";
 
 export default function MainMobilesDetailList({ user }: { user: any }) {
   const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
@@ -46,6 +47,36 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
   };
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
 
+  const handleDownload = async (mobileArticle: MobileArticleType) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${mobileArticle?.display_image}`
+      );
+      const blob = await response.blob();
+      function getFileType(filename: string) {
+        // Match the extension after the last dot
+        const match = filename.match(/\.([a-zA-Z0-9]+)$/);
+        return match ? match[1].toLowerCase() : null; // Returns the extension in lowercase or null if not found
+      }
+      // Create a temporary link to download the blob
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${mobileArticle?.title}.${getFileType(
+        mobileArticle?.display_image
+      )}`; // Set the downloaded file name
+
+      // Trigger the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error("Failed to download image:", error);
+    }
+  };
+
   const handlePostToFacebook = async (
     params: MobileArticleType,
     urlPrefix:
@@ -55,9 +86,12 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
       | "Linkedin"
       | "Pinterest"
       | "Tumblr"
+      | "Quora"
   ) => {
     // const url = `https://www.safarilist.com/mobile/Apple-IPhone-13`;
-    const url = `https://www.safarilist.com/mobile/${formatForUrl(params?.title)}`;
+    const url = `https://www.safarilist.com/mobile/${formatForUrl(
+      params?.title
+    )}`;
     commonShareFunc(url, params, urlPrefix);
     // window.open(
     //   `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
@@ -73,7 +107,7 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
       field: "createdAt",
       headerName: "Create Date",
       renderCell: (params: any) => (
-        <Typography alignItems={"center"} sx={{ mt: 2 , fontSize:15}}>
+        <Typography alignItems={"center"} sx={{ mt: 2, fontSize: 15 }}>
           {formatDateWithTime(params?.row?.createdAt)}
         </Typography>
       ),
@@ -112,8 +146,8 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Share</DialogTitle>
-              <DialogDescription className="text-2xl">
-                {params?.row?.title}
+              <DialogDescription className="text-2xl flex">
+                {params?.row?.title} <CopyIcon className="cursor-pointer ml-2" onClick={async() => await navigator.clipboard.writeText(params.row?.title)} />
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -138,6 +172,23 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
                 );
               })}
             </div>
+            <Stack direction={"row"} gap={2}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleCopy(params.row)}
+              >
+                Copy Link
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<DownloadIcon />}
+                onClick={() => handleDownload(params.row)}
+              >
+                Download Image
+              </Button>
+            </Stack>
           </DialogContent>
         </Dialog>
         // <Button
