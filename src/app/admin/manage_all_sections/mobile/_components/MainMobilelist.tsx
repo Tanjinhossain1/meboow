@@ -147,7 +147,7 @@ export default function MainMobilesDetailList({ user }: { user: any }) {
             <DialogHeader>
               <DialogTitle>Share</DialogTitle>
               <DialogDescription className="text-2xl flex">
-                {params?.row?.title} <CopyIcon className="cursor-pointer ml-2" onClick={async() => await navigator.clipboard.writeText(params.row?.title)} />
+                {params?.row?.title} <CopyIcon className="cursor-pointer ml-2" onClick={async() => await navigator.clipboard.writeText(`${params.row?.title} 🔥🤩`)} />
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
