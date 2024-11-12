@@ -54,7 +54,7 @@ export default function RecentMobiles({ data }: { data: MobileArticleType[] }) {
             >
               <Link
                 href={`/mobile/${formatForUrl(mobile?.title)}`}
-                className={`block bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg border-t-2 border-blue-500 `}
+                className={`block bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg border-t-2 border-blue-500 hover:underline hover:text-red-600`}
               >
                 <div className="p-2 flex items-center">
                   <Phone
