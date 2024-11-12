@@ -225,7 +225,7 @@ export default async  function MainMobileDetails({
                     user={user}
                     mobileDetail={mobileArticles}
                   />
-                  <RecentMobiles data={recentMobiles?.data as MobileArticleType[]} />
+                  {/* <RecentMobiles data={recentMobiles?.data as MobileArticleType[]} /> */}
                 </>
               )}
             </Grid>

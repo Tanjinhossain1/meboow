@@ -149,9 +149,9 @@ const IphoneCard = ({
       className="w-full  mx-auto mt-2 "
     >
       <Box className=" justify-between items-center p-1 mb-4  ">
-        <Typography component="h1" className="font-bold text-xl ">
+        <h1 className="font-bold text-xl ">
           {mobileDetail.title}
-        </Typography>
+        </h1>
         <Box className="flex items-center  ">
           <Typography variant="body2">
             Market Status: {mobileDetail.market_status}
@@ -645,7 +645,7 @@ const IphoneCard = ({
           {isPicture || isOpinion ? (
             <Link href={`/mobile/${formattedTitle}`}>
               <Button aria-label="Specification" sx={{ color: "white" }} className="hover:bg-red-600 px-3">
-                Specification
+                <h2>Specification</h2>
               </Button>
             </Link>
           ) : null}

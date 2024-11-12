@@ -13,16 +13,16 @@ import { getAllArticles } from "@/lib/queries/services";
 const NavbarHelper = dynamic(
   () => import("@/Component/Shared/NavbarHelperComponent"),
   {
-    ssr: false, // or true, based on whether you want SSR support
+    ssr: true, // or true, based on whether you want SSR support
   }
 );
 const MainMobileDetails = dynamic(
   () => import("./_components/MainMobileDetails"),
-  { ssr: false }
+  { ssr: true }
 );
 
 const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
-  ssr: false,
+  ssr: true,
 });
 export async function generateMetadata(
   { params }: { params: { title: string } },
