@@ -9,6 +9,8 @@ import Link from "next/link";
 import Tags from "./Tags";
 import { formatForUrl } from "@/utils/utils";
 import dynamic from "next/dynamic";
+import { getAllMobiles } from "@/lib/queries/services";
+import RecentMobiles from "./RecentMobiles";
 
 const PhoneFinder = dynamic(
   () => import("@/Component/Common/PhoneFinder"),
@@ -53,7 +55,7 @@ const ExpertViewComponent = dynamic(
   }
 );
 
-export default function MainMobileDetails({
+export default async  function MainMobileDetails({
   mobileArticles,
 
   latestArticles,
@@ -76,6 +78,10 @@ export default function MainMobileDetails({
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("-");
+   const recentMobiles = await getAllMobiles({
+      limits: "30",
+      brands: mobileArticles?.brands
+    })
   return (
     <Fragment>
       {" "}
@@ -219,6 +225,7 @@ export default function MainMobileDetails({
                     user={user}
                     mobileDetail={mobileArticles}
                   />
+                  <RecentMobiles data={recentMobiles?.data as MobileArticleType[]} />
                 </>
               )}
             </Grid>

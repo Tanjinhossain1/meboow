@@ -22,6 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatForUrl } from "@/utils/utils";
 import { SearchIcon } from "@/app/mobile/_components/MobileDetails";
+import { removeBrandFromTitle } from "@/app/mobile/[title]/_components/RecentMobiles";
 
 export default function BrandWiseMobile({
   defaultMobiles,
@@ -171,7 +172,7 @@ export default function BrandWiseMobile({
                         }}
                         href={`/mobile/${formatForUrl(data?.title)}`}
                       >
-                        {data?.title}
+                        {removeBrandFromTitle(data?.title)}
                       </Link>
                     </Typography>
                   </Grid>

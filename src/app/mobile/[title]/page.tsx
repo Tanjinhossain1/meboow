@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import {
-  fetchArticles,
   fetchCategories,
   fetchMobileArticleDetails,
   fetchMobileOpinions,
@@ -9,20 +8,21 @@ import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import dynamic from "next/dynamic";
+import { getAllArticles } from "@/lib/queries/services";
 
 const NavbarHelper = dynamic(
   () => import("@/Component/Shared/NavbarHelperComponent"),
   {
-    ssr: true, // or true, based on whether you want SSR support
+    ssr: false, // or true, based on whether you want SSR support
   }
 );
 const MainMobileDetails = dynamic(
   () => import("./_components/MainMobileDetails"),
-  { ssr: true }
+  { ssr: false }
 );
 
 const Footer = dynamic(() => import("@/Component/HomePage/Footer"), {
-  ssr: true,
+  ssr: false,
 });
 export async function generateMetadata(
   { params }: { params: { title: string } },
@@ -85,19 +85,15 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
   const mobileArticles = await fetchMobileArticleDetails({
     title: formattedTitle,
   });
-  const LatestArticles = await fetchArticles({
-    page: "1",
-    limit: "8",
-    latestDevice: "latest",
-  });
 
-  const AllMobilesOpinion = await fetchMobileOpinions({
-    mobileId: `${mobileArticles.data[0]?.id}`,
-  });
+  const [LatestArticles, AllMobilesOpinion, categories, session] = await Promise.all([
+    getAllArticles({pages: "1", limits: "8", latestDevice: "latest"}),
+    fetchMobileOpinions({ mobileId: `${mobileArticles?.data[0]?.id}` }),
+    fetchCategories(),
+    getServerSession(authConfig),
+  ]);
 
-  const categories = await fetchCategories();
 
-  const session = await getServerSession(authConfig);
   const user = session?.user;
   return (
     <Fragment>
@@ -112,7 +108,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
           <MainMobileDetails
             user={user}
             allMobilesOpinion={AllMobilesOpinion.data} 
-            latestArticles={LatestArticles.data}
+            latestArticles={LatestArticles}
             mobileArticles={mobileArticles.data[0]}
           />
         </>

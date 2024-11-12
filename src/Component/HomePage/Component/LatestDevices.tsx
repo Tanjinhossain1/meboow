@@ -16,10 +16,15 @@ export default async function LatestDevices({
   isRelated?: boolean;
   name?: string;
 }) {
-  const mobilesFetch:any = await  getAllMobiles({
-    limits: "12",
-    is_latest_device: "YES",
-  })
+  const mobilesFetch: any = isRelated
+    ? await getAllMobiles({
+        limits: "12",
+        brands: name
+      })
+    : await getAllMobiles({
+        limits: "12",
+        is_latest_device: "YES",
+      });
   return (
     <Fragment>
       <Typography sx={{ fontSize: 25, fontWeight: 600, mt: 3, mb: 1 }}>

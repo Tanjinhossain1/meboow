@@ -10,6 +10,7 @@ import { Articles, MobileArticles, TechBrands } from "@/drizzle/schema";
 import { and, asc, count, desc, eq, or } from "drizzle-orm";
 import { paginationHelpers } from "@/app/api/shared/helpers";
 import { likeInsensitive } from "@/utils/utils";
+import { RecentArticleDataType } from "@/types/RecentArticle";
 
 export async function getAllArticles({
     all, pages, limits, brands,
@@ -25,7 +26,7 @@ export async function getAllArticles({
 }: {
     all?: boolean, pages?: string, limits?: string, searchTerm?: string, brands?: string, latestDevice?: string,
     best_reviews?: string, showInNews?: boolean, id?: string, category?: string, route?: string, sub_categories?: string, is_meta?: boolean
-}) {
+}): Promise<RecentArticleDataType[]>{
     noStore();
     const cacheKey = `articles-${pages || '1'}-${limits || '10'}-${latestDevice || 'none1'}-${brands || 'none2'}-${showInNews ? "show" : 'none3'}-${searchTerm || 'none4'}-${best_reviews || 'none5'}-${category || 'none6'}-${all || 'none8'}-${route || 'none8'}-${sub_categories || 'none8'}-${is_meta || 'none8'}`;
 

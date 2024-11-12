@@ -25,8 +25,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3862320695724690"
-     crossOrigin="anonymous"></script>
+        <Script
+          id="adsbygoogle"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3862320695724690"
+          crossOrigin="anonymous"
+          async
+          strategy="lazyOnload" // Load ads script only when page load is complete
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Google Tag Manager */}
         <Script
@@ -42,7 +47,9 @@ export default async function RootLayout({
         />
         {/* End Google Tag Manager */}
 
-        <script
+        <Script
+          id="google-analytics"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

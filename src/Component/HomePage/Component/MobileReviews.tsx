@@ -67,7 +67,6 @@ export default function MobileReviews({
                   width={10} // Aspect ratio: width
                   height={40} // Aspect ratio: height
                   className="object-cover"
-                  loading="lazy" // lazy loading for reduce loading time
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               ) : mobilesArticles[0]?.image ? (
@@ -188,7 +187,6 @@ export default function MobileReviews({
                       width={10} // Aspect ratio: width
                       height={40} // Aspect ratio: height
                       className="object-cover"
-                      loading="lazy" // lazy loading for reduce loading time
                     />
                   </Link>
                 </div>

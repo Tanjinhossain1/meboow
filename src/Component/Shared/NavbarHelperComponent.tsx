@@ -38,10 +38,10 @@ import { Stack } from "@mui/material";
 import { formatForUrlWith_under_score } from "@/utils/utils";
 
 function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories:CategoryTypes[]}) {
-  const history = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const { handleOpen, handleClose } = useContext(BackdropProviderContext);
-
+  
+  const history = useRouter();
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const search = event.target.search.value;

@@ -1,6 +1,7 @@
 import { MobileTagsType } from "@/types/mobiles";
 import { formatForUrlWith_under_score } from "@/utils/utils";
-import { Chip, Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Chip from "@mui/material/Chip";
 import React from "react";
 
 export default function Tags({

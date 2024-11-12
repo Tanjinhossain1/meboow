@@ -359,7 +359,7 @@ const DeviceTable = ({ title, content, withHeadings }: any) => {
                         stripLinks(cell)
                       )
                     ):  (
-                      stripLinks(cell)
+                      <div dangerouslySetInnerHTML={{__html:stripLinks(cell)}} />
                     )}
                   </td>
                 )

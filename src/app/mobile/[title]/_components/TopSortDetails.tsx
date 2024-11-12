@@ -1,14 +1,13 @@
 'use client'
-import {
-  Typography,
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  Divider,
-  Button,
-  Paper,
-} from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
 import Image from "next/image";
 import { MobileArticleType } from "@/types/mobiles";
 import { Progress } from "antd";
