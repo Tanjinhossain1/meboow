@@ -29,6 +29,12 @@ export async function generateMetadata(
   { searchParams }: { searchParams: { search: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(searchParams?.search);
+
+  // Replace spaces back to '+'
+  const formattedSearch = decodedTitle.replace(/ /g, "+");
+
+  console.log("checker generated mata metadata", formattedSearch, searchParams);
   const formatSearch = searchParams?.search
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -52,13 +58,13 @@ export async function generateMetadata(
     openGraph: {
       title: title,
       description: desc,
-      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${searchParams?.search}`,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${formattedSearch}`,
       siteName: "Safari List",
       type: "website",
       images: [...previousImages],
     },
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${searchParams?.search}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${formattedSearch}`,
     },
   };
 }
@@ -73,19 +79,26 @@ interface CategoryPropsType {
 export default async function SearchFieldSearchPage({
   searchParams,
 }: CategoryPropsType) {
-  const { page, limit, search } = searchParams;
-  const formatSearch = search
-    .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const { page, limit,search } = searchParams;
+
+  
+  // Replace spaces back to '+'
+  const formattedSearch = search.replace(/ /g, "+");
+  
+  const formatSearch = formattedSearch
+  .split("_")
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ");
+  const decodedTitle = decodeURIComponent(formatSearch);
+
   const articles = await fetchArticles({
     page,
     limit: limit ? limit : "6",
-    search: formatSearch,
+    search: decodedTitle,
   });
   const Category = await fetchCategories();
   const mobileSearch = await fetchMobileArticles({
-    search: formatSearch,
+    search: formattedSearch,
     limit: "32",
   });
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });

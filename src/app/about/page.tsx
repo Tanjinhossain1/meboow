@@ -9,7 +9,7 @@ export const metadata = {
   openGraph: {
     title: 'About Us - Safari List',
     description: 'Learn more about our company, mission, and values at Safari List.',
-    url: `${process.env.NEXT_PUBLIC_META_URL}/aboutus`,
+    url: `${process.env.NEXT_PUBLIC_META_URL}/about`,
     siteName: 'Safari List',
     type: 'website',
   },
@@ -20,11 +20,11 @@ export const metadata = {
     // images: ['https://yourwebsite.com/static/images/aboutus.jpg'],
   },
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_META_URL}/aboutus`,
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/about`,
   },
 };
 
-export default async function AboutUs() {
+export default async function About() {
   return (
     <Fragment>
       <Navbar />

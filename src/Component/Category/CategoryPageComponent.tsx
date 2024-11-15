@@ -68,7 +68,12 @@ export default function CategoryPageComponent({
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "5";
   const search = searchParams.get("search") ?? "";
-  const formatSearch = search
+  
+  const decodedTitle = decodeURIComponent(search);
+
+  // Replace spaces back to '+'
+  const formattedSearch = decodedTitle.replace(/ /g, "+");
+  const formatSearch = formattedSearch
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -79,7 +84,7 @@ export default function CategoryPageComponent({
         `/search/?${new URLSearchParams({
           page: page,
           limit: `${Number(limit) + 6}`,
-          search: search,
+          search: formattedSearch,
         })}`,
         {
           scroll: false,
@@ -166,7 +171,7 @@ export default function CategoryPageComponent({
                 <Typography sx={{ fontSize: 12 }}>{params?.brand}</Typography>
               ) : isSearch ? (
                 <Typography sx={{ fontSize: 12 }}>
-                  Search Results for: {search}
+                  Search Results for: {formatSearch}
                 </Typography>
               ) : isSubCategory ? (
                 <Link
@@ -245,7 +250,7 @@ export default function CategoryPageComponent({
                     </Typography>
                     <Alert severity="warning">
                       No Article Found For {params?.brand}{" "}
-                      {search ? search : ""} {params?.category}.
+                      {search ? formatSearch : ""} {params?.category}.
                     </Alert>
                   </>
                 )}

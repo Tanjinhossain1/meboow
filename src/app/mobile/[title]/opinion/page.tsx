@@ -12,11 +12,13 @@ import { Metadata, ResolvingMetadata } from "next";
 import MainMobileDetails from "../_components/MainMobileDetails";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(params?.title || "");
   const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -42,13 +44,13 @@ export async function generateMetadata(
       openGraph: {
         title: title,
         description: desc,
-        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/opinion`,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${decodedTitle}/opinion`,
         siteName: "Safari List",
         type: "website",
         images: [image, ...previousImages],
       }, 
       alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/opinion`,
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${decodedTitle}/opinion`,
       },
     };
   }
@@ -67,16 +69,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     limit: "8",
     latestDevice: "latest",
   });
-
-  const LatestDeviceMobiles = await fetchMobileArticles({
-    limit: "10",
-    is_latest_device: "YES",
-  });
-  const RelatedMobileDevices = await fetchMobileArticles({
-    brands: mobileArticles.data[0].brands,
-    page: "1",
-    limit: "10",
-  });
+  
   const AllMobilesOpinion = await fetchMobileOpinions({
     mobileId: `${mobileArticles.data[0].id}`,
   });
@@ -84,13 +77,11 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
   const session = await getServerSession(authConfig);
   const user = session?.user;
 
+  if(mobileArticles.data && !mobileArticles.data[0]){
+    redirect('/mobile')
+  }
   return (
     <Fragment>
-      <link
-        rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/opinion`}
-        key="canonical"
-      />
       <Navbar />
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>

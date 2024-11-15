@@ -249,12 +249,7 @@ const getAll = async (
     isTodayPost,
   } = filters;
   const whereConditions = [];
-  console.log(
-    "checking the data is coing searchTermsearchTermsearchTerm ",
-    searchTerm,
-    is_daily_interest,
-    is_latest_device
-  );
+
   if (brands) {
     const searchConditions = likeInsensitive(
       MobileArticles["brands"],
@@ -304,14 +299,24 @@ const getAll = async (
     // const searchConditions = ["title","market_status","brands","$admin_detail?.name$"].map((field) =>
     //   likeInsensitive((MobileArticles as any)[field], `%${searchTerm}%`)
     // );
-    const lowerSearchTerm = searchTerm.toLowerCase(); // Convert search term to lowercase
 
+    // Replace spaces back to '+'
+    const formattedSearch = searchTerm.replace(/ /g, "+");
+
+    const formatSearch = formattedSearch
+      .split("_")
+      .map((word: any) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+    const decodedTitle = decodeURIComponent(formatSearch);
+
+    const lowerSearchTerm = decodedTitle.toLowerCase(); // Convert search term to lowercase
+    
     const searchConditions = [
-      likeInsensitive(MobileArticles.title, `%${searchTerm}%`),
-      likeInsensitive(MobileArticles.market_status, `%${searchTerm}%`),
-      likeInsensitive(MobileArticles.brands, `%${searchTerm}%`),
+      likeInsensitive(MobileArticles.title, `%${decodedTitle}%`),
+      likeInsensitive(MobileArticles.market_status, `%${decodedTitle}%`),
+      likeInsensitive(MobileArticles.brands, `%${decodedTitle}%`),
       // JSON path query for admin_detail.name
-      // sql`${MobileArticles.admin_detail} ->> '$.name' LIKE ${`%${searchTerm}%`}`
+      // sql`${MobileArticles.admin_detail} ->> '$.name' LIKE ${`%${formatSearch}%`}`
       sql`LOWER(${
         MobileArticles.admin_detail
       } ->> '$.name') LIKE ${`%${lowerSearchTerm}%`}`,

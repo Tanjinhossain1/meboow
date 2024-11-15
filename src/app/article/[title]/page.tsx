@@ -13,12 +13,14 @@ import {
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(params?.title);
   const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -47,7 +49,7 @@ export async function generateMetadata(
         }, ...previousImages],
       },
       alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}`,
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${decodedTitle}`,
       },
      
     };
@@ -84,13 +86,11 @@ export default async function Details({ params }: DetailsParams) {
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
   const user = session?.user;
+  if(data && !data[0]){
+    redirect('/article')
+  }
   return (
     <>
-      {/* <link
-        rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/article/${params?.title}`}
-        key="canonical"
-      /> */}
       <Navbar />
       {data && mobileArticles.data && data[0] ? (
         <DetailsComponent

@@ -18,6 +18,7 @@ export async function generateMetadata(
   { params }: { params: { route: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(params?.route || "");
   const formatCountry = params?.route
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -34,14 +35,14 @@ export async function generateMetadata(
     openGraph: {
       title: title,
       description: desc,
-      url: `${process.env.NEXT_APP_CANONICAL_URL}/glossary/${params?.route}`,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/glossary/${decodedTitle}`,
       siteName: "Safari List",
       type: "website",
       images: [...previousImages],
     },
 
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/glossary/${params?.route}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/glossary/${decodedTitle}`,
     },
   };
 }
@@ -62,11 +63,6 @@ export default async function page({ params }: { params: { route: string } }) {
   ]);
   return (
     <>
-      <link
-        rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/glossary/${params?.route}`}
-        key="canonical"
-      />
       <Navbar />
       <MainComponent
         glossaryList={glossaryList.data}

@@ -3,17 +3,17 @@ import Navbar from "@/Component/Shared/Navbar";
 import Footer from "@/Component/HomePage/Footer";
 import {
   fetchArticles,
-  fetchBrands,
   fetchMobileArticleDetails,
-  fetchMobileArticles,
 } from "@/services/articleServices";
 import { Metadata, ResolvingMetadata } from "next";
 import MainMobileDetails from "../_components/MainMobileDetails";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(params?.title || "");
   const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -41,13 +41,13 @@ export async function generateMetadata(
       openGraph: {
         title: title,
         description: desc,
-        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/pictures`,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${decodedTitle}/pictures`,
         siteName: "Safari List",
         type: "website",
         images: [image, ...previousImages],
       },
       alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/pictures`,
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/mobile/${decodedTitle}/pictures`,
       },
     };
   }
@@ -66,23 +66,12 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
     limit: "8",
     latestDevice: "latest",
   });
-
-  const LatestDeviceMobiles = await fetchMobileArticles({
-    limit: "10",
-    is_latest_device: "YES",
-  });
-  const RelatedMobileDevices = await fetchMobileArticles({
-    brands: mobileArticles.data[0].brands,
-    page: "1",
-    limit: "10",
-  });
+  
+  if(mobileArticles.data && !mobileArticles.data[0]){
+    redirect('/mobile')
+  }
   return (
     <Fragment>
-      <link
-        rel="canonical"
-        href={`${process.env.NEXT_APP_CANONICAL_URL}/mobile/${params?.title}/pictures`}
-        key="canonical"
-      />
       <Navbar />
       {mobileArticles.data && mobileArticles.data[0] ? (
         <>

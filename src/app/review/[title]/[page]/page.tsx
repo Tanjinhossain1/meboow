@@ -19,6 +19,7 @@ export async function generateMetadata(
   { params }: { params: { title: string; page: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(params?.title);
   const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -49,7 +50,7 @@ export async function generateMetadata(
       openGraph: {
         title: title,
         description: desc,
-        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}/${params?.page}`,
+        url: `${process.env.NEXT_APP_CANONICAL_URL}/review/${decodedTitle}/${params?.page}`,
         siteName: "Safari List",
         type: "website",
         images: [
@@ -64,7 +65,7 @@ export async function generateMetadata(
       },
 
       alternates: {
-        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}/${params?.page}`,
+        canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${decodedTitle}/${params?.page}`,
       },
     };
   }

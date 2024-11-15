@@ -30,7 +30,7 @@ export const metadata = {
       "IN Safari List Privacy Policy page you can see all of our site rules and policies in the privacy policy section of the privacy policy.",
   },
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_META_URL}/privacyPolicy`,
+    canonical: `${process.env.NEXT_PUBLIC_META_URL}/privacy-policy`,
   },
 };
 

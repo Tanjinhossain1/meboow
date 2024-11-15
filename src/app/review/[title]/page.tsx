@@ -11,6 +11,7 @@ import {
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const NavbarHelper = dynamic(
@@ -32,6 +33,7 @@ export async function generateMetadata(
   { params }: { params: { title: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
+  const decodedTitle = decodeURIComponent(params?.title);
   const formattedTitle = params?.title
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -55,7 +57,7 @@ export async function generateMetadata(
       },
       
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${params?.title}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/review/${decodedTitle}`,
     },
     };
   }
@@ -100,6 +102,10 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
   const user = session?.user;
+  
+  if(data && !data[0]){
+    redirect('/article')
+  }
   return (
     <>
       <NavbarHelper categories={Category?.data} isLoginUser={user} />
