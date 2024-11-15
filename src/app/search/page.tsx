@@ -7,6 +7,7 @@ import {
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
+import { headers } from "next/headers";
 import React, { Suspense } from "react";
 
 const NavbarHelper = dynamic(
@@ -29,13 +30,17 @@ export async function generateMetadata(
   { searchParams }: { searchParams: { search: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata | undefined> {
-  const decodedTitle = decodeURIComponent(searchParams?.search);
+  const entries = Object.entries(searchParams);
+  const combinedSearch = entries
+  .map(([key, value], index) => {
+    if (index === 0) {
+      return value?.replace(/ /g, "+"); // First value only, replace spaces with '+'
+    }
+    return `${key}${value?.replace(/ /g, "+")}`; // Subsequent key-value pairs
+  })
+  .join("&"); // Join all parts with '&'
 
-  // Replace spaces back to '+'
-  const formattedSearch = decodedTitle.replace(/ /g, "+");
-
-  console.log("checker generated mata metadata", formattedSearch, searchParams);
-  const formatSearch = searchParams?.search
+  const formatSearch = combinedSearch
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -58,13 +63,13 @@ export async function generateMetadata(
     openGraph: {
       title: title,
       description: desc,
-      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${encodeURIComponent(searchParams?.search)}`,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${combinedSearch}`,
       siteName: "Safari List",
       type: "website",
       images: [...previousImages],
     },
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${encodeURIComponent(searchParams?.search)}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${combinedSearch}`,
     },
   };
 }
@@ -79,26 +84,29 @@ interface CategoryPropsType {
 export default async function SearchFieldSearchPage({
   searchParams,
 }: CategoryPropsType) {
-  const { page, limit,search } = searchParams;
+  const { page, limit } = searchParams;
+  const entries = Object.entries(searchParams);
 
-  
-  // Replace spaces back to '+'
-  const formattedSearch = search.replace(/ /g, "+");
-  
-  const formatSearch = formattedSearch
-  .split("_")
-  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-  .join(" ");
-  const decodedTitle = decodeURIComponent(formatSearch);
+  // Start with the first value only, and append subsequent key-value pairs
+  const combinedSearch = entries
+    .map(([key, value], index) => {
+      if (index === 0) {
+        return value?.replace(/ /g, "+"); // First value only, replace spaces with '+'
+      }
+      return `${key}${value?.replace(/ /g, "+")}`; // Subsequent key-value pairs
+    })
+    .join("&"); // Join all parts with '&'
 
+  // Decode and handle the search parameter
+  
   const articles = await fetchArticles({
     page,
     limit: limit ? limit : "6",
-    search: formatSearch,
+    search: combinedSearch,
   });
   const Category = await fetchCategories();
   const mobileSearch = await fetchMobileArticles({
-    search: formatSearch,
+    search: combinedSearch,
     limit: "32",
   });
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });

@@ -299,13 +299,19 @@ const getAll = async (
     // const searchConditions = ["title","market_status","brands","$admin_detail?.name$"].map((field) =>
     //   likeInsensitive((MobileArticles as any)[field], `%${searchTerm}%`)
     // );
-
-    const lowerSearchTerm = searchTerm.toLowerCase(); // Convert search term to lowercase
+  // Replace spaces back to '+'
+  const formattedSearch = searchTerm.replace(/ /g, "+");
+    const decodedSearchTerm = decodeURIComponent(formattedSearch);
+    const formatSearch = decodedSearchTerm
+    .split("_")
+    .map((word:any) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+    const lowerSearchTerm = decodeURIComponent(decodedSearchTerm).toLowerCase(); // Convert search term to lowercase
     
     const searchConditions = [
-      likeInsensitive(MobileArticles.title, `%${searchTerm}%`),
-      likeInsensitive(MobileArticles.market_status, `%${searchTerm}%`),
-      likeInsensitive(MobileArticles.brands, `%${searchTerm}%`),
+      likeInsensitive(MobileArticles.title, `%${formatSearch}%`),
+      likeInsensitive(MobileArticles.market_status, `%${formatSearch}%`),
+      likeInsensitive(MobileArticles.brands, `%${formatSearch}%`),
       // JSON path query for admin_detail.name
       // sql`${MobileArticles.admin_detail} ->> '$.name' LIKE ${`%${formatSearch}%`}`
       sql`LOWER(${

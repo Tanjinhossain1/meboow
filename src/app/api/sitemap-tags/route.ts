@@ -29,7 +29,7 @@ export async function GET() {
             if (mobile?.tags) {
                 (mobile?.tags as any[])?.forEach((tag: MobileTagsType) => {
                     if (tag?.name) {
-                        const formattedTag = encodeURIComponent(formatForUrlWith_under_score(tag.name));
+                        const formattedTag = formatForUrlWith_under_score(tag.name);
                         if (!processedTags.has(formattedTag)) { // Check if the tag is already processed
                             sitemapStream.write({ 
                                 url: `/search?search=${formattedTag}`, 
@@ -47,7 +47,7 @@ export async function GET() {
             if (mobile?.tags) {
                 (mobile?.tags as any[])?.forEach((tag: MobileTagsType) => {
                     if (tag?.name) {
-                        const formattedTag =  encodeURIComponent(formatForUrlWith_under_score(tag.name));
+                        const formattedTag = formatForUrlWith_under_score(tag.name)
                         if (!processedTags.has(formattedTag)) { // Check if the tag is already processed
                             sitemapStream.write({ 
                                 url: `/search?search=${formattedTag}`, 
