@@ -31,6 +31,7 @@ export default function CategoryPageComponent({
   mobileSearchDefault,
   isSubCategory,
   mobileArticles,
+  combinedSearch
 }: {
   categoryWiseArticles: RecentArticleDataType[];
   total: number;
@@ -38,6 +39,7 @@ export default function CategoryPageComponent({
   isSearch?: boolean;
   isSubCategory?: boolean;
   isBrandWise?: boolean;
+  combinedSearch?:string;
   mobileSearchDefault?: {
     data: MobileArticleType[];
     page: number;
@@ -171,7 +173,7 @@ export default function CategoryPageComponent({
                 <Typography sx={{ fontSize: 12 }}>{params?.brand}</Typography>
               ) : isSearch ? (
                 <Typography sx={{ fontSize: 12 }}>
-                  Search Results for: {formatSearch}
+                  Search Results for: {combinedSearch || formatSearch}
                 </Typography>
               ) : isSubCategory ? (
                 <Link
@@ -205,7 +207,7 @@ export default function CategoryPageComponent({
                   <Typography
                     sx={{ fontSize: 37, fontWeight: 550, my: 2, mb: 5 }}
                   >
-                    Search Results for: {formatSearch}
+                    Search Results for: {combinedSearch || formatSearch}
                   </Typography>
                 ) : isSubCategory ? (
                   <Typography sx={{ fontSize: 37, fontWeight: 550, my: 2 }}>
@@ -250,7 +252,7 @@ export default function CategoryPageComponent({
                     </Typography>
                     <Alert severity="warning">
                       No Article Found For {params?.brand}{" "}
-                      {search ? formatSearch : ""} {params?.category}.
+                      {search ? combinedSearch || formatSearch : ""} {params?.category}.
                     </Alert>
                   </>
                 )}
@@ -295,8 +297,7 @@ export default function CategoryPageComponent({
                       Mobiles{" "}
                     </Typography>
                     <Alert severity="warning">
-                      No Mobile Found For {formatSearch}{" "}
-                      {formatSearch ? formatSearch : ""}
+                      No Mobile Found For {combinedSearch || formatSearch}{" "}
                     </Alert>
                   </>
                 )}{" "}

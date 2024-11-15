@@ -165,7 +165,7 @@ export default function ArticleList() {
                   <p className="text-gray-600 text-sm mb-4">
                     {formatDate(article.createdAt)}
                   </p>
-                  <p className="text-gray-700">{article.description}</p>
+                  <p className="text-gray-700 line-clamp-3">{article.description}</p>
                 </div>
               </div>
             ))}

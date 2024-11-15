@@ -113,6 +113,11 @@ export default async function SearchFieldSearchPage({
 
   const session = await getServerSession(authConfig);
   const user = session?.user;
+  
+  const formatSearch = combinedSearch
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
   return (
     <Suspense>
       <NavbarHelper categories={Category?.data} isLoginUser={user} />
@@ -122,6 +127,7 @@ export default async function SearchFieldSearchPage({
         category={Category.data}
         categoryWiseArticles={articles.data}
         total={articles.total}
+        combinedSearch={formatSearch}
         mobileArticles={mobileArticles?.data}
       />
       <Footer />
