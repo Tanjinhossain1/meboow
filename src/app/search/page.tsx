@@ -58,13 +58,13 @@ export async function generateMetadata(
     openGraph: {
       title: title,
       description: desc,
-      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${formattedSearch}`,
+      url: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${encodeURIComponent(searchParams?.search)}`,
       siteName: "Safari List",
       type: "website",
       images: [...previousImages],
     },
     alternates: {
-      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${formattedSearch}`,
+      canonical: `${process.env.NEXT_APP_CANONICAL_URL}/search?search=${encodeURIComponent(searchParams?.search)}`,
     },
   };
 }
@@ -94,11 +94,11 @@ export default async function SearchFieldSearchPage({
   const articles = await fetchArticles({
     page,
     limit: limit ? limit : "6",
-    search: decodedTitle,
+    search: formatSearch,
   });
   const Category = await fetchCategories();
   const mobileSearch = await fetchMobileArticles({
-    search: formattedSearch,
+    search: formatSearch,
     limit: "32",
   });
   const mobileArticles = await fetchMobileArticles({ page: "1", limit: "20" });

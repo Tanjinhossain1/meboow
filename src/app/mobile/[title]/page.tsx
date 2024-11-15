@@ -100,7 +100,7 @@ const ProductDetails = async ({ params }: { params: { title: string } }) => {
 
 
   const user = session?.user;
-  if(!mobileArticles?.data && !mobileArticles?.data?.[0]){
+  if(mobileArticles?.data && !mobileArticles?.data?.[0]){
     redirect('/mobile')
   }
   return (

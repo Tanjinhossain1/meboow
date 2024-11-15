@@ -20,7 +20,7 @@ export default function Tags({
                 key={index}
                 label={tag.name}
                 component="a"
-                href={`/search?search=${formatForUrlWith_under_score(tag.name)}`}
+                href={`/search?search=${encodeURIComponent(formatForUrlWith_under_score(tag.name))}`}
                 variant="outlined"
                 clickable
               />
@@ -32,7 +32,7 @@ export default function Tags({
                 key={tag.id}
                 label={tag.name}
                 component="a"
-                href={`/search?search=${formatForUrlWith_under_score(tag.name)}`}
+                href={`/search?search=${encodeURIComponent(formatForUrlWith_under_score(tag.name))}`}
                 variant="outlined"
                 clickable
               />

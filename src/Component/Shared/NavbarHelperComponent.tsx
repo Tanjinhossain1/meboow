@@ -45,7 +45,7 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const search = event.target.search.value;
-    history.push(`/search?search=${formatForUrlWith_under_score(search)}`);
+    history.push(`/search?search=${encodeURIComponent(formatForUrlWith_under_score(search))}`);
   };
   const [state, setState] = React.useState({
     top: false,
