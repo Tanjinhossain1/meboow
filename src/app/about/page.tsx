@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import AboutUsComponent from "../aboutus/_components/AboutUsComponent";
 import Navbar from "@/Component/Shared/Navbar";
+import Footer from "@/Component/HomePage/Footer";
 
 export const metadata = {
   title: 'About Us - Safari List',
@@ -29,7 +30,7 @@ export default async function About() {
     <Fragment>
       <Navbar />
       <AboutUsComponent />
-      {/* <Footer /> */}
+      <Footer />
     </Fragment>
   );
 }

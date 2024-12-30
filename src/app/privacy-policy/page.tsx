@@ -32,22 +32,9 @@ export default function AboutUs() {
   return (
     <Grid container>
       <Navbar />
-      <Container
-        sx={{
-          width: {
-            xs: "100%", // 80% width on extra-small screens
-            sm: "100%", // 70% width on small screens
-            md: "100%", // 60% width on medium screens
-            lg: "100%", // 50% width on large screens
-            xl: "100%", // 40% width on extra-large screens
-          },
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Container sx={{ mt: 4 }}>
+      
           <Paper
-            className="md:max-w-[1000px]"
+            className="md:max-w-[1000px] mx-auto"
             sx={{ p: 5 }}
             elevation={2}
           >
@@ -816,8 +803,7 @@ export default function AboutUs() {
               </p>
             </div>
           </Paper>
-        </Container>
-      </Container>
+         
       <Footer />
     </Grid>
   );

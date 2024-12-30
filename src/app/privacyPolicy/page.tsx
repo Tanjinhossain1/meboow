@@ -38,20 +38,7 @@ export default function AboutUs() {
   return (
     <Grid container>
       <Navbar />
-      <Container
-        sx={{
-          width: {
-            xs: "100%", // 80% width on extra-small screens
-            sm: "100%", // 70% width on small screens
-            md: "100%", // 60% width on medium screens
-            lg: "100%", // 50% width on large screens
-            xl: "100%", // 40% width on extra-large screens
-          },
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Container sx={{mt:4}}>
+      
            
           <Paper  className="md:max-w-[1000px] mx-auto" sx={{ textAlign: "center", p: 5 }} elevation={2}>
             <Image
@@ -73,12 +60,9 @@ export default function AboutUs() {
               }}
             >
               In order for the website to provide a safe and useful service, it is important for Sell Safari to collect, use, and share personal information.
-
-
             </Typography> 
-          </Paper>
-        </Container>
-      </Container>
+          </Paper> 
+      
      <Footer />
     </Grid>
   );
