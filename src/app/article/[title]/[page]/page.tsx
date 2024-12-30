@@ -14,6 +14,7 @@ import {
 import { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata(
@@ -48,12 +49,15 @@ export async function generateMetadata(
       //   title,
       // ],
       openGraph: {
-        images: [ {
-          url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
-          alt: `${title} image`,
-          width: 800, // optional, adjust based on your image size
-          height: 600, // optional, adjust based on your image size
-        }, ...previousImages],
+        images: [
+          {
+            url: `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/get/${image}`,
+            alt: `${title} image`,
+            width: 800, // optional, adjust based on your image size
+            height: 600, // optional, adjust based on your image size
+          },
+          ...previousImages,
+        ],
       },
       alternates: {
         canonical: `${process.env.NEXT_APP_CANONICAL_URL}/article/${decodedTitle}/${params?.page}`,
@@ -99,8 +103,8 @@ export default async function Details({ params, searchParams }: DetailsParams) {
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session);
   const user = session?.user;
-  if(data && !data[0]){
-    redirect('/article')
+  if (data && !data[0]) {
+    redirect("/article");
   }
   return (
     <>

@@ -20,7 +20,12 @@ import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import MobileListComponent from "./MobileListComponent";
-import { cleanText, formatDate, formatForUrl, formatForUrlWith_under_score } from "@/utils/utils";
+import {
+  cleanText,
+  formatDate,
+  formatForUrl,
+  formatForUrlWith_under_score,
+} from "@/utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -35,10 +40,48 @@ import CommonEditorDisplayer from "./CommonEditorDisplayer";
 import Tags from "@/app/mobile/[title]/_components/Tags";
 import BackdropProviderContext from "../BackdropProvider";
 import DekstopAndMobileViewContext from "../BackdropProviderChecker";
+import Script from "next/script";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
 }
+
+const AdsterraAd = () => {
+  useEffect(() => {
+    // Check if the ad script is correctly appending content to the container
+    const adContainer = document.getElementById('adsterra-container');
+    if (adContainer) {
+      adContainer.innerHTML = ''; // Clear previous content
+    }
+  }, []);
+
+  return (
+    <div id="adsterra-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+      {/* Adsterra configuration */}
+      <Script id="adsterra-options" strategy="afterInteractive">
+        {`
+          atOptions = {
+            'key' : '348a0b2241779fa5823c6a251d2bb3da',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 720,
+            'params' : {}
+          };
+        `}
+      </Script>
+      
+      {/* External script to render the ad */}
+      <Script
+        src="//www.highperformanceformat.com/348a0b2241779fa5823c6a251d2bb3da/invoke.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          console.log('Adsterra script loaded');
+        }}
+      />
+    </div>
+  );
+};
+
 export default function DetailsComponent({
   articleDetail,
   category,
@@ -61,9 +104,7 @@ export default function DetailsComponent({
   const params = useParams();
   const history = useRouter();
   console.log(" details  ", articleDetail);
-  const { desktopView } = useContext(
-    DekstopAndMobileViewContext
-  );
+  const { desktopView } = useContext(DekstopAndMobileViewContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
@@ -182,6 +223,7 @@ export default function DetailsComponent({
 
   return (
     <Grid container>
+      <AdsterraAd />
       <Paper
         className="md:max-w-[1000px] mx-auto"
         sx={{ p: 2, mb: 2 }}
@@ -194,7 +236,9 @@ export default function DetailsComponent({
           <MuiLink
             underline="hover"
             color="inherit"
-            href={`/category/${formatForUrlWith_under_score(articleDetail?.category)}`}
+            href={`/category/${formatForUrlWith_under_score(
+              articleDetail?.category
+            )}`}
           >
             {articleDetail?.category}
           </MuiLink>
@@ -216,27 +260,23 @@ export default function DetailsComponent({
           size="small"
           variant="contained"
           onClick={() => {
-            history.push(`/category/${formatForUrlWith_under_score(articleDetail?.category)}`);
+            history.push(
+              `/category/${formatForUrlWith_under_score(
+                articleDetail?.category
+              )}`
+            );
           }}
         >
           {articleDetail?.category}
         </Button>
         <Grid container>
-          <Grid xs={desktopView === true ? 7.5 :12} lg={7.5}>
+          <Grid xs={desktopView === true ? 7.5 : 12} lg={7.5}>
             <h1 className="mt-1 font-2xl text-[#333333] font-semibold">
               {articleDetail?.title}
             </h1>
-            {/* <Typography
-              sx={{
-                mt: 1,
-                fontSize: 35,
-                fontWeight: 550,
-                color: "#333333",
-              }}
-              variant="h1"
-            >
-              {" "}
-            </Typography> */}
+            {/* <Script   data-cfasync="false" src="//pl25387344.profitablecpmrate.com/638c8b094a78dfef9486067940f832de/invoke.js"></Script>
+            <div id="container-638c8b094a78dfef9486067940f832de"></div>
+            */}
 
             <Grid container>
               <Grid
@@ -737,11 +777,17 @@ export default function DetailsComponent({
                   }
                 })}
           </Grid>
-          <Grid xs={desktopView === true ? 0.5 :12} lg={0.5}></Grid>
+          <Grid xs={desktopView === true ? 0.5 : 12} lg={0.5}></Grid>
           <Grid xs={desktopView === true ? 4 : 12} sx={{ mt: 10 }} lg={4}>
             <MobileListComponent mobileArticles={mobileArticles} />
             <BrandListComponent brands={brands} />
             <CategoryListComponent category={category} />
+            {/* social bar */}
+            <Script
+              type="text/javascript"
+              src="//pl25387297.profitablecpmrate.com/ec/45/8e/ec458edcbd79518c7cfaa509a5507ab2.js"
+            />
+            {/* social bar */}
           </Grid>
         </Grid>
 
@@ -821,6 +867,11 @@ export default function DetailsComponent({
           <Grid xs={12} lg={0.5}></Grid>
           <Grid xs={12} sx={{ mt: 17 }} lg={4}></Grid>
         </Grid>
+        <Script
+          data-cfasync="false"
+          src="//pl25387344.profitablecpmrate.com/638c8b094a78dfef9486067940f832de/invoke.js"
+        />
+        <div id="container-638c8b094a78dfef9486067940f832de"></div>
       </Paper>
     </Grid>
   );
