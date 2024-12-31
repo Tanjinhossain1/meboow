@@ -28,7 +28,7 @@ export const metadata = {
   },
 };
 
-export default function AboutUs() {
+export default function PrivacyPolicy() {
   return (
     <Grid container>
       <Navbar />
