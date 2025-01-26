@@ -8,10 +8,12 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import dynamic from "next/dynamic";
 import { MobileArticleType } from "@/types/mobiles";
 import { BrandTypes } from "@/types/category";
+import { Box } from "@mui/material";
+import CommonAutoAds from "../GoogleAds/CommonAutoAds";
 
 const ContentBox = React.memo(
   dynamic(() => import("@/Component/HomePage/ContentBox"), {
-    ssr: true
+    ssr: true,
   })
 );
 const PhoneFinder = React.memo(
@@ -19,27 +21,27 @@ const PhoneFinder = React.memo(
 );
 const MobileReviews = React.memo(
   dynamic(() => import("./Component/MobileReviews"), {
-    ssr: true
+    ssr: true,
   })
 );
 const TopDevicesTable = React.memo(
   dynamic(() => import("./Component/TopDevicesTable"), {
-    ssr: true
+    ssr: true,
   })
 );
 const LatestDevices = React.memo(
   dynamic(() => import("./Component/LatestDevices"), {
-    ssr: true
+    ssr: true,
   })
 );
 const PopularMobiles = React.memo(
   dynamic(() => import("./Component/PopularMobiles"), {
-    ssr: true
+    ssr: true,
   })
 );
 const NewsAndReviews = React.memo(
   dynamic(() => import("./Component/NewsAndReviews"), {
-    ssr: true
+    ssr: true,
   })
 );
 const BrandDisplayComponent = React.memo(
@@ -146,6 +148,12 @@ export default async function Banner({
               md={4}
             >
               <PhoneFinder />
+
+              <Typography className="text-end text-gray-400 mt-1 text-xs">
+                ADVERTISEMENT
+              </Typography>
+              <CommonAutoAds adSlot="1652287191" />
+
               <MobileReviews
                 isGap
                 isTrending
@@ -153,8 +161,34 @@ export default async function Banner({
               />
               <TopDevicesTable />
               <LatestDevices />
+              <Box
+                sx={{
+                  position: "sticky", // Make the left side sticky
+                  top: 0, // Stick to the top of the viewport
+                  alignSelf: "flex-start", // Ensures alignment inside the parent container
+                  overflow: "hidden",
+                }}
+              >
+                <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="vertical" adSlot="9568906860" />
+              
+              </Box>
             </Grid>
             <Grid item sx={{ pl: 1 }} xs={12} sm={6} md={8}>
+            <Box sx={{
+              display:{
+                xs: "block",
+                sm: "none",
+              }
+            }}>
+            <Typography className="text-end text-gray-400 mt-1 text-xs">
+                ADVERTISEMENT
+              </Typography>
+              <CommonAutoAds adSlot="1652287191" />
+            </Box>
+              
               <MobileReviews mobilesArticles={mobileReviews} />
               <PopularMobiles
                 apple={apple}
@@ -179,7 +213,7 @@ export default async function Banner({
                 </Typography>
 
                 <BrandDisplayComponent brands={serverBrand} />
-
+                 
                 <Grid display={"flex"} justifyContent={"end"} xs={12}>
                   <Link aria-label="Brands" href={"/brands"}>
                     <Typography
