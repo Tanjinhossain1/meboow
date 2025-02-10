@@ -40,6 +40,7 @@ import CommonEditorDisplayer from "./CommonEditorDisplayer";
 import Tags from "@/app/mobile/[title]/_components/Tags";
 import BackdropProviderContext from "../BackdropProvider";
 import DekstopAndMobileViewContext from "../BackdropProviderChecker";
+import CommonAutoAds from "../GoogleAds/CommonAutoAds";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -527,6 +528,10 @@ export default function DetailsComponent({
                 blocks={articleDetail?.pages[0].content?.blocks}
               />
             ) : null}
+             <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adSlot="8257179837"  />
             {articleDetail?.pages && articleDetail?.pages[0]?.content
               ? null
               : articleDetail.content?.blocks?.map((block: any) => {
@@ -738,10 +743,35 @@ export default function DetailsComponent({
                 })}
           </Grid>
           <Grid xs={desktopView === true ? 0.5 : 12} lg={0.5}></Grid>
-          <Grid xs={desktopView === true ? 4 : 12} sx={{ mt: 10 }} lg={4}>
+          <Grid xs={desktopView === true ? 4 : 12} lg={4}>
+          <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adSlot="5530944148"  />
             <MobileListComponent mobileArticles={mobileArticles} />
+          <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adSlot="5080352151"  />
             <BrandListComponent brands={brands} />
+          <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adSlot="4238915914"  />
             <CategoryListComponent category={category} />
+            <Box
+                sx={{
+                  position: "sticky", // Make the left side sticky
+                  top: 0, // Stick to the top of the viewport
+                  alignSelf: "flex-start", // Ensures alignment inside the parent container
+                  overflow: "hidden",
+                }}
+              >
+                <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="vertical" adSlot="1612752574" />
+              </Box> 
           </Grid>
         </Grid>
 

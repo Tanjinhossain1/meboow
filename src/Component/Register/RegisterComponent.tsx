@@ -21,7 +21,7 @@ const RegisterComponent = () => {
       fullName,
       email,
       password,
-      role: "user",
+      role: "admin",
     };
     handleOpen()
     axios

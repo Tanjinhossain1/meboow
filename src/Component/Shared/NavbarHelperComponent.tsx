@@ -36,6 +36,7 @@ import { CategoryTypes } from "@/types/category";
 import NavbarCategoryList from "./NavCategoryList";
 import { Stack } from "@mui/material";
 import { formatForUrlWith_under_score } from "@/utils/utils";
+import CommonAutoAds from "../GoogleAds/CommonAutoAds";
 
 function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories:CategoryTypes[]}) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -356,6 +357,10 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
                   </Link>
                 </Typography>
               </Grid>
+              <Typography className="text-end text-gray-400 mt-1 text-[9px]">
+                ADVERTISEMENT
+              </Typography>
+              <CommonAutoAds adFormat="horizontal" adSlot="2022379321" />
             </Grid>
           </Grid>
           {/* phone devices */}

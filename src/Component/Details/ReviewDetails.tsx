@@ -27,7 +27,12 @@ import CategoryListComponent from "../Category/CategoryListComponent";
 import BrandListComponent from "./BrandListComponent";
 import { MobileArticleType, MobileOpinionType } from "@/types/mobiles";
 import MobileListComponent from "./MobileListComponent";
-import { cleanText, formatDate, formatForUrl, formatForUrlWith_under_score } from "@/utils/utils";
+import {
+  cleanText,
+  formatDate,
+  formatForUrl,
+  formatForUrlWith_under_score,
+} from "@/utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -41,6 +46,8 @@ import CommonEditorDisplayer from "./CommonEditorDisplayer";
 import { ArrowDownIcon } from "lucide-react";
 import Tags from "@/app/mobile/[title]/_components/Tags";
 import DekstopAndMobileViewContext from "../BackdropProviderChecker";
+import CommonAutoAds from "../GoogleAds/CommonAutoAds";
+import CommonArticleAutoAds from "../GoogleAds/CommonArticleAds";
 
 function formatText(text: string) {
   return text.replace(/\n/g, "<br />").replace(/ {2}/g, " &nbsp;");
@@ -66,7 +73,7 @@ export default function DetailsReviewComponent({
 }) {
   const history = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  console.log('review details   ',articleDetail)
+  console.log("review details   ", articleDetail);
   const { desktopView } = useContext(DekstopAndMobileViewContext);
 
   const handleHoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -210,7 +217,9 @@ export default function DetailsReviewComponent({
           <MuiLink
             underline="hover"
             color="inherit"
-            href={`/category/${formatForUrlWith_under_score(articleDetail?.category)}`}
+            href={`/category/${formatForUrlWith_under_score(
+              articleDetail?.category
+            )}`}
           >
             {articleDetail?.category}
           </MuiLink>
@@ -232,7 +241,11 @@ export default function DetailsReviewComponent({
           size="small"
           variant="contained"
           onClick={() => {
-            history.push(`/category/${formatForUrlWith_under_score(articleDetail?.category)}`);
+            history.push(
+              `/category/${formatForUrlWith_under_score(
+                articleDetail?.category
+              )}`
+            );
           }}
         >
           {articleDetail?.category}
@@ -370,6 +383,7 @@ export default function DetailsReviewComponent({
                 </Typography>
               </Grid>
             </Grid>
+
             {articleDetail?.pages && articleDetail?.pages[0]?.title ? (
               <Box
                 sx={{
@@ -543,6 +557,10 @@ export default function DetailsReviewComponent({
                 blocks={articleDetail?.pages[0].content?.blocks}
               />
             ) : null}
+             <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adSlot="9270878606"  />
             {/* ); */}
             {/* })} */}
             {articleDetail?.pages && articleDetail?.pages[0]
@@ -756,10 +774,39 @@ export default function DetailsReviewComponent({
                 })}
           </Grid>
           <Grid xs={desktopView === true ? 0.5 : 12} lg={0.5}></Grid>
-          <Grid xs={desktopView === true ? 4 : 12} sx={{ mt: 10 }} lg={4}>
+          <Grid xs={desktopView === true ? 4 : 12} lg={4}>
+            <Typography className="text-end text-gray-400 mt-1 text-xs">
+              ADVERTISEMENT
+            </Typography>
+            <CommonAutoAds adSlot="9326417601" />
             <MobileListComponent mobileArticles={mobileArticles} />
+            {/* after top mobile list  */}
+            <Typography className="text-end text-gray-400 mt-1 text-xs">
+              ADVERTISEMENT
+            </Typography>
+            <CommonAutoAds adSlot="7212487639" />
+
             <BrandListComponent brands={brands} />
+            {/* after brand list  */}
+            <Typography className="text-end text-gray-400 mt-1 text-xs">
+              ADVERTISEMENT
+            </Typography>
+            <CommonAutoAds adSlot="1312196219" />
             <CategoryListComponent category={category} />
+            {/* after category list  */}
+            <Box
+                sx={{
+                  position: "sticky", // Make the left side sticky
+                  top: 0, // Stick to the top of the viewport
+                  alignSelf: "flex-start", // Ensures alignment inside the parent container
+                  overflow: "hidden",
+                }}
+              >
+                <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="vertical" adSlot="6115028387" />
+              </Box>
           </Grid>
         </Grid>
 
