@@ -7,7 +7,7 @@ useEffect(() => {
       if (typeof window !== "undefined") {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
-    }, 10); // Delay to ensure the element has a size
+    }, 100); // Delay to ensure the element has a size
 
     return () => clearTimeout(timeout);
   }, []);

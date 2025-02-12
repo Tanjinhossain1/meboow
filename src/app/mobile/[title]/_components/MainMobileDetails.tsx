@@ -11,25 +11,18 @@ import { formatForUrl } from "@/utils/utils";
 import dynamic from "next/dynamic";
 import { getAllMobiles } from "@/lib/queries/services";
 import RecentMobiles from "./RecentMobiles";
+import { Box, Typography } from "@mui/material";
+import CommonAutoAds from "@/Component/GoogleAds/CommonAutoAds";
 
-const PhoneFinder = dynamic(
-  () => import("@/Component/Common/PhoneFinder"),
-  {
-    ssr: true, // or true, based on whether you want SSR support
-  }
-);
-const Opinion = dynamic(
-  () => import("./Opinion"),
-  {
-    ssr: true, // or true, based on whether you want SSR support
-  }
-);
-const IphoneCard = dynamic(
-  () => import("./TopSortDetails"),
-  {
-    ssr: true, // or true, based on whether you want SSR support
-  }
-);
+const PhoneFinder = dynamic(() => import("@/Component/Common/PhoneFinder"), {
+  ssr: true, // or true, based on whether you want SSR support
+});
+const Opinion = dynamic(() => import("./Opinion"), {
+  ssr: true, // or true, based on whether you want SSR support
+});
+const IphoneCard = dynamic(() => import("./TopSortDetails"), {
+  ssr: true, // or true, based on whether you want SSR support
+});
 const LatestDevices = dynamic(
   () => import("@/Component/HomePage/Component/LatestDevices"),
   {
@@ -55,7 +48,7 @@ const ExpertViewComponent = dynamic(
   }
 );
 
-export default async  function MainMobileDetails({
+export default async function MainMobileDetails({
   mobileArticles,
 
   latestArticles,
@@ -78,10 +71,10 @@ export default async  function MainMobileDetails({
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("-");
-   const recentMobiles = await getAllMobiles({
-      limits: "30",
-      brands: mobileArticles?.brands
-    })
+  const recentMobiles = await getAllMobiles({
+    limits: "30",
+    brands: mobileArticles?.brands,
+  });
   return (
     <Fragment>
       {" "}
@@ -107,18 +100,36 @@ export default async  function MainMobileDetails({
               sm={3.9}
             >
               <PhoneFinder />
-
+              <Typography className="text-end text-gray-400 mt-1 text-xs">
+                ADVERTISEMENT
+              </Typography>
+              <CommonAutoAds adSlot="3314810506" />
               <MobileReviews
                 isGap
                 isTrending
                 mobilesArticles={latestArticles}
               />
 
-              <LatestDevices   />
-              <LatestDevices
-                name={mobileArticles?.brands}
-                isRelated
-              />
+              <Typography className="text-end text-gray-400 mt-1 text-xs">
+                ADVERTISEMENT
+              </Typography>
+              <CommonAutoAds adSlot="1583497259" />
+
+              <LatestDevices />
+              <LatestDevices name={mobileArticles?.brands} isRelated />
+              <Box
+                sx={{
+                  position: "sticky", // Make the left side sticky
+                  top: 0, // Stick to the top of the viewport
+                  alignSelf: "flex-start", // Ensures alignment inside the parent container
+                  overflow: "hidden",
+                }}
+              >
+                <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adSlot="9824378539" adFormat="vertical" />
+              </Box>
             </Grid>
             <Grid xs={12} sm={8}>
               <IphoneCard
@@ -159,7 +170,16 @@ export default async  function MainMobileDetails({
                 <>
                   {" "}
                   <BottomMobileDetails mobileArticles={mobileArticles} />
+                  <Typography className="text-end text-gray-400 mt-1 text-xs">
+                    ADVERTISEMENT
+                  </Typography>
+                  <CommonAutoAds adSlot="6752063450" />
+
                   <ExpertViewComponent mobileArticles={mobileArticles} />
+                  <Typography className="text-end text-gray-400 mt-1 text-xs">
+                    ADVERTISEMENT
+                  </Typography>
+                  <CommonAutoAds adSlot="8237407651" />
                   <Paper
                     elevation={1}
                     style={{
@@ -225,7 +245,9 @@ export default async  function MainMobileDetails({
                     user={user}
                     mobileDetail={mobileArticles}
                   />
-                  <RecentMobiles data={recentMobiles?.data as MobileArticleType[]} />
+                  <RecentMobiles
+                    data={recentMobiles?.data as MobileArticleType[]}
+                  />
                 </>
               )}
             </Grid>
