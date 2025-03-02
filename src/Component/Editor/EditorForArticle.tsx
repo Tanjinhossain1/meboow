@@ -10,6 +10,7 @@ import { Container } from "@mui/material";
 import Delimiter from "@editorjs/delimiter";
 import Marker from "@editorjs/marker";
 import SearchAndLinkTool from "./SearchAndLinkTool";
+import SearchAndAddText from "./SearchAndAddText";
 
 const EditorForArticle = ({
   holderId,
@@ -42,6 +43,7 @@ const EditorForArticle = ({
               inlineToolbar: true,
             },
             searchAndLink: SearchAndLinkTool as any,
+            searchAndAddText: SearchAndAddText as any,
             table: {
               class: Table as any,
               inlineToolbar: true,
