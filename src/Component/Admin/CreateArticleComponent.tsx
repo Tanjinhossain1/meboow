@@ -27,7 +27,7 @@ import {
   Typography,
 } from "@mui/material";
 import dynamic from "next/dynamic";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import EditorJS from "@editorjs/editorjs";
 import FileUpload from "@/Component/Forms/UploadImage";
 import axios from "axios";
@@ -71,29 +71,58 @@ export default function CreateArticleComponent({
   const editorRef = useRef<EditorJS | null>(null);
   const [open, setOpen] = React.useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
-  console.log("isEdit?.articleDetail  ", categories);
+
+  const [selectedArticleForDuplicate, setSelectedArticleForDuplicate] =
+    useState<RecentArticleDataType | null>(null);
+    
+    useEffect(() => {
+      const selectedArticle = localStorage?.getItem("selectedArticle");
+      console.log(
+        'Selected article',selectedArticle
+      )
+      if (selectedArticle) {
+        const getArticle = async ()=>{
+          const response = await axios.get(
+            `/api/v1/article/all?searchTerm=${selectedArticle}`
+          );
+          setSelectedArticleForDuplicate(response?.data?.data[0])
+        }
+        getArticle()
+      }
+    }, []);
 
   const [age, setAge] = React.useState(
-    isEdit?.isEdit ? isEdit?.articleDetail?.category : ""
+    isEdit?.isEdit ? isEdit?.articleDetail?.category : selectedArticleForDuplicate?.category ? selectedArticleForDuplicate?.category : ""
   );
   const [totalSelectedCategories, setTotalSelectedCategories] =
     React.useState<CategoryTypes | null>(null);
 
   const [brands, setBrands] = React.useState(
-    isEdit?.isEdit ? isEdit?.articleDetail?.brands : ""
+    isEdit?.isEdit ? isEdit?.articleDetail?.brands : selectedArticleForDuplicate ? selectedArticleForDuplicate?.brands : ""
   );
   const [latestDevice, setLatestDevice] = React.useState(
-    isEdit?.isEdit ? isEdit?.articleDetail?.latestDevice : ""
+    isEdit?.isEdit ? isEdit?.articleDetail?.latestDevice : selectedArticleForDuplicate ? selectedArticleForDuplicate?.latestDevice : ""
   );
   const [best_reviews, setBest_reviews] = React.useState(
-    isEdit?.isEdit ? isEdit?.articleDetail?.best_reviews : ""
+     isEdit?.isEdit ? isEdit?.articleDetail?.best_reviews : selectedArticleForDuplicate ? selectedArticleForDuplicate?.best_reviews : ""
   );
+   
 
+    
   const methods = useForm({
     defaultValues: RhfDefaultInitialValues(
-      isEdit?.isEdit ? isEdit?.articleDetail : undefined
+      isEdit?.isEdit
+        ? isEdit?.articleDetail
+        : selectedArticleForDuplicate ? selectedArticleForDuplicate :
+        undefined
     ),
   });
+  useEffect(() => {
+    if (selectedArticleForDuplicate) {
+      methods.reset(RhfDefaultInitialValues(selectedArticleForDuplicate,true));
+    }
+  }, [selectedArticleForDuplicate, methods]);
+  
   // const { fields, append, remove } = useFieldArray({
   //   control,
   //   name: "articles", // The name must match the structure in defaultValues
@@ -123,6 +152,7 @@ export default function CreateArticleComponent({
   const [loading, setLoading] = useState(false);
   let debounceTimeout: NodeJS.Timeout;
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchArticleTerm, setSearchArticleTerm] = useState("");
   const [options, setOptions] = useState<MobileArticleType[]>([]);
   const [finalValueSelectedArticle, setFinalValueSelectedArticle] =
     useState<MobileArticleType | null>(
@@ -131,6 +161,42 @@ export default function CreateArticleComponent({
         : null
     );
 
+  const [selectedArticleOptions, setSelectedArticleOptions] = useState<
+    RecentArticleDataType[]
+  >([]);
+
+  console.log("selectedArticleForDuplicate", selectedArticleForDuplicate);
+  const handleArticleSearchChange = (
+    event: React.ChangeEvent<{}> | null,
+    newInputValue: string
+  ) => {
+    setSearchArticleTerm(newInputValue); // Use the second argument instead of event.target.value
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    // Debounce the API call to avoid too many requests
+    debounceTimeout = setTimeout(() => {
+      if (newInputValue) {
+        fetchArticleData(newInputValue);
+      }
+    }, 500); // Adjust debounce timing if necessary
+  };
+
+  const fetchArticleData = async (query: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `/api/v1/article/all?searchTerm=${query}`
+      );
+      
+      setSelectedArticleOptions(response.data?.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleSearchChange = (
     event: React.ChangeEvent<{}> | null,
     newInputValue: string
@@ -153,13 +219,14 @@ export default function CreateArticleComponent({
     }
   }, [title]);
   useEffect(() => {
-    if(isEdit){
+    if (isEdit || selectedArticleForDuplicate) {
       const selectedCategories = categories.filter(
-        (category) => category?.title === age
+        (category) => category?.title === selectedArticleForDuplicate?.category || age
       );
+      console.log('first selected category selectedCategories ',selectedCategories)
       setTotalSelectedCategories(selectedCategories[0]);
     }
-  }, [isEdit?.isEdit]);
+  }, [isEdit?.isEdit,selectedArticleForDuplicate]);
   const fetchData = async (query: string) => {
     setLoading(true);
     try {
@@ -203,7 +270,7 @@ export default function CreateArticleComponent({
     React.useState(false);
 
   const [showInNews, setShowInNews] = React.useState(
-    isEdit?.isEdit ? isEdit?.articleDetail?.showInNews : ""
+    isEdit?.isEdit ? isEdit?.articleDetail?.showInNews : selectedArticleForDuplicate ? selectedArticleForDuplicate?.showInNews : ""
   );
 
   const [deleteMobileArticle, setDeleteMobileArticle] = React.useState(false);
@@ -444,6 +511,73 @@ export default function CreateArticleComponent({
                   Delete
                 </Button>
               ) : null}
+              {
+                isEdit?.isEdit ? null :
+              
+             <Grid sx={{display:"flex",width: '100%'}}>
+               <Autocomplete
+                {...register("selected_articles")}
+                options={
+                  Array.isArray(selectedArticleOptions)
+                    ? selectedArticleOptions
+                    : []
+                }
+                getOptionLabel={(option) => option.title || ""}
+                value={selectedArticleForDuplicate || null}
+                sx={{
+                  mt:2,
+                  width:'100%',
+                  ".MuiInputBase-root": {
+                    height: "40px", // Set the height for the entire input base
+                    fontSize: "14px", // Optional: decrease font size
+                    padding: "0 10px", // Adjust padding inside input
+                  },
+                  ".MuiOutlinedInput-input": {
+                    padding: "8px 14px", // Adjust padding for the text input
+                  },
+                }}
+                onChange={(event, newValue) => {
+                  setSelectedArticleForDuplicate(newValue);
+                  setValue("selected_articles", newValue as any); // Use setValue from React Hook Form to update form state
+                  localStorage.setItem(
+                    "selectedArticle",
+                    newValue?.title ?  newValue?.title : ""
+                  );
+                }}
+                inputValue={searchArticleTerm}
+                onInputChange={handleArticleSearchChange} // Modified
+                loading={loading}
+                renderInput={(params) => (
+                  <TextField
+                    sx={{
+                      ".MuiInputLabel-root": {
+                        top: "-5px", // Adjust the label positioning
+                      },
+                      ".MuiInputBase-input": {
+                        padding: "8px", // Padding inside the input
+                        height: "40px", // Force input height
+                        fontSize: "14px", // Optional: decrease font size
+                      },
+                    }}
+                    {...params}
+                    label="Search Articles"
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: loading ? (
+                        <CircularProgress size={20} />
+                      ) : null,
+                    }}
+                  />
+                )}
+              />
+              <Button onClick={()=>{
+                localStorage.removeItem("selectedArticle");
+                window.location.reload(); 
+              }}>Remove</Button>
+             </Grid>
+            }
             </div>
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
               <TextField
@@ -540,7 +674,7 @@ export default function CreateArticleComponent({
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={showInNews}
+                value={selectedArticleForDuplicate ? selectedArticleForDuplicate?.showInNews :showInNews}
                 {...register("showInNews")}
                 // name="showInNews"
                 onChange={handleNewsChange}
@@ -561,7 +695,7 @@ export default function CreateArticleComponent({
                 {...register("best_reviews")}
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={best_reviews}
+                value={ selectedArticleForDuplicate ? selectedArticleForDuplicate?.best_reviews : best_reviews}
                 name="best_reviews"
                 onChange={handleBest_reviewsChange}
               >
@@ -581,7 +715,7 @@ export default function CreateArticleComponent({
                 {...register("latestDevice")}
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={latestDevice}
+                value={selectedArticleForDuplicate ? selectedArticleForDuplicate?.latestDevice :latestDevice}
                 name="latestDevice"
                 onChange={handleLatestChange}
               >
@@ -602,7 +736,7 @@ export default function CreateArticleComponent({
                 {...register("category")}
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={age}
+                value={selectedArticleForDuplicate ? selectedArticleForDuplicate?.category :age}
                 required
                 name="category"
                 onChange={handleChange}
@@ -621,40 +755,41 @@ export default function CreateArticleComponent({
               </IconButton>
             </FormControl>
 
-              <FormControl
-                variant="filled"
-                sx={{ my: 1, minWidth: "100%", display: "flex" }}
+            <FormControl
+              variant="filled"
+              sx={{ my: 1, minWidth: "100%", display: "flex" }}
+            >
+              <InputLabel id="demo-simple-select-filled-label">
+                Sub Category <sup style={{ color: "red", fontSize: 20 }}>*</sup>
+              </InputLabel>
+
+              <Select
+                {...register("sub_categories")}
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                name="sub_categories"
+                value={
+                  // isEdit?.isEdit
+                  //   ? isEdit?.articleDetail?.sub_categories
+                  //     ? isEdit?.articleDetail?.sub_categories
+                  //     : undefined
+                  //   :
+                    selectedArticleForDuplicate ? selectedArticleForDuplicate?.sub_categories : isEdit?.articleDetail ? isEdit?.articleDetail?.sub_categories : ""
+                }
               >
-                <InputLabel id="demo-simple-select-filled-label">
-                  Sub Category{" "}
-                  <sup style={{ color: "red", fontSize: 20 }}>*</sup>
-                </InputLabel>
+                {totalSelectedCategories?.sub_categories?.map((subCategory) => {
+                  return (
+                    <MenuItem key={subCategory.title} value={subCategory.title}>
+                      {subCategory.title}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
 
-                <Select
-                  {...register("sub_categories")}
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  name="sub_categories"
-                  value={isEdit?.isEdit ? isEdit?.articleDetail?.sub_categories ? isEdit?.articleDetail?.sub_categories  : undefined :undefined}
-                >
-                  {totalSelectedCategories?.sub_categories?.map(
-                    (subCategory) => {
-                      return (
-                        <MenuItem
-                          key={subCategory.title}
-                          value={subCategory.title}
-                        >
-                          {subCategory.title}
-                        </MenuItem>
-                      );
-                    }
-                  )}
-                </Select>
-
-                <IconButton onClick={() => setSubCategoriesCreateModal(true)}>
-                  <AddCircleIcon color="success" titleAccess="Add Brand" />
-                </IconButton>
-              </FormControl>
+              <IconButton onClick={() => setSubCategoriesCreateModal(true)}>
+                <AddCircleIcon color="success" titleAccess="Add Brand" />
+              </IconButton>
+            </FormControl>
 
             {age === "Mobiles" ? (
               <FormControl
@@ -688,7 +823,6 @@ export default function CreateArticleComponent({
                 </IconButton>
               </FormControl>
             ) : null}
-
             <TextField
               {...register("description")}
               label={
@@ -700,7 +834,7 @@ export default function CreateArticleComponent({
               multiline
               rows={4}
               defaultValue={
-                isEdit?.isEdit ? isEdit?.articleDetail?.description : ""
+                isEdit?.isEdit ? isEdit?.articleDetail?.description : selectedArticleForDuplicate ? selectedArticleForDuplicate?.description : ""
               }
               required
               name={"description"}

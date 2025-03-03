@@ -2,6 +2,7 @@ import { MobileArticleType } from "./mobiles";
 
 export interface RecentArticleDataType {
     id:string;
+    selected_articles?: RecentArticleDataType;
     image: string;
     title: string;
     route: string;
@@ -34,6 +35,7 @@ export interface RecentArticleDataType {
 
 export interface RecentArticleDataCreateType {
     title: string;
+    selected_articles?: RecentArticleDataType;
     route: string;
     description: string;
     category: string;

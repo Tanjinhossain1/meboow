@@ -7,11 +7,11 @@ export type FieldType = {
 };
 
 
-export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType): RecentArticleDataCreateType => {
+export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType, withoutTitle?: boolean): RecentArticleDataCreateType => {
     console.log('mobileArticle?.expert_view  ', mobileArticle)
     return {
-        title: mobileArticle?.title ? mobileArticle?.title : "",
-        route: mobileArticle?.route ? mobileArticle?.route : "",
+        title: withoutTitle ? "" : mobileArticle?.title ? mobileArticle?.title : "",
+        route: withoutTitle ? "" : mobileArticle?.route ? mobileArticle?.route : "",
         category: mobileArticle?.category ? mobileArticle?.category : "",
         sub_categories: mobileArticle?.sub_categories ? mobileArticle?.sub_categories : "",
         description: mobileArticle?.description ? mobileArticle?.description : "",
