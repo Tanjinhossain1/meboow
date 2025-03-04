@@ -80,7 +80,7 @@ export default function CreateArticleComponent({
       console.log(
         'Selected article',selectedArticle
       )
-      if (selectedArticle) {
+      if (selectedArticle && isEdit?.isEdit!== true) {
         const getArticle = async ()=>{
           const response = await axios.get(
             `/api/v1/article/all?searchTerm=${selectedArticle}`
