@@ -18,6 +18,7 @@ import {
   formatForUrlWith_under_score,
 } from "@/utils/utils";
 import { RecentArticleDataType } from "@/types/RecentArticle";
+import CommonAutoAds from "@/Component/GoogleAds/CommonAutoAds";
 
 const PhoneFinder = lazy(() => import("@/Component/Common/PhoneFinder"));
 const MobileReviews = lazy(() => import("@/Component/HomePage/Component/MobileReviews"));
@@ -152,12 +153,29 @@ export default function MainComponent({
           xs={12}
           sm={3.8}
         >
+           <Typography className="text-end text-gray-400 mt-1 text-xs">
+                ADVERTISEMENT
+              </Typography>
+              <CommonAutoAds adSlot="9928330054" />
           <MobileReviews
             isGap
             isTrending
             isText
             mobilesArticles={latestArticles}
-          />
+          /> 
+             <Box
+                sx={{
+                  position: "sticky", // Make the left side sticky
+                  top: 0, // Stick to the top of the viewport
+                  alignSelf: "flex-start", // Ensures alignment inside the parent container
+                  overflow: "hidden",
+                }}
+              >
+                <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="vertical" adSlot="6771683673" />
+              </Box>
         </Grid>
         <Grid
           sx={{
@@ -166,6 +184,10 @@ export default function MainComponent({
           xs={12}
           sm={7.6}
         >
+           <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="horizontal" adSlot="3293535295" />
           {glossary?.content?.blocks?.map((block: any) => {
             if (block.type === "paragraph") {
               if (block.data.text === "toc admin") {
@@ -426,12 +448,17 @@ export default function MainComponent({
               );
             }
           })}
+          <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="horizontal" adSlot="4484431685" />
           <div className="space-y-6 mt-6">
             {glossaryList.map((group) => (
               <div key={group.type}>
                 <p className="font-bold text-xl mb-4 border-l-8 border-[#17819f] pl-1 border-b border-b-gray-300">
                   {group.type}
                 </p>
+                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {group.data.map((item, index) => {
                     return (
@@ -448,6 +475,10 @@ export default function MainComponent({
                     );
                   })}
                 </div>
+                <Typography className="text-end text-gray-400 mt-1 text-xs">
+                  ADVERTISEMENT
+                </Typography>
+                <CommonAutoAds adFormat="horizontal" adSlot="6818950988" />
               </div>
             ))}
           </div>
