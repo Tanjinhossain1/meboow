@@ -14,7 +14,7 @@ export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType, w
         route: withoutTitle ? "" : mobileArticle?.route ? mobileArticle?.route : "",
         category: mobileArticle?.category ? mobileArticle?.category : "",
         sub_categories: mobileArticle?.sub_categories ? mobileArticle?.sub_categories : "",
-        description: mobileArticle?.description ? mobileArticle?.description : "",
+        description: withoutTitle ? "" : mobileArticle?.description ? mobileArticle?.description : "",
         latestDevice: mobileArticle?.latestDevice ? mobileArticle?.latestDevice : "",
         best_reviews: mobileArticle?.best_reviews ? mobileArticle?.best_reviews : "",
         brands: mobileArticle?.brands ? mobileArticle?.brands : "",
@@ -24,7 +24,7 @@ export const RhfDefaultInitialValues = (mobileArticle?: RecentArticleDataType, w
         pages: mobileArticle?.pages ? mobileArticle?.pages : [
             { page: 1, title: "", content: null } // Initial object
         ],
-        tags: mobileArticle?.tags ? mobileArticle?.tags : [
+        tags: withoutTitle ? [{name:""}] : mobileArticle?.tags ? mobileArticle?.tags : [
             { name: "" }
         ]
     }

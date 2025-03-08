@@ -6,11 +6,12 @@ import Table from "@editorjs/table";
 import List from "@editorjs/list";
 import axios from "axios";
 import { ResizableImageTool } from "./EditorImage";
-import { Container } from "@mui/material";
+import { Button, Container, Tooltip } from "@mui/material";
 import Delimiter from "@editorjs/delimiter";
 import Marker from "@editorjs/marker";
 import SearchAndLinkTool from "./SearchAndLinkTool";
 import SearchAndAddText from "./SearchAndAddText";
+import { CopyIcon } from "lucide-react";
 
 const EditorForArticle = ({
   holderId,
@@ -158,8 +159,40 @@ const EditorForArticle = ({
     //   }
     // };
   }, [editorRef, defaultData, holderId,onChange,value]);
+  const handleCopyText = async () => {
+    if (editorRef.current) {
+      const content = await editorRef.current.save();
+      const text = content.blocks.map((block: any) => block.data.text).join("\n");
+
+      try {
+        await navigator.clipboard.writeText(text);
+         
+         
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+      }
+    }
+  };
+
+
   return (
     <>
+   <div className="flex justify-end">
+   <Tooltip title={ "Copy Text"}>
+        <Button
+          variant="contained"
+          startIcon={<CopyIcon />}
+          onClick={handleCopyText}
+          sx={{
+            display: "flex",
+            justifyContent:"end",
+            margin: "10px auto",
+          }}
+        >
+          Copy
+        </Button>
+      </Tooltip>
+   </div>
     <Container
       id={holderId ? `editorjs-${holderId}` : `editorjs`}
       sx={{
