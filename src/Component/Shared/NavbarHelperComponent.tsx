@@ -521,11 +521,11 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
                 justifyContent={"space-between"}
                 container
               >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <Link aria-label="Home" href={"/"}>
                     <Typography
                       sx={{
-                        mr: 2,
+                        mr: 0,
                         color:"white"
                       }}
                     >
@@ -544,9 +544,9 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
                   <Link aria-label="Mobile" href={"/mobile"}>
                     <Typography sx={{ color: "white" }}>Mobiles</Typography>
                   </Link>
-                  <Link aria-label="Contact us" href={"/contact"}>
+                  <Link aria-label="Earning" href={"/earning/dashboard"}>
                     {" "}
-                    <Typography sx={{ color: "white" }}>Contact</Typography>
+                    <Typography sx={{ color: "white" }}>Earning</Typography>
                   </Link>
                   <NavbarCategoryList categories={categories} />
                 </Box>
@@ -582,7 +582,7 @@ function NavbarHelper({ isLoginUser,categories }: { isLoginUser: any ,categories
 
                       <GroupAddIcon
                         aria-label="Add Tag"
-                        sx={{ ml: 1.5, mt: 1 }}
+                        sx={{ ml: 1, mt: 1 }}
                         onClick={() => history.push("/register")}
                       />
                     </>
