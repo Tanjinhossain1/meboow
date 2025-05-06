@@ -57,6 +57,21 @@ const Dashboard = ({ user }: any) => {
               </Typography>
             </Paper>
           </Grid>
+          <Grid xs={3.5}>
+            <Paper
+              onClick={() => router.push("/admin/earningVideo")}
+              sx={{
+                width: "100%",
+                p: 2,
+                cursor: "pointer",
+                ":hover": { bgcolor: "lightgray" },
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                Earning Video Url
+              </Typography>
+            </Paper>
+          </Grid>
        {
         user?.role === "admin" ? <> <Grid xs={3.5}>
         <Link href={`/admin/network-bands`}>

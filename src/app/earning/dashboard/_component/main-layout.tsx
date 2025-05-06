@@ -9,12 +9,13 @@ import { UserHeader } from "./user-header"
 type MainLayoutProps = {
   children: React.ReactNode
   activeTab: "dashboard" | "referrals" | "surveys" | "withdraw" | "profile"
+  user: any
 }
 
-export function MainLayout({ children, activeTab }: MainLayoutProps) {
+export function MainLayout({ children, activeTab,user }: MainLayoutProps) {
   return (
     <div className="max-w-5xl mx-auto bg-white shadow-sm">
-      <UserHeader />
+      <UserHeader user={user} />
       <nav className="flex border-b">
         <NavItem
           href="/earning/dashboard"

@@ -179,7 +179,9 @@ export function DashboardContent() {
           <div className="flex justify-between">
             <Button
               onClick={togglePlayPause}
-              className="bg-purple-500 hover:bg-purple-600 text-white"
+            //   className="bg-purple-600 hover:bg-purple-600 text-white"
+              style={{background:"#7367f0",color:'white'}}
+             
               disabled={!playerReady}
             >
               {isPlaying ? "Pause Video" : "Watch Video"}

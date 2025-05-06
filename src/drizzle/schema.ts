@@ -71,6 +71,17 @@ export const TechBrands = mysqlTable(
     updateAt: timestamp('updateAt').defaultNow().notNull(),
   }
 )
+export const EaringVideoUrls = mysqlTable(
+  'earningVideoUrls',
+  {
+    id: int('id').autoincrement().primaryKey(),
+    video: text('video').notNull(),
+    income: text('income').notNull(),
+
+    createdAt: timestamp('createdAt').defaultNow().notNull(),
+    updateAt: timestamp('updateAt').defaultNow().notNull(),
+  }
+)
 
 // export const Brands = mysqlTable(
 //   'brands',

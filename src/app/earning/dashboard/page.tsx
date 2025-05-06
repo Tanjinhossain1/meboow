@@ -10,8 +10,8 @@ export default async function DashboardPage() {
 
   if (!user) redirect("/");
   return (
-    <MainLayout activeTab="dashboard">
-      <DashboardContent />
+    <MainLayout user={user} activeTab="dashboard">
+      <DashboardContent  />
     </MainLayout>
   );
 }
