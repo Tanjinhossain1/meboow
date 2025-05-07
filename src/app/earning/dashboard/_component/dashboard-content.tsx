@@ -1,133 +1,152 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { DollarSign, Eye } from "lucide-react"
-import { VideoPlayer } from "./video-player"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog"
+import { useState, useRef, useEffect } from "react";
+import { DollarSign, Eye } from "lucide-react";
+import { VideoPlayer } from "./video-player";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { Button as MuiButton } from "@mui/material";
+import axios from "axios";
 
 // Sample data for videos
-const sampleVideos = [
-  { video: "njmrj2X0fJQ", income: "1" },
-  { video: "ExJf1ESbW4I", income: "2" },
-  { video: "njmrj2X0fJQ", income: "0.2" },
-  { video: "njmrj2X0fJQ", income: "0.1" },
-  { video: "njmrj2X0fJQ", income: "1.5" },
-  { video: "njmrj2X0fJQ", income: "0.5" },
-  { video: "njmrj2X0fJQ", income: "3" },
-  { video: "njmrj2X0fJQ", income: "0.8" },
-  { video: "njmrj2X0fJQ", income: "1.2" },
-  { video: "njmrj2X0fJQ", income: "0.3" },
-  { video: "njmrj2X0fJQ", income: "2.5" },
-  { video: "njmrj2X0fJQ", income: "1.8" },
-  { video: "njmrj2X0fJQ", income: "0.7" },
-  { video: "njmrj2X0fJQ", income: "1.3" },
-  { video: "njmrj2X0fJQ", income: "2.2" },
-]
+// const sampleVideos = [
+//   { video: "njmrj2X0fJQ", income: "1" },
+//   { video: "ExJf1ESbW4I", income: "2" },
+//   { video: "njmrj2X0fJQ", income: "0.2" },
+//   { video: "njmrj2X0fJQ", income: "0.1" },
+//   { video: "njmrj2X0fJQ", income: "1.5" },
+//   { video: "njmrj2X0fJQ", income: "0.5" },
+//   { video: "njmrj2X0fJQ", income: "3" },
+//   { video: "njmrj2X0fJQ", income: "0.8" },
+//   { video: "njmrj2X0fJQ", income: "1.2" },
+//   { video: "njmrj2X0fJQ", income: "0.3" },
+//   { video: "njmrj2X0fJQ", income: "2.5" },
+//   { video: "njmrj2X0fJQ", income: "1.8" },
+//   { video: "njmrj2X0fJQ", income: "0.7" },
+//   { video: "njmrj2X0fJQ", income: "1.3" },
+//   { video: "njmrj2X0fJQ", income: "2.2" },
+// ]
 
-export function DashboardContent() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [timeWatched, setTimeWatched] = useState(0)
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
-  const [totalBalance, setTotalBalance] = useState(457)
-  const [totalViews, setTotalViews] = useState(7)
-  const [playerReady, setPlayerReady] = useState(false)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const videoKey = useRef(0) // Used to force re-render of video component
+export function DashboardContent({ data,user }: { data: any,user:any }) {
+  console.log(data);
+  const [sampleVideos] = useState(data);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [timeWatched, setTimeWatched] = useState(0);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [totalBalance, setTotalBalance] = useState(457);
+  const [totalViews, setTotalViews] = useState(7);
+  const [playerReady, setPlayerReady] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const videoKey = useRef(0); // Used to force re-render of video component
 
-  const currentVideo = sampleVideos[currentVideoIndex]
-  const requiredWatchTime = 35 // seconds
+  const currentVideo = sampleVideos[currentVideoIndex];
+  const requiredWatchTime = 35; // seconds
 
   // Clear timer on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current)
+        clearInterval(timerRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   // Handle timer logic
   useEffect(() => {
     // Clear any existing timer
     if (timerRef.current) {
-      clearInterval(timerRef.current)
-      timerRef.current = null
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
 
     if (isPlaying) {
-      console.log("Starting timer")
+      console.log("Starting timer");
       timerRef.current = setInterval(() => {
         setTimeWatched((prev) => {
-          const newTime = prev + 1
-          console.log("Time watched:", newTime)
+          const newTime = prev + 1;
+          console.log("Time watched:", newTime);
 
           // Check if we've reached the required watch time
           if (newTime >= requiredWatchTime) {
-            console.log("Watch complete!")
-            handleWatchComplete()
+            console.log("Watch complete!");
+            handleWatchComplete();
             if (timerRef.current) {
-              clearInterval(timerRef.current)
+              clearInterval(timerRef.current);
             }
+            const data = {
+                videoId: currentVideo?.id,
+                video: currentVideo?.video,
+                email: user?.email,
+                income: currentVideo?.income,
+                lastVideoIndex: currentVideoIndex
+            }
+             axios.post(`/api/earning/watchComplete`,data).then((res)=>{
+                console.log('response ', res)
+             }).catch((err)=>{
+                console.log(err)
+             })
+            
+            console.log('currentVideo' , currentVideo)
+
           }
 
-          return newTime
-        })
-      }, 1000)
+          return newTime;
+        });
+      }, 1000);
     } else {
-      console.log("Timer paused")
+      console.log("Timer paused");
     }
 
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current)
+        clearInterval(timerRef.current);
       }
-    }
-  }, [isPlaying])
+    };
+  }, [isPlaying]);
 
   const handleWatchComplete = () => {
-    setIsPlaying(false)
-    setShowSuccessDialog(true)
+    setIsPlaying(false);
+    setShowSuccessDialog(true);
     // Update balance and views
-    setTotalBalance((prev) => prev + Number.parseFloat(currentVideo.income))
-    setTotalViews((prev) => prev + 1)
-  }
+    setTotalBalance((prev) => prev + Number.parseFloat(currentVideo.income));
+    setTotalViews((prev) => prev + 1);
+  };
 
   const handleNextVideo = () => {
-    setShowSuccessDialog(false)
-    setIsPlaying(false)
-    setTimeWatched(0)
-    setPlayerReady(false)
-    videoKey.current += 1 // Force re-render of video component
+    setShowSuccessDialog(false);
+    setIsPlaying(false);
+    setTimeWatched(0);
+    setPlayerReady(false);
+    videoKey.current += 1; // Force re-render of video component
     if (currentVideoIndex < sampleVideos.length - 1) {
-      setCurrentVideoIndex((prev) => prev + 1)
+      setCurrentVideoIndex((prev) => prev + 1);
     } else {
       // Loop back to the first video when all videos are watched
-      setCurrentVideoIndex(0)
+      setCurrentVideoIndex(0);
     }
-  }
+  };
 
   const togglePlayPause = () => {
-    console.log("Toggle play/pause, current state:", isPlaying)
-    setIsPlaying((prev) => !prev)
-  }
+    console.log("Toggle play/pause, current state:", isPlaying);
+    setIsPlaying((prev) => !prev);
+  };
 
   const handlePlayerReady = () => {
-    console.log("Player ready event received")
-    setPlayerReady(true)
-  }
+    console.log("Player ready event received");
+    setPlayerReady(true);
+  };
 
   const handlePlayerStateChange = (playing: boolean) => {
-    console.log("Player state changed to:", playing ? "playing" : "paused")
+    console.log("Player state changed to:", playing ? "playing" : "paused");
     // Update our state to match the YouTube player state
-    setIsPlaying(playing)
-  }
+    setIsPlaying(playing);
+  };
 
   const handleVideoClick = () => {
-    console.log("Video container clicked")
-    togglePlayPause()
-  }
+    console.log("Video container clicked");
+    togglePlayPause();
+  };
 
   return (
     <div>
@@ -154,9 +173,13 @@ export function DashboardContent() {
       </div>
 
       <div className="p-4 text-center">
-        <h2 className="text-lg font-medium mb-4">Watch videos and earn money!</h2>
+        <h2 className="text-lg font-medium mb-4">
+          Watch videos and earn money!
+        </h2>
 
-        <div className="mb-2 text-sm">View this video for 35 seconds and get ${currentVideo.income}</div>
+        <div className="mb-2 text-sm">
+          View this video for 35 seconds and get ${currentVideo.income}
+        </div>
 
         <div className="border border-red-500 rounded-md overflow-hidden mb-4">
           <VideoPlayer
@@ -179,9 +202,8 @@ export function DashboardContent() {
           <div className="flex justify-between">
             <Button
               onClick={togglePlayPause}
-            //   className="bg-purple-600 hover:bg-purple-600 text-white"
-              style={{background:"#7367f0",color:'white'}}
-             
+              //   className="bg-purple-600 hover:bg-purple-600 text-white"
+              style={{ background: "#7367f0", color: "white" }}
               disabled={!playerReady}
             >
               {isPlaying ? "Pause Video" : "Watch Video"}
@@ -190,22 +212,33 @@ export function DashboardContent() {
               {timeWatched}/{requiredWatchTime} seconds
             </div>
           </div>
+
+          <br />
+
+          <br />
         </div>
       </div>
 
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent className="sm:max-w-md">
           <div className="text-center py-4">
-            <h3 className="text-lg font-medium">Success!</h3>
-            <p className="mt-2">{`You've`} earned ${currentVideo.income} for watching this video.</p>
+            <h3 className="text-lg font-medium text-green-600">Success!</h3>
+            <p className="mt-2">
+              {`You've`} earned ${currentVideo.income} for watching this video.
+            </p>
           </div>
           <DialogFooter>
-            <Button onClick={handleNextVideo} className="w-full">
+            <MuiButton
+              variant={"contained"}
+              color="secondary"
+              onClick={handleNextVideo}
+              className="w-full"
+            >
               OK
-            </Button>
+            </MuiButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

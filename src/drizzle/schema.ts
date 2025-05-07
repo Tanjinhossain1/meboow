@@ -8,7 +8,7 @@ import {
   int,
   text,
   timestamp,
-  mysqlTable
+  mysqlTable,
 } from 'drizzle-orm/mysql-core';
 
 export const Articles = mysqlTable(
@@ -77,6 +77,21 @@ export const EaringVideoUrls = mysqlTable(
     id: int('id').autoincrement().primaryKey(),
     video: text('video').notNull(),
     income: text('income').notNull(),
+
+    createdAt: timestamp('createdAt').defaultNow().notNull(),
+    updateAt: timestamp('updateAt').defaultNow().notNull(),
+  }
+)
+
+export const WatchedVideoInfo = mysqlTable(
+  'watchedVideoInfo',
+  {
+    id: int('id').autoincrement().primaryKey(),
+    videoId: text('videoId').notNull(),
+    video: text('video').notNull(),
+    email: text('email').notNull(),
+    income: text('income').notNull(),
+    lastVideoIndex: text('lastVideoIndex').notNull(),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),

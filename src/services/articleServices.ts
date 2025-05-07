@@ -406,6 +406,25 @@ export async function fetchBrands(): Promise<{
     data: data?.data,
   };
 }
+export async function fetchEarningVideos(): Promise<{
+  data: BrandTypes[];
+}> {
+  const response = await fetch(`${process.env.NEXT_APP_URL}/api/earning/uploadurl`, {
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch brands: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch uploadurl");
+  }
+
+  const data = await response.json();
+  revalidatePath('/')
+  return {
+    data: data?.data,
+  };
+}
 
 export async function fetchNetworkBands({ id,country }: { id?: string,country?: string }): Promise<{
   data: NetworkBandsType[];

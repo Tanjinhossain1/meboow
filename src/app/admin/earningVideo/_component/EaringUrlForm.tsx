@@ -65,6 +65,9 @@ export default function UploadVideoComponent() {
       if (res.ok) {
         setMessage('Video uploaded successfully!');
         reset();
+        setTimeout(() => {
+            setMessage('')
+        }, 1000);
       } else {
         const errData = await res.json();
         setMessage(errData?.error || 'Upload failed.');
@@ -97,8 +100,8 @@ export default function UploadVideoComponent() {
           <label className="block font-medium">Income</label>
           <input
             {...register('income', { required: 'Income is required' })}
-            type="number"
-            min={0}
+            type="number" 
+            step="0.01"
             className="w-full border border-gray-300 rounded p-2"
             placeholder="Enter income"
           />
@@ -116,7 +119,7 @@ export default function UploadVideoComponent() {
         </button>
       </form>
 
-      {message && <p className="mt-4 text-sm text-center">{message}</p>}
+      {message && <p className="mt-4 text-sm text-center text-green-600">{message}</p>}
     </div>
   );
 }
