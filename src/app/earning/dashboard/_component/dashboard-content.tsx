@@ -148,7 +148,7 @@ export function DashboardContent({
     setIsPlaying(false);
     setShowSuccessDialog(true);
     // Update balance and views
-    setTotalBalance((prev) => prev + Number.parseFloat(currentVideo.income));
+    setTotalBalance((prev) => prev + Number.parseFloat(currentVideo?.income));
     setTotalViews((prev) => prev + 1);
   };
 
@@ -218,13 +218,13 @@ export function DashboardContent({
         </h2>
 
         <div className="mb-2 text-sm">
-          View this video for 35 seconds and get ${currentVideo.income}
+          View this video for 35 seconds and get ${currentVideo?.income}
         </div>
 
         <div className="border border-red-500 rounded-md overflow-hidden mb-4">
           <VideoPlayer
             key={`video-${currentVideoIndex}-${videoKey.current}`}
-            videoId={currentVideo.video}
+            videoId={currentVideo?.video}
             isPlaying={isPlaying}
             onPlayerReady={handlePlayerReady}
             onPlayerStateChange={handlePlayerStateChange}
@@ -264,7 +264,7 @@ export function DashboardContent({
           <div className="text-center py-4">
             <h3 className="text-lg font-medium text-green-600">Success!</h3>
             <p className="mt-2">
-              {`You've`} earned ${currentVideo.income} for watching this video.
+              {`You've`} earned ${currentVideo?.income} for watching this video.
             </p>
           </div>
           <DialogFooter>
