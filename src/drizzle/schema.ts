@@ -9,6 +9,7 @@ import {
   text,
   timestamp,
   mysqlTable,
+  unique,
 } from 'drizzle-orm/mysql-core';
 
 export const Articles = mysqlTable(
@@ -92,6 +93,19 @@ export const WatchedVideoInfo = mysqlTable(
     email: text('email').notNull(),
     income: text('income').notNull(),
     lastVideoIndex: text('lastVideoIndex').notNull(),
+
+    createdAt: timestamp('createdAt').defaultNow().notNull(),
+    updateAt: timestamp('updateAt').defaultNow().notNull(),
+  }
+)
+
+export const WithdrawRequest = mysqlTable(
+  'withdrawRequest',
+  {
+    id: int('id').autoincrement().primaryKey(),
+    method: text('method').notNull(),
+    phoneNumber: text('phoneNumber').notNull(),
+    email: text('email').notNull(),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),

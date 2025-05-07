@@ -26,12 +26,12 @@ export function MainLayout({ children, activeTab,user }: MainLayoutProps) {
         <NavItem href="/referrals" icon={<Users size={20} />} label="Referrals" isActive={activeTab === "referrals"} />
         <NavItem href="/earning/surveys" icon={<Globe size={20} />} label="Surveys" isActive={activeTab === "surveys"} />
         <NavItem
-          href="/withdraw"
+          href="/earning/withdraw"
           icon={<DollarSign size={20} />}
           label="Withdraw"
           isActive={activeTab === "withdraw"}
         />
-        <NavItem href="/profile" icon={<User size={20} />} label="Profile" isActive={activeTab === "profile"} />
+        <NavItem href="/earning/profile" icon={<User size={20} />} label="Profile" isActive={activeTab === "profile"} />
       </nav>
       <main>{children}</main>
     </div>

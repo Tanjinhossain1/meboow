@@ -27,10 +27,19 @@ import axios from "axios";
 //   { video: "njmrj2X0fJQ", income: "2.2" },
 // ]
 
-export function DashboardContent({ data,user }: { data: any,user:any }) {
-  console.log(data);
+export function DashboardContent({
+  data,
+  user,
+  watchedData,
+}: {
+  data: any;
+  user: any;
+  watchedData: any;
+}) {
   const [sampleVideos] = useState(data);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(
+    +watchedData[watchedData?.length - 1]?.lastVideoIndex + 1 || 0
+  );
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeWatched, setTimeWatched] = useState(0);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
@@ -43,7 +52,15 @@ export function DashboardContent({ data,user }: { data: any,user:any }) {
   const currentVideo = sampleVideos[currentVideoIndex];
   const requiredWatchTime = 35; // seconds
 
-  // Clear timer on unmount
+  useEffect(() => {
+      let calculateBalance = 0
+     if(watchedData?.length > 0){
+        watchedData.map((e:any)=>{
+              calculateBalance = calculateBalance + +e?.income
+        })
+     }
+     setTotalBalance(calculateBalance)
+  }, [watchedData]);
   useEffect(() => {
     return () => {
       if (timerRef.current) {
@@ -51,6 +68,7 @@ export function DashboardContent({ data,user }: { data: any,user:any }) {
       }
     };
   }, []);
+  const hasSentRequestRef = useRef(false); // Flag to prevent multiple calls
 
   // Handle timer logic
   useEffect(() => {
@@ -68,27 +86,48 @@ export function DashboardContent({ data,user }: { data: any,user:any }) {
           console.log("Time watched:", newTime);
 
           // Check if we've reached the required watch time
-          if (newTime >= requiredWatchTime) {
-            console.log("Watch complete!");
-            handleWatchComplete();
-            if (timerRef.current) {
-              clearInterval(timerRef.current);
-            }
-            const data = {
-                videoId: currentVideo?.id,
-                video: currentVideo?.video,
-                email: user?.email,
-                income: currentVideo?.income,
-                lastVideoIndex: currentVideoIndex
-            }
-             axios.post(`/api/earning/watchComplete`,data).then((res)=>{
-                console.log('response ', res)
-             }).catch((err)=>{
-                console.log(err)
-             })
-            
-            console.log('currentVideo' , currentVideo)
+          if (newTime >= requiredWatchTime && !hasSentRequestRef.current) {
+            hasSentRequestRef.current = true; // Mark as sent
 
+            clearInterval(timerRef.current!);
+            timerRef.current = null;
+  
+            handleWatchComplete();
+  
+            const data = {
+              videoId: `${currentVideo?.id}`,
+              video: currentVideo?.video,
+              email: user?.email,
+              income: currentVideo?.income,
+              lastVideoIndex: `${currentVideoIndex}`,
+            };
+            fetch('/api/earning/watchComplete', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              })
+                .then((res) => {
+                  if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return res.json();
+                })
+                .then((result) => {
+                  console.log('response', result); 
+                })
+                .catch((error) => {
+                  console.error('error', error);
+                });
+              
+            // axios
+            //   .post(`/api/earning/watchComplete`, data)
+            //   .then((res) =>{
+            //       console.log("response", res)
+            //     //   window.location.reload()
+            //   })
+            //   .catch((err) => console.log("error", err));
           }
 
           return newTime;
@@ -114,6 +153,7 @@ export function DashboardContent({ data,user }: { data: any,user:any }) {
   };
 
   const handleNextVideo = () => {
+      window.location.reload();
     setShowSuccessDialog(false);
     setIsPlaying(false);
     setTimeWatched(0);
@@ -166,7 +206,7 @@ export function DashboardContent({ data,user }: { data: any,user:any }) {
             <Eye className="h-8 w-8 text-green-500" />
           </div>
           <div>
-            <div className="text-3xl font-bold">{totalViews}</div>
+            <div className="text-3xl font-bold">{watchedData?.length}</div>
             <div className="text-sm">Total Views</div>
           </div>
         </div>
