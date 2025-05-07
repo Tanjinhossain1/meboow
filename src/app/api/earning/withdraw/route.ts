@@ -9,11 +9,11 @@ export async function POST(req: Request) {
         // Parse the JSON body
         const body = await req.json()
 
-        const { method, phoneNumber, email } = body;
+        const { method, phoneNumber, email,amount } = body;
 
-        console.log('body detail created', method, phoneNumber, email);
+        console.log('body detail created', method, phoneNumber, email,amount);
 
-        if (!method || !phoneNumber || !email) {
+        if (!method || !phoneNumber || !email || !amount) {
             return NextResponse.json({ error: 'Missing required fields' });
         }
         // ✅ Check if this video is already watched by this user
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         // Perform the database insertion using Drizzle ORM
         const db = await getDb();
         const result = await db.insert(WithdrawRequest).values({
-            method, phoneNumber, email
+            method, phoneNumber, email,amount
         });
 
         return NextResponse.json({ success: true, message: "successfully withdraw", data: result })

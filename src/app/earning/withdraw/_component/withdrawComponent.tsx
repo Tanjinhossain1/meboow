@@ -1,30 +1,55 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useEffect, useState } from "react";
 
-export default function PaymentWithdraw({user}:{user:any}) {
-  const [step, setStep] = useState<"method" | "details">("method")
-  const [selectedMethod, setSelectedMethod] = useState<"bkash" | "nagad" | null>(null)
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState("")
+export default function PaymentWithdraw({
+  user,
+  watchedData,
+}: {
+  user: any;
+  watchedData: any;
+}) {
+  const [step, setStep] = useState<"method" | "details">("method");
+  const [selectedMethod, setSelectedMethod] = useState<
+    "bkash" | "nagad" | null
+  >(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [totalBalance, setTotalBalance] = useState(0);
+
+  useEffect(() => {
+    let calculateBalance = 0;
+    if (watchedData?.length > 0) {
+      watchedData.map((e: any) => {
+        calculateBalance = calculateBalance + +e?.income;
+      });
+    }
+    setTotalBalance(calculateBalance);
+  }, [watchedData]);
 
   const handleWithdraw = (method: "bkash" | "nagad") => {
-    setSelectedMethod(method)
-    setStep("details")
-  }
+    setSelectedMethod(method);
+    setStep("details");
+  };
 
   const handleSubmit = async () => {
     if (!phoneNumber) {
-      setError("Phone number is required")
-      return
+      setError("Phone number is required");
+      return;
     }
 
-    setIsSubmitting(true)
-    setError("")
+    if (!amount) {
+      setError("Amount is required");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError("");
 
     try {
-      const response = await fetch("/earning/withdraw", {
+      const response = await fetch("/api/earning/withdraw", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,25 +57,26 @@ export default function PaymentWithdraw({user}:{user:any}) {
         body: JSON.stringify({
           method: selectedMethod,
           phoneNumber: phoneNumber,
-          email: user?.email
+          amount: `${amount}`,
+          email: user?.email,
         }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to process withdrawal")
+        throw new Error("Failed to process withdrawal");
       }
 
       // Reset form and show success
-      setPhoneNumber("")
-      setStep("method")
-      setSelectedMethod(null)
-      alert("Withdrawal request submitted successfully")
+      setPhoneNumber("");
+      setAmount("");
+      setStep("method");
+      setSelectedMethod(null);
     } catch (err) {
-      setError("Failed to process withdrawal. Please try again.")
+      setError("Failed to process withdrawal. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -59,7 +85,9 @@ export default function PaymentWithdraw({user}:{user:any}) {
         <button
           onClick={() => step === "details" && setStep("method")}
           className={`flex items-center justify-center w-1/2 py-3 px-4 ${
-            step === "method" ? "bg-indigo-600 text-white" : "bg-white text-gray-600"
+            step === "method"
+              ? "bg-indigo-600 text-white"
+              : "bg-white text-gray-600"
           } ${step === "details" ? "cursor-pointer" : "cursor-default"}`}
         >
           <svg
@@ -80,7 +108,9 @@ export default function PaymentWithdraw({user}:{user:any}) {
         </button>
         <div
           className={`flex items-center justify-center w-1/2 py-3 px-4 ${
-            step === "details" ? "bg-indigo-600 text-white" : "bg-white text-gray-600"
+            step === "details"
+              ? "bg-indigo-600 text-white"
+              : "bg-white text-gray-600"
           } cursor-default`}
         >
           <svg
@@ -105,7 +135,9 @@ export default function PaymentWithdraw({user}:{user:any}) {
       {step === "method" && (
         <div className="border border-gray-200 rounded-b-lg">
           <div className="p-4 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-800">Choose Payment Method</h2>
+            <h2 className="text-lg font-medium text-gray-800">
+              Choose Payment Method
+            </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 p-6">
@@ -128,7 +160,9 @@ export default function PaymentWithdraw({user}:{user:any}) {
                 </svg>
               </div>
               <h3 className="text-lg font-medium mb-2">bKash</h3>
-              <p className="text-center text-gray-600 mb-4">Get paid by direct transfer into your bKash wallet.</p>
+              <p className="text-center text-gray-600 mb-4">
+                Get paid by direct transfer into your bKash wallet.
+              </p>
               <button
                 onClick={() => handleWithdraw("bkash")}
                 className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-6 rounded-md flex items-center"
@@ -140,7 +174,12 @@ export default function PaymentWithdraw({user}:{user:any}) {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
                 </svg>
                 Withdraw
               </button>
@@ -165,7 +204,9 @@ export default function PaymentWithdraw({user}:{user:any}) {
                 </svg>
               </div>
               <h3 className="text-lg font-medium mb-2">Nagad</h3>
-              <p className="text-center text-gray-600 mb-4">Get paid by direct transfer into your Nagad wallet.</p>
+              <p className="text-center text-gray-600 mb-4">
+                Get paid by direct transfer into your Nagad wallet.
+              </p>
               <button
                 onClick={() => handleWithdraw("nagad")}
                 className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-6 rounded-md flex items-center"
@@ -177,7 +218,12 @@ export default function PaymentWithdraw({user}:{user:any}) {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
                 </svg>
                 Withdraw
               </button>
@@ -190,14 +236,16 @@ export default function PaymentWithdraw({user}:{user:any}) {
       {step === "details" && (
         <div className="border border-gray-200 rounded-b-lg">
           <div className="p-4 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-800">Enter Payment Details</h2>
+            <h2 className="text-lg font-medium text-gray-800">
+              Enter Payment Details
+            </h2>
           </div>
 
           <div className="p-6">
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Enter your {selectedMethod === "bkash" ? "bKash" : "Nagad"} phone number{" "}
-                <span className="text-red-500">*</span>
+                Enter your {selectedMethod === "bkash" ? "bKash" : "Nagad"}{" "}
+                phone number <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -207,12 +255,39 @@ export default function PaymentWithdraw({user}:{user:any}) {
                 placeholder="e.g., 01XXXXXXXXX"
                 required
               />
-              {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
             </div>
+
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Enter amount to withdraw <span className="text-red-500">*</span> 
+              </label>
+              <p className="text-xs ">Currently Have: <b>$ ( <span className="text-green-600 font-bold">{totalBalance}</span></b> )</p>
+              <input
+                type="number"
+                value={amount}
+                min={5}
+                max={totalBalance}
+                onChange={(e) => {
+                    setAmount(e.target.value)
+                    if(+e.target.value  >  +totalBalance ){
+                        setError(`You don't have this much ballance`)
+                    }else if(+e.target.value < 5 ){
+                        setError("Minimum Withdraw Ballance 5$")
+                    }    else{
+                        setError("")
+                    }
+                }}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Amount"
+                required
+              />
+            </div>
+
+            {error && <p className="mt-1 mb-4 text-sm text-red-600">{error}</p>}
 
             <button
               onClick={handleSubmit}
-              disabled={isSubmitting}
+              disabled={isSubmitting || error === "" ? false : true}
               className="w-64 bg-indigo-500 hover:bg-indigo-600 text-white py-3 px-6 rounded-md flex items-center justify-center"
             >
               {isSubmitting ? (
@@ -226,7 +301,12 @@ export default function PaymentWithdraw({user}:{user:any}) {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                   Withdraw Now
                 </>
@@ -236,5 +316,5 @@ export default function PaymentWithdraw({user}:{user:any}) {
         </div>
       )}
     </div>
-  )
+  );
 }
