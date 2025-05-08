@@ -51,7 +51,7 @@ export default function ReferralProgram({user, referralData}:{user:any, referral
       </div>
 
       <div className="text-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Earn ₹50 for every friend that signs up</h2>
+        <h2 className="text-xl font-semibold text-gray-800">Earn $0.5 for every friend that signs up</h2>
       </div>
 
       <div className="text-center mb-6">

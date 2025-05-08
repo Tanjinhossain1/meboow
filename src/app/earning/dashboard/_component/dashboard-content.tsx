@@ -31,10 +31,12 @@ export function DashboardContent({
   data,
   user,
   watchedData,
+  referralData
 }: {
   data: any;
   user: any;
   watchedData: any;
+  referralData: any;
 }) {
   const [sampleVideos] = useState(data);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(
@@ -56,10 +58,10 @@ export function DashboardContent({
       let calculateBalance = 0
      if(watchedData?.length > 0){
         watchedData.map((e:any)=>{
-              calculateBalance = calculateBalance + +e?.income
+              calculateBalance = calculateBalance + +e?.income 
         })
      }
-     setTotalBalance(calculateBalance)
+     setTotalBalance(calculateBalance + (referralData?.length * 0.5))
   }, [watchedData]);
   useEffect(() => {
     return () => {

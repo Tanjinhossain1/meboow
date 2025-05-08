@@ -5,9 +5,11 @@ import { useEffect, useState } from "react"
 export default function PaymentWithdraw({
   user,
   watchedData,
+  referralData,
 }: {
   user: any
   watchedData: any
+  referralData: any
 }) {
   const [step, setStep] = useState<"method" | "details">("method")
   const [selectedMethod, setSelectedMethod] = useState<"binance" | "payoneer" | "bkash" | "nagad" | null>(null)
@@ -24,7 +26,7 @@ export default function PaymentWithdraw({
         calculateBalance = calculateBalance + +e?.income
       })
     }
-    setTotalBalance(calculateBalance)
+    setTotalBalance(calculateBalance + (referralData?.length * 0.5))
   }, [watchedData])
 
   const handleWithdraw = (method: "binance" | "payoneer" | "bkash" | "nagad") => {

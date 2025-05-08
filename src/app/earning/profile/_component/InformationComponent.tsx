@@ -4,7 +4,7 @@ import { toUpper } from "lodash";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function UserInformation({watchedData,user}:{watchedData:any,user:any}) {
+export default function UserInformation({watchedData,user, referralData}:{watchedData:any,user:any,referralData:any}) {
     const [totalBalance, setTotalBalance] = useState(0);
 console.log('first ',watchedData)
   
@@ -15,7 +15,7 @@ console.log('first ',watchedData)
                  calculateBalance = calculateBalance + +e?.income
            })
         }
-        setTotalBalance(calculateBalance)
+        setTotalBalance(calculateBalance + (referralData?.length * 0.5))
      }, [watchedData])
 
     return (
