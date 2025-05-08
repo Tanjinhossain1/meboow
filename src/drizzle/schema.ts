@@ -281,6 +281,7 @@ export const users = mysqlTable("users", {
   email: text("email").notNull(),
   password: text("password").notNull(),
   role: text("role").notNull(),
+  referralId: text("referralId"),
   authProviderId: text("authProviderId"),
 
   ballance: text('ballance'),

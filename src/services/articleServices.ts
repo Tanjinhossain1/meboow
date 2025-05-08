@@ -7,7 +7,6 @@ import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
 import { GlossaryGroup, GlossaryType, NetworkBandsType } from "@/types/network-bands";
 import { UsersTypes } from "@/types/users";
-import axios from "axios";
 import { desc } from "drizzle-orm";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
@@ -596,10 +595,10 @@ export async function fetchGlossaryList({isList }: { isList?:boolean }): Promise
       data: data?.data ,
     };
 }
-export async function fetchUsers(): Promise<{
+export async function fetchUsers({userId}:{userId?:string}): Promise<{
   data: UsersTypes[];
 }> {
-  const response = await fetch(`${process.env.NEXT_APP_URL}/api/auth/login`, {
+  const response = await fetch(userId ? `${process.env.NEXT_APP_URL}/api/auth/login?userId=${userId}` : `${process.env.NEXT_APP_URL}/api/auth/login`, {
     cache: "no-store",
   });
   if (!response.ok) {

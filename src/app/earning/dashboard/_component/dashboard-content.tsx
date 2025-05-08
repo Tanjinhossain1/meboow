@@ -38,7 +38,7 @@ export function DashboardContent({
 }) {
   const [sampleVideos] = useState(data);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(
-    +watchedData[watchedData?.length - 1]?.lastVideoIndex + 1 || 0
+    +watchedData?.[watchedData?.length - 1]?.lastVideoIndex + 1 || 0
   );
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeWatched, setTimeWatched] = useState(0);

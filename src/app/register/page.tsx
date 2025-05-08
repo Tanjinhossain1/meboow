@@ -37,7 +37,12 @@ export const metadata = {
   },
 };
 
-const Register = async () => {
+interface RegisterPagePropsType {
+  searchParams: {
+    user: string;
+  };
+}
+const Register = async ({searchParams}: RegisterPagePropsType) => {
   // const session = await auth();
   const session = await getServerSession(authConfig);
   console.log(
@@ -51,7 +56,7 @@ const Register = async () => {
   return (
     <>
     <Navbar />
-    <RegisterComponent />
+    <RegisterComponent referralId={searchParams?.user ? searchParams?.user : undefined} />
     <Footer />
     </>
   );

@@ -13,6 +13,7 @@ type MainLayoutProps = {
 }
 
 export function MainLayout({ children, activeTab,user }: MainLayoutProps) {
+  console.log(user)
   return (
     <div className="max-w-5xl mx-auto bg-white shadow-sm">
       <UserHeader user={user} />
@@ -23,7 +24,7 @@ export function MainLayout({ children, activeTab,user }: MainLayoutProps) {
           label="Dashboard"
           isActive={activeTab === "dashboard"}
         />
-        <NavItem href="/referrals" icon={<Users size={20} />} label="Referrals" isActive={activeTab === "referrals"} />
+        <NavItem href="/earning/referrals" icon={<Users size={20} />} label="Referrals" isActive={activeTab === "referrals"} />
         <NavItem href="/earning/surveys" icon={<Globe size={20} />} label="Surveys" isActive={activeTab === "surveys"} />
         <NavItem
           href="/earning/withdraw"

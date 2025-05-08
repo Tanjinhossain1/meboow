@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     // Parse the JSON body
     const body = await req.json();
 
-    const { email, fullName, password, role } = body;
+    const { email, fullName, password, role,referralId } = body;
 
     console.log("body detail created", body);
 
@@ -35,6 +35,7 @@ export async function POST(req: Request) {
         email,
         password: password,
         role,
+        referralId
       })
       const insertedId = result[0]?.insertId;
     

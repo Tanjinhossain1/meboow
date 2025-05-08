@@ -8,48 +8,58 @@ import BackdropProviderContext from "../BackdropProvider";
 import { useContext } from "react";
 import SnackbarProviderContext from "../SnackbarProvider";
 
-const RegisterComponent = () => {
+const RegisterComponent = ({ referralId }: { referralId?: string }) => {
   const router = useRouter();
-  const { handleOpen:SnackbarOpen,handleClose:SnackbarClose } = useContext(SnackbarProviderContext)
-  const {handleOpen,handleClose} = useContext(BackdropProviderContext)
+  const { handleOpen: SnackbarOpen, handleClose: SnackbarClose } = useContext(
+    SnackbarProviderContext
+  );
+  const { handleOpen, handleClose } = useContext(BackdropProviderContext);
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const fullName = event.target.fullName.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const data = {
-      fullName,
-      email,
-      password,
-      role: "user",
-    };
-    handleOpen()
+    const data = referralId
+      ? {
+          referralId,
+          fullName,
+          email,
+          password,
+          role: "user",
+        }
+      : {
+          fullName,
+          email,
+          password,
+          role: "user",
+        };
+    handleOpen();
     axios
       .post(`/api/auth/register`, data)
       .then(async (response: any) => {
         console.log("response in register ", response);
         if (response?.data?.error) {
           console.log("error in register ", response?.data?.error);
-          SnackbarOpen(response?.data?.error,"error");
-          handleClose()
+          SnackbarOpen(response?.data?.error, "error");
+          handleClose();
         }
         if (response.data.success) {
-          SnackbarOpen(response?.data?.message,"success")
+          SnackbarOpen(response?.data?.message, "success");
           const data = response?.data?.data[0];
-          console.log('first data', data)
+          console.log("first data", data);
           await signIn("credentials", {
             redirect: false,
             email: data?.email,
             password: data?.password,
           });
-          handleClose()
+          handleClose();
           router.push("/");
         }
       })
       .catch((error) => {
-        handleClose()
+        handleClose();
         console.log("error in register ", error);
-      }); 
+      });
   };
   return (
     <div className="my-10 max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white border border-[#121212]  dark:bg-black">

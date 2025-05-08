@@ -1,7 +1,7 @@
 
 import { getDb } from "@/drizzle/db";
 import { users } from "@/drizzle/schema";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { MySqlRawQueryResult } from "drizzle-orm/mysql2";
 import { signIn } from "next-auth/react";
 import { NextResponse } from "next/server";
@@ -31,9 +31,19 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
+        const { searchParams } = new URL(req.url);
         const db = await getDb();
+        const filters = {
+            userId: searchParams.get("userId"),
+        };
+       const whereConditions = [];
+        
+           if (filters?.userId) {
+               const searchConditions = eq(users["referralId"], filters?.userId);
+               whereConditions.push(searchConditions);
+           }
         // Perform the database insertion using Drizzle ORM
-        const result = await db.select().from(users).orderBy(desc(users.createdAt))
+        const result = await db.select().from(users).orderBy(desc(users.createdAt)).where(and(...whereConditions))
 
         console.log('Users  ', result)
         return NextResponse.json({ success: true, message: "successfully Get all Users", data: result })

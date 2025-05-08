@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import UserList from "./_components/MainMobilelist";
 
 export default async function Page() {
-  const brands = await fetchUsers();
+  const brands = await fetchUsers({});
 
   const session = await getServerSession(authConfig);
   console.log("this is the user  in app/page", session?.user);
