@@ -107,6 +107,7 @@ export const WithdrawRequest = mysqlTable(
     phoneNumber: text('phoneNumber').notNull(),
     email: text('email').notNull(),
     amount: text('amount').notNull(),
+    status: text('status'),
 
     createdAt: timestamp('createdAt').defaultNow().notNull(),
     updateAt: timestamp('updateAt').defaultNow().notNull(),

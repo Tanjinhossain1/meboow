@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import debounce from "lodash/debounce";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import { RecentArticleDataType } from "@/types/RecentArticle";
+import { RecentArticleDataType, VideoListUrlDataType, WithdrawRequestDataType } from "@/types/RecentArticle";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button as CompoButton } from "@/components/ui/button";
@@ -25,7 +25,9 @@ export default function CommonTableComponent({
     | CategoryTypes[]
     | UsersTypes[]
     | NetworkBandsType[]
-    | GlossaryType[];
+    | GlossaryType[]
+    | VideoListUrlDataType[]
+    | WithdrawRequestDataType[];
   columns: any;
   endpoint?: string;
 }) {
@@ -41,6 +43,8 @@ export default function CommonTableComponent({
         | UsersTypes
         | NetworkBandsType
         | GlossaryType
+        | VideoListUrlDataType
+        | WithdrawRequestDataType
       )[]
     >(columnData);
   // paginate for mobile
@@ -153,7 +157,8 @@ export default function CommonTableComponent({
           );
           setFilteredRows(filteredData);
           setLoading(false);
-        } else if ((columnData[0] as RecentArticleDataType)?.category) {
+        } 
+        else if ((columnData[0] as RecentArticleDataType)?.category) {
           const filteredData = (columnData as RecentArticleDataType[]).filter(
             (row) =>
               row?.title.toLowerCase().includes(value) ||
@@ -161,7 +166,25 @@ export default function CommonTableComponent({
           );
           setFilteredRows(filteredData);
           setLoading(false);
-        } else {
+        }
+        else if ((columnData[0] as VideoListUrlDataType)) {
+          const filteredData = (columnData as VideoListUrlDataType[]).filter(
+            (row) =>
+              row?.video.toLowerCase().includes(value) ||
+              row.income.toString().includes(value)
+          );
+          setFilteredRows(filteredData);
+          setLoading(false);
+        }
+        else if ((columnData[0] as WithdrawRequestDataType)) {
+          const filteredData = (columnData as WithdrawRequestDataType[]).filter(
+            (row) =>
+              row?.email.toLowerCase().includes(value)
+          );
+          setFilteredRows(filteredData);
+          setLoading(false);
+        }
+         else {
           const filteredData = (
             columnData as (
               | RecentArticleDataType

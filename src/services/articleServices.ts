@@ -2,7 +2,7 @@
 import { getDb } from "@/drizzle/db";
 import { Category } from "@/drizzle/schema";
 // services/articleService.ts
-import { RecentArticleDataType } from "@/types/RecentArticle";
+import { RecentArticleDataType, VideoListUrlDataType, WithdrawRequestDataType } from "@/types/RecentArticle";
 import { BrandTypes, CategoryTypes } from "@/types/category";
 import { MobileArticleType, MobileOpinionType, MobileTagsType } from "@/types/mobiles";
 import { GlossaryGroup, GlossaryType, NetworkBandsType } from "@/types/network-bands";
@@ -407,7 +407,7 @@ export async function fetchBrands(): Promise<{
   };
 }
 export async function fetchEarningVideos(): Promise<{
-  data: BrandTypes[];
+  data: VideoListUrlDataType[];
 }> {
   const response = await fetch(`${process.env.NEXT_APP_URL}/api/earning/uploadurl`, {
     cache: "no-store",
@@ -436,6 +436,25 @@ export async function fetchEarningWatchedVideos({email}:{email:string}): Promise
       `Failed to fetch brands: ${response.status} ${response.statusText}`
     );
     throw new Error("Failed to fetch get watched videos");
+  }
+
+  const data = await response.json();
+  revalidatePath('/')
+  return {
+    data: data?.data,
+  };
+}
+export async function withdrawRequest(): Promise<{
+  data: WithdrawRequestDataType[];
+}> {
+  const response = await fetch(`${process.env.NEXT_APP_URL}/api/earning/withdraw`, {
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch brands: ${response.status} ${response.statusText}`
+    );
+    throw new Error("Failed to fetch get withdraw");
   }
 
   const data = await response.json();

@@ -32,6 +32,23 @@ export interface RecentArticleDataType {
         name:string;
     }[]
 }
+export interface VideoListUrlDataType {
+    id:string;
+    video: string;
+    income: string;
+    updateAt: string;
+    createdAt: string;
+}
+export interface WithdrawRequestDataType {
+    id:string;
+    method: string;
+    phoneNumber: string;
+    email: string;
+    amount: string;
+    status: string;
+    updateAt: string;
+    createdAt: string;
+}
 
 export interface RecentArticleDataCreateType {
     title: string;

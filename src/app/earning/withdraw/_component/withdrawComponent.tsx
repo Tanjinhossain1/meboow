@@ -59,6 +59,7 @@ export default function PaymentWithdraw({
           phoneNumber: phoneNumber,
           amount: `${amount}`,
           email: user?.email,
+          status:"Pending"
         }),
       });
 

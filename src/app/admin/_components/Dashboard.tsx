@@ -228,6 +228,42 @@ const Dashboard = ({ user }: any) => {
               </Link>
             </Grid>
           ) : null}
+          {user?.role === "admin" ? (
+            <Grid xs={3.5}>
+              <Link href={`/admin/manage_all_sections/earningVideos`}>
+                <Paper
+                  sx={{
+                    width: "100%",
+                    p: 2,
+                    mb: 4,
+                    ":hover": { bgcolor: "lightgray" },
+                  }}
+                >
+                  <Typography variant="h6" component="h2">
+                    Earning Videos
+                  </Typography>
+                </Paper>
+              </Link>
+            </Grid>
+          ) : null}
+          {user?.role === "admin" ? (
+            <Grid xs={3.5}>
+              <Link href={`/admin/manage_all_sections/withdrawals`}>
+                <Paper
+                  sx={{
+                    width: "100%",
+                    p: 2,
+                    mb: 4,
+                    ":hover": { bgcolor: "lightgray" },
+                  }}
+                >
+                  <Typography variant="h6" component="h2">
+                    Withdraw Request
+                  </Typography>
+                </Paper>
+              </Link>
+            </Grid>
+          ) : null}
         </Grid>
       </Box>
     </Container>

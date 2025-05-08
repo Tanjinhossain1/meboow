@@ -1,8 +1,21 @@
 import { getDb } from "@/drizzle/db";
 import { WithdrawRequest } from "@/drizzle/schema";
-import { likeInsensitive } from "@/utils/utils";
-import { and, asc, eq } from "drizzle-orm";
+import { asc } from "drizzle-orm";
 import { NextResponse } from "next/server";
+
+
+export async function GET(req: Request) {
+    try {
+        const db = await getDb();
+        // Perform the database insertion using Drizzle ORM
+        const result = await db.select().from(WithdrawRequest).orderBy(asc(WithdrawRequest.createdAt)).execute();
+
+        return NextResponse.json({success:true,message:"successfully Get all withdraw Request",data:result})
+    } catch (error) {
+        console.error('Error get withdraw Request:', error);
+        return NextResponse.json({ error: 'Internal Server Error' });
+    }
+}
 
 export async function POST(req: Request) {
     try {

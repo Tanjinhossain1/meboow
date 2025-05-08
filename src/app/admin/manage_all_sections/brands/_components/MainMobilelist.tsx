@@ -1,21 +1,14 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
-import { RecentArticleDataType } from "@/types/RecentArticle";
 import { formatDate, formatForUrlWith_under_score } from "@/utils/utils";
-import Link from "next/link";
 import axios from "axios";
 import CommonTableComponent from "../../_components/CommonTable";
 import SnackbarProviderContext from "@/Component/SnackbarProvider";
 import BackdropProviderContext from "@/Component/BackdropProvider";
-import { MobileArticleType } from "@/types/mobiles";
 import { BrandTypes } from "@/types/category";
 import {
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
 } from "@mui/material";
 import DialogComponent from "@/Component/Admin/Dialog";
 
