@@ -223,7 +223,7 @@ export function DashboardContent({
           View this video for 35 seconds and get ${currentVideo?.income}
         </div>
 
-        <div className="border border-red-500 rounded-md overflow-hidden mb-4">
+        <div  >
           <VideoPlayer
             key={`video-${currentVideoIndex}-${videoKey.current}`}
             videoId={currentVideo?.video}
@@ -234,7 +234,7 @@ export function DashboardContent({
           />
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-1">
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
               className="bg-purple-500 h-2.5 rounded-full transition-all duration-1000"

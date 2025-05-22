@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import PaymentWithdraw from "./_component/withdrawComponent";
 import { fetchEarningWatchedVideos, fetchUsers } from "@/services/articleServices";
+import PaymentRules from "../dashboard/_component/payment-rules";
 
 export default async function WidthDrawPage() {
    const session = await getServerSession(authConfig);
@@ -15,6 +16,8 @@ export default async function WidthDrawPage() {
   return (
     <MainLayout user={user} activeTab="withdraw">
       <div className="p-6">
+        <PaymentRules />
+        <br />
          <PaymentWithdraw referralData={referralData?.data} watchedData={watchedData?.data} user={user} />
       </div>
     </MainLayout>

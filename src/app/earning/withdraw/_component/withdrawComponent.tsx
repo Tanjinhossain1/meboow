@@ -364,14 +364,14 @@ export default function PaymentWithdraw({
               <input
                 type="number"
                 value={amount}
-                min={5}
+                min={30}
                 max={totalBalance}
                 onChange={(e) => {
                   setAmount(e.target.value)
                   if (+e.target.value > +totalBalance) {
                     setError(`You don't have this much balance`)
-                  } else if (+e.target.value < 5) {
-                    setError("Minimum Withdraw Balance 5$")
+                  } else if (+e.target.value < 30) {
+                    setError("Minimum Withdraw Balance 30$")
                   } else {
                     setError("")
                   }

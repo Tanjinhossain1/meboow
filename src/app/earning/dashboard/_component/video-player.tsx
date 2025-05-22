@@ -108,22 +108,24 @@ export function VideoPlayer({
   }
 
   return (
-    <div ref={containerRef} className="aspect-video relative cursor-pointer" onClick={handleContainerClick}>
+    <div ref={containerRef} className="aspect-video relative cursor-pointer h-[50%] w-[60%] mx-auto" onClick={handleContainerClick}>
+      
       <iframe
         ref={iframeRef}
-        width="100%"
-        height="100%"
+        width="80%"
+        height="90%"
         src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${
           typeof window !== "undefined" ? window.location.origin : ""
         }&controls=1&rel=0&showinfo=0&playsinline=1`}
         title="YouTube video player"
         // frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        className="mx-auto"
         // allowFullScreen
       ></iframe>
 
       {/* Transparent overlay to capture clicks */}
-      <div
+      <div 
         className="absolute inset-0 z-10"
         onClick={(e) => {
           e.stopPropagation()
